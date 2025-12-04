@@ -550,197 +550,235 @@
     </footer>
   </div>
 
-  <script>
-    const API_KEY = "4e94b7d0e08c44a9a796c472b6320228"; // <-- replace this
-    const API_URL = `https://newsapi.org/v2/top-headlines?country=in&pageSize=12&apiKey=${API_KEY}`;
+  
+    <script>
+  // Using RSS → JSON (no API key) with The Better India (positive stories)
+  const RSS_URL = encodeURIComponent("https://www.thebetterindia.com/feed/");
+  const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${RSS_URL}`;
 
-    const newsList = document.getElementById("news-list");
-    const filterChips = document.querySelectorAll(".filter-chip");
-    const positiveCountEl = document.getElementById("positive-count");
-    const lastUpdatedEl = document.getElementById("last-updated");
+  const newsList = document.getElementById("news-list");
+  const filterChips = document.querySelectorAll(".filter-chip");
+  const positiveCountEl = document.getElementById("positive-count");
+  const lastUpdatedEl = document.getElementById("last-updated");
 
-    function classifyArticle(article) {
-      const text = (
-        (article.title || "") +
-        " " +
-        (article.description || "") +
-        " " +
-        (article.content || "")
-      ).toLowerCase();
+  // --- Classification logic stays the same ---
+  function classifyArticle(article) {
+    const text = (
+      (article.title || "") +
+      " " +
+      (article.description || "") +
+      " " +
+      (article.content || "")
+    ).toLowerCase();
 
-      if (
-        text.includes("cricket") ||
-        text.includes("football") ||
-        text.includes("t20") ||
-        text.includes("ipl") ||
-        text.includes("world cup") ||
-        text.includes("olympic")
-      ) {
-        return "sports";
-      }
-
-      if (
-        text.includes("sensex") ||
-        text.includes("nifty") ||
-        text.includes("stock") ||
-        text.includes("market") ||
-        text.includes("shares") ||
-        text.includes("economy") ||
-        text.includes("gdp") ||
-        text.includes("inflation")
-      ) {
-        return "markets";
-      }
-
-      if (
-        text.includes("election") ||
-        text.includes("minister") ||
-        text.includes("parliament") ||
-        text.includes("bill passed") ||
-        text.includes("policy")
-      ) {
-        return "politics";
-      }
-
-      if (
-        text.includes("ai") ||
-        text.includes("artificial intelligence") ||
-        text.includes("machine learning") ||
-        text.includes("openai") ||
-        text.includes("chatgpt") ||
-        text.includes("google") && text.includes("ai")
-      ) {
-        return "ai";
-      }
-
-      return "current";
+    if (
+      text.includes("cricket") ||
+      text.includes("football") ||
+      text.includes("t20") ||
+      text.includes("ipl") ||
+      text.includes("world cup") ||
+      text.includes("olympic")
+    ) {
+      return "sports";
     }
 
-    function createNewsCard(article) {
-      const category = classifyArticle(article);
-      const card = document.createElement("article");
-      card.className = "news-card";
-      card.dataset.category = category;
+    if (
+      text.includes("sensex") ||
+      text.includes("nifty") ||
+      text.includes("stock") ||
+      text.includes("market") ||
+      text.includes("shares") ||
+      text.includes("economy") ||
+      text.includes("gdp") ||
+      text.includes("inflation")
+    ) {
+      return "markets";
+    }
 
-      const published = article.publishedAt
-        ? new Date(article.publishedAt).toLocaleString("en-IN", {
+    if (
+      text.includes("election") ||
+      text.includes("minister") ||
+      text.includes("parliament") ||
+      text.includes("bill passed") ||
+      text.includes("policy")
+    ) {
+      return "politics";
+    }
+
+    if (
+      text.includes("ai") ||
+      text.includes("artificial intelligence") ||
+      text.includes("machine learning") ||
+      text.includes("openai") ||
+      text.includes("chatgpt") ||
+      (text.includes("google") && text.includes("ai"))
+    ) {
+      return "ai";
+    }
+
+    return "current";
+  }
+
+  function createNewsCard(article) {
+    const category = classifyArticle(article);
+    const card = document.createElement("article");
+    card.className = "news-card";
+    card.dataset.category = category;
+
+    const published = article.publishedAt
+      ? new Date(article.publishedAt).toLocaleString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : "";
+
+    const sourceName =
+      article.source && article.source.name
+        ? article.source.name
+        : "Positive news source";
+
+    const title = article.title || "Untitled story";
+    const description =
+      article.description ||
+      "A positive development worth noting today.";
+
+    card.innerHTML = `
+      <div class="news-badges">
+        <span class="badge badge--category">${category.toUpperCase()}</span>
+        <span class="badge badge--positive">Net positive impact</span>
+      </div>
+      <h3 class="news-title">${title}</h3>
+      <p class="tagline">${description}</p>
+      <div class="news-meta-row">
+        <div class="news-meta">
+          ${published ? `⏱ ${published}` : ""}
+        </div>
+      </div>
+      <div class="news-footer">
+        <span class="source">Source: ${sourceName}</span>
+        ${
+          article.url
+            ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer">
+                 Read <span>↗</span>
+               </a>`
+            : ""
+        }
+      </div>
+    `;
+
+    return card;
+  }
+
+  function updatePositiveCount() {
+    const cards = document.querySelectorAll(".news-card");
+    const visiblePositive = Array.from(cards).filter(
+      (card) => !card.classList.contains("hidden")
+    ).length;
+
+    if (positiveCountEl) {
+      positiveCountEl.textContent = `${visiblePositive} stories`;
+    }
+  }
+
+  function applyFilter(filter) {
+    const cards = document.querySelectorAll(".news-card");
+    cards.forEach((card) => {
+      const category = card.dataset.category;
+      const shouldShow = filter === "all" || category === filter;
+      card.classList.toggle("hidden", !shouldShow);
+    });
+    updatePositiveCount();
+  }
+
+  filterChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const filter = chip.getAttribute("data-filter");
+      filterChips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+      applyFilter(filter);
+    });
+  });
+
+  // Helper: strip basic HTML tags from RSS descriptions
+  function stripHtml(html) {
+    if (!html) return "";
+    return html.replace(/<[^>]*>/g, "").trim();
+  }
+
+  async function loadNews() {
+    newsList.innerHTML =
+      '<p style="color:#9ca3af;font-size:0.8rem;">Fetching positive stories…</p>';
+
+    try {
+      const resp = await fetch(API_URL);
+      const data = await resp.json();
+
+      // rss2json error handling
+      if (data.status !== "ok") {
+        console.error("RSS API error:", data);
+        newsList.innerHTML =
+          `<p style="color:#fecaca;font-size:0.8rem;">
+             Error from RSS source: ${data.message || "Unknown error"}
+           </p>`;
+        if (lastUpdatedEl) {
+          lastUpdatedEl.textContent = "Error fetching headlines";
+        }
+        return;
+      }
+
+      if (!data.items || data.items.length === 0) {
+        newsList.innerHTML =
+          '<p style="color:#9ca3af;font-size:0.8rem;">No stories found. Try again later.</p>';
+        return;
+      }
+
+      const sourceTitle =
+        (data.feed && data.feed.title) || "The Better India";
+
+      newsList.innerHTML = "";
+
+      // Take first 10–12 items
+      data.items.slice(0, 12).forEach((item) => {
+        const article = {
+          title: item.title,
+          description: stripHtml(item.description),
+          content: stripHtml(item.content),
+          url: item.link,
+          publishedAt: item.pubDate,
+          source: { name: sourceTitle },
+        };
+
+        const card = createNewsCard(article);
+        newsList.appendChild(card);
+      });
+
+      if (lastUpdatedEl) {
+        lastUpdatedEl.textContent =
+          "Updated from The Better India • " +
+          new Date().toLocaleString("en-IN", {
             day: "2-digit",
             month: "short",
             hour: "2-digit",
             minute: "2-digit",
-          })
-        : "";
-
-      const sourceName = article.source && article.source.name
-        ? article.source.name
-        : "Unknown source";
-
-      const title = article.title || "Untitled story";
-      const description =
-        article.description ||
-        "A positive development worth noting today.";
-
-      card.innerHTML = `
-        <div class="news-badges">
-          <span class="badge badge--category">${category.toUpperCase()}</span>
-          <span class="badge badge--positive">Net positive impact</span>
-        </div>
-        <h3 class="news-title">${title}</h3>
-        <p class="tagline">${description}</p>
-        <div class="news-meta-row">
-          <div class="news-meta">
-            ${published ? `⏱ ${published}` : ""}
-          </div>
-        </div>
-        <div class="news-footer">
-          <span class="source">Source: ${sourceName}</span>
-          ${
-            article.url
-              ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer">
-                   Read <span>↗</span>
-                 </a>`
-              : ""
-          }
-        </div>
-      `;
-
-      return card;
-    }
-
-    function updatePositiveCount() {
-      const cards = document.querySelectorAll(".news-card");
-      const visiblePositive = Array.from(cards).filter(
-        (card) => !card.classList.contains("hidden")
-      ).length;
-
-      if (positiveCountEl) {
-        positiveCountEl.textContent = `${visiblePositive} stories`;
+          });
       }
-    }
 
-    function applyFilter(filter) {
-      const cards = document.querySelectorAll(".news-card");
-      cards.forEach((card) => {
-        const category = card.dataset.category;
-        const shouldShow = filter === "all" || category === filter;
-        card.classList.toggle("hidden", !shouldShow);
-      });
-      updatePositiveCount();
-    }
-
-    filterChips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        const filter = chip.getAttribute("data-filter");
-        filterChips.forEach((c) => c.classList.remove("active"));
-        chip.classList.add("active");
-        applyFilter(filter);
-      });
-    });
-
-    async function loadNews() {
+      applyFilter("all");
+    } catch (error) {
+      console.error(error);
       newsList.innerHTML =
-        '<p style="color:#9ca3af;font-size:0.8rem;">Fetching fresh stories across all topics…</p>';
-
-      try {
-        const resp = await fetch(API_URL);
-        const data = await resp.json();
-
-        if (!data.articles || data.articles.length === 0) {
-          newsList.innerHTML =
-            '<p style="color:#9ca3af;font-size:0.8rem;">No stories found. Try again later.</p>';
-          return;
-        }
-
-        newsList.innerHTML = "";
-        data.articles.forEach((article) => {
-          const card = createNewsCard(article);
-          newsList.appendChild(card);
-        });
-
-        if (lastUpdatedEl) {
-          lastUpdatedEl.textContent =
-            "Updated just now • " +
-            new Date().toLocaleString("en-IN", {
-              day: "2-digit",
-              month: "short",
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-        }
-
-        // Initial filter (All)
-        applyFilter("all");
-      } catch (error) {
-        console.error(error);
-        newsList.innerHTML =
-          '<p style="color:#fecaca;font-size:0.8rem;">Error loading stories. Check your API key or network.</p>';
-        if (lastUpdatedEl) {
-          lastUpdatedEl.textContent = "Error fetching headlines";
-        }
+        '<p style="color:#fecaca;font-size:0.8rem;">Network error while loading stories.</p>';
+      if (lastUpdatedEl) {
+        lastUpdatedEl.textContent = "Network error fetching headlines";
       }
     }
+  }
 
-    loadNews();
-  </script>
+  loadNews();
+</script>
+
+  
 </body>
 </html>
