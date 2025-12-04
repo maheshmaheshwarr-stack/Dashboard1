@@ -551,17 +551,29 @@
   </div>
 
   
-    <script>
-  // Using RSS → JSON (no API key) with The Better India (positive stories)
-  const RSS_URL = encodeURIComponent("https://www.thebetterindia.com/feed/");
-  const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${RSS_URL}`;
+ 
+  <script>
+  // --- RSS sources ---
+  const TBI_RSS = "https://www.thebetterindia.com/feed/";
+  const TECH_RSS = "https://indianexpress.com/section/technology/feed/";
+  const POLITICS_RSS = "https://indianexpress.com/section/india/politics/feed/";
+
+  const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+    TBI_RSS
+  )}`;
+  const TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+    TECH_RSS
+  )}`;
+  const POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+    POLITICS_RSS
+  )}`;
 
   const newsList = document.getElementById("news-list");
   const filterChips = document.querySelectorAll(".filter-chip");
   const positiveCountEl = document.getElementById("positive-count");
   const lastUpdatedEl = document.getElementById("last-updated");
 
-  // --- Classification logic stays the same ---
+  // --- Classification helper (still used for TBI + extra nuance) ---
   function classifyArticle(article) {
     const text = (
       (article.title || "") +
@@ -619,8 +631,14 @@
     return "current";
   }
 
+  // Strip HTML tags from RSS content/description
+  function stripHtml(html) {
+    if (!html) return "";
+    return html.replace(/<[^>]*>/g, "").trim();
+  }
+
   function createNewsCard(article) {
-    const category = classifyArticle(article);
+    const category = article.forcedCategory || classifyArticle(article);
     const card = document.createElement("article");
     card.className = "news-card";
     card.dataset.category = category;
@@ -635,9 +653,7 @@
       : "";
 
     const sourceName =
-      article.source && article.source.name
-        ? article.source.name
-        : "Positive news source";
+      (article.source && article.source.name) || "News source";
 
     const title = article.title || "Untitled story";
     const description =
@@ -689,6 +705,21 @@
       const shouldShow = filter === "all" || category === filter;
       card.classList.toggle("hidden", !shouldShow);
     });
+
+    // If nothing is visible, show a friendly message
+    const anyVisible = Array.from(cards).some(
+      (card) => !card.classList.contains("hidden")
+    );
+    if (!anyVisible) {
+      newsList.insertAdjacentHTML(
+        "beforeend",
+        '<p id="empty-msg" style="color:#9ca3af;font-size:0.8rem;margin-top:4px;">No stories in this category right now. Try another filter.</p>'
+      );
+    } else {
+      const msg = document.getElementById("empty-msg");
+      if (msg) msg.remove();
+    }
+
     updatePositiveCount();
   }
 
@@ -701,62 +732,100 @@
     });
   });
 
-  // Helper: strip basic HTML tags from RSS descriptions
-  function stripHtml(html) {
-    if (!html) return "";
-    return html.replace(/<[^>]*>/g, "").trim();
-  }
-
   async function loadNews() {
     newsList.innerHTML =
-      '<p style="color:#9ca3af;font-size:0.8rem;">Fetching positive stories…</p>';
+      '<p style="color:#9ca3af;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
 
     try {
-      const resp = await fetch(API_URL);
-      const data = await resp.json();
+      const [tbiResp, techResp, polResp] = await Promise.all([
+        fetch(TBI_URL),
+        fetch(TECH_URL),
+        fetch(POLITICS_URL),
+      ]);
 
-      // rss2json error handling
-      if (data.status !== "ok") {
-        console.error("RSS API error:", data);
+      const [tbiData, techData, polData] = await Promise.all([
+        tbiResp.json(),
+        techResp.json(),
+        polResp.json(),
+      ]);
+
+      const allArticles = [];
+
+      // --- The Better India (general positive news) ---
+      if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
+        const sourceTitle =
+          (tbiData.feed && tbiData.feed.title) || "The Better India";
+
+        tbiData.items.slice(0, 8).forEach((item) => {
+          allArticles.push({
+            title: item.title,
+            description: stripHtml(item.description),
+            content: stripHtml(item.content),
+            url: item.link,
+            publishedAt: item.pubDate,
+            source: { name: sourceTitle },
+            forcedCategory: null, // let classifyArticle decide
+          });
+        });
+      }
+
+      // --- Indian Express Technology → force IT/AI category ---
+      if (techData.status === "ok" && techData.items && techData.items.length) {
+        const sourceTitle =
+          (techData.feed && techData.feed.title) ||
+          "Indian Express - Technology";
+
+        techData.items.slice(0, 6).forEach((item) => {
+          allArticles.push({
+            title: item.title,
+            description: stripHtml(item.description),
+            content: stripHtml(item.content),
+            url: item.link,
+            publishedAt: item.pubDate,
+            source: { name: sourceTitle },
+            forcedCategory: "ai", // shows under IT & AI Trends
+          });
+        });
+      }
+
+      // --- Indian Express Politics → force Politics category ---
+      if (polData.status === "ok" && polData.items && polData.items.length) {
+        const sourceTitle =
+          (polData.feed && polData.feed.title) ||
+          "Indian Express - Politics";
+
+        polData.items.slice(0, 6).forEach((item) => {
+          allArticles.push({
+            title: item.title,
+            description: stripHtml(item.description),
+            content: stripHtml(item.content),
+            url: item.link,
+            publishedAt: item.pubDate,
+            source: { name: sourceTitle },
+            forcedCategory: "politics", // shows under Politics
+          });
+        });
+      }
+
+      if (!allArticles.length) {
         newsList.innerHTML =
-          `<p style="color:#fecaca;font-size:0.8rem;">
-             Error from RSS source: ${data.message || "Unknown error"}
-           </p>`;
+          '<p style="color:#9ca3af;font-size:0.8rem;">No stories found from any source. Try again later.</p>';
         if (lastUpdatedEl) {
-          lastUpdatedEl.textContent = "Error fetching headlines";
+          lastUpdatedEl.textContent = "No stories available";
         }
         return;
       }
 
-      if (!data.items || data.items.length === 0) {
-        newsList.innerHTML =
-          '<p style="color:#9ca3af;font-size:0.8rem;">No stories found. Try again later.</p>';
-        return;
-      }
-
-      const sourceTitle =
-        (data.feed && data.feed.title) || "The Better India";
-
+      // Clear and render all cards
       newsList.innerHTML = "";
-
-      // Take first 10–12 items
-      data.items.slice(0, 12).forEach((item) => {
-        const article = {
-          title: item.title,
-          description: stripHtml(item.description),
-          content: stripHtml(item.content),
-          url: item.link,
-          publishedAt: item.pubDate,
-          source: { name: sourceTitle },
-        };
-
+      allArticles.forEach((article) => {
         const card = createNewsCard(article);
         newsList.appendChild(card);
       });
 
       if (lastUpdatedEl) {
         lastUpdatedEl.textContent =
-          "Updated from The Better India • " +
+          "Updated from The Better India & Indian Express • " +
           new Date().toLocaleString("en-IN", {
             day: "2-digit",
             month: "short",
@@ -769,14 +838,16 @@
     } catch (error) {
       console.error(error);
       newsList.innerHTML =
-        '<p style="color:#fecaca;font-size:0.8rem;">Network error while loading stories.</p>';
+        '<p style="color:#fecaca;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
       if (lastUpdatedEl) {
-        lastUpdatedEl.textContent = "Network error fetching headlines";
+        lastUpdatedEl.textContent = "Error fetching headlines";
       }
     }
   }
 
   loadNews();
+
+
 </script>
 
   
