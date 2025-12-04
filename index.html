@@ -1,826 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>Mahesh's Positive News Dashboard</title>
-    <style>
-      :root {
-        --bg: #050816;
-        --bg-soft: #0b1020;
-        --bg-softer: #11182a;
-        --accent: #38bdf8;
-        --accent-soft: rgba(56, 189, 248, 0.12);
-        --accent-strong: #22c55e;
-        --text-main: #e5e7eb;
-        --text-muted: #9ca3af;
-        --card-border: rgba(148, 163, 184, 0.3);
-        --chip-bg: rgba(15, 23, 42, 0.9);
-        --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
-        --radius-xl: 18px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>My Positive News Feed</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --bg-softer: #11182a;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-strong: #22c55e;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --card-border: rgba(148, 163, 184, 0.3);
+      --chip-bg: rgba(15, 23, 42, 0.9);
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+      --radius-xl: 18px;
+    }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-          "Segoe UI", sans-serif;
-        background: radial-gradient(
-          circle at top,
-          #1d293b 0,
-          #020617 45%,
-          #000 100%
-        );
-        color: var(--text-main);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        padding: 32px 16px;
-      }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "SF Pro Text", "Segoe UI", sans-serif;
+      background: radial-gradient(
+        circle at top,
+        #1d293b 0,
+        #020617 45%,
+        #000 100%
+      );
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
 
+    .app-shell {
+      width: 100%;
+      max-width: 1100px;
+      background: linear-gradient(
+        145deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(2, 6, 23, 0.98)
+      );
+      border-radius: 28px;
+      padding: 20px 20px 24px;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      backdrop-filter: blur(18px);
+    }
+
+    @media (min-width: 768px) {
       .app-shell {
-        width: 100%;
-        max-width: 1100px;
-        background: linear-gradient(
-          145deg,
-          rgba(15, 23, 42, 0.95),
-          rgba(2, 6, 23, 0.98)
-        );
-        border-radius: 28px;
-        padding: 20px 20px 24px;
-        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        backdrop-filter: blur(18px);
+        padding: 26px 26px 30px;
       }
+    }
 
-      @media (min-width: 768px) {
-        .app-shell {
-          padding: 26px 26px 30px;
-        }
-      }
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
 
+    @media (min-width: 640px) {
       header {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        margin-bottom: 18px;
-      }
-
-      @media (min-width: 640px) {
-        header {
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-        }
-      }
-
-      .brand {
-        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
-        gap: 12px;
       }
+    }
 
-      .brand-badge {
-        width: 40px;
-        height: 40px;
-        border-radius: 999px;
-        background: radial-gradient(circle at 30% 20%, #38bdf8, #22c55e);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 12px 30px rgba(34, 197, 94, 0.5);
-        position: relative;
-        overflow: hidden;
-      }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-      .brand-badge span {
-        font-size: 22px;
-        font-weight: 700;
-        color: #0b1020;
-      }
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(
+        circle at 30% 20%,
+        #38bdf8,
+        #22c55e
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
 
-      .brand-text h1 {
-        font-size: 1.5rem;
-        letter-spacing: 0.03em;
-      }
+    .brand-badge span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0b1020;
+    }
 
-      .brand-text p {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-      }
+    .brand-text h1 {
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+    }
 
-      .meta {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 8px;
-        font-size: 0.75rem;
-      }
+    .brand-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-      .pill {
-        border-radius: 999px;
-        padding: 6px 10px;
-        background: rgba(15, 23, 42, 0.9);
-        border: 1px solid rgba(148, 163, 184, 0.5);
-        color: var(--text-muted);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 0.75rem;
+    }
 
-      .pill span.icon {
-        font-size: 0.9em;
-      }
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-      .pill--accent {
-        border-color: rgba(34, 197, 94, 0.8);
-        color: #bbf7d0;
-        background: rgba(22, 163, 74, 0.16);
-      }
+    .pill span.icon {
+      font-size: 0.9em;
+    }
 
-      .filters-bar {
-        margin-top: 14px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
+    .pill--accent {
+      border-color: rgba(34, 197, 94, 0.8);
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, 0.16);
+    }
 
-      .filter-chip {
-        border-radius: 999px;
-        padding: 6px 11px;
-        font-size: 0.78rem;
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        background: var(--chip-bg);
-        color: var(--text-muted);
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        transition: all 0.16s ease-out;
-      }
+    .filters-bar {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-      .filter-chip span.dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: rgba(148, 163, 184, 0.6);
-      }
+    .filter-chip {
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 0.78rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: var(--chip-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease-out;
+    }
 
-      .filter-chip.active {
-        background: radial-gradient(
-          circle at 0 0,
-          rgba(56, 189, 248, 0.3),
-          rgba(15, 23, 42, 0.98)
-        );
-        color: #e0f2fe;
-        border-color: rgba(56, 189, 248, 0.9);
-        transform: translateY(-1px);
-        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.8);
-      }
+    .filter-chip span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.6);
+    }
 
-      .filter-chip.active span.dot {
-        background: #38bdf8;
-      }
+    .filter-chip.active {
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(56, 189, 248, 0.3),
+        rgba(15, 23, 42, 0.98)
+      );
+      color: #e0f2fe;
+      border-color: rgba(56, 189, 248, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.8);
+    }
 
+    .filter-chip.active span.dot {
+      background: #38bdf8;
+    }
+
+    main {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
       main {
-        margin-top: 18px;
-        display: grid;
-        grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
-        gap: 18px;
-      }
-
-      @media (max-width: 900px) {
-        main {
-          grid-template-columns: minmax(0, 1fr);
-        }
-      }
-
-      .column {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .section-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 4px;
-      }
-
-      .section-title h2 {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .section-title span {
-        font-size: 0.72rem;
-        color: var(--accent);
-      }
-
-      .news-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .news-card {
-        border-radius: var(--radius-xl);
-        border: 1px solid var(--card-border);
-        background: radial-gradient(
-          circle at top left,
-          rgba(148, 163, 184, 0.14),
-          rgba(15, 23, 42, 0.98)
-        );
-        padding: 12px 13px;
-        box-shadow: var(--shadow-soft);
-        display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: 6px;
-        cursor: default;
-        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out,
-          border-color 0.18s ease-out;
       }
+    }
 
-      .news-card:hover {
-        transform: translateY(-3px) translateZ(0);
-        box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
-        border-color: rgba(56, 189, 248, 0.7);
-      }
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-      .news-badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        font-size: 0.68rem;
-      }
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
 
-      .badge {
-        padding: 4px 8px;
-        border-radius: 999px;
-        background: rgba(15, 23, 42, 0.95);
-        color: var(--text-muted);
-        border: 1px solid rgba(148, 163, 184, 0.4);
-      }
+    .section-title h2 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
 
-      .badge--category {
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-size: 0.65rem;
-      }
+    .section-title span {
+      font-size: 0.72rem;
+      color: var(--accent);
+    }
 
-      .badge--positive {
-        border-color: rgba(34, 197, 94, 0.8);
-        color: #bbf7d0;
-        background: rgba(21, 128, 61, 0.2);
-      }
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-      .badge--ai {
-        border-color: rgba(56, 189, 248, 0.85);
-        color: #e0f2fe;
-        background: rgba(15, 23, 42, 0.9);
-      }
+    .news-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      background: radial-gradient(
+        circle at top left,
+        rgba(148, 163, 184, 0.14),
+        rgba(15, 23, 42, 0.98)
+      );
+      padding: 12px 13px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+      transition: transform 0.18s ease-out,
+        box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+    }
 
-      .news-title {
-        font-size: 0.98rem;
-        font-weight: 600;
-        line-height: 1.4;
-      }
+    .news-card:hover {
+      transform: translateY(-3px) translateZ(0);
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+      border-color: rgba(56, 189, 248, 0.7);
+    }
 
-      .news-meta-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-      }
+    .news-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.68rem;
+    }
 
-      .news-meta {
-        font-size: 0.72rem;
-        color: var(--text-muted);
-      }
+    .badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
 
-      .tagline {
-        font-size: 0.75rem;
-        color: #a5b4fc;
-      }
+    .badge--category {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+    }
 
-      .news-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 4px;
-      }
+    .badge--positive {
+      border-color: rgba(34, 197, 94, 0.8);
+      color: #bbf7d0;
+      background: rgba(21, 128, 61, 0.2);
+    }
 
-      .source {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-      }
+    .badge--ai {
+      border-color: rgba(56, 189, 248, 0.85);
+      color: #e0f2fe;
+      background: rgba(15, 23, 42, 0.9);
+    }
 
-      .read-link {
-        font-size: 0.72rem;
-        text-decoration: none;
-        color: var(--accent);
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
+    .news-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
 
-      .read-link span {
-        font-size: 0.9em;
-      }
+    .news-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
 
-      .sidebar-card {
-        border-radius: 20px;
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        background: radial-gradient(
-          circle at top,
-          rgba(56, 189, 248, 0.22),
-          rgba(15, 23, 42, 0.98)
-        );
-        padding: 12px 14px;
-        box-shadow: var(--shadow-soft);
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
+    .news-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
 
-      .sidebar-card h3 {
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
-        color: #bfdbfe;
-      }
+    .tagline {
+      font-size: 0.75rem;
+      color: #a5b4fc;
+    }
 
-      .sidebar-card p {
-        font-size: 0.8rem;
-        color: #e5e7eb;
-      }
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
 
-      .sidebar-list {
-        margin-top: 4px;
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
+    .source {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
 
-      .sidebar-list li {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+    .read-link {
+      font-size: 0.72rem;
+      text-decoration: none;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-      .pill-mini {
-        border-radius: 999px;
-        padding: 3px 7px;
-        border: 1px solid rgba(148, 163, 184, 0.5);
-        font-size: 0.7rem;
-        color: #c4b5fd;
-      }
+    .read-link span {
+      font-size: 0.9em;
+    }
 
-      .status-line {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-      }
+    .sidebar-card {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(
+        circle at top,
+        rgba(56, 189, 248, 0.22),
+        rgba(15, 23, 42, 0.98)
+      );
+      padding: 12px 14px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-      .status-line strong {
-        color: #e5e7eb;
-      }
+    .sidebar-card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #bfdbfe;
+    }
 
-      footer {
-        margin-top: 18px;
-        padding-top: 10px;
-        border-top: 1px dashed rgba(148, 163, 184, 0.35);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.72rem;
-        color: var(--text-muted);
-      }
+    .sidebar-card p {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
 
-      .footer-badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
+    .sidebar-list {
+      margin-top: 4px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-      .footer-badge {
-        padding: 4px 8px;
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.45);
-        background: rgba(15, 23, 42, 0.95);
-      }
+    .sidebar-list li {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      .hidden {
-        display: none !important;
-      }
+    .pill-mini {
+      border-radius: 999px;
+      padding: 3px 7px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.7rem;
+      color: #c4b5fd;
+    }
 
-      .error-message {
-        font-size: 0.8rem;
-        color: #fecaca;
-        background: rgba(127, 29, 29, 0.4);
-        border-radius: 999px;
-        padding: 6px 10px;
-        border: 1px solid rgba(248, 113, 113, 0.6);
-        margin-top: 6px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
+    footer {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.35);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
 
-      .spinner {
-        width: 14px;
-        height: 14px;
-        border-radius: 999px;
-        border: 2px solid rgba(148, 163, 184, 0.5);
-        border-top-color: var(--accent);
-        animation: spin 0.7s linear infinite;
-      }
+    .footer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
 
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="app-shell">
-      <header>
-        <div class="brand">
-          <div class="brand-badge" aria-hidden="true">
-            <span>☀️</span>
+    .footer-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true">
+          <span>☀️</span>
+        </div>
+        <div class="brand-text">
+          <h1>My Positive News Feed</h1>
+          <p>
+            Curated daily: Current affairs, AI, markets, politics &amp;
+            sports — with an optimistic lens.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="meta">
+          <div class="pill pill--accent">
+            <span class="icon">✨</span>
+            <span>Signal over noise. Positivity over panic.</span>
           </div>
-          <div class="brand-text">
-            <h1>Mahesh's Positive News Dashboard</h1>
-            <p>
-              Live headlines on current affairs, AI, markets, politics & sports —
-              filtered through a constructive, progress-first lens.
-            </p>
+          <div class="pill">
+            <span class="icon">🕒</span>
+            <span id="last-updated">Fetching latest headlines…</span>
           </div>
         </div>
-        <div>
-          <div class="meta">
-            <div class="pill pill--accent">
-              <span class="icon">✨</span>
-              <span>Signal over noise. Positivity over panic.</span>
-            </div>
-            <div class="pill">
-              <span class="icon">🕒</span>
-              <span id="status-text">
-                Fetching fresh stories when you open or refresh this page.
-              </span>
-            </div>
-          </div>
-          <div class="filters-bar" aria-label="Filter by topic">
-            <button class="filter-chip active" data-filter="all">
-              <span class="dot"></span>
-              All
-            </button>
-            <button class="filter-chip" data-filter="current">
-              <span class="dot"></span>
-              Current Affairs
-            </button>
-            <button class="filter-chip" data-filter="ai">
-              <span class="dot"></span>
-              IT &amp; AI Trends
-            </button>
-            <button class="filter-chip" data-filter="markets">
-              <span class="dot"></span>
-              Stock Market &amp; Economy
-            </button>
-            <button class="filter-chip" data-filter="politics">
-              <span class="dot"></span>
-              Politics
-            </button>
-            <button class="filter-chip" data-filter="sports">
-              <span class="dot"></span>
-              Sports
-            </button>
-          </div>
+        <div class="filters-bar" aria-label="Filter by topic">
+          <button class="filter-chip active" data-filter="all">
+            <span class="dot"></span>
+            All
+          </button>
+          <button class="filter-chip" data-filter="current">
+            <span class="dot"></span>
+            Current Affairs
+          </button>
+          <button class="filter-chip" data-filter="ai">
+            <span class="dot"></span>
+            IT &amp; AI Trends
+          </button>
+          <button class="filter-chip" data-filter="markets">
+            <span class="dot"></span>
+            Stock Market &amp; Economy
+          </button>
+          <button class="filter-chip" data-filter="politics">
+            <span class="dot"></span>
+            Politics
+          </button>
+          <button class="filter-chip" data-filter="sports">
+            <span class="dot"></span>
+            Sports
+          </button>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <main>
-        <!-- Left column: main feed -->
-        <section class="column" aria-label="Main news feed">
-          <div class="section-title">
-            <h2>Today&apos;s Highlights</h2>
-            <span>Hand-picked by your algorithm, curated by you</span>
-          </div>
+    <main>
+      <!-- Left column: main feed -->
+      <section class="column" aria-label="Main news feed">
+        <div class="section-title">
+          <h2>Today's Highlights</h2>
+          <span>Hand-picked positive stories</span>
+        </div>
 
-          <div id="status-line" class="status-line">
-            <span class="spinner" aria-hidden="true"></span>
-            <span>Loading stories from the news API...</span>
-          </div>
+        <div class="news-list" id="news-list">
+          <!-- JS will inject cards here -->
+        </div>
+      </section>
 
-          <div class="news-list" id="news-list">
-            <!-- Dynamic cards will be injected here -->
-          </div>
+      <!-- Right column: criteria / notes -->
+      <aside class="column" aria-label="Curation notes">
+        <section class="sidebar-card">
+          <h3>Your Criteria</h3>
+          <p>
+            A quick view of what your “positive news feed” is optimised for.
+          </p>
+          <ul class="sidebar-list">
+            <li>
+              Net positive impact
+              <span class="pill-mini" id="positive-count">0 stories</span>
+            </li>
+            <li>
+              Focus on AI / tech
+              <span class="pill-mini">At least 1 key story</span>
+            </li>
+            <li>
+              Personal relevance
+              <span class="pill-mini">Custom curated by you</span>
+            </li>
+          </ul>
         </section>
 
-        <!-- Right column: side widgets -->
-        <aside class="column" aria-label="Summary and quick stats">
-          <section class="sidebar-card">
-            <h3>Today&apos;s Mood</h3>
-            <p>
-              This dashboard prefers stories that contain signals of progress,
-              resilience and collaboration, even when the news cycle is noisy.
-            </p>
-            <ul class="sidebar-list">
-              <li>
-                Visible stories
-                <span class="pill-mini" id="positive-count">0</span>
-              </li>
-              <li>
-                Topics covered
-                <span class="pill-mini">Current • AI • Markets • Politics • Sports</span>
-              </li>
-              <li>
-                Refresh model
-                <span class="pill-mini">On every page load</span>
-              </li>
-            </ul>
-          </section>
+        <section class="sidebar-card" style="margin-top: 10px;">
+          <h3>Your Curation Notes</h3>
+          <p>
+            Use this space as a mental checklist when you add or read stories:
+          </p>
+          <ul class="sidebar-list">
+            <li>
+              Does this story show progress?
+              <span class="pill-mini">Yes / Skip</span>
+            </li>
+            <li>
+              What's one constructive takeaway?
+              <span class="pill-mini">Write it down</span>
+            </li>
+            <li>
+              How does this affect my world?
+              <span class="pill-mini">Actionable or ignore</span>
+            </li>
+          </ul>
+        </section>
+      </aside>
+    </main>
 
-          <section class="sidebar-card" style="margin-top: 10px">
-            <h3>Your Curation Notes</h3>
-            <p>
-              Use these prompts as you glance through the feed:
-            </p>
-            <ul class="sidebar-list">
-              <li>
-                What&apos;s one constructive takeaway?
-                <span class="pill-mini">Note it</span>
-              </li>
-              <li>
-                Does this headline show progress or solutions?
-                <span class="pill-mini">Yes → keep</span>
-              </li>
-              <li>
-                Is this relevant to your goals?
-                <span class="pill-mini">If no → ignore</span>
-              </li>
-            </ul>
-          </section>
-        </aside>
-      </main>
+    <footer>
+      <span>
+        Built for a calm information diet. Tweak this page as your interests
+        evolve.
+      </span>
+      <div class="footer-badges">
+        <span class="footer-badge">🌱 Growth-focused</span>
+        <span class="footer-badge">📚 Curated, not addictive</span>
+        <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
+      </div>
+    </footer>
+  </div>
 
-      <footer>
-        <span>
-          Built for a calm information diet. Data fetched from a news API when you open this page.
-        </span>
-        <div class="footer-badges">
-          <span class="footer-badge">🌱 Growth-focused</span>
-          <span class="footer-badge">📚 Curated, not addictive</span>
-          <span class="footer-badge">🤖 AI, markets, politics &amp; sports</span>
+  <script>
+    const API_KEY = "4e94b7d0e08c44a9a796c472b6320228"; // <-- replace this
+    const API_URL = `https://newsapi.org/v2/top-headlines?country=in&pageSize=12&apiKey=${API_KEY}`;
+
+    const newsList = document.getElementById("news-list");
+    const filterChips = document.querySelectorAll(".filter-chip");
+    const positiveCountEl = document.getElementById("positive-count");
+    const lastUpdatedEl = document.getElementById("last-updated");
+
+    function classifyArticle(article) {
+      const text = (
+        (article.title || "") +
+        " " +
+        (article.description || "") +
+        " " +
+        (article.content || "")
+      ).toLowerCase();
+
+      if (
+        text.includes("cricket") ||
+        text.includes("football") ||
+        text.includes("t20") ||
+        text.includes("ipl") ||
+        text.includes("world cup") ||
+        text.includes("olympic")
+      ) {
+        return "sports";
+      }
+
+      if (
+        text.includes("sensex") ||
+        text.includes("nifty") ||
+        text.includes("stock") ||
+        text.includes("market") ||
+        text.includes("shares") ||
+        text.includes("economy") ||
+        text.includes("gdp") ||
+        text.includes("inflation")
+      ) {
+        return "markets";
+      }
+
+      if (
+        text.includes("election") ||
+        text.includes("minister") ||
+        text.includes("parliament") ||
+        text.includes("bill passed") ||
+        text.includes("policy")
+      ) {
+        return "politics";
+      }
+
+      if (
+        text.includes("ai") ||
+        text.includes("artificial intelligence") ||
+        text.includes("machine learning") ||
+        text.includes("openai") ||
+        text.includes("chatgpt") ||
+        text.includes("google") && text.includes("ai")
+      ) {
+        return "ai";
+      }
+
+      return "current";
+    }
+
+    function createNewsCard(article) {
+      const category = classifyArticle(article);
+      const card = document.createElement("article");
+      card.className = "news-card";
+      card.dataset.category = category;
+
+      const published = article.publishedAt
+        ? new Date(article.publishedAt).toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        : "";
+
+      const sourceName = article.source && article.source.name
+        ? article.source.name
+        : "Unknown source";
+
+      const title = article.title || "Untitled story";
+      const description =
+        article.description ||
+        "A positive development worth noting today.";
+
+      card.innerHTML = `
+        <div class="news-badges">
+          <span class="badge badge--category">${category.toUpperCase()}</span>
+          <span class="badge badge--positive">Net positive impact</span>
         </div>
-      </footer>
-    </div>
+        <h3 class="news-title">${title}</h3>
+        <p class="tagline">${description}</p>
+        <div class="news-meta-row">
+          <div class="news-meta">
+            ${published ? `⏱ ${published}` : ""}
+          </div>
+        </div>
+        <div class="news-footer">
+          <span class="source">Source: ${sourceName}</span>
+          ${
+            article.url
+              ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer">
+                   Read <span>↗</span>
+                 </a>`
+              : ""
+          }
+        </div>
+      `;
 
-    <script>
-      
-  
-  // ================= CONFIG (NO API, SAMPLE DATA ONLY) =================
-  const MAX_ARTICLES_PER_TOPIC = 4;
-
-  const TOPICS = [
-    { id: "current", label: "Current Affairs" },
-    { id: "ai", label: "IT • AI" },
-    { id: "markets", label: "Markets" },
-    { id: "politics", label: "Politics" },
-    { id: "sports", label: "Sports" },
-  ];
-
-  const SAMPLE_ARTICLES = {
-    current: [
-      {
-        title:
-          "Court ruling brings relief and stability to thousands of teachers and families",
-        description:
-          "A long-running dispute ends in favour of job security, offering stability to educators and students alike.",
-        url: "#",
-        author: "Sample Current Affairs",
-        published: new Date().toISOString(),
-      },
-    ],
-    ai: [
-      {
-        title:
-          "Hospitals adopt AI tools that help doctors analyse scans faster and more accurately",
-        description:
-          "By automating routine checks, AI frees specialists to spend more time listening to patients and planning treatment.",
-        url: "#",
-        author: "Sample Tech Desk",
-        published: new Date().toISOString(),
-      },
-    ],
-    markets: [
-      {
-        title:
-          "Long-term investors stay confident as key sectors show steady earnings growth",
-        description:
-          "Despite short-term volatility, strong fundamentals in multiple sectors keep long-term sentiment positive.",
-        url: "#",
-        author: "Sample Markets",
-        published: new Date().toISOString(),
-      },
-    ],
-    politics: [
-      {
-        title:
-          "Leaders meet to deepen cooperation in trade, energy and technology",
-        description:
-          "Dialogue-focused diplomacy aims at practical wins in infrastructure, energy security and cross-border projects.",
-        url: "#",
-        author: "Sample Politics",
-        published: new Date().toISOString(),
-      },
-    ],
-    sports: [
-      {
-        title:
-          "Underdog team clinches series with disciplined performance and smart planning",
-        description:
-          "A masterclass in consistency, preparation and teamwork delivers a memorable win.",
-        url: "#",
-        author: "Sample Sports Desk",
-        published: new Date().toISOString(),
-      },
-    ],
-  };
-
-  const newsListEl = document.getElementById("news-list");
-  const filterChips = document.querySelectorAll(".filter-chip");
-  const positiveCountEl = document.getElementById("positive-count");
-  const statusLineEl = document.getElementById("status-line");
-  const statusTextEl = document.getElementById("status-text");
-
-  // ================= HELPERS =================
-
-  function formatPublished(published) {
-    if (!published) return "";
-    const date = new Date(published);
-    if (Number.isNaN(date.getTime())) return "";
-    return date.toLocaleString("en-IN", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-  }
-
-  function scorePositivity(title = "", description = "") {
-    const text = (title + " " + description).toLowerCase();
-    const positiveWords = [
-      "growth",
-      "record",
-      "rise",
-      "improves",
-      "improvement",
-      "surge",
-      "wins",
-      "win",
-      "boost",
-      "progress",
-      "breakthrough",
-      "stability",
-      "recovers",
-      "rebound",
-      "milestone",
-      "achieves",
-      "achieved",
-      "launches",
-      "expands",
-      "positive",
-      "strong",
-    ];
-    let score = 0;
-    positiveWords.forEach((w) => {
-      if (text.includes(w)) score += 1;
-    });
-    return score;
-  }
-
-  function getCategoryLabel(topicId) {
-    switch (topicId) {
-      case "current":
-        return "Current Affairs";
-      case "ai":
-        return "IT • AI";
-      case "markets":
-        return "Markets";
-      case "politics":
-        return "Politics";
-      case "sports":
-        return "Sports";
-      default:
-        return "News";
+      return card;
     }
-  }
 
-  function getTagline(topicId) {
-    switch (topicId) {
-      case "ai":
-        return "How technology and AI are quietly reshaping daily life.";
-      case "markets":
-        return "Signals for long-term investors, not panic traders.";
-      case "sports":
-        return "Sport as a reminder that effort and teamwork compound.";
-      case "politics":
-        return "Focus on dialogue, cooperation and stability.";
-      case "current":
-      default:
-        return "Stories that show progress, resilience or problem-solving.";
+    function updatePositiveCount() {
+      const cards = document.querySelectorAll(".news-card");
+      const visiblePositive = Array.from(cards).filter(
+        (card) => !card.classList.contains("hidden")
+      ).length;
+
+      if (positiveCountEl) {
+        positiveCountEl.textContent = `${visiblePositive} stories`;
+      }
     }
-  }
 
-  function createNewsCard(article, topicId) {
-    const card = document.createElement("article");
-    card.className = "news-card";
-    card.dataset.category = topicId;
-
-    const positivityScore = scorePositivity(
-      article.title,
-      article.description
-    );
-    const isPositive = positivityScore > 0;
-
-    const categoryBadgeClass =
-      topicId === "ai"
-        ? "badge badge--category badge--ai"
-        : "badge badge--category";
-
-    const categoryLabel = getCategoryLabel(topicId);
-    const positiveLabel = isPositive ? "Positive signal" : "Balanced update";
-
-    const taglineText = getTagline(topicId);
-
-    const safeTitle = article.title || "Untitled story";
-    const safeDesc = article.description || "";
-    const safeSource = article.author || "News source";
-
-    const publishedStr = formatPublished(article.published);
-
-    card.innerHTML = `
-      <div class="news-badges">
-        <span class="${categoryBadgeClass}">${categoryLabel}</span>
-        <span class="badge badge--positive">${positiveLabel}</span>
-      </div>
-      <h3 class="news-title">
-        ${safeTitle}
-      </h3>
-      <div class="news-meta-row">
-        <p class="news-meta">
-          ${safeDesc.slice(0, 130)}${safeDesc.length > 130 ? "..." : ""}
-        </p>
-        <p class="tagline">${taglineText}</p>
-      </div>
-      <div class="news-footer">
-        <span class="source">
-          ${safeSource}${publishedStr ? " • " + publishedStr : ""}
-        </span>
-        <a href="${article.url}" class="read-link" target="_blank" rel="noreferrer">
-          Read full story
-          <span>↗</span>
-        </a>
-      </div>
-    `;
-    return card;
-  }
-
-  function updatePositiveCount() {
-    const cards = document.querySelectorAll(".news-card");
-    const visible = Array.from(cards).filter(
-      (card) => !card.classList.contains("hidden")
-    ).length;
-    if (positiveCountEl) {
-      positiveCountEl.textContent = `${visible} stories`;
+    function applyFilter(filter) {
+      const cards = document.querySelectorAll(".news-card");
+      cards.forEach((card) => {
+        const category = card.dataset.category;
+        const shouldShow = filter === "all" || category === filter;
+        card.classList.toggle("hidden", !shouldShow);
+      });
+      updatePositiveCount();
     }
-  }
 
-  function applyFilter(filter) {
-    const cards = document.querySelectorAll(".news-card");
-    cards.forEach((card) => {
-      const category = card.getAttribute("data-category");
-      const shouldShow = filter === "all" || category === filter;
-      card.classList.toggle("hidden", !shouldShow);
-    });
-    updatePositiveCount();
-  }
-
-  function initFilters() {
     filterChips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const filter = chip.getAttribute("data-filter");
@@ -829,53 +696,51 @@
         applyFilter(filter);
       });
     });
-  }
 
-  function loadAllTopics() {
-    if (statusLineEl) {
-      statusLineEl.innerHTML = `
-        <span>Loaded sample stories. Later, you can plug in a live API.</span>
-      `;
+    async function loadNews() {
+      newsList.innerHTML =
+        '<p style="color:#9ca3af;font-size:0.8rem;">Fetching fresh stories across all topics…</p>';
+
+      try {
+        const resp = await fetch(API_URL);
+        const data = await resp.json();
+
+        if (!data.articles || data.articles.length === 0) {
+          newsList.innerHTML =
+            '<p style="color:#9ca3af;font-size:0.8rem;">No stories found. Try again later.</p>';
+          return;
+        }
+
+        newsList.innerHTML = "";
+        data.articles.forEach((article) => {
+          const card = createNewsCard(article);
+          newsList.appendChild(card);
+        });
+
+        if (lastUpdatedEl) {
+          lastUpdatedEl.textContent =
+            "Updated just now • " +
+            new Date().toLocaleString("en-IN", {
+              day: "2-digit",
+              month: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+        }
+
+        // Initial filter (All)
+        applyFilter("all");
+      } catch (error) {
+        console.error(error);
+        newsList.innerHTML =
+          '<p style="color:#fecaca;font-size:0.8rem;">Error loading stories. Check your API key or network.</p>';
+        if (lastUpdatedEl) {
+          lastUpdatedEl.textContent = "Error fetching headlines";
+        }
+      }
     }
-    if (statusTextEl) {
-      statusTextEl.textContent =
-        "Using built-in sample stories. You can switch to live news later.";
-    }
 
-    newsListEl.innerHTML = "";
-    let totalStories = 0;
-
-    TOPICS.forEach((topic) => {
-      const articles = SAMPLE_ARTICLES[topic.id] || [];
-      const sorted = articles
-        .map((a) => ({
-          article: a,
-          score: scorePositivity(a.title, a.description),
-        }))
-        .sort((a, b) => b.score - a.score)
-        .slice(0, MAX_ARTICLES_PER_TOPIC)
-        .map((x) => x.article);
-
-      sorted.forEach((article) => {
-        const card = createNewsCard(article, topic.id);
-        newsListEl.appendChild(card);
-        totalStories += 1;
-      });
-    });
-
-    if (statusLineEl) {
-      statusLineEl.innerHTML = `
-        <span>Loaded <strong>${totalStories}</strong> sample stories. Use the filters above to focus by topic.</span>
-      `;
-    }
-    applyFilter("all");
-  }
-
-  // ================= INIT =================
-  initFilters();
-  loadAllTopics();
-</script>
-
-    
-  </body>
+    loadNews();
+  </script>
+</body>
 </html>
