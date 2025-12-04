@@ -592,346 +592,412 @@
     </div>
 
     <script>
-      // ================= CONFIG =================
-      // 1) Get an API key from a news API provider (e.g. Currents API)
-      // 2) Paste it below:
-      const API_KEY = "yLdU-mmI7zsUbAMdu_17NCQ865WG42I6ChQqINMKPsrrmdEK"; // <-- CHANGE THIS
+      
+  // ================= CONFIG =================
+  const API_KEY = "f2T-Vv5rjqs1D8gk86giU1Y0_ALECD8ib65691dPVePKmXVT"; // <-- put your real Currents API key here
+  const MAX_ARTICLES_PER_TOPIC = 4;
 
-      // How many articles per topic you want to display
-      const MAX_ARTICLES_PER_TOPIC = 4;
+  const TOPICS = [
+    {
+      id: "current",
+      label: "Current Affairs",
+      query: {
+        endpoint: "search",
+        keywords: "India development OR innovation OR policy reform OR progress",
+        category: "world",
+      },
+    },
+    {
+      id: "ai",
+      label: "IT • AI",
+      query: {
+        endpoint: "search",
+        keywords:
+          "artificial intelligence OR AI OR machine learning OR generative AI OR technology",
+        category: "technology",
+      },
+    },
+    {
+      id: "markets",
+      label: "Markets",
+      query: {
+        endpoint: "search",
+        keywords:
+          "stock market OR nifty OR sensex OR investing OR economic growth OR earnings",
+        category: "business",
+      },
+    },
+    {
+      id: "politics",
+      label: "Politics",
+      query: {
+        endpoint: "search",
+        keywords:
+          "diplomacy OR cooperation OR summit OR policy OR parliament OR agreement",
+        category: "politics",
+      },
+    },
+    {
+      id: "sports",
+      label: "Sports",
+      query: {
+        endpoint: "search",
+        keywords:
+          "cricket OR football OR tennis OR kabaddi OR olympics OR tournament",
+        category: "sports",
+      },
+    },
+  ];
 
-      // Topic configuration: maps your categories to queries
-      const TOPICS = [
-        {
-          id: "current",
-          label: "Current Affairs",
-          query: {
-            endpoint: "search",
-            keywords: "India development OR innovation OR policy reform OR progress",
-            category: "world",
-          },
-        },
-        {
-          id: "ai",
-          label: "IT • AI",
-          query: {
-            endpoint: "search",
-            keywords:
-              "artificial intelligence OR AI OR machine learning OR generative AI OR technology",
-            category: "technology",
-          },
-        },
-        {
-          id: "markets",
-          label: "Markets",
-          query: {
-            endpoint: "search",
-            keywords:
-              "stock market OR nifty OR sensex OR investing OR economic growth OR earnings",
-            category: "business",
-          },
-        },
-        {
-          id: "politics",
-          label: "Politics",
-          query: {
-            endpoint: "search",
-            keywords:
-              "diplomacy OR cooperation OR summit OR policy OR parliament OR agreement",
-            category: "politics",
-          },
-        },
-        {
-          id: "sports",
-          label: "Sports",
-          query: {
-            endpoint: "search",
-            keywords:
-              "cricket OR football OR tennis OR kabaddi OR olympics OR tournament",
-            category: "sports",
-          },
-        },
-      ];
+  const newsListEl = document.getElementById("news-list");
+  const filterChips = document.querySelectorAll(".filter-chip");
+  const positiveCountEl = document.getElementById("positive-count");
+  const statusLineEl = document.getElementById("status-line");
+  const statusTextEl = document.getElementById("status-text");
 
-      const newsListEl = document.getElementById("news-list");
-      const filterChips = document.querySelectorAll(".filter-chip");
-      const positiveCountEl = document.getElementById("positive-count");
-      const statusLineEl = document.getElementById("status-line");
-      const statusTextEl = document.getElementById("status-text");
+  // --------- SAMPLE DATA FALLBACK (used when API not configured or fails) ----------
+  const SAMPLE_ARTICLES = {
+    current: [
+      {
+        title:
+          "Court ruling brings relief and stability to thousands of teachers and families",
+        description:
+          "A long-running dispute ends in favour of job security, offering stability to educators and students alike.",
+        url: "#",
+        author: "Sample Current Affairs",
+        published: new Date().toISOString(),
+      },
+    ],
+    ai: [
+      {
+        title:
+          "Hospitals adopt AI tools that help doctors analyse scans faster and more accurately",
+        description:
+          "By automating routine checks, AI frees specialists to spend more time listening to patients and planning treatment.",
+        url: "#",
+        author: "Sample Tech Desk",
+        published: new Date().toISOString(),
+      },
+    ],
+    markets: [
+      {
+        title:
+          "Long-term investors stay confident as key sectors show steady earnings growth",
+        description:
+          "Despite short-term volatility, strong fundamentals in multiple sectors keep long-term sentiment positive.",
+        url: "#",
+        author: "Sample Markets",
+        published: new Date().toISOString(),
+      },
+    ],
+    politics: [
+      {
+        title:
+          "Leaders meet to deepen cooperation in trade, energy and technology",
+        description:
+          "Dialogue-focused diplomacy aims at practical wins in infrastructure, energy security and cross-border projects.",
+        url: "#",
+        author: "Sample Politics",
+        published: new Date().toISOString(),
+      },
+    ],
+    sports: [
+      {
+        title:
+          "Underdog team clinches series with disciplined performance and smart planning",
+        description:
+          "A masterclass in consistency, preparation and teamwork delivers a memorable win.",
+        url: "#",
+        author: "Sample Sports Desk",
+        published: new Date().toISOString(),
+      },
+    ],
+  };
 
-      // ================= HELPERS =================
+  // ================= HELPERS =================
 
-      function buildApiUrl(query) {
-        // Example for Currents API; adapt if you use a different provider
-        const base =
-          query.endpoint === "search"
-            ? "https://api.currentsapi.services/v1/search"
-            : "https://api.currentsapi.services/v1/latest-news";
+  function buildApiUrl(query) {
+    const base =
+      query.endpoint === "search"
+        ? "https://api.currentsapi.services/v1/search"
+        : "https://api.currentsapi.services/v1/latest-news";
 
-        const url = new URL(base);
-        url.searchParams.set("apiKey", API_KEY);
-        url.searchParams.set("language", "en");
+    const url = new URL(base);
+    url.searchParams.set("apiKey", API_KEY);
+    url.searchParams.set("language", "en");
+    if (query.keywords) url.searchParams.set("keywords", query.keywords);
+    if (query.category) url.searchParams.set("category", query.category);
+    return url.toString();
+  }
 
-        if (query.keywords) url.searchParams.set("keywords", query.keywords);
-        if (query.category) url.searchParams.set("category", query.category);
-
-        return url.toString();
+  async function fetchTopicNews(topic) {
+    const url = buildApiUrl(topic.query);
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        console.error("API error for topic", topic.id, res.status);
+        return [];
       }
+      const data = await res.json();
+      return data.news || [];
+    } catch (err) {
+      console.error("Network error for topic", topic.id, err);
+      return [];
+    }
+  }
 
-      async function fetchTopicNews(topic) {
-        const url = buildApiUrl(topic.query);
-        try {
-          const res = await fetch(url);
-          if (!res.ok) {
-            console.error("API error for topic", topic.id, res.status);
-            return [];
-          }
-          const data = await res.json();
-          // For Currents, articles are usually in data.news
-          // Adjust if your provider is different
-          return data.news || [];
-        } catch (err) {
-          console.error("Network error for topic", topic.id, err);
-          return [];
+  function formatPublished(published) {
+    if (!published) return "";
+    const date = new Date(published);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleString("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  }
+
+  function scorePositivity(title = "", description = "") {
+    const text = (title + " " + description).toLowerCase();
+    const positiveWords = [
+      "growth",
+      "record",
+      "rise",
+      "improves",
+      "improvement",
+      "surge",
+      "wins",
+      "win",
+      "boost",
+      "progress",
+      "breakthrough",
+      "stability",
+      "recovers",
+      "rebound",
+      "milestone",
+      "achieves",
+      "achieved",
+      "launches",
+      "expands",
+      "positive",
+      "strong",
+    ];
+    let score = 0;
+    positiveWords.forEach((w) => {
+      if (text.includes(w)) score += 1;
+    });
+    return score;
+  }
+
+  function getCategoryLabel(topicId) {
+    switch (topicId) {
+      case "current":
+        return "Current Affairs";
+      case "ai":
+        return "IT • AI";
+      case "markets":
+        return "Markets";
+      case "politics":
+        return "Politics";
+      case "sports":
+        return "Sports";
+      default:
+        return "News";
+    }
+  }
+
+  function getTagline(topicId) {
+    switch (topicId) {
+      case "ai":
+        return "How technology and AI are quietly reshaping daily life.";
+      case "markets":
+        return "Signals for long-term investors, not panic traders.";
+      case "sports":
+        return "Sport as a reminder that effort and teamwork compound.";
+      case "politics":
+        return "Focus on dialogue, cooperation and stability.";
+      case "current":
+      default:
+        return "Stories that show progress, resilience or problem-solving.";
+    }
+  }
+
+  function createNewsCard(article, topicId) {
+    const card = document.createElement("article");
+    card.className = "news-card";
+    card.dataset.category = topicId;
+
+    const positivityScore = scorePositivity(
+      article.title,
+      article.description
+    );
+    const isPositive = positivityScore > 0;
+
+    const categoryBadgeClass =
+      topicId === "ai"
+        ? "badge badge--category badge--ai"
+        : "badge badge--category";
+
+    const categoryLabel = getCategoryLabel(topicId);
+    const positiveLabel = isPositive ? "Positive signal" : "Balanced update";
+
+    const taglineText = getTagline(topicId);
+
+    const safeTitle = article.title || "Untitled story";
+    const safeDesc = article.description || "";
+    const safeSource =
+      article.author ||
+      article.domain ||
+      article.source ||
+      "News source";
+
+    const publishedStr = formatPublished(article.published);
+
+    card.innerHTML = `
+      <div class="news-badges">
+        <span class="${categoryBadgeClass}">${categoryLabel}</span>
+        <span class="badge badge--positive">${positiveLabel}</span>
+      </div>
+      <h3 class="news-title">
+        ${safeTitle}
+      </h3>
+      <div class="news-meta-row">
+        <p class="news-meta">
+          ${safeDesc.slice(0, 130)}${safeDesc.length > 130 ? "..." : ""}
+        </p>
+        <p class="tagline">${taglineText}</p>
+      </div>
+      <div class="news-footer">
+        <span class="source">
+          ${safeSource}${publishedStr ? " • " + publishedStr : ""}
+        </span>
+        <a href="${article.url}" class="read-link" target="_blank" rel="noreferrer">
+          Read full story
+          <span>↗</span>
+        </a>
+      </div>
+    `;
+    return card;
+  }
+
+  function updatePositiveCount() {
+    const cards = document.querySelectorAll(".news-card");
+    const visible = Array.from(cards).filter(
+      (card) => !card.classList.contains("hidden")
+    ).length;
+    if (positiveCountEl) {
+      positiveCountEl.textContent = `${visible} stories`;
+    }
+  }
+
+  function applyFilter(filter) {
+    const cards = document.querySelectorAll(".news-card");
+    cards.forEach((card) => {
+      const category = card.getAttribute("data-category");
+      const shouldShow = filter === "all" || category === filter;
+      card.classList.toggle("hidden", !shouldShow);
+    });
+    updatePositiveCount();
+  }
+
+  function initFilters() {
+    filterChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const filter = chip.getAttribute("data-filter");
+        filterChips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        applyFilter(filter);
+      });
+    });
+  }
+
+  function showError(message) {
+    if (!statusLineEl) return;
+    statusLineEl.innerHTML = `
+      <div class="error-message">
+        <span>⚠️</span>
+        <span>${message}</span>
+      </div>
+    `;
+  }
+
+  async function loadAllTopics() {
+    let usedSampleFallback = false;
+
+    // If no key, always use sample stories
+    if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+      usedSampleFallback = true;
+    }
+
+    if (statusLineEl) {
+      statusLineEl.innerHTML = `
+        <span class="spinner" aria-hidden="true"></span>
+        <span>${
+          usedSampleFallback
+            ? "Showing sample stories. Configure an API key later for live news."
+            : "Fetching fresh stories across all topics..."
+        }</span>
+      `;
+    }
+    if (statusTextEl) {
+      statusTextEl.textContent = usedSampleFallback
+        ? "Using sample data. Add your API key in the script to enable live news."
+        : "Live stories fetched each time you open this dashboard.";
+    }
+
+    newsListEl.innerHTML = "";
+    let totalStories = 0;
+
+    for (const topic of TOPICS) {
+      let articles = [];
+
+      if (usedSampleFallback) {
+        articles = SAMPLE_ARTICLES[topic.id] || [];
+      } else {
+        const apiArticles = await fetchTopicNews(topic);
+        // If API gave nothing (e.g. error/rate-limit), fall back to sample for that topic
+        if (!apiArticles || apiArticles.length === 0) {
+          articles = SAMPLE_ARTICLES[topic.id] || [];
+        } else {
+          articles = apiArticles;
         }
       }
 
-      function formatPublished(published) {
-        if (!published) return "";
-        const date = new Date(published);
-        if (Number.isNaN(date.getTime())) return "";
-        return date.toLocaleString("en-IN", {
-          dateStyle: "medium",
-          timeStyle: "short",
-        });
-      }
+      const sorted = articles
+        .map((a) => ({
+          article: a,
+          score: scorePositivity(a.title, a.description),
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, MAX_ARTICLES_PER_TOPIC)
+        .map((x) => x.article);
 
-      // Light heuristic to bump up positive-ish headlines
-      function scorePositivity(title = "", description = "") {
-        const text = (title + " " + description).toLowerCase();
-        const positiveWords = [
-          "growth",
-          "record",
-          "rise",
-          "improves",
-          "improvement",
-          "surge",
-          "wins",
-          "win",
-          "boost",
-          "progress",
-          "breakthrough",
-          "stability",
-          "recovers",
-          "rebound",
-          "milestone",
-          "achieves",
-          "achieved",
-          "launches",
-          "expands",
-          "positive",
-          "strong",
-        ];
-        let score = 0;
-        positiveWords.forEach((w) => {
-          if (text.includes(w)) score += 1;
-        });
-        return score;
-      }
+      if (!sorted.length) continue;
 
-      function getCategoryLabel(topicId) {
-        switch (topicId) {
-          case "current":
-            return "Current Affairs";
-          case "ai":
-            return "IT • AI";
-          case "markets":
-            return "Markets";
-          case "politics":
-            return "Politics";
-          case "sports":
-            return "Sports";
-          default:
-            return "News";
-        }
-      }
+      sorted.forEach((article) => {
+        const card = createNewsCard(article, topic.id);
+        newsListEl.appendChild(card);
+        totalStories += 1;
+      });
+    }
 
-      function getTagline(topicId) {
-        switch (topicId) {
-          case "ai":
-            return "How technology and AI are quietly reshaping daily life.";
-          case "markets":
-            return "Signals for long-term investors, not panic traders.";
-          case "sports":
-            return "Sport as a reminder that effort and teamwork compound.";
-          case "politics":
-            return "Focus on dialogue, cooperation and stability.";
-          case "current":
-          default:
-            return "Stories that show progress, resilience or problem-solving.";
-        }
-      }
+    if (totalStories === 0) {
+      showError(
+        "No stories could be loaded. This might be a temporary API limit or network issue."
+      );
+    } else if (statusLineEl) {
+      statusLineEl.innerHTML = `
+        <span>Loaded <strong>${totalStories}</strong> stories. Use the filters above to focus by topic.</span>
+      `;
+    }
 
-      function createNewsCard(article, topicId) {
-        const card = document.createElement("article");
-        card.className = "news-card";
-        card.dataset.category = topicId;
+    applyFilter("all");
+  }
 
-        const positivityScore = scorePositivity(
-          article.title,
-          article.description
-        );
-        const isPositive = positivityScore > 0;
+  // ================= INIT =================
+  initFilters();
+  loadAllTopics();
 
-        const categoryBadgeClass =
-          topicId === "ai"
-            ? "badge badge--category badge--ai"
-            : "badge badge--category";
 
-        const categoryLabel = getCategoryLabel(topicId);
-        const positiveLabel = isPositive ? "Positive signal" : "Balanced update";
-
-        const taglineText = getTagline(topicId);
-
-        const safeTitle = article.title || "Untitled story";
-        const safeDesc = article.description || "";
-        const safeSource =
-          article.author ||
-          article.domain ||
-          article.source ||
-          "News source";
-
-        const publishedStr = formatPublished(article.published);
-
-        card.innerHTML = `
-          <div class="news-badges">
-            <span class="${categoryBadgeClass}">${categoryLabel}</span>
-            <span class="badge badge--positive">${positiveLabel}</span>
-          </div>
-          <h3 class="news-title">
-            ${safeTitle}
-          </h3>
-          <div class="news-meta-row">
-            <p class="news-meta">
-              ${safeDesc.slice(0, 130)}${safeDesc.length > 130 ? "..." : ""}
-            </p>
-            <p class="tagline">${taglineText}</p>
-          </div>
-          <div class="news-footer">
-            <span class="source">
-              ${safeSource}${publishedStr ? " • " + publishedStr : ""}
-            </span>
-            <a href="${article.url}" class="read-link" target="_blank" rel="noreferrer">
-              Read full story
-              <span>↗</span>
-            </a>
-          </div>
-        `;
-        return card;
-      }
-
-      function updatePositiveCount() {
-        const cards = document.querySelectorAll(".news-card");
-        const visible = Array.from(cards).filter(
-          (card) => !card.classList.contains("hidden")
-        ).length;
-        if (positiveCountEl) {
-          positiveCountEl.textContent = `${visible} stories`;
-        }
-      }
-
-      function applyFilter(filter) {
-        const cards = document.querySelectorAll(".news-card");
-        cards.forEach((card) => {
-          const category = card.getAttribute("data-category");
-          const shouldShow = filter === "all" || category === filter;
-          card.classList.toggle("hidden", !shouldShow);
-        });
-        updatePositiveCount();
-      }
-
-      function initFilters() {
-        filterChips.forEach((chip) => {
-          chip.addEventListener("click", () => {
-            const filter = chip.getAttribute("data-filter");
-            filterChips.forEach((c) => c.classList.remove("active"));
-            chip.classList.add("active");
-            applyFilter(filter);
-          });
-        });
-      }
-
-      function showError(message) {
-        if (!statusLineEl) return;
-        statusLineEl.innerHTML = `
-          <div class="error-message">
-            <span>⚠️</span>
-            <span>${message}</span>
-          </div>
-        `;
-      }
-
-      async function loadAllTopics() {
-        if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
-          showError(
-            "No API key configured. Edit index.html and set your news API key in the JavaScript section."
-          );
-          if (statusTextEl) {
-            statusTextEl.textContent = "Configure your API key to start fetching live news.";
-          }
-          return;
-        }
-
-        if (statusLineEl) {
-          statusLineEl.innerHTML = `
-            <span class="spinner" aria-hidden="true"></span>
-            <span>Fetching fresh stories across all topics...</span>
-          `;
-        }
-        if (statusTextEl) {
-          statusTextEl.textContent = "Live stories fetched each time you open this dashboard.";
-        }
-
-        newsListEl.innerHTML = "";
-        let totalStories = 0;
-
-        for (const topic of TOPICS) {
-          const articles = await fetchTopicNews(topic);
-
-          const sorted = articles
-            .map((a) => ({
-              article: a,
-              score: scorePositivity(a.title, a.description),
-            }))
-            .sort((a, b) => b.score - a.score)
-            .slice(0, MAX_ARTICLES_PER_TOPIC)
-            .map((x) => x.article);
-
-          if (!sorted.length) continue;
-
-          sorted.forEach((article) => {
-            const card = createNewsCard(article, topic.id);
-            newsListEl.appendChild(card);
-            totalStories += 1;
-          });
-        }
-
-        if (totalStories === 0) {
-          showError(
-            "No stories could be loaded. This might be a temporary API limit or network issue."
-          );
-        } else if (statusLineEl) {
-          statusLineEl.innerHTML = `
-            <span>Loaded <strong>${totalStories}</strong> stories. Use the filters above to focus by topic.</span>
-          `;
-        }
-
-        applyFilter("all");
-      }
-
-      // ================= INIT =================
-      initFilters();
-      loadAllTopics();
     </script>
   </body>
 </html>
