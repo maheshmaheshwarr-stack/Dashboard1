@@ -474,6 +474,11 @@
             <span class="dot"></span>
             Sports
           </button>
+          <button id="refresh-btn" class="filter-chip" style="background:rgba(56,189,248,0.16);border-color:rgba(56,189,248,0.85);">
+  <span class="dot"></span>
+  Refresh
+</button>
+
         </div>
       </div>
     </header>
@@ -731,6 +736,15 @@
       applyFilter(filter);
     });
   });
+    // Manual refresh button
+const refreshBtn = document.getElementById("refresh-btn");
+refreshBtn.addEventListener("click", () => {
+  if (lastUpdatedEl) {
+    lastUpdatedEl.textContent = "Refreshing now…";
+  }
+  loadNews();
+});
+
 
   async function loadNews() {
     newsList.innerHTML =
