@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Positive News Feed</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Mahesh's Positive News Dashboard</title>
     <style>
       :root {
         --bg: #050816;
@@ -27,9 +30,14 @@
       }
 
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
-          'Segoe UI', sans-serif;
-        background: radial-gradient(circle at top, #1d293b 0, #020617 45%, #000 100%);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          "Segoe UI", sans-serif;
+        background: radial-gradient(
+          circle at top,
+          #1d293b 0,
+          #020617 45%,
+          #000 100%
+        );
         color: var(--text-main);
         min-height: 100vh;
         display: flex;
@@ -40,7 +48,11 @@
       .app-shell {
         width: 100%;
         max-width: 1100px;
-        background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98));
+        background: linear-gradient(
+          145deg,
+          rgba(15, 23, 42, 0.95),
+          rgba(2, 6, 23, 0.98)
+        );
         border-radius: 28px;
         padding: 20px 20px 24px;
         box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
@@ -162,7 +174,11 @@
       }
 
       .filter-chip.active {
-        background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.98));
+        background: radial-gradient(
+          circle at 0 0,
+          rgba(56, 189, 248, 0.3),
+          rgba(15, 23, 42, 0.98)
+        );
         color: #e0f2fe;
         border-color: rgba(56, 189, 248, 0.9);
         transform: translateY(-1px);
@@ -220,14 +236,19 @@
       .news-card {
         border-radius: var(--radius-xl);
         border: 1px solid var(--card-border);
-        background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.14), rgba(15, 23, 42, 0.98));
+        background: radial-gradient(
+          circle at top left,
+          rgba(148, 163, 184, 0.14),
+          rgba(15, 23, 42, 0.98)
+        );
         padding: 12px 13px;
         box-shadow: var(--shadow-soft);
         display: grid;
         grid-template-columns: minmax(0, 1fr);
         gap: 6px;
         cursor: default;
-        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out,
+          border-color 0.18s ease-out;
       }
 
       .news-card:hover {
@@ -320,7 +341,11 @@
       .sidebar-card {
         border-radius: 20px;
         border: 1px solid rgba(148, 163, 184, 0.4);
-        background: radial-gradient(circle at top, rgba(56, 189, 248, 0.22), rgba(15, 23, 42, 0.98));
+        background: radial-gradient(
+          circle at top,
+          rgba(56, 189, 248, 0.22),
+          rgba(15, 23, 42, 0.98)
+        );
         padding: 12px 14px;
         box-shadow: var(--shadow-soft);
         display: flex;
@@ -364,6 +389,15 @@
         color: #c4b5fd;
       }
 
+      .status-line {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .status-line strong {
+        color: #e5e7eb;
+      }
+
       footer {
         margin-top: 18px;
         padding-top: 10px;
@@ -393,6 +427,34 @@
       .hidden {
         display: none !important;
       }
+
+      .error-message {
+        font-size: 0.8rem;
+        color: #fecaca;
+        background: rgba(127, 29, 29, 0.4);
+        border-radius: 999px;
+        padding: 6px 10px;
+        border: 1px solid rgba(248, 113, 113, 0.6);
+        margin-top: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .spinner {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        border: 2px solid rgba(148, 163, 184, 0.5);
+        border-top-color: var(--accent);
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body>
@@ -403,8 +465,11 @@
             <span>☀️</span>
           </div>
           <div class="brand-text">
-            <h1>My Positive News Feed</h1>
-            <p>Curated daily: Current affairs, AI, markets, politics & sports — with an optimistic lens.</p>
+            <h1>Mahesh's Positive News Dashboard</h1>
+            <p>
+              Live headlines on current affairs, AI, markets, politics & sports —
+              filtered through a constructive, progress-first lens.
+            </p>
           </div>
         </div>
         <div>
@@ -415,7 +480,9 @@
             </div>
             <div class="pill">
               <span class="icon">🕒</span>
-              <span>Updated manually • Your personal curation</span>
+              <span id="status-text">
+                Fetching fresh stories when you open or refresh this page.
+              </span>
             </div>
           </div>
           <div class="filters-bar" aria-label="Filter by topic">
@@ -429,11 +496,11 @@
             </button>
             <button class="filter-chip" data-filter="ai">
               <span class="dot"></span>
-              IT & AI Trends
+              IT &amp; AI Trends
             </button>
             <button class="filter-chip" data-filter="markets">
               <span class="dot"></span>
-              Stock Market & Economy
+              Stock Market &amp; Economy
             </button>
             <button class="filter-chip" data-filter="politics">
               <span class="dot"></span>
@@ -452,119 +519,16 @@
         <section class="column" aria-label="Main news feed">
           <div class="section-title">
             <h2>Today&apos;s Highlights</h2>
-            <span>Hand‑picked positive stories</span>
+            <span>Hand-picked by your algorithm, curated by you</span>
+          </div>
+
+          <div id="status-line" class="status-line">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Loading stories from the news API...</span>
           </div>
 
           <div class="news-list" id="news-list">
-            <!-- Example card: Current affairs -->
-            <article class="news-card" data-category="current">
-              <div class="news-badges">
-                <span class="badge badge--category">Current Affairs</span>
-                <span class="badge badge--positive">Net positive impact</span>
-              </div>
-              <h3 class="news-title">
-                Teachers&apos; jobs secured as court ruling brings relief and stability to thousands of families.
-              </h3>
-              <div class="news-meta-row">
-                <p class="news-meta">Education • Policy • Human impact</p>
-                <p class="tagline">A reminder that institutions can correct course in favour of people.</p>
-              </div>
-              <div class="news-footer">
-                <span class="source">Source: Add link here</span>
-                <a href="#" class="read-link" target="_blank" rel="noreferrer">
-                  Read full story
-                  <span>↗</span>
-                </a>
-              </div>
-            </article>
-
-            <!-- Example card: IT & AI -->
-            <article class="news-card" data-category="ai">
-              <div class="news-badges">
-                <span class="badge badge--category badge--ai">IT • AI</span>
-                <span class="badge badge--positive">AI for good</span>
-              </div>
-              <h3 class="news-title">
-                New AI tools help doctors analyse scans faster, freeing them to focus more on patients.
-              </h3>
-              <div class="news-meta-row">
-                <p class="news-meta">Healthcare • Productivity • Innovation</p>
-                <p class="tagline">Technology quietly making everyday care more human.</p>
-              </div>
-              <div class="news-footer">
-                <span class="source">Source: Add link here</span>
-                <a href="#" class="read-link" target="_blank" rel="noreferrer">
-                  Explore the AI breakthrough
-                  <span>↗</span>
-                </a>
-              </div>
-            </article>
-
-            <!-- Example card: Markets -->
-            <article class="news-card" data-category="markets">
-              <div class="news-badges">
-                <span class="badge badge--category">Markets</span>
-                <span class="badge badge--positive">Long‑term optimism</span>
-              </div>
-              <h3 class="news-title">
-                Broader indices stay resilient as investors back fundamentals and long‑term growth sectors.
-              </h3>
-              <div class="news-meta-row">
-                <p class="news-meta">Stocks • Economy • Signals</p>
-                <p class="tagline">Less noise, more conviction in real value.</p>
-              </div>
-              <div class="news-footer">
-                <span class="source">Source: Add link here</span>
-                <a href="#" class="read-link" target="_blank" rel="noreferrer">
-                  See market context
-                  <span>↗</span>
-                </a>
-              </div>
-            </article>
-
-            <!-- Example card: Politics / geopolitics -->
-            <article class="news-card" data-category="politics">
-              <div class="news-badges">
-                <span class="badge badge--category">Politics</span>
-                <span class="badge badge--positive">Constructive diplomacy</span>
-              </div>
-              <h3 class="news-title">
-                Leaders meet to deepen cooperation in trade, energy and technology, signalling focus on stability.
-              </h3>
-              <div class="news-meta-row">
-                <p class="news-meta">Diplomacy • Trade • Energy</p>
-                <p class="tagline">When dialogue takes centre stage, everyone wins slowly but surely.</p>
-              </div>
-              <div class="news-footer">
-                <span class="source">Source: Add link here</span>
-                <a href="#" class="read-link" target="_blank" rel="noreferrer">
-                  Read summit overview
-                  <span>↗</span>
-                </a>
-              </div>
-            </article>
-
-            <!-- Example card: Sports -->
-            <article class="news-card" data-category="sports">
-              <div class="news-badges">
-                <span class="badge badge--category">Sports</span>
-                <span class="badge badge--positive">Inspiring performance</span>
-              </div>
-              <h3 class="news-title">
-                Underdog side clinches series with disciplined play, showing what smart preparation can do.
-              </h3>
-              <div class="news-meta-row">
-                <p class="news-meta">Cricket • Teamwork • Mindset</p>
-                <p class="tagline">Sport as a weekly reminder that effort compounds.</p>
-              </div>
-              <div class="news-footer">
-                <span class="source">Source: Add link here</span>
-                <a href="#" class="read-link" target="_blank" rel="noreferrer">
-                  Match recap
-                  <span>↗</span>
-                </a>
-              </div>
-            </article>
+            <!-- Dynamic cards will be injected here -->
           </div>
         </section>
 
@@ -573,42 +537,42 @@
           <section class="sidebar-card">
             <h3>Today&apos;s Mood</h3>
             <p>
-              A quick snapshot of why today&apos;s feed is net‑positive: more stories about
-              solutions, collaboration and long‑term thinking than about panic or fear.
+              This dashboard prefers stories that contain signals of progress,
+              resilience and collaboration, even when the news cycle is noisy.
             </p>
             <ul class="sidebar-list">
               <li>
-                Positive‑tilted items
-                <span class="pill-mini" id="positive-count">5 stories</span>
+                Visible stories
+                <span class="pill-mini" id="positive-count">0</span>
               </li>
               <li>
-                Focus on AI / tech
-                <span class="pill-mini">At least 1 key story</span>
+                Topics covered
+                <span class="pill-mini">Current • AI • Markets • Politics • Sports</span>
               </li>
               <li>
-                Personal relevance
-                <span class="pill-mini">Custom curated by you</span>
+                Refresh model
+                <span class="pill-mini">On every page load</span>
               </li>
             </ul>
           </section>
 
-          <section class="sidebar-card" style="margin-top: 10px;">
+          <section class="sidebar-card" style="margin-top: 10px">
             <h3>Your Curation Notes</h3>
             <p>
-              Use this space as a mental checklist when you add new links:
+              Use these prompts as you glance through the feed:
             </p>
             <ul class="sidebar-list">
               <li>
-                Does this story show progress?
-                <span class="pill-mini">Yes / Skip</span>
-              </li>
-              <li>
                 What&apos;s one constructive takeaway?
-                <span class="pill-mini">Write it down</span>
+                <span class="pill-mini">Note it</span>
               </li>
               <li>
-                How does it connect to your goals?
-                <span class="pill-mini">Reflect</span>
+                Does this headline show progress or solutions?
+                <span class="pill-mini">Yes → keep</span>
+              </li>
+              <li>
+                Is this relevant to your goals?
+                <span class="pill-mini">If no → ignore</span>
               </li>
             </ul>
           </section>
@@ -617,50 +581,357 @@
 
       <footer>
         <span>
-          Built for calm information diet. Edit this page to add your own links and thoughts.
+          Built for a calm information diet. Data fetched from a news API when you open this page.
         </span>
         <div class="footer-badges">
-          <span class="footer-badge">🌱 Growth‑focused</span>
+          <span class="footer-badge">🌱 Growth-focused</span>
           <span class="footer-badge">📚 Curated, not addictive</span>
-          <span class="footer-badge">🤖 AI, markets, sport & more</span>
+          <span class="footer-badge">🤖 AI, markets, politics &amp; sports</span>
         </div>
       </footer>
     </div>
 
     <script>
-      // Simple client-side filtering for categories
-      const filterChips = document.querySelectorAll('.filter-chip');
-      const newsCards = document.querySelectorAll('.news-card');
-      const positiveCountEl = document.getElementById('positive-count');
+      // ================= CONFIG =================
+      // 1) Get an API key from a news API provider (e.g. Currents API)
+      // 2) Paste it below:
+      const API_KEY = yLdU-mmI7zsUbAMdu_17NCQ865WG42I6ChQqINMKPsrrmdEK; // <-- CHANGE THIS
 
-      function updatePositiveCount() {
-        const visiblePositive = Array.from(newsCards).filter((card) => {
-          return !card.classList.contains('hidden');
-        }).length;
-        if (positiveCountEl) {
-          positiveCountEl.textContent = `${visiblePositive} stories`;
+      // How many articles per topic you want to display
+      const MAX_ARTICLES_PER_TOPIC = 4;
+
+      // Topic configuration: maps your categories to queries
+      const TOPICS = [
+        {
+          id: "current",
+          label: "Current Affairs",
+          query: {
+            endpoint: "search",
+            keywords: "India development OR innovation OR policy reform OR progress",
+            category: "world",
+          },
+        },
+        {
+          id: "ai",
+          label: "IT • AI",
+          query: {
+            endpoint: "search",
+            keywords:
+              "artificial intelligence OR AI OR machine learning OR generative AI OR technology",
+            category: "technology",
+          },
+        },
+        {
+          id: "markets",
+          label: "Markets",
+          query: {
+            endpoint: "search",
+            keywords:
+              "stock market OR nifty OR sensex OR investing OR economic growth OR earnings",
+            category: "business",
+          },
+        },
+        {
+          id: "politics",
+          label: "Politics",
+          query: {
+            endpoint: "search",
+            keywords:
+              "diplomacy OR cooperation OR summit OR policy OR parliament OR agreement",
+            category: "politics",
+          },
+        },
+        {
+          id: "sports",
+          label: "Sports",
+          query: {
+            endpoint: "search",
+            keywords:
+              "cricket OR football OR tennis OR kabaddi OR olympics OR tournament",
+            category: "sports",
+          },
+        },
+      ];
+
+      const newsListEl = document.getElementById("news-list");
+      const filterChips = document.querySelectorAll(".filter-chip");
+      const positiveCountEl = document.getElementById("positive-count");
+      const statusLineEl = document.getElementById("status-line");
+      const statusTextEl = document.getElementById("status-text");
+
+      // ================= HELPERS =================
+
+      function buildApiUrl(query) {
+        // Example for Currents API; adapt if you use a different provider
+        const base =
+          query.endpoint === "search"
+            ? "https://api.currentsapi.services/v1/search"
+            : "https://api.currentsapi.services/v1/latest-news";
+
+        const url = new URL(base);
+        url.searchParams.set("apiKey", API_KEY);
+        url.searchParams.set("language", "en");
+
+        if (query.keywords) url.searchParams.set("keywords", query.keywords);
+        if (query.category) url.searchParams.set("category", query.category);
+
+        return url.toString();
+      }
+
+      async function fetchTopicNews(topic) {
+        const url = buildApiUrl(topic.query);
+        try {
+          const res = await fetch(url);
+          if (!res.ok) {
+            console.error("API error for topic", topic.id, res.status);
+            return [];
+          }
+          const data = await res.json();
+          // For Currents, articles are usually in data.news
+          // Adjust if your provider is different
+          return data.news || [];
+        } catch (err) {
+          console.error("Network error for topic", topic.id, err);
+          return [];
         }
       }
 
-      filterChips.forEach((chip) => {
-        chip.addEventListener('click', () => {
-          const filter = chip.getAttribute('data-filter');
-
-          filterChips.forEach((c) => c.classList.remove('active'));
-          chip.classList.add('active');
-
-          newsCards.forEach((card) => {
-            const category = card.getAttribute('data-category');
-            const shouldShow = filter === 'all' || category === filter;
-            card.classList.toggle('hidden', !shouldShow);
-          });
-
-          updatePositiveCount();
+      function formatPublished(published) {
+        if (!published) return "";
+        const date = new Date(published);
+        if (Number.isNaN(date.getTime())) return "";
+        return date.toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
         });
-      });
+      }
 
-      // Initial count on load
-      updatePositiveCount();
+      // Light heuristic to bump up positive-ish headlines
+      function scorePositivity(title = "", description = "") {
+        const text = (title + " " + description).toLowerCase();
+        const positiveWords = [
+          "growth",
+          "record",
+          "rise",
+          "improves",
+          "improvement",
+          "surge",
+          "wins",
+          "win",
+          "boost",
+          "progress",
+          "breakthrough",
+          "stability",
+          "recovers",
+          "rebound",
+          "milestone",
+          "achieves",
+          "achieved",
+          "launches",
+          "expands",
+          "positive",
+          "strong",
+        ];
+        let score = 0;
+        positiveWords.forEach((w) => {
+          if (text.includes(w)) score += 1;
+        });
+        return score;
+      }
+
+      function getCategoryLabel(topicId) {
+        switch (topicId) {
+          case "current":
+            return "Current Affairs";
+          case "ai":
+            return "IT • AI";
+          case "markets":
+            return "Markets";
+          case "politics":
+            return "Politics";
+          case "sports":
+            return "Sports";
+          default:
+            return "News";
+        }
+      }
+
+      function getTagline(topicId) {
+        switch (topicId) {
+          case "ai":
+            return "How technology and AI are quietly reshaping daily life.";
+          case "markets":
+            return "Signals for long-term investors, not panic traders.";
+          case "sports":
+            return "Sport as a reminder that effort and teamwork compound.";
+          case "politics":
+            return "Focus on dialogue, cooperation and stability.";
+          case "current":
+          default:
+            return "Stories that show progress, resilience or problem-solving.";
+        }
+      }
+
+      function createNewsCard(article, topicId) {
+        const card = document.createElement("article");
+        card.className = "news-card";
+        card.dataset.category = topicId;
+
+        const positivityScore = scorePositivity(
+          article.title,
+          article.description
+        );
+        const isPositive = positivityScore > 0;
+
+        const categoryBadgeClass =
+          topicId === "ai"
+            ? "badge badge--category badge--ai"
+            : "badge badge--category";
+
+        const categoryLabel = getCategoryLabel(topicId);
+        const positiveLabel = isPositive ? "Positive signal" : "Balanced update";
+
+        const taglineText = getTagline(topicId);
+
+        const safeTitle = article.title || "Untitled story";
+        const safeDesc = article.description || "";
+        const safeSource =
+          article.author ||
+          article.domain ||
+          article.source ||
+          "News source";
+
+        const publishedStr = formatPublished(article.published);
+
+        card.innerHTML = `
+          <div class="news-badges">
+            <span class="${categoryBadgeClass}">${categoryLabel}</span>
+            <span class="badge badge--positive">${positiveLabel}</span>
+          </div>
+          <h3 class="news-title">
+            ${safeTitle}
+          </h3>
+          <div class="news-meta-row">
+            <p class="news-meta">
+              ${safeDesc.slice(0, 130)}${safeDesc.length > 130 ? "..." : ""}
+            </p>
+            <p class="tagline">${taglineText}</p>
+          </div>
+          <div class="news-footer">
+            <span class="source">
+              ${safeSource}${publishedStr ? " • " + publishedStr : ""}
+            </span>
+            <a href="${article.url}" class="read-link" target="_blank" rel="noreferrer">
+              Read full story
+              <span>↗</span>
+            </a>
+          </div>
+        `;
+        return card;
+      }
+
+      function updatePositiveCount() {
+        const cards = document.querySelectorAll(".news-card");
+        const visible = Array.from(cards).filter(
+          (card) => !card.classList.contains("hidden")
+        ).length;
+        if (positiveCountEl) {
+          positiveCountEl.textContent = `${visible} stories`;
+        }
+      }
+
+      function applyFilter(filter) {
+        const cards = document.querySelectorAll(".news-card");
+        cards.forEach((card) => {
+          const category = card.getAttribute("data-category");
+          const shouldShow = filter === "all" || category === filter;
+          card.classList.toggle("hidden", !shouldShow);
+        });
+        updatePositiveCount();
+      }
+
+      function initFilters() {
+        filterChips.forEach((chip) => {
+          chip.addEventListener("click", () => {
+            const filter = chip.getAttribute("data-filter");
+            filterChips.forEach((c) => c.classList.remove("active"));
+            chip.classList.add("active");
+            applyFilter(filter);
+          });
+        });
+      }
+
+      function showError(message) {
+        if (!statusLineEl) return;
+        statusLineEl.innerHTML = `
+          <div class="error-message">
+            <span>⚠️</span>
+            <span>${message}</span>
+          </div>
+        `;
+      }
+
+      async function loadAllTopics() {
+        if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+          showError(
+            "No API key configured. Edit index.html and set your news API key in the JavaScript section."
+          );
+          if (statusTextEl) {
+            statusTextEl.textContent = "Configure your API key to start fetching live news.";
+          }
+          return;
+        }
+
+        if (statusLineEl) {
+          statusLineEl.innerHTML = `
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Fetching fresh stories across all topics...</span>
+          `;
+        }
+        if (statusTextEl) {
+          statusTextEl.textContent = "Live stories fetched each time you open this dashboard.";
+        }
+
+        newsListEl.innerHTML = "";
+        let totalStories = 0;
+
+        for (const topic of TOPICS) {
+          const articles = await fetchTopicNews(topic);
+
+          const sorted = articles
+            .map((a) => ({
+              article: a,
+              score: scorePositivity(a.title, a.description),
+            }))
+            .sort((a, b) => b.score - a.score)
+            .slice(0, MAX_ARTICLES_PER_TOPIC)
+            .map((x) => x.article);
+
+          if (!sorted.length) continue;
+
+          sorted.forEach((article) => {
+            const card = createNewsCard(article, topic.id);
+            newsListEl.appendChild(card);
+            totalStories += 1;
+          });
+        }
+
+        if (totalStories === 0) {
+          showError(
+            "No stories could be loaded. This might be a temporary API limit or network issue."
+          );
+        } else if (statusLineEl) {
+          statusLineEl.innerHTML = `
+            <span>Loaded <strong>${totalStories}</strong> stories. Use the filters above to focus by topic.</span>
+          `;
+        }
+
+        applyFilter("all");
+      }
+
+      // ================= INIT =================
+      initFilters();
+      loadAllTopics();
     </script>
   </body>
 </html>
