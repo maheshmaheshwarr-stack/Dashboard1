@@ -1,683 +1,666 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.2">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
-  </style>
-</head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;My Positive News Feed&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>:root {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--bg: #050816;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--bg-soft: #0b1020;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--bg-softer: #11182a;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--accent: #38bdf8;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--accent-soft: rgba(56, 189, 248, 0.12);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--accent-strong: #22c55e;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--text-main: #e5e7eb;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--text-muted: #9ca3af;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--card-border: rgba(148, 163, 184, 0.3);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--chip-bg: rgba(15, 23, 42, 0.9);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>--radius-xl: 18px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>* {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-sizing: border-box;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>'Segoe UI', sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: radial-gradient(circle at top, #1d293b 0, #020617 45%, #000 100%);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-main);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>min-height: 100vh;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 32px 16px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.app-shell {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>width: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>max-width: 1100px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 28px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 20px 20px 24px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.4);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>backdrop-filter: blur(18px);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>@media (min-width: 768px) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.app-shell {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>padding: 26px 26px 30px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>header {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-direction: column;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 14px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-bottom: 18px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>@media (min-width: 640px) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>header {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>flex-direction: row;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>justify-content: space-between;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.brand {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 12px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.brand-badge {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>width: 40px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>height: 40px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: radial-gradient(circle at 30% 20%, #38bdf8, #22c55e);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-shadow: 0 12px 30px rgba(34, 197, 94, 0.5);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>overflow: hidden;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.brand-badge span {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 22px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-weight: 700;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #0b1020;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.brand-text h1 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 1.5rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>letter-spacing: 0.03em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.brand-text p {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.8rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.meta {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: flex-start;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.75rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.pill {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 6px 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(15, 23, 42, 0.9);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.5);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: inline-flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.pill span.icon {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.9em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.pill--accent {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-color: rgba(34, 197, 94, 0.8);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #bbf7d0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(22, 163, 74, 0.16);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.filters-bar {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-top: 14px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.filter-chip {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 6px 11px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.78rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.35);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: var(--chip-bg);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: inline-flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>transition: all 0.16s ease-out;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.filter-chip span.dot {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>width: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>height: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(148, 163, 184, 0.6);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.filter-chip.active {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.98));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #e0f2fe;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-color: rgba(56, 189, 248, 0.9);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>transform: translateY(-1px);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-shadow: 0 10px 28px rgba(15, 23, 42, 0.8);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.filter-chip.active span.dot {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: #38bdf8;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>main {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-top: 18px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: grid;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 18px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>@media (max-width: 900px) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>main {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>grid-template-columns: minmax(0, 1fr);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.column {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-direction: column;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.section-title {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: space-between;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-bottom: 4px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.section-title h2 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.85rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>letter-spacing: 0.12em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>text-transform: uppercase;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.section-title span {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.72rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--accent);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-list {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-direction: column;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-card {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: var(--radius-xl);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid var(--card-border);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.14), rgba(15, 23, 42, 0.98));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 12px 13px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-shadow: var(--shadow-soft);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: grid;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>grid-template-columns: minmax(0, 1fr);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>cursor: default;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-card:hover {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>transform: translateY(-3px) translateZ(0);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-color: rgba(56, 189, 248, 0.7);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-badges {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.68rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.badge {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 4px 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(15, 23, 42, 0.95);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.4);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.badge--category {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>text-transform: uppercase;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>letter-spacing: 0.08em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.65rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.badge--positive {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-color: rgba(34, 197, 94, 0.8);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #bbf7d0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(21, 128, 61, 0.2);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.badge--ai {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-color: rgba(56, 189, 248, 0.85);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #e0f2fe;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(15, 23, 42, 0.9);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-title {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.98rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-weight: 600;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>line-height: 1.4;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-meta-row {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: space-between;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-meta {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.72rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.tagline {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.75rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #a5b4fc;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.news-footer {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: space-between;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-top: 4px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.source {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.7rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.read-link {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.72rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>text-decoration: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--accent);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: inline-flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 4px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.read-link span {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.9em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.sidebar-card {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.4);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: radial-gradient(circle at top, rgba(56, 189, 248, 0.22), rgba(15, 23, 42, 0.98));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 12px 14px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>box-shadow: var(--shadow-soft);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-direction: column;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.sidebar-card h3 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.9rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>text-transform: uppercase;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>letter-spacing: 0.16em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #bfdbfe;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.sidebar-card p {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.8rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #e5e7eb;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.sidebar-list {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-top: 4px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>list-style: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-direction: column;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.sidebar-list li {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.78rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: space-between;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.pill-mini {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 3px 7px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.5);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.7rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: #c4b5fd;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>footer {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>margin-top: 18px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding-top: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-top: 1px dashed rgba(148, 163, 184, 0.35);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>justify-content: space-between;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-size: 0.72rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>color: var(--text-muted);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.footer-badges {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>gap: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.footer-badge {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>padding: 4px 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border-radius: 999px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>border: 1px solid rgba(148, 163, 184, 0.45);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>background: rgba(15, 23, 42, 0.95);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.hidden {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>display: none !important;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;body&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="app-shell"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;header&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="brand"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="brand-badge" aria-hidden="true"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span&gt;☀️&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="brand-text"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1&gt;My Positive News Feed&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;Curated daily: Current affairs, AI, markets, politics &amp; sports — with an optimistic lens.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="meta"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="pill pill--accent"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="icon"&gt;✨&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span&gt;Signal over noise. Positivity over panic.&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="pill"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="icon"&gt;🕒&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span&gt;Updated manually • Your personal curation&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="filters-bar" aria-label="Filter by topic"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="filter-chip active" data-filter="all"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="dot"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>All</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="filter-chip" data-filter="current"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="dot"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>Current Affairs</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="filter-chip" data-filter="ai"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="dot"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>IT &amp; AI Trends</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="filter-chip" data-filter="markets"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="dot"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>Stock Market &amp; Economy</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="filter-chip" data-filter="politics"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="dot"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>Politics</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="filter-chip" data-filter="sports"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="dot"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>Sports</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;main&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Left column: main feed --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;section class="column" aria-label="Main news feed"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="section-title"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Today&amp;apos;s Highlights&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span&gt;Hand‑picked positive stories&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="news-list" id="news-list"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Example card: Current affairs --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;article class="news-card" data-category="current"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-badges"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--category"&gt;Current Affairs&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--positive"&gt;Net positive impact&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 class="news-title"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Teachers&amp;apos; jobs secured as court ruling brings relief and stability to thousands of families.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-meta-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="news-meta"&gt;Education • Policy • Human impact&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="tagline"&gt;A reminder that institutions can correct course in favour of people.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="source"&gt;Source: Add link here&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="read-link" target="_blank" rel="noreferrer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>Read full story</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;span&gt;↗&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/article&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Example card: IT &amp; AI --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;article class="news-card" data-category="ai"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-badges"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--category badge--ai"&gt;IT • AI&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--positive"&gt;AI for good&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 class="news-title"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>New AI tools help doctors analyse scans faster, freeing them to focus more on patients.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-meta-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="news-meta"&gt;Healthcare • Productivity • Innovation&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="tagline"&gt;Technology quietly making everyday care more human.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="source"&gt;Source: Add link here&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="read-link" target="_blank" rel="noreferrer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>Explore the AI breakthrough</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;span&gt;↗&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/article&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Example card: Markets --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;article class="news-card" data-category="markets"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-badges"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--category"&gt;Markets&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--positive"&gt;Long‑term optimism&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 class="news-title"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Broader indices stay resilient as investors back fundamentals and long‑term growth sectors.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-meta-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="news-meta"&gt;Stocks • Economy • Signals&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="tagline"&gt;Less noise, more conviction in real value.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="source"&gt;Source: Add link here&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="read-link" target="_blank" rel="noreferrer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>See market context</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;span&gt;↗&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/article&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Example card: Politics / geopolitics --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;article class="news-card" data-category="politics"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-badges"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--category"&gt;Politics&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--positive"&gt;Constructive diplomacy&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 class="news-title"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Leaders meet to deepen cooperation in trade, energy and technology, signalling focus on stability.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-meta-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="news-meta"&gt;Diplomacy • Trade • Energy&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="tagline"&gt;When dialogue takes centre stage, everyone wins slowly but surely.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="source"&gt;Source: Add link here&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="read-link" target="_blank" rel="noreferrer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>Read summit overview</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;span&gt;↗&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/article&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- Example card: Sports --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;article class="news-card" data-category="sports"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-badges"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--category"&gt;Sports&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="badge badge--positive"&gt;Inspiring performance&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 class="news-title"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Underdog side clinches series with disciplined play, showing what smart preparation can do.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-meta-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="news-meta"&gt;Cricket • Teamwork • Mindset&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p class="tagline"&gt;Sport as a weekly reminder that effort compounds.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="news-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="source"&gt;Source: Add link here&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="read-link" target="_blank" rel="noreferrer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>Match recap</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;span&gt;↗&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/article&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Right column: side widgets --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;aside class="column" aria-label="Summary and quick stats"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;section class="sidebar-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Today&amp;apos;s Mood&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>A quick snapshot of why today&amp;apos;s feed is net‑positive: more stories about</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>solutions, collaboration and long‑term thinking than about panic or fear.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;ul class="sidebar-list"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Positive‑tilted items</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="pill-mini" id="positive-count"&gt;5 stories&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Focus on AI / tech</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="pill-mini"&gt;At least 1 key story&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Personal relevance</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="pill-mini"&gt;Custom curated by you&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;section class="sidebar-card" style="margin-top: 10px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h3&gt;Your Curation Notes&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>Use this space as a mental checklist when you add new links:</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;ul class="sidebar-list"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Does this story show progress?</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="pill-mini"&gt;Yes / Skip&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>What&amp;apos;s one constructive takeaway?</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="pill-mini"&gt;Write it down&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>How does it connect to your goals?</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span class="pill-mini"&gt;Reflect&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/li&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/section&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/aside&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/main&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;footer&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>Built for calm information diet. Edit this page to add your own links and thoughts.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="footer-badges"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;span class="footer-badge"&gt;🌱 Growth‑focused&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;span class="footer-badge"&gt;📚 Curated, not addictive&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;span class="footer-badge"&gt;🤖 AI, markets, sport &amp; more&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/footer&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Simple client-side filtering for categories</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const filterChips = document.querySelectorAll('.filter-chip');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const newsCards = document.querySelectorAll('.news-card');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const positiveCountEl = document.getElementById('positive-count');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>function updatePositiveCount() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const visiblePositive = Array.from(newsCards).filter((card) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>return !card.classList.contains('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}).length;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (positiveCountEl) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>positiveCountEl.textContent = `${visiblePositive} stories`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>filterChips.forEach((chip) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>chip.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const filter = chip.getAttribute('data-filter');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>filterChips.forEach((c) =&gt; c.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>chip.classList.add('active');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>newsCards.forEach((card) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const category = card.getAttribute('data-category');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const shouldShow = filter === 'all' || category === filter;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>card.classList.toggle('hidden', !shouldShow);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>updatePositiveCount();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Initial count on load</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>updatePositiveCount();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Positive News Feed</title>
+    <style>
+      :root {
+        --bg: #050816;
+        --bg-soft: #0b1020;
+        --bg-softer: #11182a;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.12);
+        --accent-strong: #22c55e;
+        --text-main: #e5e7eb;
+        --text-muted: #9ca3af;
+        --card-border: rgba(148, 163, 184, 0.3);
+        --chip-bg: rgba(15, 23, 42, 0.9);
+        --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+        --radius-xl: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+          'Segoe UI', sans-serif;
+        background: radial-gradient(circle at top, #1d293b 0, #020617 45%, #000 100%);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 32px 16px;
+      }
+
+      .app-shell {
+        width: 100%;
+        max-width: 1100px;
+        background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98));
+        border-radius: 28px;
+        padding: 20px 20px 24px;
+        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        backdrop-filter: blur(18px);
+      }
+
+      @media (min-width: 768px) {
+        .app-shell {
+          padding: 26px 26px 30px;
+        }
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+
+      @media (min-width: 640px) {
+        header {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 20%, #38bdf8, #22c55e);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 12px 30px rgba(34, 197, 94, 0.5);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .brand-badge span {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0b1020;
+      }
+
+      .brand-text h1 {
+        font-size: 1.5rem;
+        letter-spacing: 0.03em;
+      }
+
+      .brand-text p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+        font-size: 0.75rem;
+      }
+
+      .pill {
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        color: var(--text-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .pill span.icon {
+        font-size: 0.9em;
+      }
+
+      .pill--accent {
+        border-color: rgba(34, 197, 94, 0.8);
+        color: #bbf7d0;
+        background: rgba(22, 163, 74, 0.16);
+      }
+
+      .filters-bar {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .filter-chip {
+        border-radius: 999px;
+        padding: 6px 11px;
+        font-size: 0.78rem;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        background: var(--chip-bg);
+        color: var(--text-muted);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.16s ease-out;
+      }
+
+      .filter-chip span.dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.6);
+      }
+
+      .filter-chip.active {
+        background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.98));
+        color: #e0f2fe;
+        border-color: rgba(56, 189, 248, 0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.8);
+      }
+
+      .filter-chip.active span.dot {
+        background: #38bdf8;
+      }
+
+      main {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
+        gap: 18px;
+      }
+
+      @media (max-width: 900px) {
+        main {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+
+      .section-title h2 {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .section-title span {
+        font-size: 0.72rem;
+        color: var(--accent);
+      }
+
+      .news-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .news-card {
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--card-border);
+        background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.14), rgba(15, 23, 42, 0.98));
+        padding: 12px 13px;
+        box-shadow: var(--shadow-soft);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+        cursor: default;
+        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+      }
+
+      .news-card:hover {
+        transform: translateY(-3px) translateZ(0);
+        box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+        border-color: rgba(56, 189, 248, 0.7);
+      }
+
+      .news-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 0.68rem;
+      }
+
+      .badge {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.95);
+        color: var(--text-muted);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
+
+      .badge--category {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.65rem;
+      }
+
+      .badge--positive {
+        border-color: rgba(34, 197, 94, 0.8);
+        color: #bbf7d0;
+        background: rgba(21, 128, 61, 0.2);
+      }
+
+      .badge--ai {
+        border-color: rgba(56, 189, 248, 0.85);
+        color: #e0f2fe;
+        background: rgba(15, 23, 42, 0.9);
+      }
+
+      .news-title {
+        font-size: 0.98rem;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+
+      .news-meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .news-meta {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+
+      .tagline {
+        font-size: 0.75rem;
+        color: #a5b4fc;
+      }
+
+      .news-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4px;
+      }
+
+      .source {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+
+      .read-link {
+        font-size: 0.72rem;
+        text-decoration: none;
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .read-link span {
+        font-size: 0.9em;
+      }
+
+      .sidebar-card {
+        border-radius: 20px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        background: radial-gradient(circle at top, rgba(56, 189, 248, 0.22), rgba(15, 23, 42, 0.98));
+        padding: 12px 14px;
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .sidebar-card h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: #bfdbfe;
+      }
+
+      .sidebar-card p {
+        font-size: 0.8rem;
+        color: #e5e7eb;
+      }
+
+      .sidebar-list {
+        margin-top: 4px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .sidebar-list li {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .pill-mini {
+        border-radius: 999px;
+        padding: 3px 7px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        font-size: 0.7rem;
+        color: #c4b5fd;
+      }
+
+      footer {
+        margin-top: 18px;
+        padding-top: 10px;
+        border-top: 1px dashed rgba(148, 163, 184, 0.35);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+
+      .footer-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .footer-badge {
+        padding: 4px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        background: rgba(15, 23, 42, 0.95);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header>
+        <div class="brand">
+          <div class="brand-badge" aria-hidden="true">
+            <span>☀️</span>
+          </div>
+          <div class="brand-text">
+            <h1>My Positive News Feed</h1>
+            <p>Curated daily: Current affairs, AI, markets, politics & sports — with an optimistic lens.</p>
+          </div>
+        </div>
+        <div>
+          <div class="meta">
+            <div class="pill pill--accent">
+              <span class="icon">✨</span>
+              <span>Signal over noise. Positivity over panic.</span>
+            </div>
+            <div class="pill">
+              <span class="icon">🕒</span>
+              <span>Updated manually • Your personal curation</span>
+            </div>
+          </div>
+          <div class="filters-bar" aria-label="Filter by topic">
+            <button class="filter-chip active" data-filter="all">
+              <span class="dot"></span>
+              All
+            </button>
+            <button class="filter-chip" data-filter="current">
+              <span class="dot"></span>
+              Current Affairs
+            </button>
+            <button class="filter-chip" data-filter="ai">
+              <span class="dot"></span>
+              IT & AI Trends
+            </button>
+            <button class="filter-chip" data-filter="markets">
+              <span class="dot"></span>
+              Stock Market & Economy
+            </button>
+            <button class="filter-chip" data-filter="politics">
+              <span class="dot"></span>
+              Politics
+            </button>
+            <button class="filter-chip" data-filter="sports">
+              <span class="dot"></span>
+              Sports
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Left column: main feed -->
+        <section class="column" aria-label="Main news feed">
+          <div class="section-title">
+            <h2>Today&apos;s Highlights</h2>
+            <span>Hand‑picked positive stories</span>
+          </div>
+
+          <div class="news-list" id="news-list">
+            <!-- Example card: Current affairs -->
+            <article class="news-card" data-category="current">
+              <div class="news-badges">
+                <span class="badge badge--category">Current Affairs</span>
+                <span class="badge badge--positive">Net positive impact</span>
+              </div>
+              <h3 class="news-title">
+                Teachers&apos; jobs secured as court ruling brings relief and stability to thousands of families.
+              </h3>
+              <div class="news-meta-row">
+                <p class="news-meta">Education • Policy • Human impact</p>
+                <p class="tagline">A reminder that institutions can correct course in favour of people.</p>
+              </div>
+              <div class="news-footer">
+                <span class="source">Source: Add link here</span>
+                <a href="#" class="read-link" target="_blank" rel="noreferrer">
+                  Read full story
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Example card: IT & AI -->
+            <article class="news-card" data-category="ai">
+              <div class="news-badges">
+                <span class="badge badge--category badge--ai">IT • AI</span>
+                <span class="badge badge--positive">AI for good</span>
+              </div>
+              <h3 class="news-title">
+                New AI tools help doctors analyse scans faster, freeing them to focus more on patients.
+              </h3>
+              <div class="news-meta-row">
+                <p class="news-meta">Healthcare • Productivity • Innovation</p>
+                <p class="tagline">Technology quietly making everyday care more human.</p>
+              </div>
+              <div class="news-footer">
+                <span class="source">Source: Add link here</span>
+                <a href="#" class="read-link" target="_blank" rel="noreferrer">
+                  Explore the AI breakthrough
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Example card: Markets -->
+            <article class="news-card" data-category="markets">
+              <div class="news-badges">
+                <span class="badge badge--category">Markets</span>
+                <span class="badge badge--positive">Long‑term optimism</span>
+              </div>
+              <h3 class="news-title">
+                Broader indices stay resilient as investors back fundamentals and long‑term growth sectors.
+              </h3>
+              <div class="news-meta-row">
+                <p class="news-meta">Stocks • Economy • Signals</p>
+                <p class="tagline">Less noise, more conviction in real value.</p>
+              </div>
+              <div class="news-footer">
+                <span class="source">Source: Add link here</span>
+                <a href="#" class="read-link" target="_blank" rel="noreferrer">
+                  See market context
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Example card: Politics / geopolitics -->
+            <article class="news-card" data-category="politics">
+              <div class="news-badges">
+                <span class="badge badge--category">Politics</span>
+                <span class="badge badge--positive">Constructive diplomacy</span>
+              </div>
+              <h3 class="news-title">
+                Leaders meet to deepen cooperation in trade, energy and technology, signalling focus on stability.
+              </h3>
+              <div class="news-meta-row">
+                <p class="news-meta">Diplomacy • Trade • Energy</p>
+                <p class="tagline">When dialogue takes centre stage, everyone wins slowly but surely.</p>
+              </div>
+              <div class="news-footer">
+                <span class="source">Source: Add link here</span>
+                <a href="#" class="read-link" target="_blank" rel="noreferrer">
+                  Read summit overview
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+
+            <!-- Example card: Sports -->
+            <article class="news-card" data-category="sports">
+              <div class="news-badges">
+                <span class="badge badge--category">Sports</span>
+                <span class="badge badge--positive">Inspiring performance</span>
+              </div>
+              <h3 class="news-title">
+                Underdog side clinches series with disciplined play, showing what smart preparation can do.
+              </h3>
+              <div class="news-meta-row">
+                <p class="news-meta">Cricket • Teamwork • Mindset</p>
+                <p class="tagline">Sport as a weekly reminder that effort compounds.</p>
+              </div>
+              <div class="news-footer">
+                <span class="source">Source: Add link here</span>
+                <a href="#" class="read-link" target="_blank" rel="noreferrer">
+                  Match recap
+                  <span>↗</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Right column: side widgets -->
+        <aside class="column" aria-label="Summary and quick stats">
+          <section class="sidebar-card">
+            <h3>Today&apos;s Mood</h3>
+            <p>
+              A quick snapshot of why today&apos;s feed is net‑positive: more stories about
+              solutions, collaboration and long‑term thinking than about panic or fear.
+            </p>
+            <ul class="sidebar-list">
+              <li>
+                Positive‑tilted items
+                <span class="pill-mini" id="positive-count">5 stories</span>
+              </li>
+              <li>
+                Focus on AI / tech
+                <span class="pill-mini">At least 1 key story</span>
+              </li>
+              <li>
+                Personal relevance
+                <span class="pill-mini">Custom curated by you</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="sidebar-card" style="margin-top: 10px;">
+            <h3>Your Curation Notes</h3>
+            <p>
+              Use this space as a mental checklist when you add new links:
+            </p>
+            <ul class="sidebar-list">
+              <li>
+                Does this story show progress?
+                <span class="pill-mini">Yes / Skip</span>
+              </li>
+              <li>
+                What&apos;s one constructive takeaway?
+                <span class="pill-mini">Write it down</span>
+              </li>
+              <li>
+                How does it connect to your goals?
+                <span class="pill-mini">Reflect</span>
+              </li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+
+      <footer>
+        <span>
+          Built for calm information diet. Edit this page to add your own links and thoughts.
+        </span>
+        <div class="footer-badges">
+          <span class="footer-badge">🌱 Growth‑focused</span>
+          <span class="footer-badge">📚 Curated, not addictive</span>
+          <span class="footer-badge">🤖 AI, markets, sport & more</span>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Simple client-side filtering for categories
+      const filterChips = document.querySelectorAll('.filter-chip');
+      const newsCards = document.querySelectorAll('.news-card');
+      const positiveCountEl = document.getElementById('positive-count');
+
+      function updatePositiveCount() {
+        const visiblePositive = Array.from(newsCards).filter((card) => {
+          return !card.classList.contains('hidden');
+        }).length;
+        if (positiveCountEl) {
+          positiveCountEl.textContent = `${visiblePositive} stories`;
+        }
+      }
+
+      filterChips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          const filter = chip.getAttribute('data-filter');
+
+          filterChips.forEach((c) => c.classList.remove('active'));
+          chip.classList.add('active');
+
+          newsCards.forEach((card) => {
+            const category = card.getAttribute('data-category');
+            const shouldShow = filter === 'all' || category === filter;
+            card.classList.toggle('hidden', !shouldShow);
+          });
+
+          updatePositiveCount();
+        });
+      });
+
+      // Initial count on load
+      updatePositiveCount();
+    </script>
+  </body>
 </html>
