@@ -1053,6 +1053,78 @@
       return trimmed + "…";
     }
 
+    // NEW: compute a "positive impact" score for each article
+    function getPositivityScore(article) {
+      const text = (
+        (article.title || "") +
+        " " +
+        (article.description || "")
+      ).toLowerCase();
+
+      let score = 0;
+
+      // Baseline by source: The Better India is usually very positive
+      if (article.sourceKey === "tbi") {
+        score += 3;
+      }
+
+      // Baseline by category
+      const category = article.forcedCategory || classifyArticle(article);
+      if (category === "ai" || category === "startups") score += 1;
+      if (category === "sports") score += 1;
+      // markets & politics stay neutral baseline
+
+      // Positive word buckets
+      const positiveGeneral = [
+        "success", "growth", "improves", "improved", "improvement",
+        "wins", "win", "record", "milestone", "boost", "boosts",
+        "progress", "innovation", "innovative", "breakthrough",
+        "surges", "rebounds", "recovery", "revival", "benefit",
+        "positive", "uplift", "opportunity", "opportunities",
+        "clean energy", "renewable", "sustainable", "solution",
+        "solves", "addressing", "tackles"
+      ];
+
+      const positiveSports = [
+        "beats", "beat", "thrashes", "thrash", "clinches", "clinched",
+        "wins", "win", "victory", "series win", "title", "trophy",
+        "qualify", "qualified", "into final", "semifinal", "quarterfinal"
+      ];
+
+      const positiveMarkets = [
+        "rallies", "rally", "gains", "soars", "surges", "jumps",
+        "hits record", "record high", "all-time high",
+        "profit rises", "profits rise", "strong earnings",
+        "upgrade", "upgraded", "raises guidance"
+      ];
+
+      const negativeWords = [
+        "fraud", "scam", "crash", "crashes", "plunge", "plunges",
+        "falls", "fall", "loss", "losses", "decline", "declines",
+        "layoff", "layoffs", "job cuts", "fired",
+        "violence", "attack", "attacks", "killed", "dead",
+        "war", "conflict", "crisis", "controversy", "controversial"
+      ];
+
+      positiveGeneral.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
+
+      positiveSports.forEach((w) => {
+        if (text.includes(w)) score += 1;
+      });
+
+      positiveMarkets.forEach((w) => {
+        if (text.includes(w)) score += 1;
+      });
+
+      negativeWords.forEach((w) => {
+        if (text.includes(w)) score -= 2;
+      });
+
+      return score;
+    }
+
     function createNewsCard(article) {
       const category = article.forcedCategory || classifyArticle(article);
       const sourceKey = article.sourceKey || "unknown";
@@ -1530,6 +1602,20 @@
             });
           });
         }
+
+        // === NEW: sort by positive impact, then by recency ===
+        allArticles.sort((a, b) => {
+          const scoreA = getPositivityScore(a);
+          const scoreB = getPositivityScore(b);
+
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA; // higher positivity first
+          }
+
+          const dateA = new Date(a.publishedAt || a.pubDate || 0).getTime();
+          const dateB = new Date(b.publishedAt || b.pubDate || 0).getTime();
+          return dateB - dateA; // newer first
+        });
 
         if (!allArticles.length) {
           newsList.innerHTML =
