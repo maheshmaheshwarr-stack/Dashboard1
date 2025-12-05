@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>About — Mahesh’s Curated News Brief</title>
+
+  <!-- Primary meta -->
+  <meta name="description" content="About Mahesh’s Curated News Brief — a calm, personal project that curates positive and constructive news from public RSS feeds." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About — Mahesh’s Curated News Brief" />
+  <meta property="og:description" content="A personal, non-commercial project curating positive, constructive news for a calm daily reading habit." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/about.html" />
+  <meta property="og:image" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/preview.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About — Mahesh’s Curated News Brief" />
+  <meta name="twitter:description" content="A calm, optimistic news dashboard built as a personal curation project." />
+  <meta name="twitter:image" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/preview.jpg" />
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#38bdf8" />
+
+  <!-- Favicon (emoji SVG as fallback, replace with your own if you want) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>☀️</text></svg>">
+
+  <!-- Analytics (Google Analytics 4 example) -->
+  <!-- Replace G-XXXXXXXXXX with your real Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    // Replace with your Measurement ID
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --bg-softer: #f3f4f6;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-strong: #22c55e;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --card-border: #e5e7eb;
+      --chip-bg: #f3f4f6;
+      --shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
+      --radius-xl: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: #ffffff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 20px 20px 24px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e5e7eb;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .app-shell {
+        padding: 26px 26px 30px;
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 640px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(
+        circle at 30% 20%,
+        #38bdf8,
+        #22c55e
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.3);
+      overflow: hidden;
+    }
+
+    .brand-badge span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0b1020;
+    }
+
+    .brand-text h1 {
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Top navigation */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .nav-link {
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.16s ease-out;
+    }
+
+    .nav-link:hover {
+      border-color: #e5e7eb;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    .nav-link.active {
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(56, 189, 248, 0.18),
+        #e0f2fe
+      );
+      border-color: rgba(56, 189, 248, 0.9);
+      color: #0f172a;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.08);
+    }
+
+    .hook-section {
+      margin: 4px 0 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .hook-tagline {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #0f172a;
+    }
+
+    .hook-support {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .hook-about {
+      margin-top: 4px;
+      font-size: 0.72rem;
+      color: #9ca3af;
+    }
+
+    main {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .about-card {
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 14px 16px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .about-card h2 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .about-card p {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .about-card ul {
+      list-style: none;
+      margin-top: 6px;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .about-card li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      margin-top: 4px;
+      background: #38bdf8;
+      flex-shrink: 0;
+    }
+
+    .sidebar-card {
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 12px 14px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.82rem;
+    }
+
+    .sidebar-card h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #0f172a;
+    }
+
+    .sidebar-card p {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .sidebar-list {
+      list-style: none;
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-list li {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pill-mini {
+      border-radius: 999px;
+      padding: 3px 7px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.7rem;
+      color: #4f46e5;
+      background: #eef2ff;
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .footer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .footer-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #f3f4f6;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true">
+          <span>☀️</span>
+        </div>
+        <div class="brand-text">
+          <h1>Mahesh’s Curated News Brief</h1>
+          <p>Positive, calm headlines — curated from trusted public RSS feeds.</p>
+        </div>
+      </div>
+      <nav aria-label="Main navigation">
+        <!-- Link back to your main dashboard (update href if needed) -->
+        <a class="nav-link" href="index.html">News Feed</a>
+        <a class="nav-link active" href="about.html">About</a>
+      </nav>
+    </header>
+
+    <section class="hook-section" aria-label="About this project">
+      <p class="hook-tagline">Curated stories that inspire confidence in the future.</p>
+      <p class="hook-support">
+        This page explains the intent, boundaries and curation principles behind Mahesh’s Curated News Brief.
+      </p>
+      <p class="hook-about">
+        This is a personal, non-commercial project that organizes articles from public RSS feeds with a focus on positive, constructive developments.
+      </p>
+    </section>
+
+    <main>
+      <!-- Left column: main about content -->
+      <section class="column" aria-label="About content">
+        <div class="section-title">Overview</div>
+        <article class="about-card">
+          <h2>What this page is</h2>
+          <p>
+            Mahesh’s Curated News Brief is a calm reading space that gathers headlines from multiple
+            established news sources and highlights stories that show progress, solutions, collaboration
+            and long-term thinking.
+          </p>
+          <ul>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Content is fetched via public RSS feeds from trusted publishers.</span>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>The focus is on low-noise, high-signal stories across technology, markets, society and sports.</span>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Headlines and summaries remain the intellectual property of their respective publishers.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="about-card">
+          <h2>Curation principles</h2>
+          <p>
+            The feed is filtered with an emphasis on positivity and usefulness, without ignoring reality.
+            The intent is not to deny difficult news, but to make it easier to notice constructive and
+            solution-oriented developments.
+          </p>
+          <ul>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Highlight stories that teach something, show clear progress or unlock a new way of thinking.</span>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Avoid sensationalist framing, clickbait and purely fear-driven narratives whenever possible.</span>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Prioritise credibility of the source and clarity of the information.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="about-card">
+          <h2>How to use this page</h2>
+          <p>
+            You can treat the main dashboard as a quick once-or-twice-a-day briefing. Use the topic and
+            source filters to match your interests, and follow through to the original publisher whenever you
+            want deeper coverage.
+          </p>
+          <ul>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Scan the “Today’s Highlights” for a few minutes instead of doom-scrolling multiple apps.</span>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Click through to full articles only when something feels genuinely relevant or uplifting.</span>
+            </li>
+            <li>
+              <span class="bullet-dot"></span>
+              <span>Adjust your own information diet over time based on what leaves you feeling informed but calm.</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- Right column: quick facts / analytics note -->
+      <aside class="column" aria-label="Project details">
+        <section class="sidebar-card">
+          <h3>Project facts</h3>
+          <ul class="sidebar-list">
+            <li>
+              Creator
+              <span class="pill-mini">Mahesh</span>
+            </li>
+            <li>
+              Purpose
+              <span class="pill-mini">Calm news intake</span>
+            </li>
+            <li>
+              Sources
+              <span class="pill-mini">Public RSS only</span>
+            </li>
+            <li>
+              Commercial?
+              <span class="pill-mini">No, personal</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="sidebar-card">
+          <h3>About analytics</h3>
+          <p>
+            Basic, privacy-friendly analytics are used only to understand how often this page is visited and
+            which filters or sections are useful. No personalised advertising or invasive tracking is intended.
+          </p>
+          <ul class="sidebar-list">
+            <li>
+              Data stored
+              <span class="pill-mini">Aggregate usage</span>
+            </li>
+            <li>
+              Tracking IDs
+              <span class="pill-mini">Configurable</span>
+            </li>
+            <li>
+              Control
+              <span class="pill-mini">You can disable JS</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="sidebar-card">
+          <h3>Back to the feed</h3>
+          <p>
+            Ready to return to today’s headlines?
+          </p>
+          <a href="index.html" style="
+            margin-top:4px;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            font-size:0.8rem;
+            text-decoration:none;
+            border-radius:999px;
+            padding:6px 10px;
+            border:1px solid rgba(56,189,248,0.8);
+            background:#e0f2fe;
+            color:#0f172a;
+          ">
+            <span>← Back to News Feed</span>
+          </a>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <span>
+        Built as a personal experiment in calmer news consumption. Adjust and evolve as your interests change.
+      </span>
+      <div class="footer-badges">
+        <span class="footer-badge">🌱 Growth-focused</span>
+        <span class="footer-badge">📚 Curated, not addictive</span>
+        <span class="footer-badge">🤝 Respectful of publishers</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
