@@ -694,6 +694,26 @@
                   <span class="dot"></span>
                   IE Politics
                 </button>
+                <button class="filter-chip source-chip" data-source="ieindia">
+                  <span class="dot"></span>
+                  IE India (National)
+                </button>
+                <button class="filter-chip source-chip" data-source="telegraph">
+                  <span class="dot"></span>
+                  Telegraph Politics
+                </button>
+                <button class="filter-chip source-chip" data-source="iesports">
+                  <span class="dot"></span>
+                  IE Sports
+                </button>
+                <button class="filter-chip source-chip" data-source="ndtvsports">
+                  <span class="dot"></span>
+                  NDTV Sports
+                </button>
+                <button class="filter-chip source-chip" data-source="espncricinfo">
+                  <span class="dot"></span>
+                  ESPNcricinfo
+                </button>
                 <button class="filter-chip source-chip" data-source="techcrunch">
                   <span class="dot"></span>
                   TechCrunch
@@ -893,20 +913,44 @@
 
     // --- RSS sources ---
     const TBI_RSS = "https://www.thebetterindia.com/feed/";
+
+    // Indian Express (existing)
     const TECH_RSS = "https://indianexpress.com/section/technology/feed/";
     const POLITICS_RSS = "https://indianexpress.com/section/india/politics/feed/";
+
+    // NEW: Indian Express India (general) – we'll treat as politics/current
+    const IE_INDIA_RSS = "https://indianexpress.com/section/india/feed/";
+
+    // NEW: Indian Express Sports
+    const IE_SPORTS_RSS = "https://indianexpress.com/section/sports/feed/";
+
+    // NEW: Telegraph India politics
+    const TELEGRAPH_POLITICS_RSS = "http://www.telegraphindia.com/feeds/rss.jsp?id=4";
+
+    // Tech / startups
     const TECHCRUNCH_RSS = "https://techcrunch.com/feed/";
 
+    // Markets / economy
     const ET_MARKETS_RSS = "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms";
     const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
     const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
 
+    // Extra tech
     const VERGE_TECH_RSS = "https://www.theverge.com/rss/tech/index.xml";
     const ARS_TECH_RSS = "https://feeds.arstechnica.com/arstechnica/technology-lab";
+
+    // NEW: Sports-heavy feeds
+    const NDTV_SPORTS_RSS = "http://feeds.feedburner.com/NDTV-Sports";
+    const ESPNCRICINFO_RSS = "https://www.espncricinfo.com/rss/content/story/feeds/6.xml";
 
     const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TBI_RSS)}`;
     const TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TECH_RSS)}`;
     const POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(POLITICS_RSS)}`;
+
+    const IE_INDIA_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(IE_INDIA_RSS)}`;
+    const IE_SPORTS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(IE_SPORTS_RSS)}`;
+    const TELEGRAPH_POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TELEGRAPH_POLITICS_RSS)}`;
+
     const TECHCRUNCH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TECHCRUNCH_RSS)}`;
 
     const ET_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ET_MARKETS_RSS)}`;
@@ -915,6 +959,9 @@
 
     const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(VERGE_TECH_RSS)}`;
     const ARS_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ARS_TECH_RSS)}`;
+
+    const NDTV_SPORTS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(NDTV_SPORTS_RSS)}`;
+    const ESPNCRICINFO_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ESPNCRICINFO_RSS)}`;
 
     const newsList = document.getElementById("news-list");
     const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
@@ -1141,6 +1188,11 @@
           tbiResp,
           techResp,
           polResp,
+          ieIndiaResp,
+          telegraphPolResp,
+          ieSportsResp,
+          ndtvSportsResp,
+          espncricinfoResp,
           tcResp,
           etMarketsResp,
           livemintMarketsResp,
@@ -1151,6 +1203,11 @@
           fetch(TBI_URL),
           fetch(TECH_URL),
           fetch(POLITICS_URL),
+          fetch(IE_INDIA_URL),
+          fetch(TELEGRAPH_POLITICS_URL),
+          fetch(IE_SPORTS_URL),
+          fetch(NDTV_SPORTS_URL),
+          fetch(ESPNCRICINFO_URL),
           fetch(TECHCRUNCH_URL),
           fetch(ET_MARKETS_URL),
           fetch(LIVEMINT_MARKETS_URL),
@@ -1163,6 +1220,11 @@
           tbiData,
           techData,
           polData,
+          ieIndiaData,
+          telegraphPolData,
+          ieSportsData,
+          ndtvSportsData,
+          espncricinfoData,
           tcData,
           etMarketsData,
           livemintMarketsData,
@@ -1173,6 +1235,11 @@
           tbiResp.json(),
           techResp.json(),
           polResp.json(),
+          ieIndiaResp.json(),
+          telegraphPolResp.json(),
+          ieSportsResp.json(),
+          ndtvSportsResp.json(),
+          espncricinfoResp.json(),
           tcResp.json(),
           etMarketsResp.json(),
           livemintMarketsResp.json(),
@@ -1183,6 +1250,7 @@
 
         allArticles = [];
 
+        // The Better India – general positive
         if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
           const sourceTitle =
             (tbiData.feed && tbiData.feed.title) || "The Better India";
@@ -1200,6 +1268,7 @@
           });
         }
 
+        // Indian Express Technology – AI / startups
         if (techData.status === "ok" && techData.items && techData.items.length) {
           const sourceTitle =
             (techData.feed && techData.feed.title) ||
@@ -1228,6 +1297,7 @@
           });
         }
 
+        // Indian Express Politics – pure politics
         if (polData.status === "ok" && polData.items && polData.items.length) {
           const sourceTitle =
             (polData.feed && polData.feed.title) ||
@@ -1247,6 +1317,107 @@
           });
         }
 
+        // NEW: Indian Express India – treat as politics/current affairs
+        if (ieIndiaData.status === "ok" && ieIndiaData.items && ieIndiaData.items.length) {
+          const sourceTitle =
+            (ieIndiaData.feed && ieIndiaData.feed.title) ||
+            "Indian Express - India";
+
+          ieIndiaData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "politics", // push into Politics tab
+              sourceKey: "ieindia"
+            });
+          });
+        }
+
+        // NEW: Telegraph India – politics
+        if (telegraphPolData.status === "ok" && telegraphPolData.items && telegraphPolData.items.length) {
+          const sourceTitle =
+            (telegraphPolData.feed && telegraphPolData.feed.title) ||
+            "Telegraph India - Politics";
+
+          telegraphPolData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "politics",
+              sourceKey: "telegraph"
+            });
+          });
+        }
+
+        // NEW: Indian Express Sports
+        if (ieSportsData.status === "ok" && ieSportsData.items && ieSportsData.items.length) {
+          const sourceTitle =
+            (ieSportsData.feed && ieSportsData.feed.title) ||
+            "Indian Express - Sports";
+
+          ieSportsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "sports",
+              sourceKey: "iesports"
+            });
+          });
+        }
+
+        // NEW: NDTV Sports
+        if (ndtvSportsData.status === "ok" && ndtvSportsData.items && ndtvSportsData.items.length) {
+          const sourceTitle =
+            (ndtvSportsData.feed && ndtvSportsData.feed.title) ||
+            "NDTV Sports";
+
+          ndtvSportsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "sports",
+              sourceKey: "ndtvsports"
+            });
+          });
+        }
+
+        // NEW: ESPNcricinfo – cricket
+        if (espncricinfoData.status === "ok" && espncricinfoData.items && espncricinfoData.items.length) {
+          const sourceTitle =
+            (espncricinfoData.feed && espncricinfoData.feed.title) ||
+            "ESPNcricinfo";
+
+          espncricinfoData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "sports",
+              sourceKey: "espncricinfo"
+            });
+          });
+        }
+
+        // TechCrunch – startups
         if (tcData.status === "ok" && tcData.items && tcData.items.length) {
           const sourceTitle =
             (tcData.feed && tcData.feed.title) || "TechCrunch";
@@ -1265,6 +1436,7 @@
           });
         }
 
+        // ET Markets – markets
         if (etMarketsData.status === "ok" && etMarketsData.items && etMarketsData.items.length) {
           const sourceTitle =
             (etMarketsData.feed && etMarketsData.feed.title) || "ET Markets";
@@ -1283,6 +1455,7 @@
           });
         }
 
+        // Livemint – markets
         if (livemintMarketsData.status === "ok" && livemintMarketsData.items && livemintMarketsData.items.length) {
           const sourceTitle =
             (livemintMarketsData.feed && livemintMarketsData.feed.title) || "Livemint Markets";
@@ -1301,6 +1474,7 @@
           });
         }
 
+        // Moneycontrol – markets
         if (moneycontrolData.status === "ok" && moneycontrolData.items && moneycontrolData.items.length) {
           const sourceTitle =
             (moneycontrolData.feed && moneycontrolData.feed.title) || "Moneycontrol";
@@ -1319,6 +1493,7 @@
           });
         }
 
+        // The Verge – tech
         if (vergeTechData.status === "ok" && vergeTechData.items && vergeTechData.items.length) {
           const sourceTitle =
             (vergeTechData.feed && vergeTechData.feed.title) || "The Verge · Tech";
@@ -1337,6 +1512,7 @@
           });
         }
 
+        // Ars Technica – tech
         if (arsTechData.status === "ok" && arsTechData.items && arsTechData.items.length) {
           const sourceTitle =
             (arsTechData.feed && arsTechData.feed.title) || "Ars Technica · Tech";
