@@ -47,9 +47,9 @@
       width: 100%;
       max-width: 1100px;
       background: #ffffff;
-      border-radius: 28px;
+      border-radius: 24px;
       padding: 20px 20px 24px;
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
       border: 1px solid #e5e7eb;
       position: relative;
     }
@@ -64,7 +64,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 8px;
     }
 
     @media (min-width: 640px) {
@@ -114,11 +114,11 @@
       color: var(--text-muted);
     }
 
-    /* NEW: right side wrapper for nav + meta */
+    /* right side wrapper for nav + meta */
     .header-right {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       align-items: flex-start;
     }
 
@@ -128,7 +128,7 @@
       }
     }
 
-    /* NEW: nav styling */
+    /* nav styling */
     nav {
       display: flex;
       gap: 10px;
@@ -204,8 +204,16 @@
       background: rgba(22, 163, 74, 0.08);
     }
 
-    .filters-bar {
+    /* NEW: filters wrapper below header */
+    .filters-wrapper {
       margin-top: 10px;
+      margin-bottom: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filters-bar {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -248,11 +256,18 @@
       background: #38bdf8;
     }
 
+    /* Optional: hide source filters on small screens to reduce clutter */
+    @media (max-width: 700px) {
+      #source-filters {
+        display: none;
+      }
+    }
+
     main {
-      margin-top: 18px;
+      margin-top: 24px;
       display: grid;
-      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
-      gap: 18px;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+      gap: 24px;
     }
 
     @media (max-width: 900px) {
@@ -289,14 +304,14 @@
     .news-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 14px;
     }
 
     .news-card {
-      border-radius: var(--radius-xl);
+      border-radius: 20px;
       border: 1px solid var(--card-border);
-      background: var(--bg-soft);
-      padding: 12px 13px;
+      background: #ffffff;
+      padding: 14px 16px;
       box-shadow: var(--shadow-soft);
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -339,9 +354,9 @@
     }
 
     .news-title {
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.5;
       color: var(--text-main);
     }
 
@@ -358,8 +373,8 @@
     }
 
     .tagline {
-      font-size: 0.75rem;
-      color: #4f46e5;
+      font-size: 0.8rem;
+      color: #4b5563;
     }
 
     .news-footer {
@@ -483,7 +498,6 @@
         </div>
       </div>
 
-      <!-- NEW right-side block: nav + meta -->
       <div class="header-right">
         <nav aria-label="Main navigation">
           <a class="nav-link active" href="index.html">News Feed</a>
@@ -501,96 +515,98 @@
               <span id="last-updated">Fetching latest headlines…</span>
             </div>
           </div>
-
-          <!-- Topic filters (added Startups) -->
-          <div class="filters-bar" aria-label="Filter by topic">
-            <button class="filter-chip active" data-filter="all">
-              <span class="dot"></span>
-              All
-            </button>
-            <button class="filter-chip" data-filter="current">
-              <span class="dot"></span>
-              Current Affairs
-            </button>
-            <button class="filter-chip" data-filter="ai">
-              <span class="dot"></span>
-              IT &amp; AI Trends
-            </button>
-            <button class="filter-chip" data-filter="startups">
-              <span class="dot"></span>
-              Startups
-            </button>
-            <button class="filter-chip" data-filter="markets">
-              <span class="dot"></span>
-              Stock Market &amp; Economy
-            </button>
-            <button class="filter-chip" data-filter="politics">
-              <span class="dot"></span>
-              Politics
-            </button>
-            <button class="filter-chip" data-filter="sports">
-              <span class="dot"></span>
-              Sports
-            </button>
-
-            <!-- Refresh button -->
-            <button
-              id="refresh-btn"
-              class="filter-chip"
-              style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);"
-            >
-              <span class="dot"></span>
-              Refresh
-            </button>
-          </div>
-
-          <!-- Source filters -->
-          <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
-            <button class="filter-chip source-chip active" data-source="all">
-              <span class="dot"></span>
-              All sources
-            </button>
-            <button class="filter-chip source-chip" data-source="tbi">
-              <span class="dot"></span>
-              The Better India
-            </button>
-            <button class="filter-chip source-chip" data-source="ietech">
-              <span class="dot"></span>
-              IE Tech
-            </button>
-            <button class="filter-chip source-chip" data-source="iepolitics">
-              <span class="dot"></span>
-              IE Politics
-            </button>
-            <button class="filter-chip source-chip" data-source="techcrunch">
-              <span class="dot"></span>
-              TechCrunch
-            </button>
-            <button class="filter-chip source-chip" data-source="etmarkets">
-              <span class="dot"></span>
-              ET Markets
-            </button>
-            <button class="filter-chip source-chip" data-source="livemint">
-              <span class="dot"></span>
-              Livemint Markets
-            </button>
-            <button class="filter-chip source-chip" data-source="moneycontrol">
-              <span class="dot"></span>
-              Moneycontrol
-            </button>
-            <!-- NEW: Forbes & Verge source chips -->
-            <button class="filter-chip source-chip" data-source="forbes">
-              <span class="dot"></span>
-              Forbes Tech
-            </button>
-            <button class="filter-chip source-chip" data-source="verge">
-              <span class="dot"></span>
-              The Verge IT
-            </button>
-          </div>
         </div>
       </div>
     </header>
+
+    <!-- NEW: filters separated from header -->
+    <section class="filters-wrapper" aria-label="Filters">
+      <!-- Topic filters -->
+      <div class="filters-bar" aria-label="Filter by topic">
+        <button class="filter-chip active" data-filter="all">
+          <span class="dot"></span>
+          All
+        </button>
+        <button class="filter-chip" data-filter="current">
+          <span class="dot"></span>
+          Current Affairs
+        </button>
+        <button class="filter-chip" data-filter="ai">
+          <span class="dot"></span>
+          IT &amp; AI Trends
+        </button>
+        <button class="filter-chip" data-filter="startups">
+          <span class="dot"></span>
+          Startups
+        </button>
+        <button class="filter-chip" data-filter="markets">
+          <span class="dot"></span>
+          Stock Market &amp; Economy
+        </button>
+        <button class="filter-chip" data-filter="politics">
+          <span class="dot"></span>
+          Politics
+        </button>
+        <button class="filter-chip" data-filter="sports">
+          <span class="dot"></span>
+          Sports
+        </button>
+
+        <!-- Refresh button -->
+        <button
+          id="refresh-btn"
+          class="filter-chip"
+          style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);"
+        >
+          <span class="dot"></span>
+          Refresh
+        </button>
+      </div>
+
+      <!-- Source filters -->
+      <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
+        <button class="filter-chip source-chip active" data-source="all">
+          <span class="dot"></span>
+          All sources
+        </button>
+        <button class="filter-chip source-chip" data-source="tbi">
+          <span class="dot"></span>
+          The Better India
+        </button>
+        <button class="filter-chip source-chip" data-source="ietech">
+          <span class="dot"></span>
+          IE Tech
+        </button>
+        <button class="filter-chip source-chip" data-source="iepolitics">
+          <span class="dot"></span>
+          IE Politics
+        </button>
+        <button class="filter-chip source-chip" data-source="techcrunch">
+          <span class="dot"></span>
+          TechCrunch
+        </button>
+        <button class="filter-chip source-chip" data-source="etmarkets">
+          <span class="dot"></span>
+          ET Markets
+        </button>
+        <button class="filter-chip source-chip" data-source="livemint">
+          <span class="dot"></span>
+          Livemint Markets
+        </button>
+        <button class="filter-chip source-chip" data-source="moneycontrol">
+          <span class="dot"></span>
+          Moneycontrol
+        </button>
+        <button class="filter-chip source-chip" data-source="forbes">
+          <span class="dot"></span>
+          Forbes Tech
+        </button>
+        <button class="filter-chip source-chip" data-source="verge">
+          <span class="dot"></span>
+          The Verge IT
+        </button>
+      </div>
+    </section>
 
     <main>
       <!-- Left column: main feed -->
@@ -762,7 +778,7 @@
     const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
     const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
 
-    // NEW: Forbes Tech & The Verge Tech RSS
+    // Forbes Tech & The Verge Tech RSS
     const FORBES_TECH_RSS = "https://www.forbes.com/technology/feed/";
     const VERGE_TECH_RSS = "https://www.theverge.com/tech/rss/index.xml";
 
@@ -789,7 +805,6 @@
       MONEYCONTROL_MARKETS_RSS
     )}`;
 
-    // NEW: rss2json URLs for Forbes & Verge
     const FORBES_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       FORBES_TECH_RSS
     )}`;
@@ -1036,8 +1051,8 @@
           fetch(ET_MARKETS_URL),
           fetch(LIVEMINT_MARKETS_URL),
           fetch(MONEYCONTROL_MARKETS_URL),
-          fetch(FORBES_TECH_URL),   // NEW
-          fetch(VERGE_TECH_URL),    // NEW
+          fetch(FORBES_TECH_URL),
+          fetch(VERGE_TECH_URL),
         ]);
 
         const [
@@ -1058,8 +1073,8 @@
           etMarketsResp.json(),
           livemintMarketsResp.json(),
           moneycontrolResp.json(),
-          forbesTechResp.json(),   // NEW
-          vergeTechResp.json(),    // NEW
+          forbesTechResp.json(),
+          vergeTechResp.json(),
         ]);
 
         allArticles = [];
@@ -1210,7 +1225,7 @@
           });
         }
 
-        // NEW: Forbes Tech → IT & AI Trends
+        // Forbes Tech → IT & AI Trends
         if (forbesTechData.status === "ok" && forbesTechData.items && forbesTechData.items.length) {
           const sourceTitle =
             (forbesTechData.feed && forbesTechData.feed.title) || "Forbes Tech";
@@ -1229,7 +1244,7 @@
           });
         }
 
-        // NEW: The Verge Tech → IT & AI Trends
+        // The Verge Tech → IT & AI Trends
         if (vergeTechData.status === "ok" && vergeTechData.items && vergeTechData.items.length) {
           const sourceTitle =
             (vergeTechData.feed && vergeTechData.feed.title) || "The Verge - Tech";
@@ -1247,6 +1262,12 @@
             });
           });
         }
+
+        // NEW: sort by date and limit total articles (reduce clutter)
+        allArticles.sort(
+          (a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0)
+        );
+        allArticles = allArticles.slice(0, 25);
 
         if (!allArticles.length) {
           newsList.innerHTML =
