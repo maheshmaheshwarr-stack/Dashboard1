@@ -246,6 +246,68 @@
       background: #38bdf8;
     }
 
+    /* Collapsible sources panel */
+    .sources-wrapper {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .sources-wrapper[open] {
+      background: #f9fafb;
+      border-radius: 999px;
+    }
+
+    .sources-summary {
+      list-style: none;
+      cursor: pointer;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9fafb;
+    }
+
+    .sources-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .sources-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sources-caret {
+      font-size: 0.7rem;
+      transform: translateY(1px);
+    }
+
+    .sources-count {
+      font-size: 0.7rem;
+      color: #4b5563;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+
+    .sources-wrapper[open] .sources-summary {
+      border-color: rgba(56, 189, 248, 0.9);
+      background: #e0f2fe;
+      color: #0f172a;
+    }
+
+    .sources-wrapper[open] .sources-caret {
+      transform: rotate(90deg);
+    }
+
+    .sources-body {
+      margin-top: 8px;
+    }
+
     main {
       margin-top: 18px;
       display: grid;
@@ -557,6 +619,7 @@
             </div>
           </div>
 
+          <!-- Topic filters -->
           <div class="filters-bar" aria-label="Filter by topic">
             <button class="filter-chip active" data-filter="all">
               <span class="dot"></span>
@@ -597,48 +660,62 @@
             </button>
           </div>
 
-          <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
-            <button class="filter-chip source-chip active" data-source="all">
-              <span class="dot"></span>
-              All sources (combined)
-            </button>
-            <button class="filter-chip source-chip" data-source="tbi">
-              <span class="dot"></span>
-              The Better India
-            </button>
-            <button class="filter-chip source-chip" data-source="ietech">
-              <span class="dot"></span>
-              IE Tech
-            </button>
-            <button class="filter-chip source-chip" data-source="iepolitics">
-              <span class="dot"></span>
-              IE Politics
-            </button>
-            <button class="filter-chip source-chip" data-source="techcrunch">
-              <span class="dot"></span>
-              TechCrunch
-            </button>
-            <button class="filter-chip source-chip" data-source="etmarkets">
-              <span class="dot"></span>
-              ET Markets
-            </button>
-            <button class="filter-chip source-chip" data-source="livemint">
-              <span class="dot"></span>
-              Livemint Markets
-            </button>
-            <button class="filter-chip source-chip" data-source="moneycontrol">
-              <span class="dot"></span>
-              Moneycontrol
-            </button>
-            <button class="filter-chip source-chip" data-source="verge">
-              <span class="dot"></span>
-              The Verge Tech
-            </button>
-            <button class="filter-chip source-chip" data-source="arstechnica">
-              <span class="dot"></span>
-              Ars Technica
-            </button>
-          </div>
+          <!-- Collapsible source filters -->
+          <details class="sources-wrapper">
+            <summary class="sources-summary">
+              <span class="sources-label">
+                <span class="sources-caret">▶</span>
+                Sources
+              </span>
+              <span class="sources-count" id="sources-count-label">
+                All sources (combined)
+              </span>
+            </summary>
+            <div class="sources-body">
+              <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
+                <button class="filter-chip source-chip active" data-source="all">
+                  <span class="dot"></span>
+                  All sources (combined)
+                </button>
+                <button class="filter-chip source-chip" data-source="tbi">
+                  <span class="dot"></span>
+                  The Better India
+                </button>
+                <button class="filter-chip source-chip" data-source="ietech">
+                  <span class="dot"></span>
+                  IE Tech
+                </button>
+                <button class="filter-chip source-chip" data-source="iepolitics">
+                  <span class="dot"></span>
+                  IE Politics
+                </button>
+                <button class="filter-chip source-chip" data-source="techcrunch">
+                  <span class="dot"></span>
+                  TechCrunch
+                </button>
+                <button class="filter-chip source-chip" data-source="etmarkets">
+                  <span class="dot"></span>
+                  ET Markets
+                </button>
+                <button class="filter-chip source-chip" data-source="livemint">
+                  <span class="dot"></span>
+                  Livemint Markets
+                </button>
+                <button class="filter-chip source-chip" data-source="moneycontrol">
+                  <span class="dot"></span>
+                  Moneycontrol
+                </button>
+                <button class="filter-chip source-chip" data-source="verge">
+                  <span class="dot"></span>
+                  The Verge Tech
+                </button>
+                <button class="filter-chip source-chip" data-source="arstechnica">
+                  <span class="dot"></span>
+                  Ars Technica
+                </button>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
     </header>
@@ -679,28 +756,7 @@
           </ul>
         </section>
 
-        <section class="sidebar-card" style="margin-top: 10px;">
-          <h3>Your Curation Notes</h3>
-          <p>
-            Use this space as a mental checklist when you add or read stories:
-          </p>
-          <ul class="sidebar-list">
-            <li>
-              Does this story show progress?
-              <span class="pill-mini">Yes / Skip</span>
-            </li>
-            <li>
-              What's one constructive takeaway?
-              <span class="pill-mini">Write it down</span>
-            </li>
-            <li>
-              How does this affect my world?
-              <span class="pill-mini">Actionable or ignore</span>
-            </li>
-          </ul>
-        </section>
-
-        <!-- NEW: Visitor feedback card -->
+        <!-- Feedback only (removed "Your Curation Notes" to reduce clutter) -->
         <section class="sidebar-card" style="margin-top: 10px;">
           <h3>Visitor Feedback</h3>
           <p style="font-size:0.78rem;color:#6b7280;">
@@ -740,7 +796,7 @@
       </div>
     </footer>
 
-    <!-- AI News Chat widget (light mode) -->
+    <!-- AI News Chat widget (starts collapsed) -->
     <div id="chat-widget" style="
       position: fixed;
       bottom: 20px;
@@ -774,9 +830,9 @@
           color:#0f172a;
           font-size:1rem;
           cursor:pointer;
-        ">−</button>
+        ">+</button>
       </div>
-      <div id="chat-body" style="display:flex;flex-direction:column;height:260px;background:#f9fafb;">
+      <div id="chat-body" style="display:none;flex-direction:column;height:260px;background:#f9fafb;">
         <div id="chat-messages" style="
           flex:1;
           padding:8px;
@@ -861,6 +917,7 @@
     const positiveCountEl = document.getElementById("positive-count");
     const lastUpdatedEl = document.getElementById("last-updated");
     const refreshBtn = document.getElementById("refresh-btn");
+    const sourcesCountLabel = document.getElementById("sources-count-label");
 
     let allArticles = [];
     let activeCategory = "all";
@@ -1028,12 +1085,23 @@
       });
     });
 
+    function updateSourcesLabel() {
+      if (!sourcesCountLabel) return;
+      const activeChip = document.querySelector(".source-chip.active");
+      if (!activeChip || activeChip.dataset.source === "all") {
+        sourcesCountLabel.textContent = "All sources (combined)";
+      } else {
+        sourcesCountLabel.textContent = activeChip.textContent.trim();
+      }
+    }
+
     sourceChips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const source = chip.getAttribute("data-source");
         activeSource = source || "all";
         sourceChips.forEach((c) => c.classList.remove("active"));
         chip.classList.add("active");
+        updateSourcesLabel();
         applyFilters();
       });
     });
@@ -1294,6 +1362,7 @@
         }
 
         applyFilters();
+        updateSourcesLabel();
       } catch (error) {
         console.error(error);
         newsList.innerHTML =
@@ -1389,7 +1458,7 @@
       }
     });
 
-    // ====== Feedback form logic (mailto-based, no backend needed) ======
+    // Feedback form logic (mailto-based)
     const feedbackForm = document.getElementById("feedback-form");
     const feedbackNameInput = document.getElementById("feedback-name");
     const feedbackTextInput = document.getElementById("feedback-text");
