@@ -114,7 +114,6 @@
       color: var(--text-muted);
     }
 
-    /* NEW: right side wrapper for nav + meta */
     .header-right {
       display: flex;
       flex-direction: column;
@@ -128,7 +127,6 @@
       }
     }
 
-    /* NEW: nav styling */
     nav {
       display: flex;
       gap: 10px;
@@ -435,6 +433,64 @@
       background: #eef2ff;
     }
 
+    /* Feedback form inputs */
+    .input,
+    .textarea {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      background: #ffffff;
+      outline: none;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .textarea {
+      border-radius: 10px;
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .btn-primary {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #38bdf8;
+      color: #020617;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .feedback-status {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      min-height: 1em;
+    }
+
+    .feedback-status.success {
+      color: #15803d;
+    }
+
+    .feedback-status.error {
+      color: #b91c1c;
+    }
+
     footer {
       margin-top: 18px;
       padding-top: 10px;
@@ -483,7 +539,6 @@
         </div>
       </div>
 
-      <!-- NEW right-side block: nav + meta -->
       <div class="header-right">
         <nav aria-label="Main navigation">
           <a class="nav-link active" href="index.html">News Feed</a>
@@ -502,7 +557,6 @@
             </div>
           </div>
 
-          <!-- Topic filters (added Startups) -->
           <div class="filters-bar" aria-label="Filter by topic">
             <button class="filter-chip active" data-filter="all">
               <span class="dot"></span>
@@ -533,7 +587,6 @@
               Sports
             </button>
 
-            <!-- Refresh button -->
             <button
               id="refresh-btn"
               class="filter-chip"
@@ -544,7 +597,6 @@
             </button>
           </div>
 
-          <!-- Source filters -->
           <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
             <button class="filter-chip source-chip active" data-source="all">
               <span class="dot"></span>
@@ -578,7 +630,6 @@
               <span class="dot"></span>
               Moneycontrol
             </button>
-            <!-- NEW: global tech sources -->
             <button class="filter-chip source-chip" data-source="verge">
               <span class="dot"></span>
               The Verge Tech
@@ -593,7 +644,6 @@
     </header>
 
     <main>
-      <!-- Left column: main feed -->
       <section class="column" aria-label="Main news feed">
         <div class="section-title">
           <h2>Today's Highlights</h2>
@@ -605,7 +655,6 @@
         </div>
       </section>
 
-      <!-- Right column: side widgets -->
       <aside class="column" aria-label="Summary and quick stats">
         <section class="sidebar-card">
           <h3>Today's Mood</h3>
@@ -649,6 +698,32 @@
               <span class="pill-mini">Actionable or ignore</span>
             </li>
           </ul>
+        </section>
+
+        <!-- NEW: Visitor feedback card -->
+        <section class="sidebar-card" style="margin-top: 10px;">
+          <h3>Visitor Feedback</h3>
+          <p style="font-size:0.78rem;color:#6b7280;">
+            Tell me who you are and how this news feed feels. Short notes are perfect.
+          </p>
+          <form id="feedback-form" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+            <input
+              id="feedback-name"
+              class="input"
+              type="text"
+              placeholder="Your name (optional)"
+              autocomplete="name"
+            />
+            <textarea
+              id="feedback-text"
+              class="textarea"
+              placeholder="Any feedback, suggestions, or what you’d like to see here…"
+            ></textarea>
+            <button type="submit" class="btn-primary" id="feedback-submit">
+              <span>Send feedback</span> <span>📨</span>
+            </button>
+          </form>
+          <div id="feedback-status" class="feedback-status"></div>
         </section>
       </aside>
     </main>
@@ -751,51 +826,34 @@
   </div>
 
   <script>
+    // ====== CONFIG FOR FEEDBACK EMAIL ======
+    // TODO: change this to your real email address.
+    const FEEDBACK_EMAIL = "mahesh.maheshwarr@gmail.com";
+
     // --- RSS sources ---
     const TBI_RSS = "https://www.thebetterindia.com/feed/";
     const TECH_RSS = "https://indianexpress.com/section/technology/feed/";
     const POLITICS_RSS = "https://indianexpress.com/section/india/politics/feed/";
     const TECHCRUNCH_RSS = "https://techcrunch.com/feed/";
 
-    // Additional markets / economy feeds
     const ET_MARKETS_RSS = "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms";
     const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
     const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
 
-    // NEW: global tech feeds
     const VERGE_TECH_RSS = "https://www.theverge.com/rss/tech/index.xml";
     const ARS_TECH_RSS = "https://feeds.arstechnica.com/arstechnica/technology-lab";
 
-    const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      TBI_RSS
-    )}`;
-    const TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      TECH_RSS
-    )}`;
-    const POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      POLITICS_RSS
-    )}`;
-    const TECHCRUNCH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      TECHCRUNCH_RSS
-    )}`;
+    const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TBI_RSS)}`;
+    const TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TECH_RSS)}`;
+    const POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(POLITICS_RSS)}`;
+    const TECHCRUNCH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TECHCRUNCH_RSS)}`;
 
-    const ET_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      ET_MARKETS_RSS
-    )}`;
-    const LIVEMINT_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      LIVEMINT_MARKETS_RSS
-    )}`;
-    const MONEYCONTROL_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      MONEYCONTROL_MARKETS_RSS
-    )}`;
+    const ET_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ET_MARKETS_RSS)}`;
+    const LIVEMINT_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(LIVEMINT_MARKETS_RSS)}`;
+    const MONEYCONTROL_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MONEYCONTROL_MARKETS_RSS)}`;
 
-    // NEW: global tech URLs
-    const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      VERGE_TECH_RSS
-    )}`;
-    const ARS_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-      ARS_TECH_RSS
-    )}`;
+    const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(VERGE_TECH_RSS)}`;
+    const ARS_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ARS_TECH_RSS)}`;
 
     const newsList = document.getElementById("news-list");
     const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
@@ -824,9 +882,7 @@
         text.includes("ipl") ||
         text.includes("world cup") ||
         text.includes("olympic")
-      ) {
-        return "sports";
-      }
+      ) return "sports";
 
       if (
         text.includes("sensex") ||
@@ -837,9 +893,7 @@
         text.includes("economy") ||
         text.includes("gdp") ||
         text.includes("inflation")
-      ) {
-        return "markets";
-      }
+      ) return "markets";
 
       if (
         text.includes("election") ||
@@ -847,9 +901,7 @@
         text.includes("parliament") ||
         text.includes("bill passed") ||
         text.includes("policy")
-      ) {
-        return "politics";
-      }
+      ) return "politics";
 
       if (
         text.includes("startup") ||
@@ -861,9 +913,7 @@
         text.includes("series b") ||
         text.includes("venture capital") ||
         text.includes("vc firm")
-      ) {
-        return "startups";
-      }
+      ) return "startups";
 
       if (
         text.includes("ai") ||
@@ -872,9 +922,7 @@
         text.includes("openai") ||
         text.includes("chatgpt") ||
         (text.includes("google") && text.includes("ai"))
-      ) {
-        return "ai";
-      }
+      ) return "ai";
 
       return "current";
     }
@@ -898,17 +946,14 @@
             day: "2-digit",
             month: "short",
             hour: "2-digit",
-            minute: "2-digit",
+            minute: "2-digit"
           })
         : "";
 
-      const sourceName =
-        (article.source && article.source.name) || "News source";
-
+      const sourceName = (article.source && article.source.name) || "News source";
       const title = article.title || "Untitled story";
       const description =
-        article.description ||
-        "A positive development worth noting today.";
+        article.description || "A positive development worth noting today.";
 
       card.innerHTML = `
         <div class="news-badges">
@@ -933,7 +978,6 @@
           }
         </div>
       `;
-
       return card;
     }
 
@@ -942,10 +986,7 @@
       const visiblePositive = Array.from(cards).filter(
         (card) => !card.classList.contains("hidden")
       ).length;
-
-      if (positiveCountEl) {
-        positiveCountEl.textContent = `${visiblePositive} stories`;
-      }
+      if (positiveCountEl) positiveCountEl.textContent = `${visiblePositive} stories`;
     }
 
     function applyFilters() {
@@ -959,10 +1000,8 @@
         const category = card.dataset.category;
         const sourceKey = card.dataset.source || "unknown";
 
-        const categoryOK =
-          activeCategory === "all" || category === activeCategory;
-        const sourceOK =
-          activeSource === "all" || sourceKey === activeSource;
+        const categoryOK = activeCategory === "all" || category === activeCategory;
+        const sourceOK = activeSource === "all" || sourceKey === activeSource;
 
         const shouldShow = categoryOK && sourceOK;
         card.classList.toggle("hidden", !shouldShow);
@@ -983,10 +1022,8 @@
       chip.addEventListener("click", () => {
         const filter = chip.getAttribute("data-filter");
         activeCategory = filter || "all";
-
         categoryChips.forEach((c) => c.classList.remove("active"));
         chip.classList.add("active");
-
         applyFilters();
       });
     });
@@ -995,19 +1032,15 @@
       chip.addEventListener("click", () => {
         const source = chip.getAttribute("data-source");
         activeSource = source || "all";
-
         sourceChips.forEach((c) => c.classList.remove("active"));
         chip.classList.add("active");
-
         applyFilters();
       });
     });
 
     if (refreshBtn) {
       refreshBtn.addEventListener("click", () => {
-        if (lastUpdatedEl) {
-          lastUpdatedEl.textContent = "Refreshing now…";
-        }
+        if (lastUpdatedEl) lastUpdatedEl.textContent = "Refreshing now…";
         loadNews();
         refreshBtn.classList.remove("active");
       });
@@ -1064,11 +1097,9 @@
 
         allArticles = [];
 
-        // --- The Better India (general positive news) ---
         if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
           const sourceTitle =
             (tbiData.feed && tbiData.feed.title) || "The Better India";
-
           tbiData.items.slice(0, 8).forEach((item) => {
             allArticles.push({
               title: item.title,
@@ -1083,7 +1114,6 @@
           });
         }
 
-        // --- Indian Express Technology → IT/AI / Startups mix ---
         if (techData.status === "ok" && techData.items && techData.items.length) {
           const sourceTitle =
             (techData.feed && techData.feed.title) ||
@@ -1097,9 +1127,7 @@
               lower.includes("startup") ||
               lower.includes("funding") ||
               lower.includes("unicorn")
-            ) {
-              forcedCategory = "startups";
-            }
+            ) forcedCategory = "startups";
 
             allArticles.push({
               title: item.title,
@@ -1114,7 +1142,6 @@
           });
         }
 
-        // --- Indian Express Politics → Politics ---
         if (polData.status === "ok" && polData.items && polData.items.length) {
           const sourceTitle =
             (polData.feed && polData.feed.title) ||
@@ -1134,7 +1161,6 @@
           });
         }
 
-        // --- TechCrunch → Startups (global tech) ---
         if (tcData.status === "ok" && tcData.items && tcData.items.length) {
           const sourceTitle =
             (tcData.feed && tcData.feed.title) || "TechCrunch";
@@ -1153,7 +1179,6 @@
           });
         }
 
-        // --- ET Markets → Markets ---
         if (etMarketsData.status === "ok" && etMarketsData.items && etMarketsData.items.length) {
           const sourceTitle =
             (etMarketsData.feed && etMarketsData.feed.title) || "ET Markets";
@@ -1172,7 +1197,6 @@
           });
         }
 
-        // --- Livemint Markets → Markets ---
         if (livemintMarketsData.status === "ok" && livemintMarketsData.items && livemintMarketsData.items.length) {
           const sourceTitle =
             (livemintMarketsData.feed && livemintMarketsData.feed.title) || "Livemint Markets";
@@ -1191,7 +1215,6 @@
           });
         }
 
-        // --- Moneycontrol → Markets ---
         if (moneycontrolData.status === "ok" && moneycontrolData.items && moneycontrolData.items.length) {
           const sourceTitle =
             (moneycontrolData.feed && moneycontrolData.feed.title) || "Moneycontrol";
@@ -1210,7 +1233,6 @@
           });
         }
 
-        // --- The Verge · Tech ---
         if (vergeTechData.status === "ok" && vergeTechData.items && vergeTechData.items.length) {
           const sourceTitle =
             (vergeTechData.feed && vergeTechData.feed.title) || "The Verge · Tech";
@@ -1229,7 +1251,6 @@
           });
         }
 
-        // --- Ars Technica · Technology Lab ---
         if (arsTechData.status === "ok" && arsTechData.items && arsTechData.items.length) {
           const sourceTitle =
             (arsTechData.feed && arsTechData.feed.title) || "Ars Technica · Tech";
@@ -1251,9 +1272,7 @@
         if (!allArticles.length) {
           newsList.innerHTML =
             '<p style="color:#6b7280;font-size:0.8rem;">No stories found from any source. Try again later.</p>';
-          if (lastUpdatedEl) {
-            lastUpdatedEl.textContent = "No stories available";
-          }
+          if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
           return;
         }
 
@@ -1279,12 +1298,11 @@
         console.error(error);
         newsList.innerHTML =
           '<p style="color:#b91c1c;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
-        if (lastUpdatedEl) {
-          lastUpdatedEl.textContent = "Error fetching headlines";
-        }
+        if (lastUpdatedEl) lastUpdatedEl.textContent = "Error fetching headlines";
       }
     }
 
+    // Chat widget logic
     const chatWidget = document.getElementById("chat-widget");
     const chatBody = document.getElementById("chat-body");
     const chatToggle = document.getElementById("chat-toggle");
@@ -1352,10 +1370,7 @@
         const resp = await fetch("https://YOUR_BACKEND_URL_HERE/api/news-chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            question,
-            articles: contextArticles
-          })
+          body: JSON.stringify({ question, articles: contextArticles })
         });
 
         thinking.remove();
@@ -1373,6 +1388,57 @@
         addChatBubble("There was an error talking to the news bot.", "bot");
       }
     });
+
+    // ====== Feedback form logic (mailto-based, no backend needed) ======
+    const feedbackForm = document.getElementById("feedback-form");
+    const feedbackNameInput = document.getElementById("feedback-name");
+    const feedbackTextInput = document.getElementById("feedback-text");
+    const feedbackStatusEl = document.getElementById("feedback-status");
+    const feedbackSubmitBtn = document.getElementById("feedback-submit");
+
+    if (feedbackForm) {
+      feedbackForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = (feedbackNameInput.value || "").trim();
+        const feedback = (feedbackTextInput.value || "").trim();
+
+        feedbackStatusEl.className = "feedback-status";
+        feedbackStatusEl.textContent = "";
+
+        if (!feedback) {
+          feedbackStatusEl.textContent = "Please add a quick note before sending.";
+          feedbackStatusEl.classList.add("error");
+          return;
+        }
+
+        const subject = encodeURIComponent("Feedback on Mahesh news feed");
+        const bodyLines = [
+          name ? `Name: ${name}` : "Name: (not provided)",
+          "",
+          "Feedback:",
+          feedback,
+          "",
+          "---",
+          "Sent from Mahesh news feed"
+        ];
+        const body = encodeURIComponent(bodyLines.join("\n"));
+
+        const mailtoUrl = `mailto:${encodeURIComponent(FEEDBACK_EMAIL)}?subject=${subject}&body=${body}`;
+
+        feedbackSubmitBtn.disabled = true;
+        feedbackStatusEl.textContent = "Opening your email client…";
+        feedbackStatusEl.classList.add("success");
+
+        window.location.href = mailtoUrl;
+
+        setTimeout(() => {
+          feedbackSubmitBtn.disabled = false;
+          feedbackNameInput.value = "";
+          feedbackTextInput.value = "";
+          feedbackStatusEl.textContent = "Thank you for taking the time to share!";
+        }, 1000);
+      });
+    }
 
     loadNews();
   </script>
