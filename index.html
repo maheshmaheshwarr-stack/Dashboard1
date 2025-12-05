@@ -58,6 +58,7 @@
       box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(148, 163, 184, 0.4);
       backdrop-filter: blur(18px);
+      position: relative;
     }
 
     @media (min-width: 768px) {
@@ -457,7 +458,7 @@
           </div>
         </div>
 
-        <!-- Topic filters -->
+        <!-- Topic filters (added Startups) -->
         <div class="filters-bar" aria-label="Filter by topic">
           <button class="filter-chip active" data-filter="all">
             <span class="dot"></span>
@@ -470,6 +471,10 @@
           <button class="filter-chip" data-filter="ai">
             <span class="dot"></span>
             IT &amp; AI Trends
+          </button>
+          <button class="filter-chip" data-filter="startups">
+            <span class="dot"></span>
+            Startups
           </button>
           <button class="filter-chip" data-filter="markets">
             <span class="dot"></span>
@@ -484,7 +489,7 @@
             Sports
           </button>
 
-          <!-- Optional Refresh button -->
+          <!-- Refresh button -->
           <button id="refresh-btn" class="filter-chip" style="background:rgba(56,189,248,0.16);border-color:rgba(56,189,248,0.85);">
             <span class="dot"></span>
             Refresh
@@ -589,6 +594,89 @@
         <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
       </div>
     </footer>
+
+    <!-- AI News Chat widget -->
+    <div id="chat-widget" style="
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 280px;
+      max-width: 90vw;
+      background: rgba(15,23,42,0.96);
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+    ">
+      <div style="
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: radial-gradient(circle at top left, rgba(56,189,248,0.25), rgba(15,23,42,1));
+      ">
+        <div>
+          <div style="font-size:0.8rem;font-weight:600;">News Chat</div>
+          <div style="font-size:0.7rem;color:#9ca3af;">Ask about today’s feed</div>
+        </div>
+        <button id="chat-toggle" style="
+          background:none;
+          border:none;
+          color:#e5e7eb;
+          font-size:1rem;
+          cursor:pointer;
+        ">−</button>
+      </div>
+      <div id="chat-body" style="display:flex;flex-direction:column;height:260px;">
+        <div id="chat-messages" style="
+          flex:1;
+          padding:8px;
+          overflow-y:auto;
+          display:flex;
+          flex-direction:column;
+          gap:6px;
+        ">
+          <div style="align-self:flex-start;max-width:90%;padding:6px 8px;border-radius:10px;background:#0f172a;color:#e5e7eb;">
+            👋 I can answer questions about the stories on this page. Try: “What are today’s IT highlights?” or “Summarise today’s politics in 3 bullet points.”
+          </div>
+        </div>
+        <form id="chat-form" style="
+          display:flex;
+          padding:6px;
+          gap:4px;
+          border-top:1px solid rgba(148,163,184,0.35);
+        ">
+          <input
+            id="chat-input"
+            type="text"
+            placeholder="Ask about today’s news..."
+            style="
+              flex:1;
+              background:#020617;
+              border:1px solid rgba(148,163,184,0.4);
+              border-radius:999px;
+              padding:5px 8px;
+              color:#e5e7eb;
+              font-size:0.75rem;
+            "
+          />
+          <button type="submit" style="
+            border:none;
+            border-radius:999px;
+            padding:5px 10px;
+            background:#38bdf8;
+            color:#020617;
+            font-weight:600;
+            font-size:0.75rem;
+            cursor:pointer;
+          ">Send</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -622,7 +710,7 @@
     let activeCategory = "all";
     let activeSource = "all";
 
-    // --- Classification helper (for TBI + nuance) ---
+    // --- Classification helper (for TBI + nuance, including startups) ---
     function classifyArticle(article) {
       const text = (
         (article.title || "") +
@@ -667,14 +755,26 @@
       }
 
       if (
+        text.includes("startup") ||
+        text.includes("start-up") ||
+        text.includes("funding") ||
+        text.includes("valuation") ||
+        text.includes("unicorn") ||
+        text.includes("series a") ||
+        text.includes("series b") ||
+        text.includes("venture capital") ||
+        text.includes("vc firm")
+      ) {
+        return "startups";
+      }
+
+      if (
         text.includes("ai") ||
         text.includes("artificial intelligence") ||
         text.includes("machine learning") ||
         text.includes("openai") ||
         text.includes("chatgpt") ||
-        (text.includes("google") && text.includes("ai")) ||
-        text.includes("startup") ||
-        text.includes("tech company")
+        (text.includes("google") && text.includes("ai"))
       ) {
         return "ai";
       }
@@ -860,13 +960,24 @@
           });
         }
 
-        // --- Indian Express Technology → IT/AI ---
+        // --- Indian Express Technology → IT/AI / Startups mix ---
         if (techData.status === "ok" && techData.items && techData.items.length) {
           const sourceTitle =
             (techData.feed && techData.feed.title) ||
             "Indian Express - Technology";
 
           techData.items.slice(0, 6).forEach((item) => {
+            const content = stripHtml(item.description + " " + (item.content || ""));
+            const lower = content.toLowerCase();
+            let forcedCategory = "ai";
+            if (
+              lower.includes("startup") ||
+              lower.includes("funding") ||
+              lower.includes("unicorn")
+            ) {
+              forcedCategory = "startups";
+            }
+
             allArticles.push({
               title: item.title,
               description: stripHtml(item.description),
@@ -874,7 +985,7 @@
               url: item.link,
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
-              forcedCategory: "ai",
+              forcedCategory,
               sourceKey: "ietech",
             });
           });
@@ -900,7 +1011,7 @@
           });
         }
 
-        // --- TechCrunch → IT/AI (global tech) ---
+        // --- TechCrunch → Startups (global tech) ---
         if (tcData.status === "ok" && tcData.items && tcData.items.length) {
           const sourceTitle =
             (tcData.feed && tcData.feed.title) || "TechCrunch";
@@ -913,7 +1024,7 @@
               url: item.link,
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
-              forcedCategory: "ai",
+              forcedCategory: "startups",
               sourceKey: "techcrunch",
             });
           });
@@ -956,6 +1067,100 @@
         }
       }
     }
+
+    // --- AI News Chat widget behaviour ---
+
+    const chatWidget = document.getElementById("chat-widget");
+    const chatBody = document.getElementById("chat-body");
+    const chatToggle = document.getElementById("chat-toggle");
+    const chatForm = document.getElementById("chat-form");
+    const chatInput = document.getElementById("chat-input");
+    const chatMessages = document.getElementById("chat-messages");
+
+    chatToggle.addEventListener("click", () => {
+      const isHidden = chatBody.style.display === "none";
+      chatBody.style.display = isHidden ? "flex" : "none";
+      chatToggle.textContent = isHidden ? "−" : "+";
+    });
+
+    function addChatBubble(text, from = "user") {
+      const bubble = document.createElement("div");
+      bubble.style.maxWidth = "90%";
+      bubble.style.padding = "6px 8px";
+      bubble.style.borderRadius = "10px";
+      bubble.style.marginTop = "2px";
+
+      if (from === "user") {
+        bubble.style.alignSelf = "flex-end";
+        bubble.style.background = "#38bdf8";
+        bubble.style.color = "#020617";
+      } else {
+        bubble.style.alignSelf = "flex-start";
+        bubble.style.background = "#0f172a";
+        bubble.style.color = "#e5e7eb";
+      }
+
+      bubble.textContent = text;
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const question = chatInput.value.trim();
+      if (!question) return;
+
+      addChatBubble(question, "user");
+      chatInput.value = "";
+
+      // Thinking bubble
+      const thinking = document.createElement("div");
+      thinking.style.alignSelf = "flex-start";
+      thinking.style.maxWidth = "90%";
+      thinking.style.padding = "6px 8px";
+      thinking.style.borderRadius = "10px";
+      thinking.style.marginTop = "2px";
+      thinking.style.background = "#0f172a";
+      thinking.style.color = "#9ca3af";
+      thinking.textContent = "Thinking about today’s stories…";
+      chatMessages.appendChild(thinking);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      try {
+        // Compact context: up to 15 current articles
+        const contextArticles = allArticles.slice(0, 15).map((a) => ({
+          title: a.title,
+          description: a.description,
+          category: a.forcedCategory || null,
+          source: a.source?.name || "",
+          url: a.url || "",
+        }));
+
+        // TODO: replace this URL with your deployed backend endpoint
+        const resp = await fetch("https://YOUR_BACKEND_URL_HERE/api/news-chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question,
+            articles: contextArticles,
+          }),
+        });
+
+        thinking.remove();
+
+        if (!resp.ok) {
+          addChatBubble("Sorry, I couldn’t answer that just now.", "bot");
+          return;
+        }
+
+        const data = await resp.json();
+        addChatBubble(data.answer || "No answer generated.", "bot");
+      } catch (err) {
+        console.error("Chat error:", err);
+        thinking.remove();
+        addChatBubble("There was an error talking to the news bot.", "bot");
+      }
+    });
 
     // Initial load
     loadNews();
