@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   />
-  <title>Mahesh news feeds</title>
+  <title>Mahesh news feed</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -29,10 +29,13 @@
       padding: 0;
     }
 
+    html, body {
+      background: #ffffff !important;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont,
         "SF Pro Text", "Segoe UI", sans-serif;
-      background: #ffffff;
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -46,9 +49,8 @@
       background: #ffffff;
       border-radius: 28px;
       padding: 20px 20px 24px;
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
       border: 1px solid #e5e7eb;
-      backdrop-filter: blur(8px);
       position: relative;
     }
 
@@ -585,17 +587,17 @@
       </div>
     </footer>
 
-    <!-- AI News Chat widget -->
+    <!-- AI News Chat widget (light mode) -->
     <div id="chat-widget" style="
       position: fixed;
       bottom: 20px;
       right: 20px;
       width: 280px;
       max-width: 90vw;
-      background: rgba(15,23,42,0.96);
+      background: #ffffff;
       border-radius: 18px;
-      border: 1px solid rgba(148,163,184,0.6);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.12);
       font-size: 0.8rem;
       display: flex;
       flex-direction: column;
@@ -607,21 +609,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: radial-gradient(circle at top left, rgba(56,189,248,0.25), rgba(15,23,42,1));
+        background: linear-gradient(to right, #e0f2fe, #f9fafb);
       ">
         <div>
-          <div style="font-size:0.8rem;font-weight:600;">News Chat</div>
-          <div style="font-size:0.7rem;color:#9ca3af;">Ask about today’s feed</div>
+          <div style="font-size:0.8rem;font-weight:600;color:#0f172a;">News Chat</div>
+          <div style="font-size:0.7rem;color:#6b7280;">Ask about today’s feed</div>
         </div>
         <button id="chat-toggle" style="
           background:none;
           border:none;
-          color:#e5e7eb;
+          color:#0f172a;
           font-size:1rem;
           cursor:pointer;
         ">−</button>
       </div>
-      <div id="chat-body" style="display:flex;flex-direction:column;height:260px;">
+      <div id="chat-body" style="display:flex;flex-direction:column;height:260px;background:#f9fafb;">
         <div id="chat-messages" style="
           flex:1;
           padding:8px;
@@ -630,7 +632,7 @@
           flex-direction:column;
           gap:6px;
         ">
-          <div style="align-self:flex-start;max-width:90%;padding:6px 8px;border-radius:10px;background:#0f172a;color:#e5e7eb;">
+          <div style="align-self:flex-start;max-width:90%;padding:6px 8px;border-radius:10px;background:#e5e7eb;color:#111827;">
             👋 I can answer questions about the stories on this page. Try: “What are today’s IT highlights?” or “Summarise today’s politics in 3 bullet points.”
           </div>
         </div>
@@ -638,7 +640,8 @@
           display:flex;
           padding:6px;
           gap:4px;
-          border-top:1px solid rgba(148,163,184,0.35);
+          border-top:1px solid #e5e7eb;
+          background:#ffffff;
         ">
           <input
             id="chat-input"
@@ -646,11 +649,11 @@
             placeholder="Ask about today’s news..."
             style="
               flex:1;
-              background:#020617;
-              border:1px solid rgba(148,163,184,0.4);
+              background:#ffffff;
+              border:1px solid #d1d5db;
               border-radius:999px;
               padding:5px 8px;
-              color:#e5e7eb;
+              color:#111827;
               font-size:0.75rem;
             "
           />
@@ -700,7 +703,6 @@
     let activeCategory = "all";
     let activeSource = "all";
 
-    // --- Classification helper (for TBI + nuance, including startups) ---
     function classifyArticle(article) {
       const text = (
         (article.title || "") +
@@ -772,7 +774,6 @@
       return "current";
     }
 
-    // Strip HTML tags from RSS content/description
     function stripHtml(html) {
       if (!html) return "";
       return html.replace(/<[^>]*>/g, "").trim();
@@ -873,7 +874,6 @@
       updatePositiveCount();
     }
 
-    // --- Category filter chips ---
     categoryChips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const filter = chip.getAttribute("data-filter");
@@ -886,7 +886,6 @@
       });
     });
 
-    // --- Source filter chips ---
     sourceChips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const source = chip.getAttribute("data-source");
@@ -899,7 +898,6 @@
       });
     });
 
-    // Manual refresh button
     if (refreshBtn) {
       refreshBtn.addEventListener("click", () => {
         if (lastUpdatedEl) {
@@ -931,7 +929,6 @@
 
         allArticles = [];
 
-        // --- The Better India (general positive news) ---
         if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
           const sourceTitle =
             (tbiData.feed && tbiData.feed.title) || "The Better India";
@@ -950,7 +947,6 @@
           });
         }
 
-        // --- Indian Express Technology → IT/AI / Startups mix ---
         if (techData.status === "ok" && techData.items && techData.items.length) {
           const sourceTitle =
             (techData.feed && techData.feed.title) ||
@@ -981,7 +977,6 @@
           });
         }
 
-        // --- Indian Express Politics → Politics ---
         if (polData.status === "ok" && polData.items && polData.items.length) {
           const sourceTitle =
             (polData.feed && polData.feed.title) ||
@@ -1001,7 +996,6 @@
           });
         }
 
-        // --- TechCrunch → Startups (global tech) ---
         if (tcData.status === "ok" && tcData.items && tcData.items.length) {
           const sourceTitle =
             (tcData.feed && tcData.feed.title) || "TechCrunch";
@@ -1046,7 +1040,6 @@
             });
         }
 
-        // Apply current filters (category + source)
         applyFilters();
       } catch (error) {
         console.error(error);
@@ -1057,8 +1050,6 @@
         }
       }
     }
-
-    // --- AI News Chat widget behaviour ---
 
     const chatWidget = document.getElementById("chat-widget");
     const chatBody = document.getElementById("chat-body");
@@ -1086,8 +1077,8 @@
         bubble.style.color = "#020617";
       } else {
         bubble.style.alignSelf = "flex-start";
-        bubble.style.background = "#0f172a";
-        bubble.style.color = "#e5e7eb";
+        bubble.style.background = "#e5e7eb";
+        bubble.style.color = "#111827";
       }
 
       bubble.textContent = text;
@@ -1103,21 +1094,19 @@
       addChatBubble(question, "user");
       chatInput.value = "";
 
-      // Thinking bubble
       const thinking = document.createElement("div");
       thinking.style.alignSelf = "flex-start";
       thinking.style.maxWidth = "90%";
       thinking.style.padding = "6px 8px";
       thinking.style.borderRadius = "10px";
       thinking.style.marginTop = "2px";
-      thinking.style.background = "#0f172a";
-      thinking.style.color = "#9ca3af";
+      thinking.style.background = "#e5e7eb";
+      thinking.style.color = "#6b7280";
       thinking.textContent = "Thinking about today’s stories…";
       chatMessages.appendChild(thinking);
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
       try {
-        // Compact context: up to 15 current articles
         const contextArticles = allArticles.slice(0, 15).map((a) => ({
           title: a.title,
           description: a.description,
@@ -1126,7 +1115,6 @@
           url: a.url || "",
         }));
 
-        // TODO: replace this URL with your deployed backend endpoint
         const resp = await fetch("https://YOUR_BACKEND_URL_HERE/api/news-chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1152,7 +1140,6 @@
       }
     });
 
-    // Initial load
     loadNews();
   </script>
 </body>
