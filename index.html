@@ -548,7 +548,7 @@
           <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
             <button class="filter-chip source-chip active" data-source="all">
               <span class="dot"></span>
-              All sources
+              All sources (combined)
             </button>
             <button class="filter-chip source-chip" data-source="tbi">
               <span class="dot"></span>
@@ -577,6 +577,15 @@
             <button class="filter-chip source-chip" data-source="moneycontrol">
               <span class="dot"></span>
               Moneycontrol
+            </button>
+            <!-- NEW: global tech sources -->
+            <button class="filter-chip source-chip" data-source="verge">
+              <span class="dot"></span>
+              The Verge Tech
+            </button>
+            <button class="filter-chip source-chip" data-source="arstechnica">
+              <span class="dot"></span>
+              Ars Technica
             </button>
           </div>
         </div>
@@ -753,6 +762,10 @@
     const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
     const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
 
+    // NEW: global tech feeds
+    const VERGE_TECH_RSS = "https://www.theverge.com/rss/tech/index.xml";
+    const ARS_TECH_RSS = "https://feeds.arstechnica.com/arstechnica/technology-lab";
+
     const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       TBI_RSS
     )}`;
@@ -774,6 +787,14 @@
     )}`;
     const MONEYCONTROL_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       MONEYCONTROL_MARKETS_RSS
+    )}`;
+
+    // NEW: global tech URLs
+    const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      VERGE_TECH_RSS
+    )}`;
+    const ARS_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      ARS_TECH_RSS
     )}`;
 
     const newsList = document.getElementById("news-list");
@@ -1004,7 +1025,9 @@
           tcResp,
           etMarketsResp,
           livemintMarketsResp,
-          moneycontrolResp
+          moneycontrolResp,
+          vergeTechResp,
+          arsTechResp
         ] = await Promise.all([
           fetch(TBI_URL),
           fetch(TECH_URL),
@@ -1013,6 +1036,8 @@
           fetch(ET_MARKETS_URL),
           fetch(LIVEMINT_MARKETS_URL),
           fetch(MONEYCONTROL_MARKETS_URL),
+          fetch(VERGE_TECH_URL),
+          fetch(ARS_TECH_URL)
         ]);
 
         const [
@@ -1022,7 +1047,9 @@
           tcData,
           etMarketsData,
           livemintMarketsData,
-          moneycontrolData
+          moneycontrolData,
+          vergeTechData,
+          arsTechData
         ] = await Promise.all([
           tbiResp.json(),
           techResp.json(),
@@ -1031,6 +1058,8 @@
           etMarketsResp.json(),
           livemintMarketsResp.json(),
           moneycontrolResp.json(),
+          vergeTechResp.json(),
+          arsTechResp.json()
         ]);
 
         allArticles = [];
@@ -1049,7 +1078,7 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory: null,
-              sourceKey: "tbi",
+              sourceKey: "tbi"
             });
           });
         }
@@ -1080,7 +1109,7 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory,
-              sourceKey: "ietech",
+              sourceKey: "ietech"
             });
           });
         }
@@ -1100,7 +1129,7 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory: "politics",
-              sourceKey: "iepolitics",
+              sourceKey: "iepolitics"
             });
           });
         }
@@ -1119,7 +1148,7 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory: "startups",
-              sourceKey: "techcrunch",
+              sourceKey: "techcrunch"
             });
           });
         }
@@ -1138,7 +1167,7 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory: "markets",
-              sourceKey: "etmarkets",
+              sourceKey: "etmarkets"
             });
           });
         }
@@ -1157,7 +1186,7 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory: "markets",
-              sourceKey: "livemint",
+              sourceKey: "livemint"
             });
           });
         }
@@ -1176,7 +1205,45 @@
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
               forcedCategory: "markets",
-              sourceKey: "moneycontrol",
+              sourceKey: "moneycontrol"
+            });
+          });
+        }
+
+        // --- The Verge · Tech ---
+        if (vergeTechData.status === "ok" && vergeTechData.items && vergeTechData.items.length) {
+          const sourceTitle =
+            (vergeTechData.feed && vergeTechData.feed.title) || "The Verge · Tech";
+
+          vergeTechData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: null,
+              sourceKey: "verge"
+            });
+          });
+        }
+
+        // --- Ars Technica · Technology Lab ---
+        if (arsTechData.status === "ok" && arsTechData.items && arsTechData.items.length) {
+          const sourceTitle =
+            (arsTechData.feed && arsTechData.feed.title) || "Ars Technica · Tech";
+
+          arsTechData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: null,
+              sourceKey: "arstechnica"
             });
           });
         }
@@ -1203,7 +1270,7 @@
               day: "2-digit",
               month: "short",
               hour: "2-digit",
-              minute: "2-digit",
+              minute: "2-digit"
             });
         }
 
@@ -1279,7 +1346,7 @@
           description: a.description,
           category: a.forcedCategory || null,
           source: a.source?.name || "",
-          url: a.url || "",
+          url: a.url || ""
         }));
 
         const resp = await fetch("https://YOUR_BACKEND_URL_HERE/api/news-chat", {
@@ -1287,8 +1354,8 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             question,
-            articles: contextArticles,
-          }),
+            articles: contextArticles
+          })
         });
 
         thinking.remove();
