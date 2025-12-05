@@ -417,9 +417,14 @@
       color: var(--text-muted);
     }
 
+    /* Short, clamped preview text */
     .tagline {
       font-size: 0.75rem;
       color: #4f46e5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* max 3 lines */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .news-footer {
@@ -756,7 +761,7 @@
           </ul>
         </section>
 
-        <!-- Feedback only (removed "Your Curation Notes" to reduce clutter) -->
+        <!-- Feedback card -->
         <section class="sidebar-card" style="margin-top: 10px;">
           <h3>Visitor Feedback</h3>
           <p style="font-size:0.78rem;color:#6b7280;">
@@ -884,7 +889,7 @@
   <script>
     // ====== CONFIG FOR FEEDBACK EMAIL ======
     // TODO: change this to your real email address.
-    const FEEDBACK_EMAIL = "mahesh.maheshwarr@gmail.com";
+    const FEEDBACK_EMAIL = "youremail@example.com";
 
     // --- RSS sources ---
     const TBI_RSS = "https://www.thebetterindia.com/feed/";
@@ -989,6 +994,18 @@
       return html.replace(/<[^>]*>/g, "").trim();
     }
 
+    // Helper: shorten long descriptions to keep cards compact
+    function shortenText(text, maxLen = 220) {
+      if (!text) return "";
+      const clean = text.trim();
+      if (clean.length <= maxLen) return clean;
+
+      const sliced = clean.slice(0, maxLen);
+      const lastSpace = sliced.lastIndexOf(" ");
+      const trimmed = lastSpace > 120 ? sliced.slice(0, lastSpace) : sliced;
+      return trimmed + "…";
+    }
+
     function createNewsCard(article) {
       const category = article.forcedCategory || classifyArticle(article);
       const sourceKey = article.sourceKey || "unknown";
@@ -1009,8 +1026,9 @@
 
       const sourceName = (article.source && article.source.name) || "News source";
       const title = article.title || "Untitled story";
-      const description =
-        article.description || "A positive development worth noting today.";
+      const description = shortenText(
+        article.description || "A positive development worth noting today."
+      );
 
       card.innerHTML = `
         <div class="news-badges">
