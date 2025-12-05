@@ -578,6 +578,15 @@
               <span class="dot"></span>
               Moneycontrol
             </button>
+            <!-- NEW: Forbes & Verge source chips -->
+            <button class="filter-chip source-chip" data-source="forbes">
+              <span class="dot"></span>
+              Forbes Tech
+            </button>
+            <button class="filter-chip source-chip" data-source="verge">
+              <span class="dot"></span>
+              The Verge IT
+            </button>
           </div>
         </div>
       </div>
@@ -753,6 +762,10 @@
     const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
     const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
 
+    // NEW: Forbes Tech & The Verge Tech RSS
+    const FORBES_TECH_RSS = "https://www.forbes.com/technology/feed/";
+    const VERGE_TECH_RSS = "https://www.theverge.com/tech/rss/index.xml";
+
     const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       TBI_RSS
     )}`;
@@ -774,6 +787,14 @@
     )}`;
     const MONEYCONTROL_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       MONEYCONTROL_MARKETS_RSS
+    )}`;
+
+    // NEW: rss2json URLs for Forbes & Verge
+    const FORBES_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      FORBES_TECH_RSS
+    )}`;
+    const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      VERGE_TECH_RSS
     )}`;
 
     const newsList = document.getElementById("news-list");
@@ -1004,7 +1025,9 @@
           tcResp,
           etMarketsResp,
           livemintMarketsResp,
-          moneycontrolResp
+          moneycontrolResp,
+          forbesTechResp,
+          vergeTechResp
         ] = await Promise.all([
           fetch(TBI_URL),
           fetch(TECH_URL),
@@ -1013,6 +1036,8 @@
           fetch(ET_MARKETS_URL),
           fetch(LIVEMINT_MARKETS_URL),
           fetch(MONEYCONTROL_MARKETS_URL),
+          fetch(FORBES_TECH_URL),   // NEW
+          fetch(VERGE_TECH_URL),    // NEW
         ]);
 
         const [
@@ -1022,7 +1047,9 @@
           tcData,
           etMarketsData,
           livemintMarketsData,
-          moneycontrolData
+          moneycontrolData,
+          forbesTechData,
+          vergeTechData
         ] = await Promise.all([
           tbiResp.json(),
           techResp.json(),
@@ -1031,6 +1058,8 @@
           etMarketsResp.json(),
           livemintMarketsResp.json(),
           moneycontrolResp.json(),
+          forbesTechResp.json(),   // NEW
+          vergeTechResp.json(),    // NEW
         ]);
 
         allArticles = [];
@@ -1177,6 +1206,44 @@
               source: { name: sourceTitle },
               forcedCategory: "markets",
               sourceKey: "moneycontrol",
+            });
+          });
+        }
+
+        // NEW: Forbes Tech → IT & AI Trends
+        if (forbesTechData.status === "ok" && forbesTechData.items && forbesTechData.items.length) {
+          const sourceTitle =
+            (forbesTechData.feed && forbesTechData.feed.title) || "Forbes Tech";
+
+          forbesTechData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "ai",
+              sourceKey: "forbes",
+            });
+          });
+        }
+
+        // NEW: The Verge Tech → IT & AI Trends
+        if (vergeTechData.status === "ok" && vergeTechData.items && vergeTechData.items.length) {
+          const sourceTitle =
+            (vergeTechData.feed && vergeTechData.feed.title) || "The Verge - Tech";
+
+          vergeTechData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "ai",
+              sourceKey: "verge",
             });
           });
         }
