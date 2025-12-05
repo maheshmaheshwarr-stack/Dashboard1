@@ -9,17 +9,17 @@
   <title>Mahesh news feed</title>
   <style>
     :root {
-      --bg: #050816;
-      --bg-soft: #0b1020;
-      --bg-softer: #11182a;
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --bg-softer: #f3f4f6;
       --accent: #38bdf8;
       --accent-soft: rgba(56, 189, 248, 0.12);
       --accent-strong: #22c55e;
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-      --card-border: rgba(148, 163, 184, 0.3);
-      --chip-bg: rgba(15, 23, 42, 0.9);
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --card-border: #e5e7eb;
+      --chip-bg: #f3f4f6;
+      --shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
       --radius-xl: 18px;
     }
 
@@ -32,7 +32,7 @@
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont,
         "SF Pro Text", "Segoe UI", sans-serif;
-      background: #ffffff; /* changed to white */
+      background: #ffffff;
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -43,16 +43,12 @@
     .app-shell {
       width: 100%;
       max-width: 1100px;
-      background: linear-gradient(
-        145deg,
-        rgba(15, 23, 42, 0.95),
-        rgba(2, 6, 23, 0.98)
-      );
+      background: #ffffff;
       border-radius: 28px;
       padding: 20px 20px 24px;
-      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+      border: 1px solid #e5e7eb;
+      backdrop-filter: blur(8px);
       position: relative;
     }
 
@@ -95,7 +91,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.5);
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.3);
       position: relative;
       overflow: hidden;
     }
@@ -140,8 +136,8 @@
     .pill {
       border-radius: 999px;
       padding: 6px 10px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
@@ -154,8 +150,8 @@
 
     .pill--accent {
       border-color: rgba(34, 197, 94, 0.8);
-      color: #bbf7d0;
-      background: rgba(22, 163, 74, 0.16);
+      color: #166534;
+      background: rgba(22, 163, 74, 0.08);
     }
 
     .filters-bar {
@@ -169,7 +165,7 @@
       border-radius: 999px;
       padding: 6px 11px;
       font-size: 0.78rem;
-      border: 1px solid rgba(148, 163, 184, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.7);
       background: var(--chip-bg);
       color: var(--text-muted);
       cursor: pointer;
@@ -183,19 +179,19 @@
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.6);
+      background: rgba(148, 163, 184, 0.8);
     }
 
     .filter-chip.active {
       background: radial-gradient(
         circle at 0 0,
-        rgba(56, 189, 248, 0.3),
-        rgba(15, 23, 42, 0.98)
+        rgba(56, 189, 248, 0.18),
+        #e0f2fe
       );
-      color: #e0f2fe;
+      color: #0f172a;
       border-color: rgba(56, 189, 248, 0.9);
       transform: translateY(-1px);
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.8);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
     }
 
     .filter-chip.active span.dot {
@@ -249,11 +245,7 @@
     .news-card {
       border-radius: var(--radius-xl);
       border: 1px solid var(--card-border);
-      background: radial-gradient(
-        circle at top left,
-        rgba(148, 163, 184, 0.14),
-        rgba(15, 23, 42, 0.98)
-      );
+      background: var(--bg-soft);
       padding: 12px 13px;
       box-shadow: var(--shadow-soft);
       display: grid;
@@ -265,7 +257,7 @@
 
     .news-card:hover {
       transform: translateY(-3px) translateZ(0);
-      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
       border-color: rgba(56, 189, 248, 0.7);
     }
 
@@ -279,9 +271,9 @@
     .badge {
       padding: 4px 8px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
+      background: #e5e7eb;
       color: var(--text-muted);
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.8);
     }
 
     .badge--category {
@@ -291,15 +283,16 @@
     }
 
     .badge--positive {
-      border-color: rgba(34, 197, 94, 0.8);
-      color: #bbf7d0;
-      background: rgba(21, 128, 61, 0.2);
+      border-color: rgba(34, 197, 94, 0.9);
+      color: #15803d;
+      background: #dcfce7;
     }
 
     .news-title {
       font-size: 0.98rem;
       font-weight: 600;
       line-height: 1.4;
+      color: var(--text-main);
     }
 
     .news-meta-row {
@@ -316,7 +309,7 @@
 
     .tagline {
       font-size: 0.75rem;
-      color: #a5b4fc;
+      color: #4f46e5;
     }
 
     .news-footer {
@@ -346,14 +339,10 @@
 
     .sidebar-card {
       border-radius: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: radial-gradient(
-        circle at top,
-        rgba(56, 189, 248, 0.22),
-        rgba(15, 23, 42, 0.98)
-      );
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
       padding: 12px 14px;
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -363,12 +352,12 @@
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: #bfdbfe;
+      color: #0f172a;
     }
 
     .sidebar-card p {
       font-size: 0.8rem;
-      color: #e5e7eb;
+      color: var(--text-main);
     }
 
     .sidebar-list {
@@ -390,15 +379,16 @@
     .pill-mini {
       border-radius: 999px;
       padding: 3px 7px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.8);
       font-size: 0.7rem;
-      color: #c4b5fd;
+      color: #4f46e5;
+      background: #eef2ff;
     }
 
     footer {
       margin-top: 18px;
       padding-top: 10px;
-      border-top: 1px dashed rgba(148, 163, 184, 0.35);
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -417,8 +407,9 @@
     .footer-badge {
       padding: 4px 8px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #f3f4f6;
+      color: var(--text-muted);
     }
 
     .hidden {
@@ -485,7 +476,11 @@
           </button>
 
           <!-- Refresh button -->
-          <button id="refresh-btn" class="filter-chip" style="background:rgba(56,189,248,0.16);border-color:rgba(56,189,248,0.85);">
+          <button
+            id="refresh-btn"
+            class="filter-chip"
+            style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);"
+          >
             <span class="dot"></span>
             Refresh
           </button>
@@ -697,7 +692,7 @@
     const newsList = document.getElementById("news-list");
     const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
     const sourceChips = document.querySelectorAll(".filter-chip[data-source]");
-       const positiveCountEl = document.getElementById("positive-count");
+    const positiveCountEl = document.getElementById("positive-count");
     const lastUpdatedEl = document.getElementById("last-updated");
     const refreshBtn = document.getElementById("refresh-btn");
 
@@ -871,7 +866,7 @@
       if (!anyVisible) {
         newsList.insertAdjacentHTML(
           "beforeend",
-          '<p id="empty-msg" style="color:#9ca3af;font-size:0.8rem;margin-top:4px;">No stories with this topic + source. Try changing a filter.</p>'
+          '<p id="empty-msg" style="color:#6b7280;font-size:0.8rem;margin-top:4px;">No stories with this topic + source. Try changing a filter.</p>'
         );
       }
 
@@ -917,7 +912,7 @@
 
     async function loadNews() {
       newsList.innerHTML =
-        '<p style="color:#9ca3af;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
+        '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
 
       try {
         const [tbiResp, techResp, polResp, tcResp] = await Promise.all([
@@ -1027,7 +1022,7 @@
 
         if (!allArticles.length) {
           newsList.innerHTML =
-            '<p style="color:#9ca3af;font-size:0.8rem;">No stories found from any source. Try again later.</p>';
+            '<p style="color:#6b7280;font-size:0.8rem;">No stories found from any source. Try again later.</p>';
           if (lastUpdatedEl) {
             lastUpdatedEl.textContent = "No stories available";
           }
@@ -1056,7 +1051,7 @@
       } catch (error) {
         console.error(error);
         newsList.innerHTML =
-          '<p style="color:#fecaca;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
+          '<p style="color:#b91c1c;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
         if (lastUpdatedEl) {
           lastUpdatedEl.textContent = "Error fetching headlines";
         }
