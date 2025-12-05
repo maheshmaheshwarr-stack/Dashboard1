@@ -1054,76 +1054,89 @@
     }
 
     // NEW: compute a "positive impact" score for each article
-    function getPositivityScore(article) {
-      const text = (
-        (article.title || "") +
-        " " +
-        (article.description || "")
-      ).toLowerCase();
+   // NEW: compute a "positive impact" score for each article (stricter)
+function getPositivityScore(article) {
+  const text = (
+    (article.title || "") +
+    " " +
+    (article.description || "")
+  ).toLowerCase();
 
-      let score = 0;
+  let score = 0;
+  let hasNegative = false;
 
-      // Baseline by source: The Better India is usually very positive
-      if (article.sourceKey === "tbi") {
-        score += 3;
-      }
+  const category = article.forcedCategory || classifyArticle(article);
 
-      // Baseline by category
-      const category = article.forcedCategory || classifyArticle(article);
-      if (category === "ai" || category === "startups") score += 1;
-      if (category === "sports") score += 1;
-      // markets & politics stay neutral baseline
+  // 1) Baseline: favor TBI + tech/startups, soften politics/current
+  if (article.sourceKey === "tbi") score += 4;          // strong boost
+  if (category === "ai" || category === "startups") score += 2;
+  if (category === "sports") score += 1;
+  if (category === "markets") score += 0;              // neutral
+  if (category === "current") score -= 1;
+  if (category === "politics") score -= 2;             // default lower
 
-      // Positive word buckets
-      const positiveGeneral = [
-        "success", "growth", "improves", "improved", "improvement",
-        "wins", "win", "record", "milestone", "boost", "boosts",
-        "progress", "innovation", "innovative", "breakthrough",
-        "surges", "rebounds", "recovery", "revival", "benefit",
-        "positive", "uplift", "opportunity", "opportunities",
-        "clean energy", "renewable", "sustainable", "solution",
-        "solves", "addressing", "tackles"
-      ];
+  // 2) Positive word buckets
+  const positiveGeneral = [
+    "success", "growth", "improves", "improved", "improvement",
+    "increases", "increase", "record high", "all-time high",
+    "milestone", "breakthrough", "innovation", "innovative",
+    "progress", "boost", "boosts", "recovery", "revival",
+    "rebounds", "surges", "solution", "solves", "addressing",
+    "sustainable", "clean energy", "renewable", "opportunity",
+    "opportunities", "wins award", "honoured", "recognised",
+    "empowers", "inspiring", "uplifting", "transforms", "transforming"
+  ];
 
-      const positiveSports = [
-        "beats", "beat", "thrashes", "thrash", "clinches", "clinched",
-        "wins", "win", "victory", "series win", "title", "trophy",
-        "qualify", "qualified", "into final", "semifinal", "quarterfinal"
-      ];
+  const positiveSports = [
+    "beats", "beat", "thrashes", "thrash", "clinches", "clinched",
+    "wins", "win", "victory", "series win", "title", "trophy",
+    "qualify", "qualified", "into final", "semifinal", "quarterfinal",
+    "stuns", "upset win"
+  ];
 
-      const positiveMarkets = [
-        "rallies", "rally", "gains", "soars", "surges", "jumps",
-        "hits record", "record high", "all-time high",
-        "profit rises", "profits rise", "strong earnings",
-        "upgrade", "upgraded", "raises guidance"
-      ];
+  const positiveMarkets = [
+    "rallies", "rally", "gains", "soars", "surges", "jumps",
+    "spikes", "climbs", "recovers", "bounce back", "bounces back",
+    "profit rises", "profits rise", "strong earnings",
+    "upgrade", "upgraded", "raises guidance"
+  ];
 
-      const negativeWords = [
-        "fraud", "scam", "crash", "crashes", "plunge", "plunges",
-        "falls", "fall", "loss", "losses", "decline", "declines",
-        "layoff", "layoffs", "job cuts", "fired",
-        "violence", "attack", "attacks", "killed", "dead",
-        "war", "conflict", "crisis", "controversy", "controversial"
-      ];
+  const negativeWords = [
+    "fraud", "scam", "crash", "crashes", "crashed", "plunge", "plunges",
+    "falls", "fall", "tumbles", "tumble", "loss", "losses", "decline",
+    "declines", "layoff", "layoffs", "job cuts", "fired", "retrenchment",
+    "violence", "clash", "clashes", "riot", "riots", "attack", "attacks",
+    "killed", "dead", "death", "deaths", "murder", "rape",
+    "war", "conflict", "crisis", "controversy", "controversial",
+    "scandal", "corruption", "bribery", "probe", "charges framed"
+  ];
 
-      positiveGeneral.forEach((w) => {
-        if (text.includes(w)) score += 2;
-      });
+  positiveGeneral.forEach((w) => {
+    if (text.includes(w)) score += 2;
+  });
 
-      positiveSports.forEach((w) => {
-        if (text.includes(w)) score += 1;
-      });
+  positiveSports.forEach((w) => {
+    if (text.includes(w)) score += 2;
+  });
 
-      positiveMarkets.forEach((w) => {
-        if (text.includes(w)) score += 1;
-      });
+  positiveMarkets.forEach((w) => {
+    if (text.includes(w)) score += 2;
+  });
 
-      negativeWords.forEach((w) => {
-        if (text.includes(w)) score -= 2;
-      });
-
-      return score;
+  negativeWords.forEach((w) => {
+    if (text.includes(w)) {
+      hasNegative = true;
+      score -= 5; // strong penalty
     }
+  });
+
+  // 3) If it has any clear negative signal, don't let it become net-positive
+  if (hasNegative && score > 0) {
+    score = -1;
+  }
+
+  return score;
+}
 
     function createNewsCard(article) {
       const category = article.forcedCategory || classifyArticle(article);
