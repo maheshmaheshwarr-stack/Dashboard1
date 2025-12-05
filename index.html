@@ -64,7 +64,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      margin-bottom: 12px;
+      margin-bottom: 18px;
     }
 
     @media (min-width: 640px) {
@@ -112,6 +112,54 @@
     .brand-text p {
       font-size: 0.8rem;
       color: var(--text-muted);
+    }
+
+    /* NEW: right side wrapper for nav + meta */
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 640px) {
+      .header-right {
+        align-items: flex-end;
+      }
+    }
+
+    /* NEW: nav styling */
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .nav-link {
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.16s ease-out;
+    }
+
+    .nav-link:hover {
+      border-color: #e5e7eb;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    .nav-link.active {
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(56, 189, 248, 0.18),
+        #e0f2fe
+      );
+      border-color: rgba(56, 189, 248, 0.9);
+      color: #0f172a;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
     }
 
     .meta {
@@ -200,30 +248,8 @@
       background: #38bdf8;
     }
 
-    /* Hook section under header */
-    .hook-section {
-      margin: 4px 0 14px;
-      padding: 10px 14px;
-      border-radius: 16px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-    }
-
-    .hook-tagline {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #0f172a;
-    }
-
-    .hook-support {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
     main {
-      margin-top: 6px;
+      margin-top: 18px;
       display: grid;
       grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
       gap: 18px;
@@ -456,110 +482,106 @@
           </p>
         </div>
       </div>
-      <nav aria-label="Main navigation">
-  <a class="nav-link active" href="index.html">News Feed</a>
-  <a class="nav-link" href="about.html">About</a>
-</nav>
 
-      <div class="meta">
-        <div class="pill-row">
-          <div class="pill pill--accent">
-            <span class="icon">✨</span>
-            <span>Signal over noise. Positivity over panic.</span>
+      <!-- NEW right-side block: nav + meta -->
+      <div class="header-right">
+        <nav aria-label="Main navigation">
+          <a class="nav-link active" href="index.html">News Feed</a>
+          <a class="nav-link" href="about.html">About</a>
+        </nav>
+
+        <div class="meta">
+          <div class="pill-row">
+            <div class="pill pill--accent">
+              <span class="icon">✨</span>
+              <span>Signal over noise. Positivity over panic.</span>
+            </div>
+            <div class="pill">
+              <span class="icon">🕒</span>
+              <span id="last-updated">Fetching latest headlines…</span>
+            </div>
           </div>
-          <div class="pill">
-            <span class="icon">🕒</span>
-            <span id="last-updated">Fetching latest headlines…</span>
+
+          <!-- Topic filters (added Startups) -->
+          <div class="filters-bar" aria-label="Filter by topic">
+            <button class="filter-chip active" data-filter="all">
+              <span class="dot"></span>
+              All
+            </button>
+            <button class="filter-chip" data-filter="current">
+              <span class="dot"></span>
+              Current Affairs
+            </button>
+            <button class="filter-chip" data-filter="ai">
+              <span class="dot"></span>
+              IT &amp; AI Trends
+            </button>
+            <button class="filter-chip" data-filter="startups">
+              <span class="dot"></span>
+              Startups
+            </button>
+            <button class="filter-chip" data-filter="markets">
+              <span class="dot"></span>
+              Stock Market &amp; Economy
+            </button>
+            <button class="filter-chip" data-filter="politics">
+              <span class="dot"></span>
+              Politics
+            </button>
+            <button class="filter-chip" data-filter="sports">
+              <span class="dot"></span>
+              Sports
+            </button>
+
+            <!-- Refresh button -->
+            <button
+              id="refresh-btn"
+              class="filter-chip"
+              style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);"
+            >
+              <span class="dot"></span>
+              Refresh
+            </button>
           </div>
-        </div>
 
-        <!-- Topic filters (added Startups) -->
-        <div class="filters-bar" aria-label="Filter by topic">
-          <button class="filter-chip active" data-filter="all">
-            <span class="dot"></span>
-            All
-          </button>
-          <button class="filter-chip" data-filter="current">
-            <span class="dot"></span>
-            Current Affairs
-          </button>
-          <button class="filter-chip" data-filter="ai">
-            <span class="dot"></span>
-            IT &amp; AI Trends
-          </button>
-          <button class="filter-chip" data-filter="startups">
-            <span class="dot"></span>
-            Startups
-          </button>
-          <button class="filter-chip" data-filter="markets">
-            <span class="dot"></span>
-            Stock Market &amp; Economy
-          </button>
-          <button class="filter-chip" data-filter="politics">
-            <span class="dot"></span>
-            Politics
-          </button>
-          <button class="filter-chip" data-filter="sports">
-            <span class="dot"></span>
-            Sports
-          </button>
-
-          <!-- Refresh button -->
-          <button
-            id="refresh-btn"
-            class="filter-chip"
-            style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);"
-          >
-            <span class="dot"></span>
-            Refresh
-          </button>
-        </div>
-
-        <!-- Source filters -->
-        <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
-          <button class="filter-chip source-chip active" data-source="all">
-            <span class="dot"></span>
-            All sources
-          </button>
-          <button class="filter-chip source-chip" data-source="tbi">
-            <span class="dot"></span>
-            The Better India
-          </button>
-          <button class="filter-chip source-chip" data-source="ietech">
-            <span class="dot"></span>
-            IE Tech
-          </button>
-          <button class="filter-chip source-chip" data-source="iepolitics">
-            <span class="dot"></span>
-            IE Politics
-          </button>
-          <button class="filter-chip source-chip" data-source="techcrunch">
-            <span class="dot"></span>
-            TechCrunch
-          </button>
-          <button class="filter-chip source-chip" data-source="etmarkets">
-            <span class="dot"></span>
-            ET Markets
-          </button>
-          <button class="filter-chip source-chip" data-source="livemint">
-            <span class="dot"></span>
-            Livemint Markets
-          </button>
-          <button class="filter-chip source-chip" data-source="moneycontrol">
-            <span class="dot"></span>
-            Moneycontrol
-          </button>
+          <!-- Source filters -->
+          <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
+            <button class="filter-chip source-chip active" data-source="all">
+              <span class="dot"></span>
+              All sources
+            </button>
+            <button class="filter-chip source-chip" data-source="tbi">
+              <span class="dot"></span>
+              The Better India
+            </button>
+            <button class="filter-chip source-chip" data-source="ietech">
+              <span class="dot"></span>
+              IE Tech
+            </button>
+            <button class="filter-chip source-chip" data-source="iepolitics">
+              <span class="dot"></span>
+              IE Politics
+            </button>
+            <button class="filter-chip source-chip" data-source="techcrunch">
+              <span class="dot"></span>
+              TechCrunch
+            </button>
+            <button class="filter-chip source-chip" data-source="etmarkets">
+              <span class="dot"></span>
+              ET Markets
+            </button>
+            <button class="filter-chip source-chip" data-source="livemint">
+              <span class="dot"></span>
+              Livemint Markets
+            </button>
+            <button class="filter-chip source-chip" data-source="moneycontrol">
+              <span class="dot"></span>
+              Moneycontrol
+            </button>
+          </div>
         </div>
       </div>
     </header>
-
-    <!-- New hook section -->
-    <section class="hook-section" aria-label="Purpose of this feed">
-      <p class="hook-tagline">Curated stories that inspire confidence in the future.</p>
-      <p class="hook-support">
-        Positive, credible news — handpicked to support a healthier daily information habit.
-      </p>
-    </section>
 
     <main>
       <!-- Left column: main feed -->
@@ -756,7 +778,7 @@
 
     const newsList = document.getElementById("news-list");
     const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
-       const sourceChips = document.querySelectorAll(".filter-chip[data-source]");
+    const sourceChips = document.querySelectorAll(".filter-chip[data-source]");
     const positiveCountEl = document.getElementById("positive-count");
     const lastUpdatedEl = document.getElementById("last-updated");
     const refreshBtn = document.getElementById("refresh-btn");
