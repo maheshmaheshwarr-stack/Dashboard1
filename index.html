@@ -907,6 +907,9 @@
   </div>
 
   <script>
+    // ====== AI CHAT BACKEND (Q&A over today's feed) ======
+const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
+
     // ====== CONFIG FOR FEEDBACK EMAIL ======
     // TODO: change this to your real email address.
     const FEEDBACK_EMAIL = "youremail@example.com";
@@ -1785,11 +1788,13 @@
         }));
 
         // NOTE: chat backend is still a placeholder; update when you build it.
-        const resp = await fetch("https://YOUR_BACKEND_URL_HERE/api/news-chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question, articles: contextArticles })
-        });
+        
+        const resp = await fetch(CHAT_BACKEND_URL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ question, articles: contextArticles })
+});
+
 
         thinking.remove();
 
