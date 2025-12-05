@@ -510,6 +510,18 @@
             <span class="dot"></span>
             TechCrunch
           </button>
+          <button class="filter-chip source-chip" data-source="etmarkets">
+            <span class="dot"></span>
+            ET Markets
+          </button>
+          <button class="filter-chip source-chip" data-source="livemint">
+            <span class="dot"></span>
+            Livemint Markets
+          </button>
+          <button class="filter-chip source-chip" data-source="moneycontrol">
+            <span class="dot"></span>
+            Moneycontrol
+          </button>
         </div>
       </div>
     </header>
@@ -679,6 +691,11 @@
     const POLITICS_RSS = "https://indianexpress.com/section/india/politics/feed/";
     const TECHCRUNCH_RSS = "https://techcrunch.com/feed/";
 
+    // Additional markets / economy feeds
+    const ET_MARKETS_RSS = "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms";
+    const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
+    const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
+
     const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       TBI_RSS
     )}`;
@@ -690,6 +707,16 @@
     )}`;
     const TECHCRUNCH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
       TECHCRUNCH_RSS
+    )}`;
+
+    const ET_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      ET_MARKETS_RSS
+    )}`;
+    const LIVEMINT_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      LIVEMINT_MARKETS_RSS
+    )}`;
+    const MONEYCONTROL_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+      MONEYCONTROL_MARKETS_RSS
     )}`;
 
     const newsList = document.getElementById("news-list");
@@ -913,22 +940,45 @@
         '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
 
       try {
-        const [tbiResp, techResp, polResp, tcResp] = await Promise.all([
+        const [
+          tbiResp,
+          techResp,
+          polResp,
+          tcResp,
+          etMarketsResp,
+          livemintMarketsResp,
+          moneycontrolResp
+        ] = await Promise.all([
           fetch(TBI_URL),
           fetch(TECH_URL),
           fetch(POLITICS_URL),
           fetch(TECHCRUNCH_URL),
+          fetch(ET_MARKETS_URL),
+          fetch(LIVEMINT_MARKETS_URL),
+          fetch(MONEYCONTROL_MARKETS_URL),
         ]);
 
-        const [tbiData, techData, polData, tcData] = await Promise.all([
+        const [
+          tbiData,
+          techData,
+          polData,
+          tcData,
+          etMarketsData,
+          livemintMarketsData,
+          moneycontrolData
+        ] = await Promise.all([
           tbiResp.json(),
           techResp.json(),
           polResp.json(),
           tcResp.json(),
+          etMarketsResp.json(),
+          livemintMarketsResp.json(),
+          moneycontrolResp.json(),
         ]);
 
         allArticles = [];
 
+        // --- The Better India (general positive news) ---
         if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
           const sourceTitle =
             (tbiData.feed && tbiData.feed.title) || "The Better India";
@@ -947,6 +997,7 @@
           });
         }
 
+        // --- Indian Express Technology → IT/AI / Startups mix ---
         if (techData.status === "ok" && techData.items && techData.items.length) {
           const sourceTitle =
             (techData.feed && techData.feed.title) ||
@@ -977,6 +1028,7 @@
           });
         }
 
+        // --- Indian Express Politics → Politics ---
         if (polData.status === "ok" && polData.items && polData.items.length) {
           const sourceTitle =
             (polData.feed && polData.feed.title) ||
@@ -996,6 +1048,7 @@
           });
         }
 
+        // --- TechCrunch → Startups (global tech) ---
         if (tcData.status === "ok" && tcData.items && tcData.items.length) {
           const sourceTitle =
             (tcData.feed && tcData.feed.title) || "TechCrunch";
@@ -1010,6 +1063,63 @@
               source: { name: sourceTitle },
               forcedCategory: "startups",
               sourceKey: "techcrunch",
+            });
+          });
+        }
+
+        // --- ET Markets → Markets ---
+        if (etMarketsData.status === "ok" && etMarketsData.items && etMarketsData.items.length) {
+          const sourceTitle =
+            (etMarketsData.feed && etMarketsData.feed.title) || "ET Markets";
+
+          etMarketsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "markets",
+              sourceKey: "etmarkets",
+            });
+          });
+        }
+
+        // --- Livemint Markets → Markets ---
+        if (livemintMarketsData.status === "ok" && livemintMarketsData.items && livemintMarketsData.items.length) {
+          const sourceTitle =
+            (livemintMarketsData.feed && livemintMarketsData.feed.title) || "Livemint Markets";
+
+          livemintMarketsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "markets",
+              sourceKey: "livemint",
+            });
+          });
+        }
+
+        // --- Moneycontrol → Markets ---
+        if (moneycontrolData.status === "ok" && moneycontrolData.items && moneycontrolData.items.length) {
+          const sourceTitle =
+            (moneycontrolData.feed && moneycontrolData.feed.title) || "Moneycontrol";
+
+          moneycontrolData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "markets",
+              sourceKey: "moneycontrol",
             });
           });
         }
@@ -1031,7 +1141,7 @@
 
         if (lastUpdatedEl) {
           lastUpdatedEl.textContent =
-            "Updated from The Better India, Indian Express & TechCrunch • " +
+            "Updated from multiple sources • " +
             new Date().toLocaleString("en-IN", {
               day: "2-digit",
               month: "short",
