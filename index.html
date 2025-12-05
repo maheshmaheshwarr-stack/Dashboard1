@@ -911,6 +911,10 @@
     // TODO: change this to your real email address.
     const FEEDBACK_EMAIL = "youremail@example.com";
 
+    // ====== AI POSITIVITY SCORING BACKEND ======
+    // Your Vercel backend URL:
+    const AI_SCORER_URL = "https://mahesh-news-backend.vercel.app/api/positivity-score";
+
     // --- RSS sources ---
     const TBI_RSS = "https://www.thebetterindia.com/feed/";
 
@@ -1053,90 +1057,134 @@
       return trimmed + "…";
     }
 
-    // NEW: compute a "positive impact" score for each article
-   // NEW: compute a "positive impact" score for each article (stricter)
-function getPositivityScore(article) {
-  const text = (
-    (article.title || "") +
-    " " +
-    (article.description || "")
-  ).toLowerCase();
+    // NEW: compute a "positive impact" score for each article (stricter, heuristic)
+    function getPositivityScore(article) {
+      const text = (
+        (article.title || "") +
+        " " +
+        (article.description || "")
+      ).toLowerCase();
 
-  let score = 0;
-  let hasNegative = false;
+      let score = 0;
+      let hasNegative = false;
 
-  const category = article.forcedCategory || classifyArticle(article);
+      const category = article.forcedCategory || classifyArticle(article);
 
-  // 1) Baseline: favor TBI + tech/startups, soften politics/current
-  if (article.sourceKey === "tbi") score += 4;          // strong boost
-  if (category === "ai" || category === "startups") score += 2;
-  if (category === "sports") score += 1;
-  if (category === "markets") score += 0;              // neutral
-  if (category === "current") score -= 1;
-  if (category === "politics") score -= 2;             // default lower
+      // 1) Baseline: favor TBI + tech/startups, soften politics/current
+      if (article.sourceKey === "tbi") score += 4;          // strong boost
+      if (category === "ai" || category === "startups") score += 2;
+      if (category === "sports") score += 1;
+      if (category === "markets") score += 0;              // neutral
+      if (category === "current") score -= 1;
+      if (category === "politics") score -= 2;             // default lower
 
-  // 2) Positive word buckets
-  const positiveGeneral = [
-    "success", "growth", "improves", "improved", "improvement",
-    "increases", "increase", "record high", "all-time high",
-    "milestone", "breakthrough", "innovation", "innovative",
-    "progress", "boost", "boosts", "recovery", "revival",
-    "rebounds", "surges", "solution", "solves", "addressing",
-    "sustainable", "clean energy", "renewable", "opportunity",
-    "opportunities", "wins award", "honoured", "recognised",
-    "empowers", "inspiring", "uplifting", "transforms", "transforming"
-  ];
+      // 2) Positive word buckets
+      const positiveGeneral = [
+        "success", "growth", "improves", "improved", "improvement",
+        "increases", "increase", "record high", "all-time high",
+        "milestone", "breakthrough", "innovation", "innovative",
+        "progress", "boost", "boosts", "recovery", "revival",
+        "rebounds", "surges", "solution", "solves", "addressing",
+        "sustainable", "clean energy", "renewable", "opportunity",
+        "opportunities", "wins award", "honoured", "recognised",
+        "empowers", "inspiring", "uplifting", "transforms", "transforming"
+      ];
 
-  const positiveSports = [
-    "beats", "beat", "thrashes", "thrash", "clinches", "clinched",
-    "wins", "win", "victory", "series win", "title", "trophy",
-    "qualify", "qualified", "into final", "semifinal", "quarterfinal",
-    "stuns", "upset win"
-  ];
+      const positiveSports = [
+        "beats", "beat", "thrashes", "thrash", "clinches", "clinched",
+        "wins", "win", "victory", "series win", "title", "trophy",
+        "qualify", "qualified", "into final", "semifinal", "quarterfinal",
+        "stuns", "upset win"
+      ];
 
-  const positiveMarkets = [
-    "rallies", "rally", "gains", "soars", "surges", "jumps",
-    "spikes", "climbs", "recovers", "bounce back", "bounces back",
-    "profit rises", "profits rise", "strong earnings",
-    "upgrade", "upgraded", "raises guidance"
-  ];
+      const positiveMarkets = [
+        "rallies", "rally", "gains", "soars", "surges", "jumps",
+        "spikes", "climbs", "recovers", "bounce back", "bounces back",
+        "profit rises", "profits rise", "strong earnings",
+        "upgrade", "upgraded", "raises guidance"
+      ];
 
-  const negativeWords = [
-    "fraud", "scam", "crash", "crashes", "crashed", "plunge", "plunges",
-    "falls", "fall", "tumbles", "tumble", "loss", "losses", "decline",
-    "declines", "layoff", "layoffs", "job cuts", "fired", "retrenchment",
-    "violence", "clash", "clashes", "riot", "riots", "attack", "attacks",
-    "killed", "dead", "death", "deaths", "murder", "rape",
-    "war", "conflict", "crisis", "controversy", "controversial",
-    "scandal", "corruption", "bribery", "probe", "charges framed"
-  ];
+      const negativeWords = [
+        "fraud", "scam", "crash", "crashes", "crashed", "plunge", "plunges",
+        "falls", "fall", "tumbles", "tumble", "loss", "losses", "decline",
+        "declines", "layoff", "layoffs", "job cuts", "fired", "retrenchment",
+        "violence", "clash", "clashes", "riot", "riots", "attack", "attacks",
+        "killed", "dead", "death", "deaths", "murder", "rape",
+        "war", "conflict", "crisis", "controversy", "controversial",
+        "scandal", "corruption", "bribery", "probe", "charges framed"
+      ];
 
-  positiveGeneral.forEach((w) => {
-    if (text.includes(w)) score += 2;
-  });
+      positiveGeneral.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
 
-  positiveSports.forEach((w) => {
-    if (text.includes(w)) score += 2;
-  });
+      positiveSports.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
 
-  positiveMarkets.forEach((w) => {
-    if (text.includes(w)) score += 2;
-  });
+      positiveMarkets.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
 
-  negativeWords.forEach((w) => {
-    if (text.includes(w)) {
-      hasNegative = true;
-      score -= 5; // strong penalty
+      negativeWords.forEach((w) => {
+        if (text.includes(w)) {
+          hasNegative = true;
+          score -= 5; // strong penalty
+        }
+      });
+
+      // 3) If it has any clear negative signal, don't let it become net-positive
+      if (hasNegative && score > 0) {
+        score = -1;
+      }
+
+      return score;
     }
-  });
 
-  // 3) If it has any clear negative signal, don't let it become net-positive
-  if (hasNegative && score > 0) {
-    score = -1;
-  }
+    // NEW: call AI backend to score positivity (optional, falls back to heuristic if fails)
+    async function scoreArticlesWithAI(articles) {
+      try {
+        if (!AI_SCORER_URL || !articles.length) return;
 
-  return score;
-}
+        const payload = {
+          articles: articles.map((a) => ({
+            title: a.title || "",
+            description: a.description || "",
+            content: a.content || "",
+            category: a.forcedCategory || classifyArticle(a),
+            source: a.source?.name || "",
+            sourceKey: a.sourceKey || "",
+          })),
+        };
+
+        const resp = await fetch(AI_SCORER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!resp.ok) {
+          console.error("AI scorer HTTP error:", resp.status);
+          return;
+        }
+
+        const data = await resp.json();
+        if (!data || !Array.isArray(data.scores)) {
+          console.error("AI scorer returned invalid data:", data);
+          return;
+        }
+
+        data.scores.forEach((score, idx) => {
+          if (typeof score === "number" && articles[idx]) {
+            articles[idx].aiScore = score;
+          }
+        });
+
+        console.log("AI positivity scores applied.");
+      } catch (err) {
+        console.error("AI scoring failed:", err);
+      }
+    }
 
     function createNewsCard(article) {
       const category = article.forcedCategory || classifyArticle(article);
@@ -1616,10 +1664,17 @@ function getPositivityScore(article) {
           });
         }
 
-        // === NEW: sort by positive impact, then by recency ===
+        // === NEW: ask AI to score positivity (optional) ===
+        await scoreArticlesWithAI(allArticles);
+
+        // === NEW: sort by positivity (AI first, fallback to heuristic), then recency ===
         allArticles.sort((a, b) => {
-          const scoreA = getPositivityScore(a);
-          const scoreB = getPositivityScore(b);
+          const scoreA = (typeof a.aiScore === "number")
+            ? a.aiScore
+            : getPositivityScore(a);
+          const scoreB = (typeof b.aiScore === "number")
+            ? b.aiScore
+            : getPositivityScore(b);
 
           if (scoreA !== scoreB) {
             return scoreB - scoreA; // higher positivity first
@@ -1729,6 +1784,7 @@ function getPositivityScore(article) {
           url: a.url || ""
         }));
 
+        // NOTE: chat backend is still a placeholder; update when you build it.
         const resp = await fetch("https://YOUR_BACKEND_URL_HERE/api/news-chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
