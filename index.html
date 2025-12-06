@@ -563,9 +563,9 @@
       padding-top: 10px;
       border-top: 1px dashed rgba(148, 163, 184, 0.7);
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 6px;
+      justify-content: center;
       align-items: center;
       font-size: 0.72rem;
       color: var(--text-muted);
@@ -575,6 +575,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      justify-content: center;
     }
 
     .footer-badge {
@@ -818,6 +819,34 @@
         <span class="footer-badge">🌱 Growth-focused</span>
         <span class="footer-badge">📚 Curated, not addictive</span>
         <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
+        <span class="footer-badge">🇮🇳 Built in India</span>
+      </div>
+
+      <!-- Privacy & Terms links -->
+      <div style="
+        width:100%;
+        text-align:center;
+        margin-top:8px;
+        font-size:0.7rem;
+        color:#6b7280;
+      ">
+        <a href="privacy.html" style="color:#4f46e5;text-decoration:none;margin-right:12px;">
+          Privacy
+        </a>
+        <a href="terms.html" style="color:#4f46e5;text-decoration:none;">
+          Terms
+        </a>
+      </div>
+
+      <!-- Copyright -->
+      <div style="
+        width:100%;
+        text-align:center;
+        margin-top:4px;
+        font-size:0.7rem;
+        color:#9ca3af;
+      ">
+        © <span id="copyright-year"></span> Mahesh Ramanathan — All rights reserved.
       </div>
     </footer>
 
@@ -907,16 +936,15 @@
   </div>
 
   <script>
-    // ====== AI CHAT BACKEND (Q&A over today's feed) ======
-const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
-
     // ====== CONFIG FOR FEEDBACK EMAIL ======
     // TODO: change this to your real email address.
     const FEEDBACK_EMAIL = "youremail@example.com";
 
     // ====== AI POSITIVITY SCORING BACKEND ======
-    // Your Vercel backend URL:
     const AI_SCORER_URL = "https://mahesh-news-backend.vercel.app/api/positivity-score";
+
+    // ====== AI CHAT BACKEND (Q&A over today's feed) ======
+    const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
 
     // --- RSS sources ---
     const TBI_RSS = "https://www.thebetterindia.com/feed/";
@@ -1467,7 +1495,7 @@ const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
               url: item.link,
               publishedAt: item.pubDate,
               source: { name: sourceTitle },
-              forcedCategory: "politics", // push into Politics tab
+              forcedCategory: "politics",
               sourceKey: "ieindia"
             });
           });
@@ -1787,14 +1815,11 @@ const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
           url: a.url || ""
         }));
 
-        // NOTE: chat backend is still a placeholder; update when you build it.
-        
         const resp = await fetch(CHAT_BACKEND_URL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ question, articles: contextArticles })
-});
-
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question, articles: contextArticles })
+        });
 
         thinking.remove();
 
@@ -1861,6 +1886,12 @@ const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
           feedbackStatusEl.textContent = "Thank you for taking the time to share!";
         }, 1000);
       });
+    }
+
+    // Auto-update copyright year
+    const copyEl = document.getElementById("copyright-year");
+    if (copyEl) {
+      copyEl.textContent = new Date().getFullYear();
     }
 
     loadNews();
