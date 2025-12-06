@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   />
-  <title>Mahesh news feed</title>
+  <title>Mahesh Positive News Feed</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -500,6 +500,38 @@
       background: #eef2ff;
     }
 
+    /* Positivity meter */
+    .positivity-meter {
+      margin-top: 6px;
+      width: 100%;
+    }
+    .positivity-meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .positivity-bar {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+    .positivity-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, #38bdf8);
+      transition: width 0.4s ease-out;
+    }
+
     /* Feedback form inputs */
     .input,
     .textarea {
@@ -599,7 +631,7 @@
           <span>☀️</span>
         </div>
         <div class="brand-text">
-          <h1>Mahesh news feed</h1>
+          <h1>Mahesh Positive News Feed</h1>
           <p>
             Curated daily: Current affairs, AI, markets, politics &amp;
             sports — with an optimistic lens.
@@ -780,6 +812,17 @@
               <span class="pill-mini">Custom curated by you</span>
             </li>
           </ul>
+
+          <!-- Positivity Meter -->
+          <div class="positivity-meter" aria-label="Overall positivity of today's feed">
+            <div class="positivity-meter-header">
+              <span>Positivity meter</span>
+              <span id="positivity-percent">–</span>
+            </div>
+            <div class="positivity-bar">
+              <div class="positivity-bar-fill" id="positivity-bar-fill"></div>
+            </div>
+          </div>
         </section>
 
         <!-- Feedback card -->
@@ -1005,6 +1048,8 @@
     const lastUpdatedEl = document.getElementById("last-updated");
     const refreshBtn = document.getElementById("refresh-btn");
     const sourcesCountLabel = document.getElementById("sources-count-label");
+    const positivityPercentEl = document.getElementById("positivity-percent");
+    const positivityBarFillEl = document.getElementById("positivity-bar-fill");
 
     let allArticles = [];
     let activeCategory = "all";
@@ -1088,7 +1133,7 @@
       return trimmed + "…";
     }
 
-    // NEW: compute a "positive impact" score for each article (stricter, heuristic)
+    // Heuristic "positive impact" score
     function getPositivityScore(article) {
       const text = (
         (article.title || "") +
@@ -1101,15 +1146,14 @@
 
       const category = article.forcedCategory || classifyArticle(article);
 
-      // 1) Baseline: favor TBI + tech/startups, soften politics/current
-      if (article.sourceKey === "tbi") score += 4;          // strong boost
+      // Baseline by category/source
+      if (article.sourceKey === "tbi") score += 4;
       if (category === "ai" || category === "startups") score += 2;
       if (category === "sports") score += 1;
-      if (category === "markets") score += 0;              // neutral
+      if (category === "markets") score += 0;
       if (category === "current") score -= 1;
-      if (category === "politics") score -= 2;             // default lower
+      if (category === "politics") score -= 2;
 
-      // 2) Positive word buckets
       const positiveGeneral = [
         "success", "growth", "improves", "improved", "improvement",
         "increases", "increase", "record high", "all-time high",
@@ -1160,11 +1204,11 @@
       negativeWords.forEach((w) => {
         if (text.includes(w)) {
           hasNegative = true;
-          score -= 5; // strong penalty
+          score -= 5;
         }
       });
 
-      // 3) If it has any clear negative signal, don't let it become net-positive
+      // If clear negative language, don't let it be net-positive
       if (hasNegative && score > 0) {
         score = -1;
       }
@@ -1172,7 +1216,7 @@
       return score;
     }
 
-    // NEW: call AI backend to score positivity (optional, falls back to heuristic if fails)
+    // Optional AI scoring (falls back to heuristic if fails)
     async function scoreArticlesWithAI(articles) {
       try {
         if (!AI_SCORER_URL || !articles.length) return;
@@ -1273,6 +1317,13 @@
         (card) => !card.classList.contains("hidden")
       ).length;
       if (positiveCountEl) positiveCountEl.textContent = `${visiblePositive} stories`;
+    }
+
+    function updatePositivityMeter(percent) {
+      if (!positivityPercentEl || !positivityBarFillEl) return;
+      const clamped = Math.max(0, Math.min(100, Math.round(percent)));
+      positivityPercentEl.textContent = clamped ? `${clamped}% positive` : "–";
+      positivityBarFillEl.style.width = `${clamped}%`;
     }
 
     function applyFilters() {
@@ -1481,7 +1532,7 @@
           });
         }
 
-        // NEW: Indian Express India – treat as politics/current affairs
+        // Indian Express India – politics/current
         if (ieIndiaData.status === "ok" && ieIndiaData.items && ieIndiaData.items.length) {
           const sourceTitle =
             (ieIndiaData.feed && ieIndiaData.feed.title) ||
@@ -1501,7 +1552,7 @@
           });
         }
 
-        // NEW: Telegraph India – politics
+        // Telegraph India – politics
         if (telegraphPolData.status === "ok" && telegraphPolData.items && telegraphPolData.items.length) {
           const sourceTitle =
             (telegraphPolData.feed && telegraphPolData.feed.title) ||
@@ -1521,7 +1572,7 @@
           });
         }
 
-        // NEW: Indian Express Sports
+        // Indian Express Sports
         if (ieSportsData.status === "ok" && ieSportsData.items && ieSportsData.items.length) {
           const sourceTitle =
             (ieSportsData.feed && ieSportsData.feed.title) ||
@@ -1541,7 +1592,7 @@
           });
         }
 
-        // NEW: NDTV Sports
+        // NDTV Sports
         if (ndtvSportsData.status === "ok" && ndtvSportsData.items && ndtvSportsData.items.length) {
           const sourceTitle =
             (ndtvSportsData.feed && ndtvSportsData.feed.title) ||
@@ -1561,7 +1612,7 @@
           });
         }
 
-        // NEW: ESPNcricinfo – cricket
+        // ESPNcricinfo – cricket
         if (espncricinfoData.status === "ok" && espncricinfoData.items && espncricinfoData.items.length) {
           const sourceTitle =
             (espncricinfoData.feed && espncricinfoData.feed.title) ||
@@ -1695,10 +1746,23 @@
           });
         }
 
-        // === NEW: ask AI to score positivity (optional) ===
+        // Try AI scoring (if backend & API available)
         await scoreArticlesWithAI(allArticles);
 
-        // === NEW: sort by positivity (AI first, fallback to heuristic), then recency ===
+        // Compute positivity % for meter (based on scores)
+        let positiveCount = 0;
+        allArticles.forEach((a) => {
+          const score = (typeof a.aiScore === "number")
+            ? a.aiScore
+            : getPositivityScore(a);
+          if (score > 0) positiveCount += 1;
+        });
+        const positivityPercent = allArticles.length
+          ? (positiveCount * 100) / allArticles.length
+          : 0;
+        updatePositivityMeter(positivityPercent);
+
+        // Sort by positivity, then recency
         allArticles.sort((a, b) => {
           const scoreA = (typeof a.aiScore === "number")
             ? a.aiScore
@@ -1720,6 +1784,7 @@
           newsList.innerHTML =
             '<p style="color:#6b7280;font-size:0.8rem;">No stories found from any source. Try again later.</p>';
           if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
+          updatePositivityMeter(0);
           return;
         }
 
@@ -1747,6 +1812,7 @@
         newsList.innerHTML =
           '<p style="color:#b91c1c;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
         if (lastUpdatedEl) lastUpdatedEl.textContent = "Error fetching headlines";
+        updatePositivityMeter(0);
       }
     }
 
@@ -1859,7 +1925,7 @@
           return;
         }
 
-        const subject = encodeURIComponent("Feedback on Mahesh news feed");
+        const subject = encodeURIComponent("Feedback on Mahesh positive news feed");
         const bodyLines = [
           name ? `Name: ${name}` : "Name: (not provided)",
           "",
@@ -1867,7 +1933,7 @@
           feedback,
           "",
           "---",
-          "Sent from Mahesh news feed"
+          "Sent from Mahesh Positive News Feed"
         ];
         const body = encodeURIComponent(bodyLines.join("\n"));
 
