@@ -2,185 +2,1965 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
   <title>Mahesh Positive News Feed</title>
-
-  <!-- ================== STYLES (UNCHANGED) ================== -->
   <style>
-    /* (STYLE BLOCK IS IDENTICAL TO YOUR ORIGINAL — OMITTED HERE FOR BREVITY) */
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --bg-softer: #f3f4f6;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-strong: #22c55e;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --card-border: #e5e7eb;
+      --chip-bg: #f3f4f6;
+      --shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
+      --radius-xl: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: #ffffff !important;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 20px 20px 24px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e5e7eb;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .app-shell {
+        padding: 26px 26px 30px;
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    @media (min-width: 640px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(
+        circle at 30% 20%,
+        #38bdf8,
+        #22c55e
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-badge span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0b1020;
+    }
+
+    .brand-text h1 {
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 640px) {
+      .header-right {
+        align-items: flex-end;
+      }
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .nav-link {
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.16s ease-out;
+    }
+
+    .nav-link:hover {
+      border-color: #e5e7eb;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    .nav-link.active {
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(56, 189, 248, 0.18),
+        #e0f2fe
+      );
+      border-color: rgba(56, 189, 248, 0.9);
+      color: #0f172a;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 640px) {
+      .meta {
+        align-items: flex-end;
+      }
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.75rem;
+      justify-content: flex-start;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill span.icon {
+      font-size: 0.9em;
+    }
+
+    .pill--accent {
+      border-color: rgba(34, 197, 94, 0.8);
+      color: #166534;
+      background: rgba(22, 163, 74, 0.08);
+    }
+
+    .filters-bar {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-chip {
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 0.78rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: var(--chip-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease-out;
+    }
+
+    .filter-chip span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.8);
+    }
+
+    .filter-chip.active {
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(56, 189, 248, 0.18),
+        #e0f2fe
+      );
+      color: #0f172a;
+      border-color: rgba(56, 189, 248, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .filter-chip.active span.dot {
+      background: #38bdf8;
+    }
+
+    /* Collapsible sources panel */
+    .sources-wrapper {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .sources-wrapper[open] {
+      background: #f9fafb;
+      border-radius: 999px;
+    }
+
+    .sources-summary {
+      list-style: none;
+      cursor: pointer;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9fafb;
+    }
+
+    .sources-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .sources-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sources-caret {
+      font-size: 0.7rem;
+      transform: translateY(1px);
+    }
+
+    .sources-count {
+      font-size: 0.7rem;
+      color: #4b5563;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+
+    .sources-wrapper[open] .sources-summary {
+      border-color: rgba(56, 189, 248, 0.9);
+      background: #e0f2fe;
+      color: #0f172a;
+    }
+
+    .sources-wrapper[open] .sources-caret {
+      transform: rotate(90deg);
+    }
+
+    .sources-body {
+      margin-top: 8px;
+    }
+
+    main {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .section-title h2 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-title span {
+      font-size: 0.72rem;
+      color: var(--accent);
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .news-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      background: var(--bg-soft);
+      padding: 12px 13px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+      transition: transform 0.18s ease-out,
+        box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+    }
+
+    .news-card:hover {
+      transform: translateY(-3px) translateZ(0);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
+      border-color: rgba(56, 189, 248, 0.7);
+    }
+
+    .news-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.68rem;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    .badge--category {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+    }
+
+    .badge--positive {
+      border-color: rgba(34, 197, 94, 0.9);
+      color: #15803d;
+      background: #dcfce7;
+    }
+
+    .news-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .news-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .news-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Short, clamped preview text */
+    .tagline {
+      font-size: 0.75rem;
+      color: #4f46e5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* max 3 lines */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .source {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .read-link {
+      font-size: 0.72rem;
+      text-decoration: none;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .read-link span {
+      font-size: 0.9em;
+    }
+
+    .sidebar-card {
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 12px 14px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #0f172a;
+    }
+
+    .sidebar-card p {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .sidebar-list {
+      margin-top: 4px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-list li {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pill-mini {
+      border-radius: 999px;
+      padding: 3px 7px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.7rem;
+      color: #4f46e5;
+      background: #eef2ff;
+    }
+
+    /* Positivity meter */
+    .positivity-meter {
+      margin-top: 6px;
+      width: 100%;
+    }
+    .positivity-meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .positivity-bar {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+    .positivity-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, #38bdf8);
+      transition: width 0.4s ease-out;
+    }
+
+    /* Feedback form inputs */
+    .input,
+    .textarea {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      background: #ffffff;
+      outline: none;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .textarea {
+      border-radius: 10px;
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .btn-primary {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #38bdf8;
+      color: #020617;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .feedback-status {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      min-height: 1em;
+    }
+
+    .feedback-status.success {
+      color: #15803d;
+    }
+
+    .feedback-status.error {
+      color: #b91c1c;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .footer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .footer-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #f3f4f6;
+      color: var(--text-muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
-
 <body>
-<div class="app-shell">
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true">
+          <span>☀️</span>
+        </div>
+        <div class="brand-text">
+          <h1>Mahesh Positive News Feed</h1>
+          <p>
+            Curated daily: Current affairs, AI, markets, politics &amp;
+            sports — with an optimistic lens.
+          </p>
+        </div>
+      </div>
 
-<!-- ================= HEADER ================= -->
-<header>
-  <div class="brand">
-    <div class="brand-badge"><span>☀️</span></div>
-    <div class="brand-text">
-      <h1>Mahesh Positive News Feed</h1>
-      <p>Curated daily with an optimistic lens.</p>
+      <div class="header-right">
+        <nav aria-label="Main navigation">
+          <a class="nav-link active" href="index.html">News Feed</a>
+          <a class="nav-link" href="about.html">About</a>
+        </nav>
+
+        <div class="meta">
+          <div class="pill-row">
+            <div class="pill pill--accent">
+              <span class="icon">✨</span>
+              <span>Signal over noise. Positivity over panic.</span>
+            </div>
+            <div class="pill">
+              <span class="icon">🕒</span>
+              <span id="last-updated">Fetching latest headlines…</span>
+            </div>
+          </div>
+
+          <!-- Topic filters -->
+          <div class="filters-bar" aria-label="Filter by topic">
+            <button class="filter-chip active" data-filter="all">
+              <span class="dot"></span>
+              All
+            </button>
+            <button class="filter-chip" data-filter="current">
+              <span class="dot"></span>
+              Current Affairs
+            </button>
+            <button class="filter-chip" data-filter="ai">
+              <span class="dot"></span>
+              IT &amp; AI Trends
+            </button>
+            <button class="filter-chip" data-filter="startups">
+              <span class="dot"></span>
+              Startups
+            </button>
+            <button class="filter-chip" data-filter="markets">
+              <span class="dot"></span>
+              Stock Market &amp; Economy
+            </button>
+            <button class="filter-chip" data-filter="politics">
+              <span class="dot"></span>
+              Politics
+            </button>
+            <button class="filter-chip" data-filter="sports">
+              <span class="dot"></span>
+              Sports
+            </button>
+
+            <button
+              id="refresh-btn"
+              class="filter-chip"
+              style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);"
+            >
+              <span class="dot"></span>
+              Refresh
+            </button>
+          </div>
+
+          <!-- Collapsible source filters -->
+          <details class="sources-wrapper">
+            <summary class="sources-summary">
+              <span class="sources-label">
+                <span class="sources-caret">▶</span>
+                Sources
+              </span>
+              <span class="sources-count" id="sources-count-label">
+                All sources (combined)
+              </span>
+            </summary>
+            <div class="sources-body">
+              <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
+                <button class="filter-chip source-chip active" data-source="all">
+                  <span class="dot"></span>
+                  All sources (combined)
+                </button>
+                <button class="filter-chip source-chip" data-source="tbi">
+                  <span class="dot"></span>
+                  The Better India
+                </button>
+                <button class="filter-chip source-chip" data-source="ietech">
+                  <span class="dot"></span>
+                  IE Tech
+                </button>
+                <button class="filter-chip source-chip" data-source="iepolitics">
+                  <span class="dot"></span>
+                  IE Politics
+                </button>
+                <button class="filter-chip source-chip" data-source="ieindia">
+                  <span class="dot"></span>
+                  IE India (National)
+                </button>
+                <button class="filter-chip source-chip" data-source="telegraph">
+                  <span class="dot"></span>
+                  Telegraph Politics
+                </button>
+                <button class="filter-chip source-chip" data-source="iesports">
+                  <span class="dot"></span>
+                  IE Sports
+                </button>
+                <button class="filter-chip source-chip" data-source="ndtvsports">
+                  <span class="dot"></span>
+                  NDTV Sports
+                </button>
+                <button class="filter-chip source-chip" data-source="espncricinfo">
+                  <span class="dot"></span>
+                  ESPNcricinfo
+                </button>
+                <button class="filter-chip source-chip" data-source="techcrunch">
+                  <span class="dot"></span>
+                  TechCrunch
+                </button>
+                <button class="filter-chip source-chip" data-source="etmarkets">
+                  <span class="dot"></span>
+                  ET Markets
+                </button>
+                <button class="filter-chip source-chip" data-source="livemint">
+                  <span class="dot"></span>
+                  Livemint Markets
+                </button>
+                <button class="filter-chip source-chip" data-source="moneycontrol">
+                  <span class="dot"></span>
+                  Moneycontrol
+                </button>
+                <button class="filter-chip source-chip" data-source="verge">
+                  <span class="dot"></span>
+                  The Verge Tech
+                </button>
+                <button class="filter-chip source-chip" data-source="arstechnica">
+                  <span class="dot"></span>
+                  Ars Technica
+                </button>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="column" aria-label="Main news feed">
+        <div class="section-title">
+          <h2>Today's Highlights</h2>
+          <span>Hand-picked positive stories</span>
+        </div>
+
+        <div class="news-list" id="news-list">
+          <!-- JS will inject cards here -->
+        </div>
+      </section>
+
+      <aside class="column" aria-label="Summary and quick stats">
+        <section class="sidebar-card">
+          <h3>Today's Mood</h3>
+          <p>
+            A quick snapshot of why today's feed is net-positive: more stories
+            about solutions, collaboration and long-term thinking than about
+            panic or fear.
+          </p>
+          <ul class="sidebar-list">
+            <li>
+              Net positive impact
+              <span class="pill-mini" id="positive-count">0 stories</span>
+            </li>
+            <li>
+              Focus on AI / tech
+              <span class="pill-mini">At least 1 key story</span>
+            </li>
+            <li>
+              Personal relevance
+              <span class="pill-mini">Custom curated by you</span>
+            </li>
+          </ul>
+
+          <!-- Positivity Meter -->
+          <div class="positivity-meter" aria-label="Overall positivity of today's feed">
+            <div class="positivity-meter-header">
+              <span>Positivity meter</span>
+              <span id="positivity-percent">–</span>
+            </div>
+            <div class="positivity-bar">
+              <div class="positivity-bar-fill" id="positivity-bar-fill"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Feedback card -->
+        <section class="sidebar-card" style="margin-top: 10px;">
+          <h3>Visitor Feedback</h3>
+          <p style="font-size:0.78rem;color:#6b7280;">
+            Tell me who you are and how this news feed feels. Short notes are perfect.
+          </p>
+          <form id="feedback-form" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+            <input
+              id="feedback-name"
+              class="input"
+              type="text"
+              placeholder="Your name (optional)"
+              autocomplete="name"
+            />
+            <textarea
+              id="feedback-text"
+              class="textarea"
+              placeholder="Any feedback, suggestions, or what you’d like to see here…"
+            ></textarea>
+            <button type="submit" class="btn-primary" id="feedback-submit">
+              <span>Send feedback</span> <span>📨</span>
+            </button>
+          </form>
+          <div id="feedback-status" class="feedback-status"></div>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <span>
+        Built for a calm information diet. Tweak this page as your interests
+        evolve.
+      </span>
+      <div class="footer-badges">
+        <span class="footer-badge">🌱 Growth-focused</span>
+        <span class="footer-badge">📚 Curated, not addictive</span>
+        <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
+        <span class="footer-badge">🇮🇳 Built in India</span>
+      </div>
+
+      <!-- Privacy & Terms links -->
+      <div style="
+        width:100%;
+        text-align:center;
+        margin-top:8px;
+        font-size:0.7rem;
+        color:#6b7280;
+      ">
+        <a href="privacy.html" style="color:#4f46e5;text-decoration:none;margin-right:12px;">
+          Privacy
+        </a>
+        <a href="terms.html" style="color:#4f46e5;text-decoration:none;">
+          Terms
+        </a>
+      </div>
+
+      <!-- Copyright -->
+      <div style="
+        width:100%;
+        text-align:center;
+        margin-top:4px;
+        font-size:0.7rem;
+        color:#9ca3af;
+      ">
+        © <span id="copyright-year"></span> Mahesh Ramanathan — All rights reserved.
+      </div>
+    </footer>
+
+    <!-- AI News Chat widget (starts collapsed) -->
+    <div id="chat-widget" style="
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 280px;
+      max-width: 90vw;
+      background: #ffffff;
+      border-radius: 18px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.12);
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+    ">
+      <div style="
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(to right, #e0f2fe, #f9fafb);
+      ">
+        <div>
+          <div style="font-size:0.8rem;font-weight:600;color:#0f172a;">News Chat</div>
+          <div style="font-size:0.7rem;color:#6b7280;">Ask about today’s feed</div>
+        </div>
+        <button id="chat-toggle" style="
+          background:none;
+          border:none;
+          color:#0f172a;
+          font-size:1rem;
+          cursor:pointer;
+        ">+</button>
+      </div>
+      <div id="chat-body" style="display:none;flex-direction:column;height:260px;background:#f9fafb;">
+        <div id="chat-messages" style="
+          flex:1;
+          padding:8px;
+          overflow-y:auto;
+          display:flex;
+          flex-direction:column;
+          gap:6px;
+        ">
+          <div style="align-self:flex-start;max-width:90%;padding:6px 8px;border-radius:10px;background:#e5e7eb;color:#111827;">
+            👋 I can answer questions about the stories on this page. Try: “What are today’s IT highlights?” or “Summarise today’s politics in 3 bullet points.”
+          </div>
+        </div>
+        <form id="chat-form" style="
+          display:flex;
+          padding:6px;
+          gap:4px;
+          border-top:1px solid #e5e7eb;
+          background:#ffffff;
+        ">
+          <input
+            id="chat-input"
+            type="text"
+            placeholder="Ask about today’s news..."
+            style="
+              flex:1;
+              background:#ffffff;
+              border:1px solid #d1d5db;
+              border-radius:999px;
+              padding:5px 8px;
+              color:#111827;
+              font-size:0.75rem;
+            "
+          />
+          <button type="submit" style="
+            border:none;
+            border-radius:999px;
+            padding:5px 10px;
+            background:#38bdf8;
+            color:#020617;
+            font-weight:600;
+            font-size:0.75rem;
+            cursor:pointer;
+          ">Send</button>
+        </form>
+      </div>
     </div>
   </div>
 
-  <div class="header-right">
-    <nav>
-      <a class="nav-link active">News Feed</a>
-    </nav>
+  <script>
+    // ====== CONFIG FOR FEEDBACK EMAIL ======
+    // TODO: change this to your real email address.
+    const FEEDBACK_EMAIL = "youremail@example.com";
 
-    <!-- ================= CATEGORY FILTERS ================= -->
-    <div class="filters-bar">
-      <button class="filter-chip active" data-filter="all"><span class="dot"></span>All</button>
-      <button class="filter-chip" data-filter="current"><span class="dot"></span>Current Affairs</button>
-      <button class="filter-chip" data-filter="ai"><span class="dot"></span>AI & Tech</button>
-      <button class="filter-chip" data-filter="startups"><span class="dot"></span>Startups</button>
-      <button class="filter-chip" data-filter="markets"><span class="dot"></span>Markets</button>
-      <button class="filter-chip" data-filter="politics"><span class="dot"></span>Politics</button>
-      <button class="filter-chip" data-filter="sports"><span class="dot"></span>Sports</button>
+    // ====== AI POSITIVITY SCORING BACKEND ======
+    const AI_SCORER_URL = "https://mahesh-news-backend.vercel.app/api/positivity-score";
 
-      <!-- 🆕 AUTOMOBILE CATEGORY -->
-      <button class="filter-chip" data-filter="automobile">
-        <span class="dot"></span>Automobile
-      </button>
+    // ====== AI CHAT BACKEND (Q&A over today's feed) ======
+    const CHAT_BACKEND_URL = "https://mahesh-news-backend.vercel.app/api/news-chat";
 
-      <button id="refresh-btn" class="filter-chip">Refresh</button>
-    </div>
-  </div>
-</header>
+    // --- RSS sources ---
+    const TBI_RSS = "https://www.thebetterindia.com/feed/";
 
-<!-- ================= MAIN ================= -->
-<main>
-<section class="column">
-  <h2 class="section-title">Today's Highlights</h2>
-  <div id="news-list"></div>
-</section>
-</main>
+    // Indian Express (existing)
+    const TECH_RSS = "https://indianexpress.com/section/technology/feed/";
+    const POLITICS_RSS = "https://indianexpress.com/section/india/politics/feed/";
 
-<footer>
-  © <span id="year"></span> Mahesh Ramanathan
-</footer>
+    // NEW: Indian Express India (general) – we'll treat as politics/current
+    const IE_INDIA_RSS = "https://indianexpress.com/section/india/feed/";
 
-</div>
+    // NEW: Indian Express Sports
+    const IE_SPORTS_RSS = "https://indianexpress.com/section/sports/feed/";
 
-<!-- ================= JAVASCRIPT ================= -->
-<script>
-/* ================= RSS FEEDS ================= */
+    // NEW: Telegraph India politics
+    const TELEGRAPH_POLITICS_RSS = "http://www.telegraphindia.com/feeds/rss.jsp?id=4";
 
-// Automobile – India
-const AUTO_CARWALE_RSS = "https://www.carwale.com/rss/news/";
-const AUTO_OVERDRIVE_RSS = "https://overdrive.in/rss/news/";
+    // Tech / startups
+    const TECHCRUNCH_RSS = "https://techcrunch.com/feed/";
 
-// Automobile – Global
-const AUTO_AUTOCAR_GLOBAL_RSS = "https://www.autocar.co.uk/rss/news";
-const AUTO_MOTOR1_RSS = "https://www.motor1.com/rss/news/";
+    // Markets / economy
+    const ET_MARKETS_RSS = "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms";
+    const LIVEMINT_MARKETS_RSS = "https://www.livemint.com/rss/markets";
+    const MONEYCONTROL_MARKETS_RSS = "https://www.moneycontrol.com/rss/MCtopnews.xml";
 
-// Convert to RSS2JSON
-const AUTO_CARWALE_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(AUTO_CARWALE_RSS)}`;
-const AUTO_OVERDRIVE_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(AUTO_OVERDRIVE_RSS)}`;
-const AUTO_AUTOCAR_GLOBAL_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(AUTO_AUTOCAR_GLOBAL_RSS)}`;
-const AUTO_MOTOR1_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(AUTO_MOTOR1_RSS)}`;
+    // Extra tech
+    const VERGE_TECH_RSS = "https://www.theverge.com/rss/tech/index.xml";
+    const ARS_TECH_RSS = "https://feeds.arstechnica.com/arstechnica/technology-lab";
 
-const newsList = document.getElementById("news-list");
-let allArticles = [];
-let activeCategory = "all";
+    // NEW: Sports-heavy feeds
+    const NDTV_SPORTS_RSS = "http://feeds.feedburner.com/NDTV-Sports";
+    const ESPNCRICINFO_RSS = "https://www.espncricinfo.com/rss/content/story/feeds/6.xml";
 
-/* ================= CLASSIFICATION ================= */
-function classifyArticle(article) {
-  const text = ((article.title||"") + " " + (article.description||"")).toLowerCase();
+    const TBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TBI_RSS)}`;
+    const TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TECH_RSS)}`;
+    const POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(POLITICS_RSS)}`;
 
-  if (
-    text.includes("car") ||
-    text.includes("automobile") ||
-    text.includes("vehicle") ||
-    text.includes("ev") ||
-    text.includes("electric") ||
-    text.includes("suv") ||
-    text.includes("sedan") ||
-    text.includes("tesla") ||
-    text.includes("tata motors") ||
-    text.includes("mahindra") ||
-    text.includes("maruti") ||
-    text.includes("bmw") ||
-    text.includes("mercedes")
-  ) return "automobile";
+    const IE_INDIA_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(IE_INDIA_RSS)}`;
+    const IE_SPORTS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(IE_SPORTS_RSS)}`;
+    const TELEGRAPH_POLITICS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TELEGRAPH_POLITICS_RSS)}`;
 
-  if (text.includes("ai") || text.includes("artificial intelligence")) return "ai";
-  if (text.includes("startup")) return "startups";
-  if (text.includes("market") || text.includes("sensex")) return "markets";
-  if (text.includes("election") || text.includes("minister")) return "politics";
-  if (text.includes("cricket") || text.includes("football")) return "sports";
+    const TECHCRUNCH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(TECHCRUNCH_RSS)}`;
 
-  return "current";
-}
+    const ET_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ET_MARKETS_RSS)}`;
+    const LIVEMINT_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(LIVEMINT_MARKETS_RSS)}`;
+    const MONEYCONTROL_MARKETS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MONEYCONTROL_MARKETS_RSS)}`;
 
-/* ================= UI ================= */
-function createCard(a) {
-  const card = document.createElement("div");
-  card.className = "news-card";
-  card.dataset.category = a.category;
+    const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(VERGE_TECH_RSS)}`;
+    const ARS_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ARS_TECH_RSS)}`;
 
-  card.innerHTML = `
-    <span class="badge">${a.category.toUpperCase()}</span>
-    <h3>${a.title}</h3>
-    <p>${a.description}</p>
-    <small>${a.source}</small>
-    <a href="${a.url}" target="_blank">Read ↗</a>
-  `;
-  return card;
-}
+    const NDTV_SPORTS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(NDTV_SPORTS_RSS)}`;
+    const ESPNCRICINFO_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ESPNCRICINFO_RSS)}`;
 
-/* ================= FILTER ================= */
-document.querySelectorAll(".filter-chip[data-filter]").forEach(btn=>{
-  btn.onclick=()=>{
-    activeCategory=btn.dataset.filter;
-    document.querySelectorAll(".filter-chip").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    render();
-  };
-});
+    const newsList = document.getElementById("news-list");
+    const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
+    const sourceChips = document.querySelectorAll(".filter-chip[data-source]");
+    const positiveCountEl = document.getElementById("positive-count");
+    const lastUpdatedEl = document.getElementById("last-updated");
+    const refreshBtn = document.getElementById("refresh-btn");
+    const sourcesCountLabel = document.getElementById("sources-count-label");
+    const positivityPercentEl = document.getElementById("positivity-percent");
+    const positivityBarFillEl = document.getElementById("positivity-bar-fill");
 
-/* ================= LOAD NEWS ================= */
-async function loadNews(){
-  const responses = await Promise.all([
-    fetch(AUTO_CARWALE_URL),
-    fetch(AUTO_OVERDRIVE_URL),
-    fetch(AUTO_AUTOCAR_GLOBAL_URL),
-    fetch(AUTO_MOTOR1_URL)
-  ]);
+    let allArticles = [];
+    let activeCategory = "all";
+    let activeSource = "all";
 
-  const data = await Promise.all(responses.map(r=>r.json()));
-  allArticles = [];
+    function classifyArticle(article) {
+      const text = (
+        (article.title || "") +
+        " " +
+        (article.description || "") +
+        " " +
+        (article.content || "")
+      ).toLowerCase();
 
-  data.forEach(feed=>{
-    if(feed.status==="ok"){
-      feed.items.slice(0,6).forEach(item=>{
-        allArticles.push({
-          title:item.title,
-          description:item.description.replace(/<[^>]+>/g,""),
-          url:item.link,
-          source:feed.feed.title,
-          category:"automobile"
+      if (
+        text.includes("cricket") ||
+        text.includes("football") ||
+        text.includes("t20") ||
+        text.includes("ipl") ||
+        text.includes("world cup") ||
+        text.includes("olympic")
+      ) return "sports";
+
+      if (
+        text.includes("sensex") ||
+        text.includes("nifty") ||
+        text.includes("stock") ||
+        text.includes("market") ||
+        text.includes("shares") ||
+        text.includes("economy") ||
+        text.includes("gdp") ||
+        text.includes("inflation")
+      ) return "markets";
+
+      if (
+        text.includes("election") ||
+        text.includes("minister") ||
+        text.includes("parliament") ||
+        text.includes("bill passed") ||
+        text.includes("policy")
+      ) return "politics";
+
+      if (
+        text.includes("startup") ||
+        text.includes("start-up") ||
+        text.includes("funding") ||
+        text.includes("valuation") ||
+        text.includes("unicorn") ||
+        text.includes("series a") ||
+        text.includes("series b") ||
+        text.includes("venture capital") ||
+        text.includes("vc firm")
+      ) return "startups";
+
+      if (
+        text.includes("ai") ||
+        text.includes("artificial intelligence") ||
+        text.includes("machine learning") ||
+        text.includes("openai") ||
+        text.includes("chatgpt") ||
+        (text.includes("google") && text.includes("ai"))
+      ) return "ai";
+
+      return "current";
+    }
+
+    function stripHtml(html) {
+      if (!html) return "";
+      return html.replace(/<[^>]*>/g, "").trim();
+    }
+
+    // Helper: shorten long descriptions to keep cards compact
+    function shortenText(text, maxLen = 220) {
+      if (!text) return "";
+      const clean = text.trim();
+      if (clean.length <= maxLen) return clean;
+
+      const sliced = clean.slice(0, maxLen);
+      const lastSpace = sliced.lastIndexOf(" ");
+      const trimmed = lastSpace > 120 ? sliced.slice(0, lastSpace) : sliced;
+      return trimmed + "…";
+    }
+
+    // Heuristic "positive impact" score
+    function getPositivityScore(article) {
+      const text = (
+        (article.title || "") +
+        " " +
+        (article.description || "")
+      ).toLowerCase();
+
+      let score = 0;
+      let hasNegative = false;
+
+      const category = article.forcedCategory || classifyArticle(article);
+
+      // Baseline by category/source
+      if (article.sourceKey === "tbi") score += 4;
+      if (category === "ai" || category === "startups") score += 2;
+      if (category === "sports") score += 1;
+      if (category === "markets") score += 0;
+      if (category === "current") score -= 1;
+      if (category === "politics") score -= 2;
+
+      const positiveGeneral = [
+        "success", "growth", "improves", "improved", "improvement",
+        "increases", "increase", "record high", "all-time high",
+        "milestone", "breakthrough", "innovation", "innovative",
+        "progress", "boost", "boosts", "recovery", "revival",
+        "rebounds", "surges", "solution", "solves", "addressing",
+        "sustainable", "clean energy", "renewable", "opportunity",
+        "opportunities", "wins award", "honoured", "recognised",
+        "empowers", "inspiring", "uplifting", "transforms", "transforming"
+      ];
+
+      const positiveSports = [
+        "beats", "beat", "thrashes", "thrash", "clinches", "clinched",
+        "wins", "win", "victory", "series win", "title", "trophy",
+        "qualify", "qualified", "into final", "semifinal", "quarterfinal",
+        "stuns", "upset win"
+      ];
+
+      const positiveMarkets = [
+        "rallies", "rally", "gains", "soars", "surges", "jumps",
+        "spikes", "climbs", "recovers", "bounce back", "bounces back",
+        "profit rises", "profits rise", "strong earnings",
+        "upgrade", "upgraded", "raises guidance"
+      ];
+
+      const negativeWords = [
+        "fraud", "scam", "crash", "crashes", "crashed", "plunge", "plunges",
+        "falls", "fall", "tumbles", "tumble", "loss", "losses", "decline",
+        "declines", "layoff", "layoffs", "job cuts", "fired", "retrenchment",
+        "violence", "clash", "clashes", "riot", "riots", "attack", "attacks",
+        "killed", "dead", "death", "deaths", "murder", "rape",
+        "war", "conflict", "crisis", "controversy", "controversial",
+        "scandal", "corruption", "bribery", "probe", "charges framed"
+      ];
+
+      positiveGeneral.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
+
+      positiveSports.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
+
+      positiveMarkets.forEach((w) => {
+        if (text.includes(w)) score += 2;
+      });
+
+      negativeWords.forEach((w) => {
+        if (text.includes(w)) {
+          hasNegative = true;
+          score -= 5;
+        }
+      });
+
+      // If clear negative language, don't let it be net-positive
+      if (hasNegative && score > 0) {
+        score = -1;
+      }
+
+      return score;
+    }
+
+    // Optional AI scoring (falls back to heuristic if fails)
+    async function scoreArticlesWithAI(articles) {
+      try {
+        if (!AI_SCORER_URL || !articles.length) return;
+
+        const payload = {
+          articles: articles.map((a) => ({
+            title: a.title || "",
+            description: a.description || "",
+            content: a.content || "",
+            category: a.forcedCategory || classifyArticle(a),
+            source: a.source?.name || "",
+            sourceKey: a.sourceKey || "",
+          })),
+        };
+
+        const resp = await fetch(AI_SCORER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
+
+        if (!resp.ok) {
+          console.error("AI scorer HTTP error:", resp.status);
+          return;
+        }
+
+        const data = await resp.json();
+        if (!data || !Array.isArray(data.scores)) {
+          console.error("AI scorer returned invalid data:", data);
+          return;
+        }
+
+        data.scores.forEach((score, idx) => {
+          if (typeof score === "number" && articles[idx]) {
+            articles[idx].aiScore = score;
+          }
+        });
+
+        console.log("AI positivity scores applied.");
+      } catch (err) {
+        console.error("AI scoring failed:", err);
+      }
+    }
+
+    function createNewsCard(article) {
+      const category = article.forcedCategory || classifyArticle(article);
+      const sourceKey = article.sourceKey || "unknown";
+
+      const card = document.createElement("article");
+      card.className = "news-card";
+      card.dataset.category = category;
+      card.dataset.source = sourceKey;
+
+      const published = article.publishedAt
+        ? new Date(article.publishedAt).toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit"
+          })
+        : "";
+
+      const sourceName = (article.source && article.source.name) || "News source";
+      const title = article.title || "Untitled story";
+      const description = shortenText(
+        article.description || "A positive development worth noting today."
+      );
+
+      card.innerHTML = `
+        <div class="news-badges">
+          <span class="badge badge--category">${category.toUpperCase()}</span>
+          <span class="badge badge--positive">Net positive impact</span>
+        </div>
+        <h3 class="news-title">${title}</h3>
+        <p class="tagline">${description}</p>
+        <div class="news-meta-row">
+          <div class="news-meta">
+            ${published ? `⏱ ${published}` : ""}
+          </div>
+        </div>
+        <div class="news-footer">
+          <span class="source">Source: ${sourceName}</span>
+          ${
+            article.url
+              ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer">
+                   Read <span>↗</span>
+                 </a>`
+              : ""
+          }
+        </div>
+      `;
+      return card;
+    }
+
+    function updatePositiveCount() {
+      const cards = document.querySelectorAll(".news-card");
+      const visiblePositive = Array.from(cards).filter(
+        (card) => !card.classList.contains("hidden")
+      ).length;
+      if (positiveCountEl) positiveCountEl.textContent = `${visiblePositive} stories`;
+    }
+
+    function updatePositivityMeter(percent) {
+      if (!positivityPercentEl || !positivityBarFillEl) return;
+      const clamped = Math.max(0, Math.min(100, Math.round(percent)));
+      positivityPercentEl.textContent = clamped ? `${clamped}% positive` : "–";
+      positivityBarFillEl.style.width = `${clamped}%`;
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll(".news-card");
+      const oldMsg = document.getElementById("empty-msg");
+      if (oldMsg) oldMsg.remove();
+
+      let anyVisible = false;
+
+      cards.forEach((card) => {
+        const category = card.dataset.category;
+        const sourceKey = card.dataset.source || "unknown";
+
+        const categoryOK = activeCategory === "all" || category === activeCategory;
+        const sourceOK = activeSource === "all" || sourceKey === activeSource;
+
+        const shouldShow = categoryOK && sourceOK;
+        card.classList.toggle("hidden", !shouldShow);
+        if (shouldShow) anyVisible = true;
+      });
+
+      if (!anyVisible) {
+        newsList.insertAdjacentHTML(
+          "beforeend",
+          '<p id="empty-msg" style="color:#6b7280;font-size:0.8rem;margin-top:4px;">No stories with this topic + source. Try changing a filter.</p>'
+        );
+      }
+
+      updatePositiveCount();
+    }
+
+    categoryChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const filter = chip.getAttribute("data-filter");
+        activeCategory = filter || "all";
+        categoryChips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        applyFilters();
+      });
+    });
+
+    function updateSourcesLabel() {
+      if (!sourcesCountLabel) return;
+      const activeChip = document.querySelector(".source-chip.active");
+      if (!activeChip || activeChip.dataset.source === "all") {
+        sourcesCountLabel.textContent = "All sources (combined)";
+      } else {
+        sourcesCountLabel.textContent = activeChip.textContent.trim();
+      }
+    }
+
+    sourceChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const source = chip.getAttribute("data-source");
+        activeSource = source || "all";
+        sourceChips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        updateSourcesLabel();
+        applyFilters();
+      });
+    });
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", () => {
+        if (lastUpdatedEl) lastUpdatedEl.textContent = "Refreshing now…";
+        loadNews();
+        refreshBtn.classList.remove("active");
       });
     }
-  });
 
-  render();
-}
+    async function loadNews() {
+      newsList.innerHTML =
+        '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
 
-/* ================= RENDER ================= */
-function render(){
-  newsList.innerHTML="";
-  allArticles
-    .filter(a=>activeCategory==="all"||a.category===activeCategory)
-    .forEach(a=>newsList.appendChild(createCard(a)));
-}
+      try {
+        const [
+          tbiResp,
+          techResp,
+          polResp,
+          ieIndiaResp,
+          telegraphPolResp,
+          ieSportsResp,
+          ndtvSportsResp,
+          espncricinfoResp,
+          tcResp,
+          etMarketsResp,
+          livemintMarketsResp,
+          moneycontrolResp,
+          vergeTechResp,
+          arsTechResp
+        ] = await Promise.all([
+          fetch(TBI_URL),
+          fetch(TECH_URL),
+          fetch(POLITICS_URL),
+          fetch(IE_INDIA_URL),
+          fetch(TELEGRAPH_POLITICS_URL),
+          fetch(IE_SPORTS_URL),
+          fetch(NDTV_SPORTS_URL),
+          fetch(ESPNCRICINFO_URL),
+          fetch(TECHCRUNCH_URL),
+          fetch(ET_MARKETS_URL),
+          fetch(LIVEMINT_MARKETS_URL),
+          fetch(MONEYCONTROL_MARKETS_URL),
+          fetch(VERGE_TECH_URL),
+          fetch(ARS_TECH_URL)
+        ]);
 
-document.getElementById("refresh-btn").onclick=loadNews;
-document.getElementById("year").textContent=new Date().getFullYear();
+        const [
+          tbiData,
+          techData,
+          polData,
+          ieIndiaData,
+          telegraphPolData,
+          ieSportsData,
+          ndtvSportsData,
+          espncricinfoData,
+          tcData,
+          etMarketsData,
+          livemintMarketsData,
+          moneycontrolData,
+          vergeTechData,
+          arsTechData
+        ] = await Promise.all([
+          tbiResp.json(),
+          techResp.json(),
+          polResp.json(),
+          ieIndiaResp.json(),
+          telegraphPolResp.json(),
+          ieSportsResp.json(),
+          ndtvSportsResp.json(),
+          espncricinfoResp.json(),
+          tcResp.json(),
+          etMarketsResp.json(),
+          livemintMarketsResp.json(),
+          moneycontrolResp.json(),
+          vergeTechResp.json(),
+          arsTechResp.json()
+        ]);
 
-loadNews();
-</script>
+        allArticles = [];
+
+        // The Better India – general positive
+        if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
+          const sourceTitle =
+            (tbiData.feed && tbiData.feed.title) || "The Better India";
+          tbiData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: null,
+              sourceKey: "tbi"
+            });
+          });
+        }
+
+        // Indian Express Technology – AI / startups
+        if (techData.status === "ok" && techData.items && techData.items.length) {
+          const sourceTitle =
+            (techData.feed && techData.feed.title) ||
+            "Indian Express - Technology";
+
+          techData.items.slice(0, 6).forEach((item) => {
+            const content = stripHtml(item.description + " " + (item.content || ""));
+            const lower = content.toLowerCase();
+            let forcedCategory = "ai";
+            if (
+              lower.includes("startup") ||
+              lower.includes("funding") ||
+              lower.includes("unicorn")
+            ) forcedCategory = "startups";
+
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory,
+              sourceKey: "ietech"
+            });
+          });
+        }
+
+        // Indian Express Politics – pure politics
+        if (polData.status === "ok" && polData.items && polData.items.length) {
+          const sourceTitle =
+            (polData.feed && polData.feed.title) ||
+            "Indian Express - Politics";
+
+          polData.items.slice(0, 6).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "politics",
+              sourceKey: "iepolitics"
+            });
+          });
+        }
+
+        // Indian Express India – politics/current
+        if (ieIndiaData.status === "ok" && ieIndiaData.items && ieIndiaData.items.length) {
+          const sourceTitle =
+            (ieIndiaData.feed && ieIndiaData.feed.title) ||
+            "Indian Express - India";
+
+          ieIndiaData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "politics",
+              sourceKey: "ieindia"
+            });
+          });
+        }
+
+        // Telegraph India – politics
+        if (telegraphPolData.status === "ok" && telegraphPolData.items && telegraphPolData.items.length) {
+          const sourceTitle =
+            (telegraphPolData.feed && telegraphPolData.feed.title) ||
+            "Telegraph India - Politics";
+
+          telegraphPolData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "politics",
+              sourceKey: "telegraph"
+            });
+          });
+        }
+
+        // Indian Express Sports
+        if (ieSportsData.status === "ok" && ieSportsData.items && ieSportsData.items.length) {
+          const sourceTitle =
+            (ieSportsData.feed && ieSportsData.feed.title) ||
+            "Indian Express - Sports";
+
+          ieSportsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "sports",
+              sourceKey: "iesports"
+            });
+          });
+        }
+
+        // NDTV Sports
+        if (ndtvSportsData.status === "ok" && ndtvSportsData.items && ndtvSportsData.items.length) {
+          const sourceTitle =
+            (ndtvSportsData.feed && ndtvSportsData.feed.title) ||
+            "NDTV Sports";
+
+          ndtvSportsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "sports",
+              sourceKey: "ndtvsports"
+            });
+          });
+        }
+
+        // ESPNcricinfo – cricket
+        if (espncricinfoData.status === "ok" && espncricinfoData.items && espncricinfoData.items.length) {
+          const sourceTitle =
+            (espncricinfoData.feed && espncricinfoData.feed.title) ||
+            "ESPNcricinfo";
+
+          espncricinfoData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "sports",
+              sourceKey: "espncricinfo"
+            });
+          });
+        }
+
+        // TechCrunch – startups
+        if (tcData.status === "ok" && tcData.items && tcData.items.length) {
+          const sourceTitle =
+            (tcData.feed && tcData.feed.title) || "TechCrunch";
+
+          tcData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "startups",
+              sourceKey: "techcrunch"
+            });
+          });
+        }
+
+        // ET Markets – markets
+        if (etMarketsData.status === "ok" && etMarketsData.items && etMarketsData.items.length) {
+          const sourceTitle =
+            (etMarketsData.feed && etMarketsData.feed.title) || "ET Markets";
+
+          etMarketsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "markets",
+              sourceKey: "etmarkets"
+            });
+          });
+        }
+
+        // Livemint – markets
+        if (livemintMarketsData.status === "ok" && livemintMarketsData.items && livemintMarketsData.items.length) {
+          const sourceTitle =
+            (livemintMarketsData.feed && livemintMarketsData.feed.title) || "Livemint Markets";
+
+          livemintMarketsData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "markets",
+              sourceKey: "livemint"
+            });
+          });
+        }
+
+        // Moneycontrol – markets
+        if (moneycontrolData.status === "ok" && moneycontrolData.items && moneycontrolData.items.length) {
+          const sourceTitle =
+            (moneycontrolData.feed && moneycontrolData.feed.title) || "Moneycontrol";
+
+          moneycontrolData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: "markets",
+              sourceKey: "moneycontrol"
+            });
+          });
+        }
+
+        // The Verge – tech
+        if (vergeTechData.status === "ok" && vergeTechData.items && vergeTechData.items.length) {
+          const sourceTitle =
+            (vergeTechData.feed && vergeTechData.feed.title) || "The Verge · Tech";
+
+          vergeTechData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: null,
+              sourceKey: "verge"
+            });
+          });
+        }
+
+        // Ars Technica – tech
+        if (arsTechData.status === "ok" && arsTechData.items && arsTechData.items.length) {
+          const sourceTitle =
+            (arsTechData.feed && arsTechData.feed.title) || "Ars Technica · Tech";
+
+          arsTechData.items.slice(0, 8).forEach((item) => {
+            allArticles.push({
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceTitle },
+              forcedCategory: null,
+              sourceKey: "arstechnica"
+            });
+          });
+        }
+
+        // Try AI scoring (if backend & API available)
+        await scoreArticlesWithAI(allArticles);
+
+        // Compute positivity % for meter (based on scores)
+        let positiveCount = 0;
+        allArticles.forEach((a) => {
+          const score = (typeof a.aiScore === "number")
+            ? a.aiScore
+            : getPositivityScore(a);
+          if (score > 0) positiveCount += 1;
+        });
+        const positivityPercent = allArticles.length
+          ? (positiveCount * 100) / allArticles.length
+          : 0;
+        updatePositivityMeter(positivityPercent);
+
+        // Sort by positivity, then recency
+        allArticles.sort((a, b) => {
+          const scoreA = (typeof a.aiScore === "number")
+            ? a.aiScore
+            : getPositivityScore(a);
+          const scoreB = (typeof b.aiScore === "number")
+            ? b.aiScore
+            : getPositivityScore(b);
+
+          if (scoreA !== scoreB) {
+            return scoreB - scoreA; // higher positivity first
+          }
+
+          const dateA = new Date(a.publishedAt || a.pubDate || 0).getTime();
+          const dateB = new Date(b.publishedAt || b.pubDate || 0).getTime();
+          return dateB - dateA; // newer first
+        });
+
+        if (!allArticles.length) {
+          newsList.innerHTML =
+            '<p style="color:#6b7280;font-size:0.8rem;">No stories found from any source. Try again later.</p>';
+          if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
+          updatePositivityMeter(0);
+          return;
+        }
+
+        newsList.innerHTML = "";
+        allArticles.forEach((article) => {
+          const card = createNewsCard(article);
+          newsList.appendChild(card);
+        });
+
+        if (lastUpdatedEl) {
+          lastUpdatedEl.textContent =
+            "Updated from multiple sources • " +
+            new Date().toLocaleString("en-IN", {
+              day: "2-digit",
+              month: "short",
+              hour: "2-digit",
+              minute: "2-digit"
+            });
+        }
+
+        applyFilters();
+        updateSourcesLabel();
+      } catch (error) {
+        console.error(error);
+        newsList.innerHTML =
+          '<p style="color:#b91c1c;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
+        if (lastUpdatedEl) lastUpdatedEl.textContent = "Error fetching headlines";
+        updatePositivityMeter(0);
+      }
+    }
+
+    // Chat widget logic
+    const chatWidget = document.getElementById("chat-widget");
+    const chatBody = document.getElementById("chat-body");
+    const chatToggle = document.getElementById("chat-toggle");
+    const chatForm = document.getElementById("chat-form");
+    const chatInput = document.getElementById("chat-input");
+    const chatMessages = document.getElementById("chat-messages");
+
+    chatToggle.addEventListener("click", () => {
+      const isHidden = chatBody.style.display === "none";
+      chatBody.style.display = isHidden ? "flex" : "none";
+      chatToggle.textContent = isHidden ? "−" : "+";
+    });
+
+    function addChatBubble(text, from = "user") {
+      const bubble = document.createElement("div");
+      bubble.style.maxWidth = "90%";
+      bubble.style.padding = "6px 8px";
+      bubble.style.borderRadius = "10px";
+      bubble.style.marginTop = "2px";
+
+      if (from === "user") {
+        bubble.style.alignSelf = "flex-end";
+        bubble.style.background = "#38bdf8";
+        bubble.style.color = "#020617";
+      } else {
+        bubble.style.alignSelf = "flex-start";
+        bubble.style.background = "#e5e7eb";
+        bubble.style.color = "#111827";
+      }
+
+      bubble.textContent = text;
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const question = chatInput.value.trim();
+      if (!question) return;
+
+      addChatBubble(question, "user");
+      chatInput.value = "";
+
+      const thinking = document.createElement("div");
+      thinking.style.alignSelf = "flex-start";
+      thinking.style.maxWidth = "90%";
+      thinking.style.padding = "6px 8px";
+      thinking.style.borderRadius = "10px";
+      thinking.style.marginTop = "2px";
+      thinking.style.background = "#e5e7eb";
+      thinking.style.color = "#6b7280";
+      thinking.textContent = "Thinking about today’s stories…";
+      chatMessages.appendChild(thinking);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      try {
+        const contextArticles = allArticles.slice(0, 15).map((a) => ({
+          title: a.title,
+          description: a.description,
+          category: a.forcedCategory || null,
+          source: a.source?.name || "",
+          url: a.url || ""
+        }));
+
+        const resp = await fetch(CHAT_BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question, articles: contextArticles })
+        });
+
+        thinking.remove();
+
+        if (!resp.ok) {
+          addChatBubble("Sorry, I couldn’t answer that just now.", "bot");
+          return;
+        }
+
+        const data = await resp.json();
+        addChatBubble(data.answer || "No answer generated.", "bot");
+      } catch (err) {
+        console.error("Chat error:", err);
+        thinking.remove();
+        addChatBubble("There was an error talking to the news bot.", "bot");
+      }
+    });
+
+    // Feedback form logic (mailto-based)
+    const feedbackForm = document.getElementById("feedback-form");
+    const feedbackNameInput = document.getElementById("feedback-name");
+    const feedbackTextInput = document.getElementById("feedback-text");
+    const feedbackStatusEl = document.getElementById("feedback-status");
+    const feedbackSubmitBtn = document.getElementById("feedback-submit");
+
+    if (feedbackForm) {
+      feedbackForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = (feedbackNameInput.value || "").trim();
+        const feedback = (feedbackTextInput.value || "").trim();
+
+        feedbackStatusEl.className = "feedback-status";
+        feedbackStatusEl.textContent = "";
+
+        if (!feedback) {
+          feedbackStatusEl.textContent = "Please add a quick note before sending.";
+          feedbackStatusEl.classList.add("error");
+          return;
+        }
+
+        const subject = encodeURIComponent("Feedback on Mahesh positive news feed");
+        const bodyLines = [
+          name ? `Name: ${name}` : "Name: (not provided)",
+          "",
+          "Feedback:",
+          feedback,
+          "",
+          "---",
+          "Sent from Mahesh Positive News Feed"
+        ];
+        const body = encodeURIComponent(bodyLines.join("\n"));
+
+        const mailtoUrl = `mailto:${encodeURIComponent(FEEDBACK_EMAIL)}?subject=${subject}&body=${body}`;
+
+        feedbackSubmitBtn.disabled = true;
+        feedbackStatusEl.textContent = "Opening your email client…";
+        feedbackStatusEl.classList.add("success");
+
+        window.location.href = mailtoUrl;
+
+        setTimeout(() => {
+          feedbackSubmitBtn.disabled = false;
+          feedbackNameInput.value = "";
+          feedbackTextInput.value = "";
+          feedbackStatusEl.textContent = "Thank you for taking the time to share!";
+        }, 1000);
+      });
+    }
+
+    // Auto-update copyright year
+    const copyEl = document.getElementById("copyright-year");
+    if (copyEl) {
+      copyEl.textContent = new Date().getFullYear();
+    }
+
+    loadNews();
+  </script>
 </body>
 </html>
