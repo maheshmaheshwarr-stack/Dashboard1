@@ -687,6 +687,11 @@
               <span class="dot"></span>
               Sports
             </button>
+            <button class="filter-chip" data-filter="automobiles">
+  <span class="dot"></span>
+  Automobiles
+</button>
+
 
             <button
               id="refresh-btn"
@@ -1016,6 +1021,12 @@
     // Extra tech
     const VERGE_TECH_RSS = "https://www.theverge.com/rss/tech/index.xml";
     const ARS_TECH_RSS = "https://feeds.arstechnica.com/arstechnica/technology-lab";
+    // ===== Automobiles =====
+const AUTOCAR_INDIA_RSS = "https://www.autocarindia.com/RSS/rss.ashx?type=all";
+const RUSHLANE_RSS = "https://www.rushlane.com/feed/";
+const AUTOCAR_UK_RSS = "https://www.autocar.co.uk/rss";
+const MOTOR_TREND_RSS = "https://www.motortrend.com/feed/";
+
 
     // NEW: Sports-heavy feeds
     const NDTV_SPORTS_RSS = "http://feeds.feedburner.com/NDTV-Sports";
@@ -1037,6 +1048,11 @@
 
     const VERGE_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(VERGE_TECH_RSS)}`;
     const ARS_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ARS_TECH_RSS)}`;
+    const AUTOCAR_INDIA_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(AUTOCAR_INDIA_RSS)}`;
+const RUSHLANE_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RUSHLANE_RSS)}`;
+const AUTOCAR_UK_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(AUTOCAR_UK_RSS)}`;
+const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MOTOR_TREND_RSS)}`;
+
 
     const NDTV_SPORTS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(NDTV_SPORTS_RSS)}`;
     const ESPNCRICINFO_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ESPNCRICINFO_RSS)}`;
@@ -1112,6 +1128,18 @@
         text.includes("chatgpt") ||
         (text.includes("google") && text.includes("ai"))
       ) return "ai";
+      if (
+  text.includes("car") ||
+  text.includes("automobile") ||
+  text.includes("vehicle") ||
+  text.includes("ev") ||
+  text.includes("electric vehicle") ||
+  text.includes("hybrid") ||
+  text.includes("suv") ||
+  text.includes("bike") ||
+  text.includes("two-wheeler")
+) return "automobiles";
+
 
       return "current";
     }
@@ -1428,7 +1456,12 @@
           fetch(LIVEMINT_MARKETS_URL),
           fetch(MONEYCONTROL_MARKETS_URL),
           fetch(VERGE_TECH_URL),
-          fetch(ARS_TECH_URL)
+          fetch(ARS_TECH_URL),
+          fetch(AUTOCAR_INDIA_URL),
+fetch(RUSHLANE_URL),
+fetch(AUTOCAR_UK_URL),
+fetch(MOTOR_TREND_URL)
+
         ]);
 
         const [
@@ -1445,7 +1478,12 @@
           livemintMarketsData,
           moneycontrolData,
           vergeTechData,
-          arsTechData
+          arsTechData,
+          autocarIndiaData,
+rushlaneData,
+autocarUkData,
+motorTrendData
+
         ] = await Promise.all([
           tbiResp.json(),
           techResp.json(),
@@ -1726,6 +1764,26 @@
             });
           });
         }
+        function pushAuto(items, sourceName, sourceKey) {
+  items.slice(0, 6).forEach((item) => {
+    allArticles.push({
+      title: item.title,
+      description: stripHtml(item.description),
+      content: stripHtml(item.content),
+      url: item.link,
+      publishedAt: item.pubDate,
+      source: { name: sourceName },
+      forcedCategory: "automobiles",
+      sourceKey
+    });
+  });
+}
+
+if (autocarIndiaData?.items) pushAuto(autocarIndiaData.items, "Autocar India", "autocarindia");
+if (rushlaneData?.items) pushAuto(rushlaneData.items, "RushLane", "rushlane");
+if (autocarUkData?.items) pushAuto(autocarUkData.items, "Autocar UK", "autocaruk");
+if (motorTrendData?.items) pushAuto(motorTrendData.items, "MotorTrend", "motortrend");
+
 
         // Ars Technica – tech
         if (arsTechData.status === "ok" && arsTechData.items && arsTechData.items.length) {
