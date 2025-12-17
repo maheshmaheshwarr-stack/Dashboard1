@@ -791,6 +791,16 @@
         </div>
 
         <div class="news-list" id="news-list">
+          <div style="margin-top:12px;text-align:center;">
+  <button
+    id="load-more-btn"
+    class="btn-primary"
+    style="background:#e0f2fe;"
+  >
+    Show more stories
+  </button>
+</div>
+
           <!-- JS will inject cards here -->
         </div>
       </section>
@@ -984,6 +994,10 @@
   </div>
 
   <script>
+    // ===== Feed pagination =====
+const INITIAL_VISIBLE_COUNT = 8;
+const LOAD_MORE_COUNT = 6;
+
     // ====== CONFIG FOR FEEDBACK EMAIL ======
     // TODO: change this to your real email address.
     const FEEDBACK_EMAIL = "mahesh.maheshwarr@gmail.com";
@@ -1070,6 +1084,8 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
     let allArticles = [];
     let activeCategory = "all";
     let activeSource = "all";
+    let visibleCount = INITIAL_VISIBLE_COUNT;
+
 
     function classifyArticle(article) {
       const text = (
@@ -1363,16 +1379,33 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
       let anyVisible = false;
 
-      cards.forEach((card) => {
-        const category = card.dataset.category;
-        const sourceKey = card.dataset.source || "unknown";
+     let shown = 0;
 
-        const categoryOK = activeCategory === "all" || category === activeCategory;
-        const sourceOK = activeSource === "all" || sourceKey === activeSource;
+cards.forEach((card) => {
+  const category = card.dataset.category;
+  const sourceKey = card.dataset.source || "unknown";
 
-        const shouldShow = categoryOK && sourceOK;
-        card.classList.toggle("hidden", !shouldShow);
-        if (shouldShow) anyVisible = true;
+  const categoryOK = activeCategory === "all" || category === activeCategory;
+  const sourceOK = activeSource === "all" || sourceKey === activeSource;
+
+  const shouldShow = categoryOK && sourceOK && shown < visibleCount;
+
+  card.classList.toggle("hidden", !shouldShow);
+
+  if (categoryOK && sourceOK && shouldShow) {
+    shown += 1;
+  }
+});
+      const loadMoreBtn = document.getElementById("load-more-btn");
+
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", () => {
+    visibleCount += LOAD_MORE_COUNT;
+    applyFilters();
+  });
+}
+
+
       });
 
       if (!anyVisible) {
@@ -1385,15 +1418,20 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
       updatePositiveCount();
     }
 
-    categoryChips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        const filter = chip.getAttribute("data-filter");
-        activeCategory = filter || "all";
-        categoryChips.forEach((c) => c.classList.remove("active"));
-        chip.classList.add("active");
-        applyFilters();
-      });
-    });
+   categoryChips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const filter = chip.getAttribute("data-filter");
+    activeCategory = filter || "all";
+
+    // 🔧 RESET visible count on category change
+    visibleCount = INITIAL_VISIBLE_COUNT;
+
+    categoryChips.forEach((c) => c.classList.remove("active"));
+    chip.classList.add("active");
+    applyFilters();
+  });
+});
+
 
     function updateSourcesLabel() {
       if (!sourcesCountLabel) return;
@@ -1406,22 +1444,32 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
     }
 
     sourceChips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        const source = chip.getAttribute("data-source");
-        activeSource = source || "all";
-        sourceChips.forEach((c) => c.classList.remove("active"));
-        chip.classList.add("active");
-        updateSourcesLabel();
-        applyFilters();
-      });
-    });
+  chip.addEventListener("click", () => {
+    const source = chip.getAttribute("data-source");
+    activeSource = source || "all";
+
+    // 🔧 RESET visible count on source change
+    visibleCount = INITIAL_VISIBLE_COUNT;
+
+    sourceChips.forEach((c) => c.classList.remove("active"));
+    chip.classList.add("active");
+    updateSourcesLabel();
+    applyFilters();
+  });
+});
+
 
     if (refreshBtn) {
       refreshBtn.addEventListener("click", () => {
-        if (lastUpdatedEl) lastUpdatedEl.textContent = "Refreshing now…";
-        loadNews();
-        refreshBtn.classList.remove("active");
-      });
+  if (lastUpdatedEl) lastUpdatedEl.textContent = "Refreshing now…";
+
+  // 🔧 RESET visible count on refresh
+  visibleCount = INITIAL_VISIBLE_COUNT;
+
+  loadNews();
+  refreshBtn.classList.remove("active");
+});
+
     }
 
     async function loadNews() {
