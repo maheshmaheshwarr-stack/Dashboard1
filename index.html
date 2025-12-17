@@ -1326,17 +1326,7 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
 
         
-        data.scores.forEach((score, idx) => {
-          if (typeof score === "number" && articles[idx]) {
-            articles[idx].aiScore = score;
-          }
-        });
-
-        console.log("AI positivity scores applied.");
-      catch (err) {
-        console.error("AI scoring failed:", err);
-      }
-    }
+       
 
     function createNewsCard(article) {
       const category = article.forcedCategory || classifyArticle(article);
