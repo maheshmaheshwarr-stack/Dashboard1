@@ -1181,6 +1181,8 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
       if (category === "markets") score += 0;
       if (category === "current") score -= 1;
       if (category === "politics") score -= 2;
+      if (category === "automobiles") score += 1;
+
 
       const positiveGeneral = [
         "success", "growth", "improves", "improved", "improvement",
@@ -1441,7 +1443,11 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
           livemintMarketsResp,
           moneycontrolResp,
           vergeTechResp,
-          arsTechResp
+          arsTechResp,
+          autocarIndiaResp,
+  rushlaneResp,
+  autocarUkResp,
+  motorTrendResp
         ] = await Promise.all([
           fetch(TBI_URL),
           fetch(TECH_URL),
@@ -1498,7 +1504,11 @@ motorTrendData
           livemintMarketsResp.json(),
           moneycontrolResp.json(),
           vergeTechResp.json(),
-          arsTechResp.json()
+          arsTechResp.json(),
+          autocarIndiaResp.json(),
+  rushlaneResp.json(),
+  autocarUkResp.json(),
+  motorTrendResp.json()
         ]);
 
         allArticles = [];
