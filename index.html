@@ -1403,12 +1403,7 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
 
 
-if (loadMoreBtn) {
-  loadMoreBtn.addEventListener("click", () => {
-    visibleCount += LOAD_MORE_COUNT;
-    applyFilters();
-  });
-}
+
 
 
       
@@ -1476,6 +1471,18 @@ if (loadMoreBtn) {
 });
 
     }
+    // 🔹 Load-more button click handler (wire ONCE)
+document.addEventListener("DOMContentLoaded", () => {
+  const loadMoreBtn = document.getElementById("load-more-btn");
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", () => {
+      visibleCount += LOAD_MORE_COUNT;
+      updateVisibleCards();
+    });
+  }
+});
+
 
     async function loadNews() {
       newsList.innerHTML =
