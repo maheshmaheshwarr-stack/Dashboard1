@@ -1264,19 +1264,104 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
     // Optional AI scoring (falls back to heuristic if fails)
     async function scoreArticlesWithAI(articles) {
-      try {
-        if (!AI_SCORER_URL || !articles.length) return;
+  let aiWorked = false;
 
-        const payload = {
-          articles: articles.map((a) => ({
-            title: a.title || "",
-            description: a.description || "",
-            content: a.content || "",
-            category: a.forcedCategory || classifyArticle(a),
-            source: a.source?.name || "",
-            sourceKey: a.sourceKey || "",
-          })),
+  try {
+    if (!AI_SCORER_URL || !articles.length) throw new Error("AI disabled");
+
+    const payload = {
+      articles: articles.map((a) => ({
+        title: a.title || "",
+        description: a.description || "",
+        content: a.content || "",
+        category: a.forcedCategory || classifyArticle(a),
+        source: a.source?.name || "",
+        sourceKey: a.sourceKey || "",
+      })),
+    };
+
+    const resp = await fetch(AI_SCORER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!resp.ok) throw new Error("AI HTTP " + resp.status);
+
+    const data = await resp.json();
+    if (!Array.isArray(data.scores)) throw new Error("Invalid AI response");
+
+    data.scores.forEach((score, idx) => {
+      if (typeof score === "number" && articles[idx]) {
+        articles[idx].aiScore = score;
+      }
+    });
+
+    aiWorked = true;
+    console.log("AI positivity scores applied");
+  } catch (err) {
+    console.warn("AI scoring failed:", err);
+  }
+
+  // 🔁 Fallback for missing scores
+  articles.forEach((article) => {
+    if (typeof article.aiScore !== "number") {
+      article.aiScore = fallbackPositivityScore(article);
+      article.scoreSource = "fallback";
+    } else {
+      article.scoreSource = "ai";
+    }
+  });
+
+  return aiWorked;
+}
+
         };
+        function fallbackPositivityScore(article) {
+  const text = (
+    article.title +
+    " " +
+    (article.description || "") +
+    " " +
+    (article.content || "")
+  ).toLowerCase();
+
+  const positiveKeywords = [
+    "growth", "record", "surge", "boost", "profit", "profits",
+    "innovation", "launch", "expansion", "win", "wins",
+    "approval", "approved", "breakthrough", "success",
+    "funding", "investment", "invest", "partnership",
+    "electric", "ev", "renewable", "green", "sustainable",
+    "jobs", "employment", "hiring", "production",
+    "strong", "positive", "upbeat"
+  ];
+
+  const negativeKeywords = [
+    "loss", "losses", "decline", "drop", "falls",
+    "crisis", "layoffs", "cut", "cuts",
+    "fraud", "scandal", "probe", "ban",
+    "shutdown", "strike", "accident",
+    "death", "dies", "killed",
+    "inflation", "slowdown", "recession",
+    "war", "conflict"
+  ];
+
+  let score = 0;
+
+  positiveKeywords.forEach(word => {
+    if (text.includes(word)) score += 1;
+  });
+
+  negativeKeywords.forEach(word => {
+    if (text.includes(word)) score -= 1;
+  });
+
+  // Normalize to 0–100
+  const normalized = Math.max(0, Math.min(100, 50 + score * 8));
+
+  return normalized;
+}
+
 
         const resp = await fetch(AI_SCORER_URL, {
           method: "POST",
