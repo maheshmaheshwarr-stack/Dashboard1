@@ -1388,15 +1388,23 @@ cards.forEach((card) => {
   const categoryOK = activeCategory === "all" || category === activeCategory;
   const sourceOK = activeSource === "all" || sourceKey === activeSource;
 
-  const shouldShow = categoryOK && sourceOK && shown < visibleCount;
-
-  card.classList.toggle("hidden", !shouldShow);
-
-  if (categoryOK && sourceOK && shouldShow) {
-    shown += 1;
+  if (categoryOK && sourceOK) {
+    if (shown < visibleCount) {
+      card.classList.remove("hidden");
+      shown += 1;
+    } else {
+      card.classList.add("hidden");
+    }
+  } else {
+    card.classList.add("hidden");
   }
 });
-      const loadMoreBtn = document.getElementById("load-more-btn");
+const loadMoreBtn = document.getElementById("load-more-btn");
+
+if (loadMoreBtn) {
+  loadMoreBtn.style.display = shown < cards.length ? "inline-flex" : "none";
+}
+
 
 if (loadMoreBtn) {
   loadMoreBtn.addEventListener("click", () => {
