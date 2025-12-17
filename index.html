@@ -1422,7 +1422,8 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
     categoryChips.forEach((c) => c.classList.remove("active"));
     chip.classList.add("active");
-    applyFilters();
+    updateVisibleCards();
+
   });
 });
 
