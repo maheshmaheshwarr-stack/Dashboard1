@@ -1325,23 +1325,7 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
     ;
 
 
-        const resp = await fetch(AI_SCORER_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (!resp.ok) {
-          console.error("AI scorer HTTP error:", resp.status);
-          return;
-        }
-
-        const data = await resp.json();
-        if (!data || !Array.isArray(data.scores)) {
-          console.error("AI scorer returned invalid data:", data);
-          return;
-        }
-
+        
         data.scores.forEach((score, idx) => {
           if (typeof score === "number" && articles[idx]) {
             articles[idx].aiScore = score;
