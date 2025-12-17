@@ -1384,35 +1384,23 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
     if (categoryOK && sourceOK && shown < visibleCount) {
       card.classList.remove("hidden");
-      shown += 1;
+      shown++;
     } else {
       card.classList.add("hidden");
     }
   });
 
+  // ✅ Button visibility lives HERE
   const loadMoreBtn = document.getElementById("load-more-btn");
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = shown < cards.length ? "inline-flex" : "none";
+  }
 
-if (loadMoreBtn) {
-  loadMoreBtn.addEventListener("click", () => {
-    visibleCount += 6;
-    updateVisibleCards();
-  });
-}
-
-
-
-
-    function applyFilters() {
-  updateVisibleCards();
   updatePositiveCount();
 }
 
 };
-const loadMoreBtn = document.getElementById("load-more-btn");
 
-if (loadMoreBtn) {
-  loadMoreBtn.style.display = shown < cards.length ? "inline-flex" : "none";
-}
 
 
 if (loadMoreBtn) {
