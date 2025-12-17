@@ -1940,18 +1940,7 @@ updateSourcesLabel();
   }
 
 
-            }
-        
-
-        applyFilters();
-        updateSourcesLabel();
-       catch (error) {
-        console.error(error);
-        newsList.innerHTML =
-          '<p style="color:#b91c1c;font-size:0.8rem;">Network or RSS error while loading stories.</p>';
-        if (lastUpdatedEl) lastUpdatedEl.textContent = "Error fetching headlines";
-        updatePositivityMeter(0);
-      }
+           
     }
 
     // Chat widget logic
