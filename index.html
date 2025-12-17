@@ -2031,6 +2031,51 @@ updateSourcesLabel();
       chatBody.style.display = isHidden ? "flex" : "none";
       chatToggle.textContent = isHidden ? "−" : "+";
     });
+    function fallbackChatAnswer(question, articles) {
+  const q = question.toLowerCase();
+
+  if (q.includes("today") || q.includes("news")) {
+    const top = articles.slice(0, 5);
+
+    return (
+      "Here’s a quick snapshot of today’s positive news:\n\n" +
+      top
+        .map((a, i) => `• ${a.title}`)
+        .join("\n")
+    );
+  }
+
+  if (q.includes("politics")) {
+    const politics = articles.filter(
+      a => (a.forcedCategory || "").includes("politics")
+    ).slice(0, 3);
+
+    if (!politics.length) {
+      return "There aren’t many major political stories in today’s positive feed.";
+    }
+
+    return (
+      "Today’s political highlights:\n\n" +
+      politics.map(a => `• ${a.title}`).join("\n")
+    );
+  }
+
+  if (q.includes("sports")) {
+    const sports = articles.filter(
+      a => (a.forcedCategory || "").includes("sports")
+    ).slice(0, 3);
+
+    return (
+      "Sports highlights today:\n\n" +
+      sports.map(a => `• ${a.title}`).join("\n")
+    );
+  }
+
+  return (
+    "I can help summarise today’s news by topic — try asking about politics, sports, markets, or today’s highlights."
+  );
+}
+
 
     function addChatBubble(text, from = "user") {
       const bubble = document.createElement("div");
@@ -2092,17 +2137,21 @@ updateSourcesLabel();
         thinking.remove();
 
         if (!resp.ok) {
-          addChatBubble("Sorry, I couldn’t answer that just now.", "bot");
-          return;
-        }
+  const fallback = fallbackChatAnswer(question, allArticles);
+  addChatBubble(fallback, "bot");
+  return;
+}
 
         const data = await resp.json();
-        addChatBubble(data.answer || "No answer generated.", "bot");
-      } catch (err) {
-        console.error("Chat error:", err);
-        thinking.remove();
-        addChatBubble("There was an error talking to the news bot.", "bot");
-      }
+
+if (!data.answer) {
+  const fallback = fallbackChatAnswer(question, allArticles);
+  addChatBubble(fallback, "bot");
+  return;
+}
+
+addChatBubble(data.answer, "bot");
+
     });
 
     // Feedback form logic (mailto-based)
