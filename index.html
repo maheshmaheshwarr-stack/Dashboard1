@@ -1084,7 +1084,7 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
     let allArticles = [];
     let activeCategory = "all";
     let activeSource = "all";
-    let visibleCount = INITIAL_VISIBLE_COUNT;
+    let visibleCount = 8;
 
 
     function classifyArticle(article) {
@@ -1371,33 +1371,42 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
       positivityPercentEl.textContent = clamped ? `${clamped}% positive` : "–";
       positivityBarFillEl.style.width = `${clamped}%`;
     }
+    function updateVisibleCards() {
+  const cards = Array.from(document.querySelectorAll(".news-card"));
+  let shown = 0;
 
-    function applyFilters() {
-      const cards = document.querySelectorAll(".news-card");
-      const oldMsg = document.getElementById("empty-msg");
-      if (oldMsg) oldMsg.remove();
+  cards.forEach((card) => {
+    const category = card.dataset.category;
+    const sourceKey = card.dataset.source || "unknown";
 
-      let anyVisible = false;
+    const categoryOK = activeCategory === "all" || category === activeCategory;
+    const sourceOK = activeSource === "all" || sourceKey === activeSource;
 
-     let shown = 0;
-
-cards.forEach((card) => {
-  const category = card.dataset.category;
-  const sourceKey = card.dataset.source || "unknown";
-
-  const categoryOK = activeCategory === "all" || category === activeCategory;
-  const sourceOK = activeSource === "all" || sourceKey === activeSource;
-
-  if (categoryOK && sourceOK) {
-    if (shown < visibleCount) {
+    if (categoryOK && sourceOK && shown < visibleCount) {
       card.classList.remove("hidden");
       shown += 1;
     } else {
       card.classList.add("hidden");
     }
-  } else {
-    card.classList.add("hidden");
-  }
+  });
+
+  const loadMoreBtn = document.getElementById("load-more-btn");
+
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", () => {
+    visibleCount += 6;
+    updateVisibleCards();
+  });
+}
+
+
+
+
+    function applyFilters() {
+  updateVisibleCards();
+  updatePositiveCount();
+}
+
 });
 const loadMoreBtn = document.getElementById("load-more-btn");
 
@@ -1913,19 +1922,16 @@ if (motorTrendData?.items) pushAuto(motorTrendData.items, "MotorTrend", "motortr
         }
 
         newsList.innerHTML = "";
-        allArticles.forEach((article) => {
-          const card = createNewsCard(article);
-          newsList.appendChild(card);
-        });
+allArticles.forEach((article) => {
+  const card = createNewsCard(article);
+  newsList.appendChild(card);
+});
 
-        if (lastUpdatedEl) {
-          lastUpdatedEl.textContent =
-            "Updated from multiple sources • " +
-            new Date().toLocaleString("en-IN", {
-              day: "2-digit",
-              month: "short",
-              hour: "2-digit",
-              minute: "2-digit"
+// 🔧 IMPORTANT ORDER
+visibleCount = 8;
+updateVisibleCards();
+updateSourcesLabel();
+
             });
         }
 
