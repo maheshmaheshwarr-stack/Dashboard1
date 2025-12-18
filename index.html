@@ -1011,6 +1011,15 @@ body {
   <div id="agent-note-text" class="agent-note-text"></div>
 
 </div>
+          <div class="agent-explainer">
+  <span class="agent-explainer-title">How this feed differs</span>
+  <p>
+    This AI does not optimise for breaking news or short-term volatility.
+    It intentionally deprioritises urgency-driven headlines and instead
+    highlights developments with durable impact, context, and practical relevance.
+  </p>
+</div>
+
 
         <div class="news-list" id="news-list">
           <div style="margin-top:12px;text-align:center;">
@@ -2611,14 +2620,14 @@ function updateAgentNote(articles) {
   const el = document.getElementById("agent-note-text");
   if (!el || !articles || !articles.length) return;
 
-  // --- Count categories ---
-  const categories = {};
   let mainstreamCount = 0;
   let constructiveCount = 0;
 
+  const categoryCounts = {};
+
   articles.forEach(a => {
     const category = a.forcedCategory || "general";
-    categories[category] = (categories[category] || 0) + 1;
+    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
 
     if (isMainstreamArticle(a)) {
       mainstreamCount++;
@@ -2626,37 +2635,38 @@ function updateAgentNote(articles) {
       constructiveCount++;
     }
   });
-  // 🚫 Remove "general" if there are other real categories
-if (Object.keys(categories).length > 1) {
-  delete categories.general;
-}
 
-  const total = articles.length;
+  // Find dominant category
+  const [topCategory, topCount] =
+    Object.entries(categoryCounts)
+      .sort((a, b) => b[1] - a[1])[0];
 
-  const [topCategory, topCount] = Object.entries(categories)
-    .sort((a, b) => b[1] - a[1])[0];
+  const percent = Math.round((topCount / articles.length) * 100);
 
-  const strength = Math.round((topCount / total) * 100);
+  // 🧠 AI stance
+  let disagreementLine;
 
-  // --- Editorial stance ---
-  let stance;
   if (mainstreamCount > constructiveCount) {
-    stance =
-      "While much of today’s mainstream coverage leans toward urgency and short-term reactions, " +
-      "this feed deliberately emphasizes calmer, longer-horizon signals and real-world impact.";
+    disagreementLine =
+      "Mainstream coverage today leaned toward urgency, volatility, and short-term reactions.";
   } else {
-    stance =
-      "Rather than amplifying breaking-news noise, today’s signal highlights constructive developments " +
-      "and practical progress that are often under-represented in mainstream narratives.";
+    disagreementLine =
+      "Rather than amplifying breaking-news noise, today’s signal focuses on developments with lasting impact.";
   }
 
-  // --- Final agent note ---
   el.innerHTML = `
-    <strong>${topCategory.toUpperCase()}</strong> emerged as today’s strongest signal
-    (${strength}% of selected stories).<br><br>
-    ${stance}
+    <strong>🤖 AI Curator — Today’s Signal</strong>
+    <div style="margin-top:6px;">
+      <strong>${topCategory.toUpperCase()}</strong> emerged as today’s strongest signal
+      (${percent}% of selected stories).
+    </div>
+    <div style="margin-top:8px;">
+      ${disagreementLine}
+      This feed deliberately prioritises calm, decision-relevant insights that are often under-represented in mainstream narratives.
+    </div>
   `;
 }
+
 
 
 
