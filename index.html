@@ -2574,34 +2574,43 @@ document.addEventListener("click", (e) => {
     document.getElementById("terms-modal")?.classList.add("show");
   }
 }, true); // <-- CAPTURE PHASE (IMPORTANT)
-    function updateAgentNote(text) {
-      function generateAgentNote(articles) {
-  if (!articles || !articles.length) {
-    return "Today’s feed is being prepared to highlight constructive, positive stories.";
+    function updateAgentNote(articles) {
+  const note = document.getElementById("agent-note-text");
+  if (!note || !articles || !articles.length) {
+    if (note) {
+      note.textContent =
+        "Today’s feed is being prepared to highlight constructive, positive stories.";
+    }
+    return;
   }
 
-  const categories = new Set(
-    articles.map(a => a.forcedCategory || a.category)
-  );
+  // -----------------------------
+  // 🧠 STEP 5A — Agent reasoning
+  // -----------------------------
+  const categories = {};
 
-  if (categories.has("Sports")) {
-    return "Today’s feed balances uplifting community stories with moments of resilience and achievement from the sports world.";
-  }
+  articles.forEach(a => {
+    const c = a.forcedCategory || a.category || "General";
+    categories[c] = (categories[c] || 0) + 1;
+  });
 
-  if (categories.has("Politics")) {
-    return "Today’s selection focuses on constructive developments and governance stories with tangible public impact.";
-  }
+  const total = Object.values(categories).reduce((a, b) => a + b, 0);
 
-  return "Today’s feed highlights real-world problem solving, community impact, and constructive outcomes — selected to maintain a calm, optimistic perspective.";
-}
+  const [topCategory, topCount] = Object.entries(categories)
+    .sort((a, b) => b[1] - a[1])[0];
 
-  const note = document.getElementById("agent-note");
-  if (!note) return;
+  const strength = Math.round((topCount / total) * 100);
 
+  // -----------------------------
+  // 🧠 STEP 5B — Agent output
+  // -----------------------------
   note.innerHTML = `
-    <strong>🧠 Curator’s Note</strong>
+    <strong>🧠 AI Curator — Today’s Signal</strong>
     <div style="margin-top:6px;">
-      ${text}
+      After reviewing today’s feed end-to-end, I identified
+      <strong>${topCategory}</strong> as the strongest signal
+      (${strength}% of stories) — balancing impact, relevance,
+      and calm decision-making.
     </div>
   `;
 }
