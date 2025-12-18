@@ -2574,7 +2574,49 @@ document.addEventListener("click", (e) => {
     document.getElementById("terms-modal")?.classList.add("show");
   }
 }, true); // <-- CAPTURE PHASE (IMPORTANT)
+
+    function isMainstreamArticle(article) {
+  const mainstreamSources = [
+    "Economic Times",
+    "Reuters",
+    "Bloomberg",
+    "CNBC",
+    "Times of India",
+    "NDTV",
+    "Moneycontrol"
+  ];
+
+  const sensationalKeywords = [
+    "crash",
+    "panic",
+    "plunge",
+    "fear",
+    "turmoil",
+    "sell-off",
+    "shock"
+  ];
+
+  const title = (article.title || "").toLowerCase();
+  const source = article.source?.name || "";
+
+  return (
+    mainstreamSources.some(s => source.includes(s)) ||
+    sensationalKeywords.some(k => title.includes(k))
+  );
+}
+
     function updateAgentNote(articles) {
+      let mainstreamCount = 0;
+let constructiveCount = 0;
+
+articles.forEach(a => {
+  if (isMainstreamArticle(a)) {
+    mainstreamCount++;
+  } else {
+    constructiveCount++;
+  }
+});
+
   const note = document.getElementById("agent-note-text");
   if (!note || !articles || !articles.length) {
     if (note) {
@@ -2676,9 +2718,18 @@ function updateAgentNote(articles) {
   const topCategory = Object.entries(categories)
     .sort((a, b) => b[1] - a[1])[0][0];
 
-  el.textContent =
-    el.textContent =
-`After reviewing today’s feed end-to-end, I identified "${topCategory}" as the strongest signal — balancing impact, relevance, and calm decision-making.`;
+  let stance;
+
+if (mainstreamCount > constructiveCount) {
+  stance = `While much of today’s mainstream coverage leans toward urgency and short-term reactions, 
+this feed deliberately emphasizes calmer, longer-horizon signals — focusing on impact, resilience, 
+and what actually changes for people on the ground.`;
+} else {
+  stance = `Rather than amplifying breaking-news noise, today’s signal highlights constructive developments 
+and practical progress that are often underplayed in mainstream narratives.`;
+}
+
+el.textContent = stance;
 
 }
 
