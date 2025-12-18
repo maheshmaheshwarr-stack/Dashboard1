@@ -1004,9 +1004,14 @@ body {
         <div class="section-title">
           <h2>Today’s Highlights</h2>
           <small>Hand-picked positive stories</small>
-        </div>
-🤖 AI Curator — Today’s Signal
-  <div id="agent-note-text" class="agent-note"></div>
+        <div class="agent-note">
+  <div class="agent-label">
+    🤖 AI Curator — Today’s Signal
+  </div>
+  <div id="agent-note-text" class="agent-note-text"></div>
+
+</div>
+
         <div class="news-list" id="news-list">
           <div style="margin-top:12px;text-align:center;">
   <button
@@ -1843,24 +1848,7 @@ card.appendChild(agentReason);
 
   // 🔧 RESET visible count on refresh
   visibleCount = INITIAL_VISIBLE_COUNT;
-        function updateAgentNote(articles) {
-  const noteEl = document.getElementById("agent-note-text");
-  if (!noteEl || !articles || articles.length === 0) return;
-
-  // Simple agent reasoning (non-LLM, deterministic for now)
-  const themes = articles
-    .map(a => a.forcedCategory || a.category || "")
-    .filter(Boolean);
-
-  let signal =
-    "I reviewed today’s stories to identify constructive outcomes, " +
-    "community impact, and solution-oriented developments. " +
-    "The overall signal today leans toward real-world problem solving " +
-    "and measured optimism.";
-
-  noteEl.textContent = signal;
-}
-
+        
 
   loadNews();
  
@@ -2658,6 +2646,26 @@ document.addEventListener("click", (e) => {
   </div>
 </div>
   <script>
+    // ===============================
+// 🧠 Agentic AI Curator
+// ===============================
+function updateAgentNote(articles) {
+  const el = document.getElementById("agent-note-text");
+  if (!el || !articles || !articles.length) return;
+
+  const categories = {};
+  articles.forEach(a => {
+    const c = a.forcedCategory || "General";
+    categories[c] = (categories[c] || 0) + 1;
+  });
+
+  const topCategory = Object.entries(categories)
+    .sort((a, b) => b[1] - a[1])[0][0];
+
+  el.textContent =
+    `After scanning today’s stories, I’m prioritizing themes around ${topCategory}.`;
+}
+
   // ===== Privacy Modal =====
   const privacyModal = document.getElementById("privacy-modal");
   const privacyClose = document.getElementById("privacy-close");
