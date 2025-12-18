@@ -1261,6 +1261,33 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
       return score;
     }
+    function fallbackPositivityScore(article) {
+  const text = `${article.title || ""} ${article.description || ""}`.toLowerCase();
+
+  let score = 50; // neutral baseline
+
+  const positiveWords = [
+    "growth", "boost", "record", "success", "wins", "innovation",
+    "launch", "expands", "profits", "strong", "positive", "improves",
+    "electric", "sustainable", "renewable", "jobs"
+  ];
+
+  const negativeWords = [
+    "crash", "loss", "decline", "cut", "layoff", "drops",
+    "scandal", "fraud", "fails", "shutdown", "strike"
+  ];
+
+  positiveWords.forEach(w => {
+    if (text.includes(w)) score += 4;
+  });
+
+  negativeWords.forEach(w => {
+    if (text.includes(w)) score -= 6;
+  });
+
+  return Math.max(10, Math.min(90, score));
+}
+
 
     // Optional AI scoring (falls back to heuristic if fails)
     
