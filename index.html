@@ -2609,41 +2609,51 @@ document.addEventListener("click", (e) => {
 // ===============================
 function updateAgentNote(articles) {
   const el = document.getElementById("agent-note-text");
-  if (!el || !Array.isArray(articles) || !articles.length) {
-    return;
-  }
+  if (!el || !articles || !articles.length) return;
 
+  // --- Count categories ---
+  const categories = {};
   let mainstreamCount = 0;
   let constructiveCount = 0;
 
-  articles.forEach(article => {
-    if (isMainstreamArticle(article)) {
+  articles.forEach(a => {
+    const category = a.forcedCategory || "general";
+    categories[category] = (categories[category] || 0) + 1;
+
+    if (isMainstreamArticle(a)) {
       mainstreamCount++;
     } else {
       constructiveCount++;
     }
   });
 
-  let message;
+  const total = articles.length;
 
+  const [topCategory, topCount] = Object.entries(categories)
+    .sort((a, b) => b[1] - a[1])[0];
+
+  const strength = Math.round((topCount / total) * 100);
+
+  // --- Editorial stance ---
+  let stance;
   if (mainstreamCount > constructiveCount) {
-    message =
-      "While much of today’s mainstream coverage emphasizes urgency, volatility, or short-term reactions, " +
-      "this feed intentionally pushes back — prioritizing calmer signals, long-term impact, and stories " +
-      "that meaningfully change outcomes rather than amplify noise.";
+    stance =
+      "While much of today’s mainstream coverage leans toward urgency and short-term reactions, " +
+      "this feed deliberately emphasizes calmer, longer-horizon signals and real-world impact.";
   } else {
-    message =
+    stance =
       "Rather than amplifying breaking-news noise, today’s signal highlights constructive developments " +
       "and practical progress that are often under-represented in mainstream narratives.";
   }
 
+  // --- Final agent note ---
   el.innerHTML = `
-    <strong>🧠 AI Curator — Today’s Signal</strong>
-    <div style="margin-top:6px;">
-      ${message}
-    </div>
+    <strong>${topCategory.toUpperCase()}</strong> emerged as today’s strongest signal
+    (${strength}% of selected stories).<br><br>
+    ${stance}
   `;
 }
+
 
 
 
