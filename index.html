@@ -691,6 +691,39 @@
   pointer-events: auto;
 }
 
+/* Modal overlay animation */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+/* Modal box animation */
+.modal-content {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 24px;
+  max-width: 520px;
+  width: 90%;
+  margin: auto;
+
+  transform: scale(0.96);
+  transition: transform 0.2s ease;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
 
 
   </style>
@@ -2336,19 +2369,31 @@ document.addEventListener("click", (e) => {
     privacyLink.addEventListener("click", (e) => {
       e.preventDefault();
       privacyModal.style.display = "flex";
+requestAnimationFrame(() => {
+  privacyModal.classList.add("show");
+});
+
     });
   }
 
   if (privacyClose && privacyModal) {
     privacyClose.addEventListener("click", () => {
-      privacyModal.style.display = "none";
+      privacyModal.classList.remove("show");
+setTimeout(() => {
+  privacyModal.style.display = "none";
+}, 200);
+
     });
   }
 
   if (privacyModal) {
     privacyModal.addEventListener("click", (e) => {
       if (e.target === privacyModal) {
-        privacyModal.style.display = "none";
+        privacyModal.classList.remove("show");
+setTimeout(() => {
+  privacyModal.style.display = "none";
+}, 200);
+
       }
     });
   }
@@ -2362,22 +2407,35 @@ document.addEventListener("click", (e) => {
     termsLink.addEventListener("click", (e) => {
       e.preventDefault();
       termsModal.style.display = "flex";
+requestAnimationFrame(() => {
+  termsModal.classList.add("show");
+});
+
     });
   }
 
   if (termsClose && termsModal) {
     termsClose.addEventListener("click", () => {
-      termsModal.style.display = "none";
+      termsModal.classList.remove("show");
+setTimeout(() => {
+  termsModal.style.display = "none";
+}, 200);
+
     });
   }
 
   if (termsModal) {
     termsModal.addEventListener("click", (e) => {
       if (e.target === termsModal) {
-        termsModal.style.display = "none";
+        termsModal.classList.remove("show");
+setTimeout(() => {
+  termsModal.style.display = "none";
+}, 200);
+
       }
     });
   }
+    
 </script>
 
 </body>
