@@ -2270,6 +2270,21 @@ document.querySelectorAll("[data-close]").forEach(btn => {
     btn.closest(".modal").classList.remove("show");
   });
 });
+    // ===== HARD OVERRIDE FOR PRIVACY / TERMS =====
+document.addEventListener("click", (e) => {
+  const text = e.target?.textContent?.trim();
+
+  if (text === "Privacy") {
+    e.preventDefault();
+    document.getElementById("privacy-modal")?.classList.add("show");
+  }
+
+  if (text === "Terms") {
+    e.preventDefault();
+    document.getElementById("terms-modal")?.classList.add("show");
+  }
+}, true); // <-- CAPTURE PHASE (IMPORTANT)
+
 
   </script>
   <!-- Privacy Modal -->
