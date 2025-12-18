@@ -802,6 +802,16 @@ body {
     #f8fafc
   ) !important;
 }
+    .agent-note {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: #0f172a;
+}
+
 
 
   </style>
@@ -971,7 +981,8 @@ body {
           <h2>Today’s Highlights</h2>
           <small>Hand-picked positive stories</small>
         </div>
-
+<!-- 🧠 Curator's Note -->
+  <div id="agent-note" class="agent-note"></div>
         <div class="news-list" id="news-list">
           <div style="margin-top:12px;text-align:center;">
   <button
@@ -1344,6 +1355,57 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
       return "current";
     }
+    function buildAgentObservation(articles) {
+  const stats = {
+    total: articles.length,
+    categories: {},
+    avgPositivity: 0
+  };
+
+  let positivitySum = 0;
+
+  articles.forEach(a => {
+    const cat = a.forcedCategory || classifyArticle(a);
+    stats.categories[cat] = (stats.categories[cat] || 0) + 1;
+
+    const score =
+      typeof a.aiScore === "number"
+        ? a.aiScore
+        : getPositivityScore(a);
+
+    positivitySum += score;
+  });
+
+  stats.avgPositivity =
+    articles.length ? Math.round(positivitySum / articles.length) : 0;
+
+  return stats;
+}
+
+function agentReasoning(observation) {
+  const dominantCategory = Object.entries(observation.categories)
+    .sort((a, b) => b[1] - a[1])[0]?.[0];
+
+  let note = "Balanced mix of stories today.";
+
+  if (observation.avgPositivity < 50) {
+    note =
+      "Overall sentiment is mixed today. The feed favors solution-oriented stories.";
+  }
+
+  if (dominantCategory === "politics") {
+    note =
+      "Political coverage is present today, balanced with other positive developments.";
+  }
+
+  if (dominantCategory === "ai" || dominantCategory === "startups") {
+    note =
+      "Today’s feed highlights innovation, technology, and forward-looking developments.";
+  }
+
+  return note;
+}
+
 
     function stripHtml(html) {
       if (!html) return "";
@@ -2142,6 +2204,17 @@ if (motorTrendData?.items) pushAuto(motorTrendData.items, "MotorTrend", "motortr
           if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
           updatePositivityMeter(0);
           return;
+          const agentObservation = buildAgentObservation(allArticles);
+const agentNote = agentReasoning(agentObservation);
+
+console.log("🧠 Agent observation:", agentObservation);
+console.log("🧠 Agent reasoning:", agentNote);
+
+const agentNoteEl = document.getElementById("agent-note");
+if (agentNoteEl) {
+  agentNoteEl.textContent = "🧠 Curator’s note: " + agentNote;
+}
+
         }
 
         newsList.innerHTML = "";
