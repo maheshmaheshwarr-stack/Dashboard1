@@ -2626,6 +2626,10 @@ function updateAgentNote(articles) {
       constructiveCount++;
     }
   });
+  // 🚫 Remove "general" if there are other real categories
+if (Object.keys(categories).length > 1) {
+  delete categories.general;
+}
 
   const total = articles.length;
 
