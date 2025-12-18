@@ -2087,6 +2087,13 @@ if (!data.answer) {
 }
 
 addChatBubble(data.answer, "bot");
+      }catch (err) {
+    console.error("Chat backend failed:", err);
+
+    thinking.remove?.();
+    const fallback = fallbackChatAnswer(question, allArticles);
+    addChatBubble(fallback, "bot");
+  }
 
     });
 
