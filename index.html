@@ -2227,6 +2227,10 @@ allArticles.forEach((article) => {
 visibleCount = 8;
 updateVisibleCards();
 updateSourcesLabel();
+        updateAgentNote(
+  "Today’s feed highlights real-world problem solving, community impact, and constructive outcomes — selected to maintain a calm, optimistic perspective."
+);
+
           } catch (error) {
     console.error(error);
     newsList.innerHTML =
@@ -2470,6 +2474,18 @@ document.addEventListener("click", (e) => {
     document.getElementById("terms-modal")?.classList.add("show");
   }
 }, true); // <-- CAPTURE PHASE (IMPORTANT)
+    function updateAgentNote(text) {
+  const note = document.getElementById("agent-note");
+  if (!note) return;
+
+  note.innerHTML = `
+    <strong>🧠 Curator’s Note</strong>
+    <div style="margin-top:6px;">
+      ${text}
+    </div>
+  `;
+}
+
 
 
   </script>
