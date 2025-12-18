@@ -1214,6 +1214,32 @@ body {
   </div>
 
   <script>
+    function getAgentReason(article) {
+  const reasons = [];
+
+  if (article.aiScore >= 70) {
+    reasons.push("high positive sentiment");
+  }
+
+  if (article.category === "Sports") {
+    reasons.push("human resilience and achievement");
+  }
+
+  if (article.category === "Current Affairs") {
+    reasons.push("constructive civic impact");
+  }
+
+  if (article.title?.toLowerCase().includes("recycle")) {
+    reasons.push("measurable environmental impact");
+  }
+
+  if (reasons.length === 0) {
+    return "Selected to maintain a calm, constructive information diet.";
+  }
+
+  return `Selected for ${reasons.join(", ")}.`;
+}
+
     // ===== Feed pagination =====
 const INITIAL_VISIBLE_COUNT = 8;
 const LOAD_MORE_COUNT = 6;
