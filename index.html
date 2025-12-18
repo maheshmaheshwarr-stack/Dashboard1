@@ -825,6 +825,16 @@ body {
     transform: translateY(0) scale(1);
   }
 }
+.agent-reason {
+  margin-top: 10px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: #1f2937;
+  background: #f0f9ff;
+  border-left: 3px solid #60a5fa;
+  border-radius: 8px;
+  line-height: 1.4;
+}
 
 
 
@@ -1663,8 +1673,46 @@ function agentReasoning(observation) {
           }
         </div>
       `;
+      // 🧠 AI agent reasoning (explainable selection)
+const agentReason = document.createElement("div");
+agentReason.className = "agent-reason";
+agentReason.innerHTML = `
+  <strong>🧠 Why the AI selected this</strong><br>
+  ${getAgentReason(article)}
+`;
+
+card.appendChild(agentReason);
+
       return card;
     }
+    function getAgentReason(article) {
+  const title = (article.title || "").toLowerCase();
+  const description = (article.description || "").toLowerCase();
+  const category = article.forcedCategory || classifyArticle(article);
+
+  if (category === "Sports" && description.includes("youth")) {
+    return "Highlights youth achievement and positive role models.";
+  }
+
+  if (category === "Automobiles" && description.includes("electric")) {
+    return "Signals progress toward sustainable transportation.";
+  }
+
+  if (description.includes("recycle") || description.includes("waste")) {
+    return "Shows grassroots problem-solving with measurable environmental impact.";
+  }
+
+  if (description.includes("startup") || description.includes("innovation")) {
+    return "Represents constructive innovation and long-term value creation.";
+  }
+
+  if (category === "Politics") {
+    return "Selected for policy impact rather than conflict or controversy.";
+  }
+
+  return "Chosen to reinforce calm, solution-oriented perspectives.";
+}
+
 
     function updatePositiveCount() {
       const cards = document.querySelectorAll(".news-card");
