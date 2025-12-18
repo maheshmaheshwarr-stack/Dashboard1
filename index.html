@@ -1006,7 +1006,7 @@ body {
           <small>Hand-picked positive stories</small>
         </div>
 🤖 AI Curator — Today’s Signal
-  <div id="agent-note" class="agent-note"></div>
+  <div id="agent-note-text" class="agent-note"></div>
         <div class="news-list" id="news-list">
           <div style="margin-top:12px;text-align:center;">
   <button
@@ -1845,6 +1845,17 @@ card.appendChild(agentReason);
   visibleCount = INITIAL_VISIBLE_COUNT;
 
   loadNews();
+        function updateAgentNote(articles) {
+  const el = document.getElementById("agent-note-text");
+  if (!el || !articles || !articles.length) return;
+
+  // Pick a representative article (top one)
+  const article = articles[0];
+
+  const reason = getAgentReason(article);
+  el.textContent = reason;
+}
+
   refreshBtn.classList.remove("active");
 });
 
@@ -1950,6 +1961,8 @@ motorTrendData
         ]);
 
         allArticles = [];
+        
+
 
         // The Better India – general positive
         if (tbiData.status === "ok" && tbiData.items && tbiData.items.length) {
@@ -2326,6 +2339,10 @@ updateSourcesLabel();
     updatePositivityMeter(0);
   }
 
+// 🧠 AGENTIC STEP — runs once, full context
+if (Array.isArray(allArticles) && allArticles.length > 0) {
+  updateAgentNote(allArticles);
+}
 
            
     }
