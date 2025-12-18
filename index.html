@@ -621,6 +621,45 @@
     .hidden {
       display: none !important;
     }
+    /* ===== Privacy / Terms Modal ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 520px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
@@ -2182,6 +2221,60 @@ addChatBubble(data.answer, "bot");
     }
 
     loadNews();
+    // ===== Privacy / Terms modal handlers =====
+document.getElementById("privacy-link")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("privacy-modal").classList.add("show");
+});
+
+document.getElementById("terms-link")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("terms-modal").classList.add("show");
+});
+
+document.querySelectorAll("[data-close]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    btn.closest(".modal").classList.remove("show");
+  });
+});
+
   </script>
+  <!-- Privacy Modal -->
+<div class="modal" id="privacy-modal">
+  <div class="modal-content">
+    <button class="modal-close" data-close>&times;</button>
+    <h2>Privacy Policy</h2>
+    <p>
+      Mahesh Positive News Feed respects your privacy.
+    </p>
+    <ul>
+      <li>No personal data is collected by default.</li>
+      <li>No tracking cookies are used.</li>
+      <li>News content is fetched from public RSS sources.</li>
+      <li>Chat interactions are processed only to generate responses and are not stored.</li>
+    </ul>
+    <p>
+      This site is provided “as is” without guarantees of accuracy or availability.
+    </p>
+  </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal" id="terms-modal">
+  <div class="modal-content">
+    <button class="modal-close" data-close>&times;</button>
+    <h2>Terms of Use</h2>
+    <ul>
+      <li>This site is for informational purposes only.</li>
+      <li>News summaries and positivity scores are automated and may be imperfect.</li>
+      <li>External links lead to third-party websites.</li>
+      <li>You agree not to misuse or attempt to disrupt the service.</li>
+    </ul>
+    <p>
+      By using this site, you accept these terms.
+    </p>
+  </div>
+</div>
+
 </body>
 </html>
