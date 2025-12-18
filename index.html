@@ -2604,58 +2604,47 @@ document.addEventListener("click", (e) => {
     sensationalKeywords.some(k => title.includes(k))
   );
 }
-
-    function updateAgentNote(articles) {
-      let mainstreamCount = 0;
-let constructiveCount = 0;
-
-articles.forEach(a => {
-  if (isMainstreamArticle(a)) {
-    mainstreamCount++;
-  } else {
-    constructiveCount++;
-  }
-});
-
-  const note = document.getElementById("agent-note-text");
-  if (!note || !articles || !articles.length) {
-    if (note) {
-      note.textContent =
-        "Today’s feed is being prepared to highlight constructive, positive stories.";
-    }
+// ===============================
+// 🧠 Agentic AI Curator (FINAL)
+// ===============================
+function updateAgentNote(articles) {
+  const el = document.getElementById("agent-note-text");
+  if (!el || !Array.isArray(articles) || !articles.length) {
     return;
   }
 
-  // -----------------------------
-  // 🧠 STEP 5A — Agent reasoning
-  // -----------------------------
-  const categories = {};
+  let mainstreamCount = 0;
+  let constructiveCount = 0;
 
-  articles.forEach(a => {
-    const c = a.forcedCategory || a.category || "General";
-    categories[c] = (categories[c] || 0) + 1;
+  articles.forEach(article => {
+    if (isMainstreamArticle(article)) {
+      mainstreamCount++;
+    } else {
+      constructiveCount++;
+    }
   });
 
-  const total = Object.values(categories).reduce((a, b) => a + b, 0);
+  let message;
 
-  const [topCategory, topCount] = Object.entries(categories)
-    .sort((a, b) => b[1] - a[1])[0];
+  if (mainstreamCount > constructiveCount) {
+    message =
+      "While much of today’s mainstream coverage emphasizes urgency, volatility, or short-term reactions, " +
+      "this feed intentionally pushes back — prioritizing calmer signals, long-term impact, and stories " +
+      "that meaningfully change outcomes rather than amplify noise.";
+  } else {
+    message =
+      "Rather than amplifying breaking-news noise, today’s signal highlights constructive developments " +
+      "and practical progress that are often under-represented in mainstream narratives.";
+  }
 
-  const strength = Math.round((topCount / total) * 100);
-
-  // -----------------------------
-  // 🧠 STEP 5B — Agent output
-  // -----------------------------
-  note.innerHTML = `
+  el.innerHTML = `
     <strong>🧠 AI Curator — Today’s Signal</strong>
     <div style="margin-top:6px;">
-      After reviewing today’s feed end-to-end, I identified
-      <strong>${topCategory}</strong> as the strongest signal
-      (${strength}% of stories) — balancing impact, relevance,
-      and calm decision-making.
+      ${message}
     </div>
   `;
 }
+
 
 
 
@@ -2698,40 +2687,7 @@ articles.forEach(a => {
 </div>
   <script>
     // ===============================
-// 🧠 Agentic AI Curator
-// ===============================
-function updateAgentNote(articles) {
-  const el = document.getElementById("agent-note-text");
-  if (!el || !articles || !articles.length) return;
 
-  const categories = {};
-  articles.forEach(a => {
-    const c =
-  a.forcedCategory ||
-  (a.sourceKey === "arstechnica" ? "AI & Technology" :
-   a.sourceKey === "economictimes" ? "Markets" :
-   "General");
-
-    categories[c] = (categories[c] || 0) + 1;
-  });
-
-  const topCategory = Object.entries(categories)
-    .sort((a, b) => b[1] - a[1])[0][0];
-
-  let stance;
-
-if (mainstreamCount > constructiveCount) {
-  stance = `While much of today’s mainstream coverage leans toward urgency and short-term reactions, 
-this feed deliberately emphasizes calmer, longer-horizon signals — focusing on impact, resilience, 
-and what actually changes for people on the ground.`;
-} else {
-  stance = `Rather than amplifying breaking-news noise, today’s signal highlights constructive developments 
-and practical progress that are often underplayed in mainstream narratives.`;
-}
-
-el.textContent = stance;
-
-}
 
   // ===== Privacy Modal =====
   const privacyModal = document.getElementById("privacy-modal");
