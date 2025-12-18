@@ -629,12 +629,15 @@
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 100000;
+  pointer-events: none; /* KEY */
 }
 
 .modal.show {
   display: flex;
+  pointer-events: auto; /* only active when visible */
 }
+
 
 .modal-content {
   background: #ffffff;
@@ -665,10 +668,29 @@
   pointer-events: auto;
 }
 
+/* ===== FORCE FOOTER CLICKABILITY ===== */
+.site-footer {
+  position: relative !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
+
 .site-footer a {
-  pointer-events: auto;
+  pointer-events: auto !important;
   cursor: pointer;
 }
+/* Prevent invisible layout layers from blocking clicks */
+.main,
+.main-content,
+.page-wrapper,
+.app,
+.container,
+.hero,
+.highlights,
+.news-section {
+  pointer-events: auto;
+}
+
 
 
   </style>
