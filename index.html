@@ -2655,7 +2655,12 @@ function updateAgentNote(articles) {
 
   const categories = {};
   articles.forEach(a => {
-    const c = a.forcedCategory || "General";
+    const c =
+  a.forcedCategory ||
+  (a.sourceKey === "arstechnica" ? "AI & Technology" :
+   a.sourceKey === "economictimes" ? "Markets" :
+   "General");
+
     categories[c] = (categories[c] || 0) + 1;
   });
 
@@ -2663,7 +2668,9 @@ function updateAgentNote(articles) {
     .sort((a, b) => b[1] - a[1])[0][0];
 
   el.textContent =
-    `After scanning today’s stories, I’m prioritizing themes around ${topCategory}.`;
+    el.textContent =
+`After reviewing today’s feed end-to-end, I identified "${topCategory}" as the strongest signal — balancing impact, relevance, and calm decision-making.`;
+
 }
 
   // ===== Privacy Modal =====
