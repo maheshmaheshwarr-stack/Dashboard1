@@ -811,6 +811,20 @@ body {
   font-size: 0.85rem;
   color: #0f172a;
 }
+.agent-note {
+  animation: agentFadeIn 0.5s ease-out;
+}
+
+@keyframes agentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 
 
@@ -981,7 +995,7 @@ body {
           <h2>Today’s Highlights</h2>
           <small>Hand-picked positive stories</small>
         </div>
-<!-- 🧠 Curator's Note -->
+🤖 AI Curator — Today’s Signal
   <div id="agent-note" class="agent-note"></div>
         <div class="news-list" id="news-list">
           <div style="margin-top:12px;text-align:center;">
@@ -2227,9 +2241,8 @@ allArticles.forEach((article) => {
 visibleCount = 8;
 updateVisibleCards();
 updateSourcesLabel();
-        updateAgentNote(
-  "Today’s feed highlights real-world problem solving, community impact, and constructive outcomes — selected to maintain a calm, optimistic perspective."
-);
+        updateAgentNote(generateAgentNote(allArticles));
+
 
           } catch (error) {
     console.error(error);
@@ -2475,6 +2488,26 @@ document.addEventListener("click", (e) => {
   }
 }, true); // <-- CAPTURE PHASE (IMPORTANT)
     function updateAgentNote(text) {
+      function generateAgentNote(articles) {
+  if (!articles || !articles.length) {
+    return "Today’s feed is being prepared to highlight constructive, positive stories.";
+  }
+
+  const categories = new Set(
+    articles.map(a => a.forcedCategory || a.category)
+  );
+
+  if (categories.has("Sports")) {
+    return "Today’s feed balances uplifting community stories with moments of resilience and achievement from the sports world.";
+  }
+
+  if (categories.has("Politics")) {
+    return "Today’s selection focuses on constructive developments and governance stories with tangible public impact.";
+  }
+
+  return "Today’s feed highlights real-world problem solving, community impact, and constructive outcomes — selected to maintain a calm, optimistic perspective.";
+}
+
   const note = document.getElementById("agent-note");
   if (!note) return;
 
