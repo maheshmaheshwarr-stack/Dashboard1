@@ -1419,56 +1419,9 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
       return "current";
     }
-    function buildAgentObservation(articles) {
-  const stats = {
-    total: articles.length,
-    categories: {},
-    avgPositivity: 0
-  };
 
-  let positivitySum = 0;
 
-  articles.forEach(a => {
-    const cat = a.forcedCategory || classifyArticle(a);
-    stats.categories[cat] = (stats.categories[cat] || 0) + 1;
 
-    const score =
-      typeof a.aiScore === "number"
-        ? a.aiScore
-        : getPositivityScore(a);
-
-    positivitySum += score;
-  });
-
-  stats.avgPositivity =
-    articles.length ? Math.round(positivitySum / articles.length) : 0;
-
-  return stats;
-}
-
-function agentReasoning(observation) {
-  const dominantCategory = Object.entries(observation.categories)
-    .sort((a, b) => b[1] - a[1])[0]?.[0];
-
-  let note = "Balanced mix of stories today.";
-
-  if (observation.avgPositivity < 50) {
-    note =
-      "Overall sentiment is mixed today. The feed favors solution-oriented stories.";
-  }
-
-  if (dominantCategory === "politics") {
-    note =
-      "Political coverage is present today, balanced with other positive developments.";
-  }
-
-  if (dominantCategory === "ai" || dominantCategory === "startups") {
-    note =
-      "Today’s feed highlights innovation, technology, and forward-looking developments.";
-  }
-
-  return note;
-}
 
 
     function stripHtml(html) {
@@ -2310,8 +2263,7 @@ if (motorTrendData?.items) pushAuto(motorTrendData.items, "MotorTrend", "motortr
           if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
           updatePositivityMeter(0);
           return;
-          const agentObservation = buildAgentObservation(allArticles);
-const agentNote = agentReasoning(agentObservation);
+         
 
 console.log("🧠 Agent observation:", agentObservation);
 console.log("🧠 Agent reasoning:", agentNote);
