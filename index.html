@@ -2572,52 +2572,87 @@ function updateAgentNote(articles) {
   const el = document.getElementById("agent-note-text");
   if (!el || !articles || !articles.length) return;
 
+  const categoryStats = {};
   let mainstreamCount = 0;
-  let constructiveCount = 0;
-
-  const categoryCounts = {};
 
   articles.forEach(a => {
     const category = a.forcedCategory || "general";
-    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+    const score =
+      typeof a.aiScore === "number"
+        ? a.aiScore
+        : getPositivityScore(a);
+
+    if (!categoryStats[category]) {
+      categoryStats[category] = { count: 0, positivitySum: 0 };
+    }
+
+    categoryStats[category].count += 1;
+    categoryStats[category].positivitySum += score;
 
     if (isMainstreamArticle(a)) {
       mainstreamCount++;
-    } else {
-      constructiveCount++;
     }
   });
 
-  // Find dominant category
-  const [topCategory, topCount] =
-    Object.entries(categoryCounts)
+  // 🔍 Dominant by volume
+  const [volumeCategory, volumeData] =
+    Object.entries(categoryStats)
+      .sort((a, b) => b[1].count - a[1].count)[0];
+
+  // 🌱 Dominant by positivity
+  const [positiveCategory, positiveData] =
+    Object.entries(categoryStats)
+      .map(([cat, data]) => [
+        cat,
+        data.positivitySum / Math.max(1, data.count)
+      ])
       .sort((a, b) => b[1] - a[1])[0];
 
-  const percent = Math.round((topCount / articles.length) * 100);
+  const volumePercent = Math.round(
+    (volumeData.count / articles.length) * 100
+  );
 
-  // 🧠 AI stance
-  let disagreementLine;
+  const constructivePercent = Math.round(
+    (positiveData / 100) * 100
+  );
 
-  if (mainstreamCount > constructiveCount) {
-    disagreementLine =
-      "Mainstream coverage today leaned toward urgency, volatility, and short-term reactions.";
+  let stanceLine;
+
+  if (volumeCategory !== positiveCategory) {
+    stanceLine = `
+      Although <strong>${volumeCategory.toUpperCase()}</strong> dominated headlines
+      (${volumePercent}% of coverage),
+      the AI deliberately elevated <strong>${positiveCategory.toUpperCase()}</strong>
+      due to higher constructive and long-term impact.
+    `;
   } else {
-    disagreementLine =
-      "Rather than amplifying breaking-news noise, today’s signal focuses on developments with lasting impact.";
+    stanceLine = `
+      Coverage and constructive impact aligned today,
+      with <strong>${volumeCategory.toUpperCase()}</strong>
+      leading both volume and positivity.
+    `;
   }
 
+  const disagreementLine =
+    mainstreamCount > articles.length / 2
+      ? "Mainstream narratives leaned toward urgency and short-term reactions."
+      : "Rather than amplifying breaking-news noise, the AI prioritised signal over urgency.";
+
   el.innerHTML = `
-    <strong>🤖 AI Curator — Today’s Signal</strong>
-    <div style="margin-top:6px;">
-      <strong>${topCategory.toUpperCase()}</strong> emerged as today’s strongest signal
-      (${percent}% of selected stories).
+    <strong>🤖 AI Curator — Intentional Signal</strong>
+
+    <div style="margin-top:8px;">
+      ${stanceLine}
     </div>
+
     <div style="margin-top:8px;">
       ${disagreementLine}
-      This feed deliberately prioritises calm, decision-relevant insights that are often under-represented in mainstream narratives.
+      This feed is curated to surface developments with durable relevance,
+      not momentary attention spikes.
     </div>
   `;
 }
+
 
 
 
