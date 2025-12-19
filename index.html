@@ -835,6 +835,26 @@ body {
   border-radius: 8px;
   line-height: 1.4;
 }
+    .agent-ignored {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fff7ed;
+  border: 1px dashed #fed7aa;
+  font-size: 0.8rem;
+  color: #7c2d12;
+}
+
+.agent-ignored ul {
+  margin-top: 6px;
+  padding-left: 16px;
+}
+
+.agent-ignored li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
 
 
 
@@ -1011,6 +1031,14 @@ body {
   <div id="agent-note-text" class="agent-note-text"></div>
 
 </div>
+          <!-- 🧠 AI Ignored Headlines (Phase 4.1) -->
+<div class="agent-ignored">
+  <strong>🧠 What the AI intentionally ignored today</strong>
+  <ul id="ignored-list">
+    <li>Evaluating headlines...</li>
+  </ul>
+</div>
+
           <div class="agent-explainer">
   <span class="agent-explainer-title">How this feed differs</span>
   <p>
@@ -2295,6 +2323,11 @@ updateSourcesLabel();
     if (lastUpdatedEl) lastUpdatedEl.textContent = "Error fetching headlines";
     updatePositivityMeter(0);
   }
+      // 🧠 Phase 4.1 — populate ignored mainstream headlines
+if (Array.isArray(allArticles) && allArticles.length > 0) {
+  updateIgnoredList(allArticles);
+}
+
 
 // 🧠 AGENTIC STEP — runs once, full context
 if (Array.isArray(allArticles) && allArticles.length > 0) {
@@ -2663,6 +2696,26 @@ function updateAgentNote(articles) {
       not momentary attention spikes.
     </div>
   `;
+}
+function updateIgnoredList(articles) {
+  const el = document.getElementById("ignored-list");
+  if (!el) return;
+
+  const ignored = articles
+    .filter(a => isMainstreamArticle(a))
+    .slice(0, 3); // keep it subtle
+
+  if (!ignored.length) {
+    el.innerHTML = "<li>No major urgency-driven headlines were prioritised today.</li>";
+    return;
+  }
+
+  el.innerHTML = ignored.map(a => `
+    <li>
+      <strong>${a.title}</strong><br>
+      <em>Deprioritised due to short-term urgency framing.</em>
+    </li>
+  `).join("");
 }
 
 
