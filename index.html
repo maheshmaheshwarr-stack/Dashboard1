@@ -1006,7 +1006,7 @@ body {
           <small>Hand-picked positive stories</small>
         <div class="agent-note">
   <div class="agent-label">
-    🤖 AI Curator — Today’s Signal
+    
   </div>
   <div id="agent-note-text" class="agent-note-text"></div>
 
@@ -2636,10 +2636,22 @@ function updateAgentNote(articles) {
   const disagreementLine =
     mainstreamCount > articles.length / 2
       ? "Mainstream narratives leaned toward urgency and short-term reactions."
-      : "Rather than amplifying breaking-news noise, the AI prioritised signal over urgency.";
+      : "The AI intentionally deprioritised breaking-news urgency in favour of durable signal.";
 
   el.innerHTML = `
-    <strong>🤖 AI Curator — Intentional Signal</strong>
+    <div style="
+  display:inline-block;
+  margin-bottom:6px;
+  padding:4px 10px;
+  font-size:0.72rem;
+  border-radius:999px;
+  background:#e0f2fe;
+  color:#0f172a;
+  font-weight:600;
+">
+  🤖 Editorial AI · Signal-first curation
+</div>
+
 
     <div style="margin-top:8px;">
       ${stanceLine}
