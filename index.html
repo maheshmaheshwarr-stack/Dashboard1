@@ -1979,56 +1979,69 @@ fetch(MOTOR_TREND_URL)
 
         ]);
 
-        const [
-          tbiData,
-          techData,
-          polData,
-          ieIndiaData,
-          telegraphPolData,
-          ieSportsData,
-          ndtvSportsData,
-          espncricinfoData,
-          tcData,
-          etMarketsData,
-          livemintMarketsData,
-          moneycontrolData,
-          vergeTechData,
-          arsTechData,
-          autocarIndiaData,
-          pibData,
-rbiData,
-prsData,
-wefData,
-unDevData,
-mitTechData,
-ieeeData,
-owidData,
-carbonBriefData,
+  const [
+  tbiData,
+  techData,
+  polData,
+  ieIndiaData,
+  telegraphPolData,
+  ieSportsData,
+  ndtvSportsData,
+  espncricinfoData,
+  tcData,
+  etMarketsData,
+  livemintMarketsData,
+  moneycontrolData,
+  vergeTechData,
+  arsTechData,
+  autocarIndiaData,
 
-rushlaneData,
-autocarUkData,
-motorTrendData
+  pibData,
+  rbiData,
+  prsData,
+  wefData,
+  unDevData,
+  mitTechData,
+  ieeeData,
+  owidData,
+  carbonBriefData,
 
-        ] = await Promise.all([
-          tbiResp.json(),
-          techResp.json(),
-          polResp.json(),
-          ieIndiaResp.json(),
-          telegraphPolResp.json(),
-          ieSportsResp.json(),
-          ndtvSportsResp.json(),
-          espncricinfoResp.json(),
-          tcResp.json(),
-          etMarketsResp.json(),
-          livemintMarketsResp.json(),
-          moneycontrolResp.json(),
-          vergeTechResp.json(),
-          arsTechResp.json(),
-          autocarIndiaResp.json(),
+  rushlaneData,
+  autocarUkData,
+  motorTrendData
+] = await Promise.all([
+  tbiResp.json(),
+  techResp.json(),
+  polResp.json(),
+  ieIndiaResp.json(),
+  telegraphPolResp.json(),
+  ieSportsResp.json(),
+  ndtvSportsResp.json(),
+  espncricinfoResp.json(),
+  tcResp.json(),
+  etMarketsResp.json(),
+  livemintMarketsResp.json(),
+  moneycontrolResp.json(),
+  vergeTechResp.json(),
+  arsTechResp.json(),
+  autocarIndiaResp.json(),
+
+  pibResp.json(),
+  rbiResp.json(),
+  prsResp.json(),
+  wefResp.json(),
+  unDevResp.json(),
+  mitTechResp.json(),
+  ieeeResp.json(),
+  owidResp.json(),
+  carbonBriefResp.json(),
+
   rushlaneResp.json(),
   autocarUkResp.json(),
   motorTrendResp.json()
-        ]);
+]);
+
+        
 
         allArticles = [];
         
@@ -2296,20 +2309,6 @@ motorTrendData
           });
         }
         // 🟦 NEW AI-APPROVED SOURCES
-const pibResponse = await fetch(PIB_RSS);
-const pibData = await pibResponse.json();
-
-const prsResponse = await fetch(PRS_RSS);
-const prsData = await prsResponse.json();
-
-const rbiResponse = await fetch(RBI_RSS);
-const rbiData = await rbiResponse.json();
-
-const wefResponse = await fetch(WEF_RSS);
-const wefData = await wefResponse.json();
-
-const unResponse = await fetch(UN_RSS);
-const unData = await unResponse.json();
 
         pushArticles(pibData?.items, "PIB India", "pib", "current");
 pushArticles(rbiData?.items, "Reserve Bank of India", "rbi", "markets");
