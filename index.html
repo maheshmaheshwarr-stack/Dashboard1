@@ -1315,6 +1315,23 @@ const LOAD_MORE_COUNT = 6;
 
     // --- RSS sources ---
     const TBI_RSS = "https://www.thebetterindia.com/feed/";
+    // --- High-signal government & policy ---
+const PIB_RSS = "https://pib.gov.in/rss.aspx";
+const RBI_RSS = "https://rbi.org.in/Scripts/Rss.aspx";
+const PRS_RSS = "https://prsindia.org/blog/rss.xml";
+
+// --- Global institutions ---
+const WEF_RSS = "https://www.weforum.org/agenda/rss.xml";
+const UN_DEV_RSS = "https://news.un.org/feed/subscribe/en/news/topic/development/feed/rss.xml";
+
+// --- Science & innovation ---
+const MIT_TECH_RSS = "https://www.technologyreview.com/feed/";
+const IEEE_RSS = "https://spectrum.ieee.org/rss/fulltext";
+
+// --- Climate / solutions ---
+const OWID_RSS = "https://ourworldindata.org/rss.xml";
+const CARBON_BRIEF_RSS = "https://www.carbonbrief.org/feed/";
+
 
     // Indian Express (existing)
     const TECH_RSS = "https://indianexpress.com/section/technology/feed/";
@@ -1375,6 +1392,19 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
     const NDTV_SPORTS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(NDTV_SPORTS_RSS)}`;
     const ESPNCRICINFO_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(ESPNCRICINFO_RSS)}`;
+    const PIB_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(PIB_RSS)}`;
+const RBI_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RBI_RSS)}`;
+const PRS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(PRS_RSS)}`;
+
+const WEF_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(WEF_RSS)}`;
+const UN_DEV_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(UN_DEV_RSS)}`;
+
+const MIT_TECH_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MIT_TECH_RSS)}`;
+const IEEE_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(IEEE_RSS)}`;
+
+const OWID_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(OWID_RSS)}`;
+const CARBON_BRIEF_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(CARBON_BRIEF_RSS)}`;
+
 
     const newsList = document.getElementById("news-list");
     const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
@@ -1596,6 +1626,23 @@ const MOTOR_TREND_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeUR
 
   return Math.max(10, Math.min(90, score));
 }
+    function pushArticles(items, sourceName, sourceKey, forcedCategory = null) {
+  if (!Array.isArray(items)) return;
+
+  items.slice(0, 6).forEach(item => {
+    allArticles.push({
+      title: item.title,
+      description: stripHtml(item.description),
+      content: stripHtml(item.content),
+      url: item.link,
+      publishedAt: item.pubDate,
+      source: { name: sourceName },
+      forcedCategory,
+      sourceKey
+    });
+  });
+}
+
 
 
     // Optional AI scoring (falls back to heuristic if fails)
@@ -1916,6 +1963,16 @@ document.addEventListener("DOMContentLoaded", () => {
           fetch(VERGE_TECH_URL),
           fetch(ARS_TECH_URL),
           fetch(AUTOCAR_INDIA_URL),
+          fetch(PIB_URL),
+fetch(RBI_URL),
+fetch(PRS_URL),
+fetch(WEF_URL),
+fetch(UN_DEV_URL),
+fetch(MIT_TECH_URL),
+fetch(IEEE_URL),
+fetch(OWID_URL),
+fetch(CARBON_BRIEF_URL),
+
 fetch(RUSHLANE_URL),
 fetch(AUTOCAR_UK_URL),
 fetch(MOTOR_TREND_URL)
@@ -1938,6 +1995,16 @@ fetch(MOTOR_TREND_URL)
           vergeTechData,
           arsTechData,
           autocarIndiaData,
+          pibData,
+rbiData,
+prsData,
+wefData,
+unDevData,
+mitTechData,
+ieeeData,
+owidData,
+carbonBriefData,
+
 rushlaneData,
 autocarUkData,
 motorTrendData
@@ -2228,6 +2295,19 @@ motorTrendData
             });
           });
         }
+        pushArticles(pibData?.items, "PIB India", "pib", "current");
+pushArticles(rbiData?.items, "Reserve Bank of India", "rbi", "markets");
+pushArticles(prsData?.items, "PRS Legislative Research", "prs", "politics");
+
+pushArticles(wefData?.items, "World Economic Forum", "wef", "current");
+pushArticles(unDevData?.items, "UN Development", "un", "current");
+
+pushArticles(mitTechData?.items, "MIT Technology Review", "mittech", "ai");
+pushArticles(ieeeData?.items, "IEEE Spectrum", "ieee", "ai");
+
+pushArticles(owidData?.items, "Our World in Data", "owid", "current");
+pushArticles(carbonBriefData?.items, "Carbon Brief", "carbonbrief", "current");
+
         function pushAuto(items, sourceName, sourceKey) {
   items.slice(0, 6).forEach((item) => {
     allArticles.push({
@@ -2242,6 +2322,7 @@ motorTrendData
     });
   });
 }
+        
 
 if (autocarIndiaData?.items) pushAuto(autocarIndiaData.items, "Autocar India", "autocarindia");
 if (rushlaneData?.items) pushAuto(rushlaneData.items, "RushLane", "rushlane");
