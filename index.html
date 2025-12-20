@@ -455,6 +455,17 @@
       font-size: 0.7rem;
       color: var(--text-muted);
     }
+    .source-group {
+  margin-bottom: 12px;
+}
+
+.source-group-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 6px 0;
+}
+
 
     .read-link {
       font-size: 0.72rem;
@@ -968,129 +979,49 @@ body {
               </span>
             </summary>
             <div class="sources-body">
-              <div class="filters-bar" aria-label="Filter by news source" id="source-filters">
-                <button class="filter-chip source-chip active" data-source="all">
-                  <span class="dot"></span>
-                  All sources (combined)
-                </button>
-                <button class="filter-chip source-chip" data-source="tbi">
-                  <span class="dot"></span>
-                  The Better India
-                </button>
-                <button class="filter-chip source-chip" data-source="ietech">
-                  <span class="dot"></span>
-                  IE Tech
-                </button>
-                <button class="filter-chip source-chip" data-source="iepolitics">
-                  <span class="dot"></span>
-                  IE Politics
-                </button>
-                <button class="filter-chip source-chip" data-source="ieindia">
-                  <span class="dot"></span>
-                  IE India (National)
-                </button>
-                <button class="filter-chip source-chip" data-source="telegraph">
-                  <span class="dot"></span>
-                  Telegraph Politics
-                </button>
-                <button class="filter-chip source-chip" data-source="iesports">
-                  <span class="dot"></span>
-                  IE Sports
-                </button>
-                <button class="filter-chip source-chip" data-source="ndtvsports">
-                  <span class="dot"></span>
-                  NDTV Sports
-                </button>
-                <button class="filter-chip source-chip" data-source="espncricinfo">
-                  <span class="dot"></span>
-                  ESPNcricinfo
-                </button>
-                <button class="filter-chip source-chip" data-source="techcrunch">
-                  <span class="dot"></span>
-                  TechCrunch
-                </button>
-                <button class="filter-chip source-chip" data-source="etmarkets">
-                  <span class="dot"></span>
-                  ET Markets
-                </button>
-                <button class="filter-chip source-chip" data-source="livemint">
-                  <span class="dot"></span>
-                  Livemint Markets
-                </button>
-                <button class="filter-chip source-chip" data-source="moneycontrol">
-                  <span class="dot"></span>
-                  Moneycontrol
-                </button>
-                <button class="filter-chip source-chip" data-source="verge">
-                  <span class="dot"></span>
-                  The Verge Tech
-                </button>
-                <button class="filter-chip source-chip" data-source="arstechnica">
-                  <span class="dot"></span>
-                  Ars Technica
-                </button>
-                <!-- 🟦 AI-Curated Institutions -->
-<button class="filter-chip source-chip" data-source="pib">
-  <span class="dot"></span>
-  PIB India
-</button>
+              <div class="filters-bar" id="source-filters">
 
-<button class="filter-chip source-chip" data-source="rbi">
-  <span class="dot"></span>
-  Reserve Bank of India
-</button>
+  <!-- Institutions -->
+  <div class="source-group">
+    <div class="source-group-title">Institutions</div>
+    <button class="filter-chip source-chip" data-source="pib">PIB</button>
+    <button class="filter-chip source-chip" data-source="rbi">RBI</button>
+    <button class="filter-chip source-chip" data-source="prs">PRS</button>
+    <button class="filter-chip source-chip" data-source="wef">WEF</button>
+  </div>
 
-<button class="filter-chip source-chip" data-source="prs">
-  <span class="dot"></span>
-  PRS Legislative Research
-</button>
+  <!-- Markets -->
+  <div class="source-group">
+    <div class="source-group-title">Markets</div>
+    <button class="filter-chip source-chip" data-source="etmarkets">ET</button>
+    <button class="filter-chip source-chip" data-source="livemint">Livemint</button>
+    <button class="filter-chip source-chip" data-source="moneycontrol">Moneycontrol</button>
+  </div>
 
-<button class="filter-chip source-chip" data-source="wef">
-  <span class="dot"></span>
-  World Economic Forum
-</button>
+  <!-- Technology & AI -->
+  <div class="source-group">
+    <div class="source-group-title">Technology & AI</div>
+    <button class="filter-chip source-chip" data-source="ietech">IE Tech</button>
+    <button class="filter-chip source-chip" data-source="mittech">MIT Tech</button>
+    <button class="filter-chip source-chip" data-source="ieee">IEEE</button>
+  </div>
 
-<button class="filter-chip source-chip" data-source="un">
-  <span class="dot"></span>
-  UN Development
-</button>
+  <!-- Automobiles -->
+  <div class="source-group">
+    <div class="source-group-title">Automobiles</div>
+    <button class="filter-chip source-chip" data-source="autocarindia">Autocar</button>
+    <button class="filter-chip source-chip" data-source="rushlane">RushLane</button>
+  </div>
 
-<!-- 🟦 AI-Curated Tech -->
-<button class="filter-chip source-chip" data-source="mittech">
-  <span class="dot"></span>
-  MIT Technology Review
-</button>
+  <!-- Sports -->
+  <div class="source-group">
+    <div class="source-group-title">Sports</div>
+    <button class="filter-chip source-chip" data-source="iesports">IE Sports</button>
+    <button class="filter-chip source-chip" data-source="ndtvsports">NDTV</button>
+    <button class="filter-chip source-chip" data-source="espncricinfo">ESPN</button>
+  </div>
 
-<button class="filter-chip source-chip" data-source="ieee">
-  <span class="dot"></span>
-  IEEE Spectrum
-</button>
-
-<button class="filter-chip source-chip" data-source="owid">
-  <span class="dot"></span>
-  Our World in Data
-</button>
-
-<button class="filter-chip source-chip" data-source="carbonbrief">
-  <span class="dot"></span>
-  Carbon Brief
-</button>
-
-<!-- 🟦 Automobiles -->
-<button class="filter-chip source-chip" data-source="motortrend">
-  <span class="dot"></span>
-  MotorTrend
-</button>
-
-<button class="filter-chip source-chip" data-source="autocaruk">
-  <span class="dot"></span>
-  Autocar UK
-</button>
-
-<button class="filter-chip source-chip" data-source="rushlane">
-  <span class="dot"></span>
-  RushLane
-</button>
+</div>
 
               </div>
             </div>
