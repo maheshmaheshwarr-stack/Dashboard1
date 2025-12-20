@@ -2295,6 +2295,22 @@ motorTrendData
             });
           });
         }
+        // 🟦 NEW AI-APPROVED SOURCES
+const pibResponse = await fetch(PIB_RSS);
+const pibData = await pibResponse.json();
+
+const prsResponse = await fetch(PRS_RSS);
+const prsData = await prsResponse.json();
+
+const rbiResponse = await fetch(RBI_RSS);
+const rbiData = await rbiResponse.json();
+
+const wefResponse = await fetch(WEF_RSS);
+const wefData = await wefResponse.json();
+
+const unResponse = await fetch(UN_RSS);
+const unData = await unResponse.json();
+
         pushArticles(pibData?.items, "PIB India", "pib", "current");
 pushArticles(rbiData?.items, "Reserve Bank of India", "rbi", "markets");
 pushArticles(prsData?.items, "PRS Legislative Research", "prs", "politics");
