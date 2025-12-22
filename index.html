@@ -111,6 +111,8 @@ align-items: center;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        padding: 16px 20px 12px; /* top | sides | bottom */
+        border-bottom: 1px solid #e5e7eb;
       }
     }
 
@@ -242,15 +244,15 @@ align-items: center;
     }
 
     .filters-bar {
-      margin-top: 10px;
+      margin-top: 6px;
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     .filter-chip {
       border-radius: 999px;
-      padding: 6px 11px;
+      padding: 6px 10px;
       font-size: 0.78rem;
       border: 1px solid rgba(148, 163, 184, 0.7);
       background: var(--chip-bg);
@@ -287,7 +289,7 @@ align-items: center;
 
     /* Collapsible sources panel */
     .sources-wrapper {
-      margin-top: 8px;
+      margin-top: 6px;
       width: 100%;
     }
 
@@ -928,6 +930,11 @@ body {
   line-height: 1.4;
 }
 
+header > .header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* was likely larger implicitly */
+}
 
 
 
