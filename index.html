@@ -108,13 +108,19 @@ align-items: center;
       align-items: flex-start;
 border-bottom: 1px solid #e5e7eb;
     }
+    header::after {
+  content: "";
+  display: block;
+  height: 4px;
+}
+
 
     @media (min-width: 640px) {
       header {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 20px 12px; /* top | sides | bottom */
+        padding: 10x 16px 8px; /* top | sides | bottom */
         border-bottom: 1px solid #e5e7eb;
       }
     }
@@ -126,8 +132,8 @@ border-bottom: 1px solid #e5e7eb;
     }
 
     .brand-badge {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 999px;
       background: radial-gradient(
         circle at 30% 20%,
@@ -149,16 +155,18 @@ border-bottom: 1px solid #e5e7eb;
     }
 
     .brand-text h1 {
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       letter-spacing: 0.03em;
       margin-bottom: 2px;
   line-height: 1.1;
+      margin: 0;
     }
 
     .brand-text p {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
        margin: 0;
+      line-height: 1.2;
     }
 
     .header-right {
@@ -226,18 +234,19 @@ border-bottom: 1px solid #e5e7eb;
       gap: 6px;
       font-size: 0.75rem;
       justify-content: flex-start;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .pill {
       border-radius: 999px;
-      padding: 6px 10px;
+      padding: 4px 10px;
       background: #f3f4f6;
       border: 1px solid #e5e7eb;
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      font-size: 0.72rem;
     }
 
     .pill span.icon {
@@ -255,12 +264,13 @@ border-bottom: 1px solid #e5e7eb;
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      row-gap: 6px;
     }
 
     .filter-chip {
       border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.78rem;
+      padding: 5px 10px;
+      font-size: 0.75rem;
       border: 1px solid rgba(148, 163, 184, 0.7);
       background: var(--chip-bg);
       color: var(--text-muted);
@@ -310,8 +320,8 @@ border-bottom: 1px solid #e5e7eb;
       cursor: pointer;
       border-radius: 999px;
       border: 1px solid #e5e7eb;
-      padding: 5px 10px;
-      font-size: 0.75rem;
+      padding: 4px 10px;
+      font-size: 0.72rem;
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
