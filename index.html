@@ -1342,6 +1342,20 @@ header > .header-right {
   </div>
 
   <script>
+    // =======================
+// 🧠 AGENT STATE (Memory)
+// =======================
+const agentState = {
+  day: new Date().toISOString().slice(0, 10),
+  observations: [],
+  decisions: {},
+  memory: {
+    deprioritisedTopics: [],
+    boostedTopics: [],
+    sourceTrust: {}
+  }
+};
+
     function getAgentReason(article) {
   const reasons = [];
 
@@ -1669,6 +1683,87 @@ const CARBON_BRIEF_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeU
 
       return score;
     }
+    // =======================
+// 🧠 AGENT: OBSERVE
+// =======================
+function observeArticles(articles) {
+  const obs = {
+    total: articles.length,
+    byCategory: {},
+    bySource: {},
+    urgencyCount: 0
+  };
+
+  articles.forEach(a => {
+    const cat = a.forcedCategory || "general";
+
+    obs.byCategory[cat] = (obs.byCategory[cat] || 0) + 1;
+    obs.bySource[a.sourceKey] = (obs.bySource[a.sourceKey] || 0) + 1;
+
+    if (
+      /breaking|alert|crisis|panic|earthquake|stocks plunge/i.test(
+        (a.title || "") + " " + (a.description || "")
+      )
+    ) {
+      obs.urgencyCount++;
+    }
+  });
+
+  agentState.observations.push(obs);
+  return obs;
+}
+    // =======================
+// 🧠 AGENT: REASON
+// =======================
+function reasonAboutDay(observation) {
+  const decisions = {
+    deprioritiseUrgency: false,
+    boostCategories: [],
+    ignoreReason: ""
+  };
+
+  if (observation.urgencyCount > observation.total * 0.25) {
+    decisions.deprioritiseUrgency = true;
+    decisions.ignoreReason =
+      "High short-term urgency detected. Prioritising durable signal.";
+  }
+
+  if ((observation.byCategory.automobiles || 0) >= 2) {
+    decisions.boostCategories.push("automobiles");
+  }
+
+  if ((observation.byCategory.ai || 0) >= 2) {
+    decisions.boostCategories.push("ai");
+  }
+
+  agentState.decisions = decisions;
+  return decisions;
+}
+    // =======================
+// 🧠 AGENT: ACT
+// =======================
+function applyAgentDecisions(articles, decisions) {
+  return articles.map(a => {
+    let bonus = 0;
+
+    if (
+      decisions.deprioritiseUrgency &&
+      /breaking|alert|crisis|panic/i.test(a.title || "")
+    ) {
+      bonus -= 2;
+    }
+
+    if (decisions.boostCategories.includes(a.forcedCategory)) {
+      bonus += 2;
+    }
+
+    a.agentBonus = bonus;
+    return a;
+  });
+}
+
+
+
     function fallbackPositivityScore(article) {
   const text = `${article.title || ""} ${article.description || ""}`.toLowerCase();
 
@@ -1709,6 +1804,10 @@ const CARBON_BRIEF_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeU
       forcedCategory,
       sourceKey
     });
+    // 🧠 AGENT: OBSERVE + REASON
+const observation = observeArticles(allArticles);
+const decisions = reasonAboutDay(observation);
+
   });
 }
 
@@ -2464,22 +2563,18 @@ if (motorTrendData?.items) pushAuto(motorTrendData.items, "MotorTrend", "motortr
         updatePositivityMeter(positivityPercent);
 
         // Sort by positivity, then recency
-        allArticles.sort((a, b) => {
-          const scoreA = (typeof a.aiScore === "number")
-            ? a.aiScore
-            : getPositivityScore(a);
-          const scoreB = (typeof b.aiScore === "number")
-            ? b.aiScore
-            : getPositivityScore(b);
+       // 🧠 AGENT: ACT
+allArticles = applyAgentDecisions(allArticles, decisions);
 
-          if (scoreA !== scoreB) {
-            return scoreB - scoreA; // higher positivity first
-          }
+// 🧠 AGENT-INFLUENCED SORT
+allArticles.sort((a, b) => {
+  const scoreA =
+    (a.aiScore ?? getPositivityScore(a)) + (a.agentBonus || 0);
+  const scoreB =
+    (b.aiScore ?? getPositivityScore(b)) + (b.agentBonus || 0);
+  return scoreB - scoreA;
+});
 
-          const dateA = new Date(a.publishedAt || a.pubDate || 0).getTime();
-          const dateB = new Date(b.publishedAt || b.pubDate || 0).getTime();
-          return dateB - dateA; // newer first
-        });
 
         if (!allArticles.length) {
           newsList.innerHTML =
@@ -2529,6 +2624,7 @@ if (Array.isArray(allArticles) && allArticles.length > 0) {
 if (Array.isArray(allArticles) && allArticles.length > 0) {
   updateAgentNote(allArticles);
 }
+updateAgentNoteFromDecisions(decisions);
 
            
     }
@@ -2893,6 +2989,28 @@ function updateAgentNote(articles) {
     </div>
   `;
 }
+    // =======================
+// 🧠 AGENT: EXPLAIN
+// =======================
+function updateAgentNoteFromDecisions(decisions) {
+  const note = [];
+
+  if (decisions.deprioritiseUrgency) {
+    note.push("Deprioritised short-term urgency-driven headlines.");
+  }
+
+  if (decisions.boostCategories.length) {
+    note.push(
+      "Elevated " +
+      decisions.boostCategories.join(", ") +
+      " due to constructive long-term impact."
+    );
+  }
+
+  const el = document.getElementById("agent-note-text");
+  if (el) el.textContent = note.join(" ");
+}
+
 function updateIgnoredList(articles) {
   const el = document.getElementById("ignored-list");
   if (!el) return;
