@@ -1869,6 +1869,17 @@ function applyAgentDecisions(articles, decisions) {
   });
 
   return aiWorked;
+    let aiScores = null;
+
+try {
+  aiScores = await scoreArticlesWithAI(allArticles);
+} catch (err) {
+  console.warn("AI scoring unavailable, continuing without it", err);
+}
+if (aiScores) {
+  applyAIScores(allArticles, aiScores);
+}
+
 }
     
 
