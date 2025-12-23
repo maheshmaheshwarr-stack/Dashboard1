@@ -103,10 +103,11 @@ align-items: center;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 0px;
       padding: 12px 0px 10px; 
       align-items: flex-start;
-border-bottom: 1px solid #e5e7eb;
+border-bottom: none;
+      padding-bottom: 8px;
     }
     header::after {
   content: "";
@@ -265,6 +266,7 @@ border-bottom: 1px solid #e5e7eb;
       flex-wrap: wrap;
       gap: 6px;
       row-gap: 6px;
+      margin-bottom: 6px; 
     }
 
     .filter-chip {
@@ -308,6 +310,7 @@ border-bottom: 1px solid #e5e7eb;
     .sources-wrapper {
       margin-top: 6px;
       width: 100%;
+        margin-bottom: 4px; 
     }
 
     .sources-wrapper[open] {
@@ -367,7 +370,7 @@ border-bottom: 1px solid #e5e7eb;
     }
 
     main {
-      margin-top: 18px;
+      margin-top: 8px;
       display: grid;
       grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
       gap: 18px;
