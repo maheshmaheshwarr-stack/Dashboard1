@@ -1804,10 +1804,7 @@ function applyAgentDecisions(articles, decisions) {
       forcedCategory,
       sourceKey
     });
-    // 🧠 AGENT: OBSERVE + REASON
-const observation = observeArticles(allArticles);
-const decisions = reasonAboutDay(observation);
-
+   
   });
 }
 
@@ -2092,6 +2089,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     async function loadNews() {
+      let decisions = null;
       newsList.innerHTML =
         '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
 
@@ -2488,6 +2486,9 @@ const [
               forcedCategory: null,
               sourceKey: "verge"
             });
+            const observation = observeArticles(allArticles);
+decisions = reasonAboutDay(observation);
+
           });
         }
         // 🟦 NEW AI-APPROVED SOURCES
