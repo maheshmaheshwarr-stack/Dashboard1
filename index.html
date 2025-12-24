@@ -109,7 +109,10 @@ align-items: center;
         background: linear-gradient(
     to bottom,
     #f0fdf4,
-    #ffffff
+    #ffffff,
+          180deg,
+    rgba(56, 189, 248, 0.10),
+    rgba(255, 255, 255, 0.0)
   );
 
       display: flex;
@@ -118,7 +121,7 @@ align-items: center;
       margin-bottom: 0px;
       padding: 16px 20px; 
       align-items: flex-start;
-border-bottom: none;
+border-bottom: 1px solid #e5e7eb;
       padding-bottom: 8px;
     }
     header::after {
@@ -961,6 +964,16 @@ body {
   margin-bottom: 6px;
   line-height: 1.4;
 }
+    .brand-sub {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+.brand:hover .brand-badge {
+  transform: rotate(-3deg) scale(1.03);
+  transition: transform 0.25s ease;
+}
+
 
 header > .header-right {
   display: flex;
@@ -979,6 +992,9 @@ header > .header-right {
   <div class="brand">
     <div class="brand-badge" aria-hidden="true">
       <span>☀️</span>
+      <small class="brand-sub">
+  AI-curated • Human-aligned
+</small>
     </div>
     <div class="brand-text">
       <h1>Mahesh +ve Pill</h1>
