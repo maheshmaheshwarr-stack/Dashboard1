@@ -973,6 +973,49 @@ body {
   transform: rotate(-3deg) scale(1.03);
   transition: transform 0.25s ease;
 }
+    .agentic-header {
+  padding: 16px 20px 12px;
+  text-align: center;
+}
+
+.agentic-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.agentic-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38bdf8, #22c55e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 6px 14px rgba(56,189,248,0.25);
+}
+
+.agentic-text h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0f172a;
+}
+
+.agentic-tagline {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.agentic-subline {
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+
 
 
 header > .header-right {
@@ -988,20 +1031,24 @@ header > .header-right {
 <body>
   
 
-<header class="site-header">
-  <div class="brand">
-    <div class="brand-badge" aria-hidden="true">
-      <span>☀️</span>
-      <small class="brand-sub">
-  AI-curated • Human-aligned
-</small>
+<header class="agentic-header">
+  <div class="agentic-brand">
+    <div class="agentic-badge" aria-hidden="true">
+      🧠
     </div>
-    <div class="brand-text">
+
+    <div class="agentic-text">
       <h1>Mahesh +ve Pill</h1>
-      <p>Your calm, optimistic view of today’s news</p>
+      <p class="agentic-tagline">
+        Signal-first news, curated with intent
+      </p>
+      <p class="agentic-subline">
+        AI that selects • deprioritises • explains
+      </p>
     </div>
   </div>
 </header>
+
 
 
 
