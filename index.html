@@ -997,15 +997,16 @@ body {
 }
 
 .agentic-text h1 {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: 750;
   margin: 0;
   color: #0f172a;
+  letter-spacing: -0.01em;
 }
 
 .agentic-tagline {
   margin: 2px 0 0;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #475569;
 }
 
@@ -1015,6 +1016,28 @@ body {
   color: #94a3b8;
   letter-spacing: 0.02em;
 }
+    .agentic-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at top left,
+    #34d399,
+    #0ea5e9
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 12px 24px rgba(14,165,233,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.agentic-logo-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+}
+
 
 
 
@@ -1033,9 +1056,9 @@ header > .header-right {
 
 <header class="agentic-header">
   <div class="agentic-brand">
-    <div class="agentic-badge" aria-hidden="true">
-      🧠
-    </div>
+    <div class="agentic-logo">
+  <span class="agentic-logo-icon">🧠</span>
+</div>
 
     <div class="agentic-text">
       <h1>Mahesh +ve Pill</h1>
