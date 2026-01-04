@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahesh +ve Pill — AI-Curated Signal Over Noise</title>
+
+  <!-- Open Graph / LinkedIn Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mahesh +ve Pill — AI-Curated Signal Over Noise" />
+  <meta property="og:description" content="An agentic AI news system that resists panic, deprioritises breaking noise, and highlights durable, constructive signals." />
+  <meta property="og:url" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/" />
+  <meta property="og:image" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/og-preview.png" />
+  
+  <!-- Article metadata -->
+  <meta property="article:author" content="Mahesh Ramanathan" />
+  <meta property="article:published_time" content="2025-12-19T08:00:00+05:30" />
+  <meta property="article:modified_time" content="2025-12-19T08:00:00+05:30" />
+  <meta name="author" content="Mahesh Ramanathan" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --bg-softer: #f3f4f6;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-strong: #22c55e;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --card-border: #e5e7eb;
+      --chip-bg: #f3f4f6;
+      --shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
+      --radius-xl: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: #ffffff !important;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #f0fdf4 0%, #f8fafc 35%, #ffffff 70%) !important;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column; 
+      justify-content: flex-start;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1100px;
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 20px 20px 24px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e5e7eb;
+      position: relative;
+    }
+
+    .app-shell > footer {
+      margin-top: auto;
+      text-align: center;
+      padding-top: 24px;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    @media (min-width: 768px) {
+      .app-shell {
+        padding: 26px 26px 30px;
+      }
+    }
+
+    header {
+      background: linear-gradient(to bottom, #f0fdf4, #ffffff);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 0px;
+      padding: 16px 20px; 
+      align-items: flex-start;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    @media (min-width: 640px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px 8px;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-text h1 {
+      font-size: 1.35rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 640px) {
+      .header-right {
+        align-items: flex-end;
+      }
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .nav-link {
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.16s ease-out;
+    }
+
+    .nav-link:hover {
+      border-color: #e5e7eb;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    .nav-link.active {
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), #e0f2fe);
+      border-color: rgba(56, 189, 248, 0.9);
+      color: #0f172a;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 640px) {
+      .meta {
+        align-items: flex-end;
+      }
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.75rem;
+      justify-content: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+    }
+
+    .pill span.icon {
+      font-size: 0.9em;
+    }
+
+    .pill--accent {
+      border-color: rgba(34, 197, 94, 0.8);
+      color: #166534;
+      background: rgba(22, 163, 74, 0.08);
+    }
+
+    .filters-bar {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      row-gap: 6px;
+      margin-bottom: 6px; 
+    }
+
+    .filter-chip {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: var(--chip-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease-out;
+    }
+
+    .filter-chip span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.8);
+    }
+
+    .filter-chip.active {
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), #e0f2fe);
+      color: #0f172a;
+      border-color: rgba(56, 189, 248, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .filter-chip.active span.dot {
+      background: #38bdf8;
+    }
+
+    .sources-wrapper {
+      margin-top: 6px;
+      width: 100%;
+      margin-bottom: 0; 
+    }
+
+    .sources-wrapper[open] {
+      background: #f9fafb;
+      border-radius: 999px;
+    }
+
+    .sources-summary {
+      list-style: none;
+      cursor: pointer;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9fafb;
+    }
+
+    .sources-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .sources-caret {
+      font-size: 0.7rem;
+      transform: translateY(1px);
+      transition: transform 0.2s;
+    }
+
+    .sources-count {
+      font-size: 0.7rem;
+      color: #4b5563;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+
+    .sources-wrapper[open] .sources-summary {
+      border-color: rgba(56, 189, 248, 0.9);
+      background: #e0f2fe;
+      color: #0f172a;
+    }
+
+    .sources-wrapper[open] .sources-caret {
+      transform: rotate(90deg);
+    }
+
+    .source-group {
+      margin-bottom: 12px;
+    }
+
+    .source-group-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin: 6px 0;
+      font-weight: 600;
+    }
+
+    main {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .section-title h2 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .news-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      background: var(--bg-soft);
+      padding: 12px 13px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+    }
+
+    .news-card:hover {
+      transform: translateY(-3px) translateZ(0);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
+      border-color: rgba(56, 189, 248, 0.7);
+    }
+
+    .news-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.68rem;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    .badge--category {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+    }
+
+    .badge--positive {
+      border-color: rgba(34, 197, 94, 0.9);
+      color: #15803d;
+      background: #dcfce7;
+    }
+
+    .news-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .news-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .news-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      color: #4f46e5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .source {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .read-link {
+      font-size: 0.72rem;
+      text-decoration: none;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .read-link:hover {
+      text-decoration: underline;
+    }
+
+    .sidebar-card {
+      border-radius: 20px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 12px 14px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #0f172a;
+    }
+
+    .sidebar-card p {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .sidebar-list {
+      margin-top: 4px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-list li {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pill-mini {
+      border-radius: 999px;
+      padding: 3px 7px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.7rem;
+      color: #4f46e5;
+      background: #eef2ff;
+    }
+
+    .positivity-meter {
+      margin-top: 6px;
+      width: 100%;
+    }
+
+    .positivity-meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .positivity-bar {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .positivity-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, #38bdf8);
+      transition: width 0.4s ease-out;
+    }
+
+    .input, .textarea {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      background: #ffffff;
+      outline: none;
+    }
+
+    .input:focus, .textarea:focus {
+      border-color: #38bdf8;
+    }
+
+    .textarea {
+      border-radius: 10px;
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .btn-primary {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #38bdf8;
+      color: #020617;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #0ea5e9;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .feedback-status {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      min-height: 1em;
+    }
+
+    .feedback-status.success {
+      color: #15803d;
+    }
+
+    .feedback-status.error {
+      color: #b91c1c;
+    }
+
+    .agent-note {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: #0f172a;
+      animation: agentFadeIn 0.5s ease-out;
+    }
+
+    @keyframes agentFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .agent-reason {
+      margin-top: 10px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: #1f2937;
+      background: #f0f9ff;
+      border-left: 3px solid #60a5fa;
+      border-radius: 8px;
+      line-height: 1.4;
+    }
+
+    .agent-ignored {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #fff7ed;
+      border: 1px dashed #fed7aa;
+      font-size: 0.8rem;
+      color: #7c2d12;
+    }
+
+    .agent-ignored ul {
+      margin-top: 6px;
+      padding-left: 16px;
+    }
+
+    .agent-ignored li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .agentic-header {
+      padding: 16px 20px 12px;
+      text-align: center;
+    }
+
+    .agentic-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .agentic-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top left, #34d399, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 24px rgba(14,165,233,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .agentic-logo-icon {
+      font-size: 1.8rem;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+    }
+
+    .agentic-text h1 {
+      font-size: 1.6rem;
+      font-weight: 750;
+      margin: 0;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    .agentic-tagline {
+      margin: 2px 0 0;
+      font-size: 0.9rem;
+      color: #475569;
+    }
+
+    .agentic-subline {
+      margin-top: 2px;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      letter-spacing: 0.02em;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: #4f46e5;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .footer-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #f3f4f6;
+      color: var(--text-muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 520px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+      transform: scale(0.96);
+      transition: transform 0.2s ease;
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .modal-content ul {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+
+    .modal-content li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border: none;
+      background: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #6b7280;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #f3f4f6;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="agentic-header">
+    <div class="agentic-brand">
+      <div class="agentic-logo">
+        <span class="agentic-logo-icon">🧠</span>
+      </div>
+      <div class="agentic-text">
+        <h1>Mahesh +ve Pill</h1>
+        <p class="agentic-tagline">Signal-first news, curated with intent</p>
+        <p class="agentic-subline">AI that selects • deprioritises • explains</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <header>
+      <div class="header-right">
+        <nav aria-label="Main navigation">
+          <a class="nav-link active" href="index.html">News Feed</a>
+          <a class="nav-link" href="about.html">About</a>
+        </nav>
+
+        <div class="meta">
+          <div class="pill-row">
+            <div class="pill pill--accent">
+              <span class="icon">✨</span>
+              <span>Signal over noise. Positivity over panic.</span>
+            </div>
+            <div class="pill">
+              <span class="icon">🕒</span>
+              <span id="last-updated">Fetching latest headlines…</span>
+            </div>
+          </div>
+
+          <div class="filters-bar" aria-label="Filter by topic">
+            <button class="filter-chip active" data-filter="all">
+              <span class="dot"></span>All
+            </button>
+            <button class="filter-chip" data-filter="current">
+              <span class="dot"></span>Current Affairs
+            </button>
+            <button class="filter-chip" data-filter="ai">
+              <span class="dot"></span>IT &amp; AI Trends
+            </button>
+            <button class="filter-chip" data-filter="startups">
+              <span class="dot"></span>Startups
+            </button>
+            <button class="filter-chip" data-filter="markets">
+              <span class="dot"></span>Stock Market &amp; Economy
+            </button>
+            <button class="filter-chip" data-filter="politics">
+              <span class="dot"></span>Politics
+            </button>
+            <button class="filter-chip" data-filter="sports">
+              <span class="dot"></span>Sports
+            </button>
+            <button class="filter-chip" data-filter="automobiles">
+              <span class="dot"></span>Automobiles
+            </button>
+            <button id="refresh-btn" class="filter-chip" style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);">
+              <span class="dot"></span>Refresh
+            </button>
+          </div>
+
+          <details class="sources-wrapper">
+            <summary class="sources-summary">
+              <span class="sources-label">
+                <span class="sources-caret">▶</span>Sources
+              </span>
+              <span class="sources-count" id="sources-count-label">All sources (combined)</span>
+            </summary>
+            <div class="sources-body">
+              <div class="filters-bar" id="source-filters">
+                <div class="source-group">
+                  <div class="source-group-title">Institutions</div>
+                  <button class="filter-chip source-chip" data-source="pib">PIB</button>
+                  <button class="filter-chip source-chip" data-source="rbi">RBI</button>
+                  <button class="filter-chip source-chip" data-source="prs">PRS</button>
+                  <button class="filter-chip source-chip" data-source="wef">WEF</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Markets</div>
+                  <button class="filter-chip source-chip" data-source="etmarkets">ET</button>
+                  <button class="filter-chip source-chip" data-source="livemint">Livemint</button>
+                  <button class="filter-chip source-chip" data-source="moneycontrol">Moneycontrol</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Technology & AI</div>
+                  <button class="filter-chip source-chip" data-source="ietech">IE Tech</button>
+                  <button class="filter-chip source-chip" data-source="mittech">MIT Tech</button>
+                  <button class="filter-chip source-chip" data-source="ieee">IEEE</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Automobiles</div>
+                  <button class="filter-chip source-chip" data-source="autocarindia">Autocar</button>
+                  <button class="filter-chip source-chip" data-source="rushlane">RushLane</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Sports</div>
+                  <button class="filter-chip source-chip" data-source="iesports">IE Sports</button>
+                  <button class="filter-chip source-chip" data-source="ndtvsports">NDTV</button>
+                  <button class="filter-chip source-chip" data-source="espncricinfo">ESPN</button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="column" aria-label="Main news feed">
+        <div class="section-title">
+          <h2>Today's Highlights</h2>
+        </div>
+
+        <div class="agent-note">
+          <div id="agent-note-text" class="agent-note-text">Loading AI curator insights...</div>
+        </div>
+
+        <div class="agent-ignored">
+          <strong>🧠 What the AI intentionally ignored today</strong>
+          <ul id="ignored-list">
+            <li>Evaluating headlines...</li>
+          </ul>
+        </div>
+
+        <div class="news-list" id="news-list">
+          <p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>
+        </div>
+
+        <div style="margin-top:12px;text-align:center;">
+          <button id="load-more-btn" class="btn-primary" style="background:#e0f2fe;display:none;">
+            Show more stories
+          </button>
+        </div>
+      </section>
+
+      <aside class="column" aria-label="Summary and quick stats">
+        <section class="sidebar-card">
+          <h3>Today's Mood</h3>
+          <p>A quick snapshot of why today's feed is net-positive.</p>
+          <ul class="sidebar-list">
+            <li>Net positive impact<span class="pill-mini" id="positive-count">0 stories</span></li>
+            <li>Focus on AI / tech<span class="pill-mini">Key stories</span></li>
+            <li>Personal relevance<span class="pill-mini">Custom curated</span></li>
+          </ul>
+
+          <div class="positivity-meter" aria-label="Overall positivity of today's feed">
+            <div class="positivity-meter-header">
+              <span>Positivity meter</span>
+              <span id="positivity-percent">–</span>
+            </div>
+            <div class="positivity-bar">
+              <div class="positivity-bar-fill" id="positivity-bar-fill"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sidebar-card" style="margin-top: 10px;">
+          <h3>Visitor Feedback</h3>
+          <p style="font-size:0.78rem;color:#6b7280;">Tell me who you are and how this news feed feels.</p>
+          <form id="feedback-form" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+            <input id="feedback-name" class="input" type="text" placeholder="Your name (optional)" autocomplete="name" />
+            <textarea id="feedback-text" class="textarea" placeholder="Any feedback or suggestions…"></textarea>
+            <button type="submit" class="btn-primary" id="feedback-submit">
+              <span>Send feedback</span> <span>📨</span>
+            </button>
+          </form>
+          <div id="feedback-status" class="feedback-status"></div>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <span>Built for a calm information diet. Tweak this page as your interests evolve.</span>
+      <div class="footer-badges">
+        <span class="footer-badge">🌱 Growth-focused</span>
+        <span class="footer-badge">📚 Curated, not addictive</span>
+        <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
+        <span class="footer-badge">🇮🇳 Built in India</span>
+      </div>
+
+      <div style="width:100%;text-align:center;margin-top:8px;font-size:0.7rem;color:#6b7280;">
+        <a href="#" id="privacy-link">Privacy</a>
+        <span style="margin:0 8px;">•</span>
+        <a href="#" id="terms-link">Terms</a>
+      </div>
+
+      <div style="width:100%;text-align:center;margin-top:4px;font-size:0.7rem;color:#9ca3af;">
+        © <span id="copyright-year"></span> Mahesh Ramanathan — All rights reserved.
+      </div>
+    </footer>
+  </div>
+
+  <!-- Privacy Modal -->
+  <div class="modal" id="privacy-modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2>Privacy Policy</h2>
+      <p>Mahesh Positive News Feed respects your privacy.</p>
+      <ul>
+        <li>No personal data is collected by default.</li>
+        <li>No tracking cookies are used.</li>
+        <li>News content is fetched from public RSS sources.</li>
+        <li>All processing happens in your browser.</li>
+      </ul>
+      <p>This site is provided "as is" without guarantees of accuracy or availability.</p>
+    </div>
+  </div>
+
+  <!-- Terms Modal -->
+  <div class="modal" id="terms-modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2>Terms of Use</h2>
+      <ul>
+        <li>This site is for informational purposes only.</li>
+        <li>News summaries and positivity scores are automated and may be imperfect.</li>
+        <li>External links lead to third-party websites over which we have no control.</li>
+        <li>You agree not to misuse or attempt to disrupt the service.</li>
+        <li>Content is provided without warranties of any kind.</li>
+      </ul>
+      <p>By using this site, you accept these terms.</p>
+    </div>
+  </div>
+
+  <script>
+    // ======================
+    // CONFIGURATION
+    // ======================
+    const CONFIG = {
+      FEEDBACK_EMAIL: "mahesh.maheshwarr@gmail.com",
+      INITIAL_VISIBLE_COUNT: 8,
+      LOAD_MORE_COUNT: 6,
+      RSS_API_BASE: "https://api.rss2json.com/v1/api.json?rss_url="
+    };
+
+    // RSS Feed URLs
+    const RSS_FEEDS = {
+      tbi: "https://www.thebetterindia.com/feed/",
+      pib: "https://pib.gov.in/rss.aspx",
+      rbi: "https://rbi.org.in/Scripts/Rss.aspx",
+      tech: "https://indianexpress.com/section/technology/feed/",
+      politics: "https://indianexpress.com/section/india/politics/feed/",
+      sports: "https://indianexpress.com/section/sports/feed/",
+      markets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+      livemint: "https://www.livemint.com/rss/markets",
+      moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
+      autocar: "https://www.autocarindia.com/RSS/rss.ashx?type=all"
+    };
+
+    // ======================
+    // STATE MANAGEMENT
+    // ======================
+    const state = {
+      allArticles: [],
+      activeCategory: "all",
+      activeSource: "all",
+      visibleCount: CONFIG.INITIAL_VISIBLE_COUNT
+    };
+
+    // ======================
+    // UTILITY FUNCTIONS
+    // ======================
+    function stripHtml(html) {
+      if (!html) return "";
+      return html.replace(/<[^>]*>/g, "").trim();
+    }
+
+    function shortenText(text, maxLen = 220) {
+      if (!text) return "";
+      const clean = text.trim();
+      if (clean.length <= maxLen) return clean;
+      const sliced = clean.slice(0, maxLen);
+      const lastSpace = sliced.lastIndexOf(" ");
+      const trimmed = lastSpace > 120 ? sliced.slice(0, lastSpace) : sliced;
+      return trimmed + "…";
+    }
+
+    function classifyArticle(article) {
+      const text = ((article.title || "") + " " + (article.description || "")).toLowerCase();
+      
+      if (text.match(/cricket|football|t20|ipl|world cup|olympic/i)) return "sports";
+      if (text.match(/sensex|nifty|stock|market|shares|economy|gdp|inflation/i)) return "markets";
+      if (text.match(/election|minister|parliament|bill passed|policy|government/i)) return "politics";
+      if (text.match(/startup|start-up|funding|valuation|unicorn|series [ab]|venture capital/i)) return "startups";
+      if (text.match(/\bai\b|artificial intelligence|machine learning|openai|chatgpt/i)) return "ai";
+      if (text.match(/car|automobile|vehicle|\bev\b|electric vehicle|hybrid|suv|bike|two-wheeler/i)) return "automobiles";
+      
+      return "current";
+    }
+
+    function calculatePositivityScore(article) {
+      const text = `${article.title || ""} ${article.description || ""}`.toLowerCase();
+      let score = 50;
+
+      const positiveWords = [
+        "growth", "boost", "record", "success", "wins", "innovation",
+        "launch", "expands", "profits", "strong", "positive", "improves",
+        "electric", "sustainable", "renewable", "jobs", "breakthrough",
+        "milestone", "achievement", "solution"
+      ];
+
+      const negativeWords = [
+        "crash", "loss", "decline", "cut", "layoff", "drops",
+        "scandal", "fraud", "fails", "shutdown", "strike", "crisis",
+        "panic", "fear", "plunge", "collapse"
+      ];
+
+      positiveWords.forEach(word => {
+        if (text.includes(word)) score += 4;
+      });
+
+      negativeWords.forEach(word => {
+        if (text.includes(word)) score -= 6;
+      });
+
+      return Math.max(10, Math.min(90, score));
+    }
+
+    function getAgentReason(article) {
+      const category = article.category;
+      const description = (article.description || "").toLowerCase();
+      
+      if (category === "sports") return "Highlights human achievement and positive role models.";
+      if (category === "automobiles" && description.includes("electric")) 
+        return "Signals progress toward sustainable transportation.";
+      if (description.includes("recycle") || description.includes("waste")) 
+        return "Shows measurable environmental impact.";
+      if (category === "startups" || description.includes("innovation")) 
+        return "Represents constructive innovation and long-term value creation.";
+      if (category === "politics") 
+        return "Selected for policy impact rather than conflict or controversy.";
+      if (category === "ai") 
+        return "Highlights technological progress with practical applications.";
+      
+      return "Selected to maintain a calm, constructive information diet.";
+    }
+
+    function isMainstreamSensational(article) {
+      const title = (article.title || "").toLowerCase();
+      const sensationalKeywords = [
+        "breaking", "urgent", "crash", "panic", "plunge", "fear", 
+        "turmoil", "sell-off", "shock", "chaos", "crisis"
+      ];
+      return sensationalKeywords.some(keyword => title.includes(keyword));
+    }
+
+    // ======================
+    // DOM CREATION
+    // ======================
+    function createNewsCard(article) {
+      const card = document.createElement("article");
+      card.className = "news-card";
+      card.dataset.category = article.category;
+      card.dataset.source = article.sourceKey;
+
+      const published = article.publishedAt ? 
+        new Date(article.publishedAt).toLocaleString("en-IN", {
+          day: "2-digit", 
+          month: "short", 
+          hour: "2-digit", 
+          minute: "2-digit"
+        }) : "";
+
+      const sourceName = article.source?.name || "News source";
+      const title = article.title || "Untitled story";
+      const description = shortenText(article.description || "A positive development worth noting today.");
+
+      card.innerHTML = `
+        <div class="news-badges">
+          <span class="badge badge--category">${article.category.toUpperCase()}</span>
+          <span class="badge badge--positive">Net positive impact</span>
+        </div>
+        <h3 class="news-title">${title}</h3>
+        <p class="tagline">${description}</p>
+        <div class="news-meta-row">
+          <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
+        </div>
+        <div class="news-footer">
+          <span class="source">Source: ${sourceName}</span>
+          ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer">Read <span>↗</span></a>` : ""}
+        </div>
+        <div class="agent-reason">
+          <strong>🧠 Why the AI selected this</strong><br>
+          ${getAgentReason(article)}
+        </div>
+      `;
+
+      return card;
+    }
+
+    // ======================
+    // UI UPDATE FUNCTIONS
+    // ======================
+    function updateVisibleCards() {
+      const cards = Array.from(document.querySelectorAll(".news-card"));
+      let shown = 0;
+
+      cards.forEach((card) => {
+        const category = card.dataset.category;
+        const sourceKey = card.dataset.source;
+        const categoryOK = state.activeCategory === "all" || category === state.activeCategory;
+        const sourceOK = state.activeSource === "all" || sourceKey === state.activeSource;
+
+        if (categoryOK && sourceOK && shown < state.visibleCount) {
+          card.classList.remove("hidden");
+          shown++;
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+
+      const loadMoreBtn = document.getElementById("load-more-btn");
+      if (loadMoreBtn) {
+        loadMoreBtn.style.display = shown < cards.length ? "inline-flex" : "none";
+      }
+
+      updatePositiveCount();
+    }
+
+    function updatePositiveCount() {
+      const visibleCards = document.querySelectorAll(".news-card:not(.hidden)");
+      const positiveCountEl = document.getElementById("positive-count");
+      if (positiveCountEl) {
+        positiveCountEl.textContent = `${visibleCards.length} stories`;
+      }
+    }
+
+    function updatePositivityMeter(percent) {
+      const positivityPercentEl = document.getElementById("positivity-percent");
+      const positivityBarFillEl = document.getElementById("positivity-bar-fill");
+      
+      if (!positivityPercentEl || !positivityBarFillEl) return;
+      
+      const clamped = Math.max(0, Math.min(100, Math.round(percent)));
+      positivityPercentEl.textContent = clamped ? `${clamped}% positive` : "–";
+      positivityBarFillEl.style.width = `${clamped}%`;
+    }
+
+    function updateAgentNote(articles) {
+      const el = document.getElementById("agent-note-text");
+      if (!el || !articles || !articles.length) return;
+
+      const categoryStats = {};
+      articles.forEach(a => {
+        const cat = a.category;
+        if (!categoryStats[cat]) {
+          categoryStats[cat] = { count: 0, totalScore: 0 };
+        }
+        categoryStats[cat].count++;
+        categoryStats[cat].totalScore += a.aiScore;
+      });
+
+      const topCategory = Object.entries(categoryStats)
+        .sort((a, b) => b[1].count - a[1].count)[0];
+
+      const [volumeCategory, volumeData] = topCategory;
+      const volumePercent = Math.round((volumeData.count / articles.length) * 100);
+
+      el.innerHTML = `
+        <div style="display:inline-block;margin-bottom:6px;padding:4px 10px;font-size:0.72rem;border-radius:999px;background:#e0f2fe;color:#0f172a;font-weight:600;">
+          🤖 Editorial AI · Signal-first curation
+        </div>
+        <div style="margin-top:8px;">
+          Today's feed prioritises <strong>durable signal over breaking noise</strong>. 
+          <strong>${volumeCategory.toUpperCase()}</strong> dominated headlines (${volumePercent}% of coverage), 
+          curated from ${Object.keys(RSS_FEEDS).length} trusted sources.
+        </div>
+        <div style="margin-top:8px;color:#64748b;font-size:0.78rem;">
+          The AI intentionally deprioritised urgency-driven headlines in favour of developments 
+          with long-term relevance and constructive impact.
+        </div>
+      `;
+    }
+
+    function updateIgnoredList(articles) {
+      const el = document.getElementById("ignored-list");
+      if (!el) return;
+
+      const ignored = articles.filter(a => isMainstreamSensational(a)).slice(0, 3);
+
+      if (!ignored.length) {
+        el.innerHTML = "<li>No major urgency-driven headlines were prioritised today.</li>";
+        return;
+      }
+
+      el.innerHTML = ignored.map(a => `
+        <li>
+          <strong>"${a.title}"</strong><br>
+          <em style="font-size:0.75rem;color:#92400e;">Deprioritised due to short-term urgency framing.</em>
+        </li>
+      `).join("");
+    }
+
+    function updateSourcesLabel() {
+      const sourcesCountLabel = document.getElementById("sources-count-label");
+      if (!sourcesCountLabel) return;
+      
+      const activeChip = document.querySelector(".source-chip.active");
+      if (!activeChip || state.activeSource === "all") {
+        sourcesCountLabel.textContent = "All sources (combined)";
+      } else {
+        sourcesCountLabel.textContent = activeChip.textContent.trim();
+      }
+    }
+
+    // ======================
+    // DATA FETCHING
+    // ======================
+    async function loadNews() {
+      const newsList = document.getElementById("news-list");
+      const lastUpdatedEl = document.getElementById("last-updated");
+      
+      newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
+
+      try {
+        // Build fetch promises
+        const fetchPromises = Object.entries(RSS_FEEDS).map(([key, url]) => 
+          fetch(CONFIG.RSS_API_BASE + encodeURIComponent(url))
+            .then(r => r.json())
+            .then(data => ({ key, data }))
+            .catch(err => {
+              console.warn(`Failed to fetch ${key}:`, err);
+              return { key, data: null };
+            })
+        );
+
+        const results = await Promise.all(fetchPromises);
+        state.allArticles = [];
+
+        // Process all feeds
+        results.forEach(({ key, data }) => {
+          if (!data || data.status !== "ok" || !data.items || !data.items.length) {
+            return;
+          }
+
+          const sourceName = data.feed?.title || "News Source";
+          
+          data.items.slice(0, 6).forEach(item => {
+            const article = {
+              title: item.title,
+              description: stripHtml(item.description),
+              content: stripHtml(item.content),
+              url: item.link,
+              publishedAt: item.pubDate,
+              source: { name: sourceName },
+              sourceKey: key,
+              category: null,
+              aiScore: 0
+            };
+
+            // Classify and score
+            article.category = classifyArticle(article);
+            article.aiScore = calculatePositivityScore(article);
+
+            state.allArticles.push(article);
+          });
+        });
+
+        if (!state.allArticles.length) {
+          newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">No stories found. Please try again later.</p>';
+          if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
+          return;
+        }
+
+        // Sort by positivity score
+        state.allArticles.sort((a, b) => b.aiScore - a.aiScore);
+
+        // Calculate positivity meter
+        const positiveCount = state.allArticles.filter(a => a.aiScore > 50).length;
+        const positivityPercent = (positiveCount * 100) / state.allArticles.length;
+        updatePositivityMeter(positivityPercent);
+
+        // Render cards
+        newsList.innerHTML = "";
+        state.allArticles.forEach(article => {
+          const card = createNewsCard(article);
+          newsList.appendChild(card);
+        });
+
+        // Reset visibility
+        state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
+        updateVisibleCards();
+
+        // Update UI elements
+        if (lastUpdatedEl) {
+          lastUpdatedEl.textContent = `Updated ${new Date().toLocaleTimeString("en-IN", { 
+            hour: "2-digit", 
+            minute: "2-digit" 
+          })}`;
+        }
+
+        updateAgentNote(state.allArticles);
+        updateIgnoredList(state.allArticles);
+
+      } catch (error) {
+        console.error("Error loading news:", error);
+        newsList.innerHTML = '<p style="color:#b91c1c;font-size:0.8rem;">Network error while loading stories. Please try again.</p>';
+        if (lastUpdatedEl) lastUpdatedEl.textContent = "Error fetching headlines";
+      }
+    }
+
+    // ======================
+    // EVENT HANDLERS
+    // ======================
+    function setupEventListeners() {
+      // Category filters
+      const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
+      categoryChips.forEach(chip => {
+        chip.addEventListener("click", () => {
+          const filter = chip.getAttribute("data-filter");
+          state.activeCategory = filter || "all";
+          state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
+          
+          categoryChips.forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          
+          updateVisibleCards();
+        });
+      });
+
+      // Source filters
+      const sourceChips = document.querySelectorAll(".source-chip[data-source]");
+      sourceChips.forEach(chip => {
+        chip.addEventListener("click", () => {
+          const source = chip.getAttribute("data-source");
+          state.activeSource = source || "all";
+          state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
+          
+          sourceChips.forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          
+          updateSourcesLabel();
+          updateVisibleCards();
+        });
+      });
+
+      // Refresh button
+      const refreshBtn = document.getElementById("refresh-btn");
+      if (refreshBtn) {
+        refreshBtn.addEventListener("click", () => {
+          const lastUpdatedEl = document.getElementById("last-updated");
+          if (lastUpdatedEl) lastUpdatedEl.textContent = "Refreshing now…";
+          state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
+          loadNews();
+        });
+      }
+
+      // Load more button
+      const loadMoreBtn = document.getElementById("load-more-btn");
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", () => {
+          state.visibleCount += CONFIG.LOAD_MORE_COUNT;
+          updateVisibleCards();
+        });
+      }
+
+      // Feedback form
+      const feedbackForm = document.getElementById("feedback-form");
+      if (feedbackForm) {
+        feedbackForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          
+          const name = document.getElementById("feedback-name").value.trim();
+          const feedback = document.getElementById("feedback-text").value.trim();
+          const statusEl = document.getElementById("feedback-status");
+
+          if (!feedback) {
+            statusEl.textContent = "Please add a quick note before sending.";
+            statusEl.className = "feedback-status error";
+            return;
+          }
+
+          const subject = encodeURIComponent("Feedback on Mahesh positive news feed");
+          const bodyLines = [
+            `Name: ${name || "(not provided)"}`,
+            "",
+            "Feedback:",
+            feedback,
+            "",
+            "---",
+            "Sent from Mahesh Positive News Feed"
+          ];
+          const body = encodeURIComponent(bodyLines.join("\n"));
+          
+          window.location.href = `mailto:${CONFIG.FEEDBACK_EMAIL}?subject=${subject}&body=${body}`;
+
+          statusEl.textContent = "Opening your email client…";
+          statusEl.className = "feedback-status success";
+          
+          setTimeout(() => {
+            document.getElementById("feedback-name").value = "";
+            document.getElementById("feedback-text").value = "";
+            statusEl.textContent = "Thank you for your feedback!";
+          }, 1500);
+        });
+      }
+
+      // Modal handlers
+      const privacyLink = document.getElementById("privacy-link");
+      const termsLink = document.getElementById("terms-link");
+      const privacyModal = document.getElementById("privacy-modal");
+      const termsModal = document.getElementById("terms-modal");
+
+      if (privacyLink && privacyModal) {
+        privacyLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          privacyModal.classList.add("show");
+        });
+      }
+
+      if (termsLink && termsModal) {
+        termsLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          termsModal.classList.add("show");
+        });
+      }
+
+      // Close buttons for modals
+      document.querySelectorAll(".modal-close").forEach(btn => {
+        btn.addEventListener("click", () => {
+          btn.closest(".modal").classList.remove("show");
+        });
+      });
+
+      // Click outside to close modals
+      document.querySelectorAll(".modal").forEach(modal => {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.classList.remove("show");
+          }
+        });
+      });
+
+      // Copyright year
+      const copyEl = document.getElementById("copyright-year");
+      if (copyEl) {
+        copyEl.textContent = new Date().getFullYear();
+      }
+    }
+
+    // ======================
+    // INITIALIZATION
+    // ======================
+    document.addEventListener("DOMContentLoaded", () => {
+      setupEventListeners();
+      loadNews();
+    });
+  </script>
+</body>
+</html>
