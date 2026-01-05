@@ -1060,6 +1060,117 @@
     </div>
   </div>
 
+  <!-- AI News Chat Widget -->
+  <div id="chat-widget" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    max-width: 90vw;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 25px rgba(15,23,42,0.15);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+  ">
+    <div id="chat-header" style="
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to right, #e0f2fe, #f9fafb);
+      cursor: pointer;
+      border-bottom: 1px solid #e5e7eb;
+    ">
+      <div>
+        <div style="font-size:0.85rem;font-weight:600;color:#0f172a;">💬 News Chat</div>
+        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px;">Ask about today's feed</div>
+      </div>
+      <button id="chat-toggle" style="
+        background:none;
+        border:none;
+        color:#0f172a;
+        font-size:1.3rem;
+        cursor:pointer;
+        width:32px;
+        height:32px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border-radius:50%;
+        transition: background 0.2s;
+      ">−</button>
+    </div>
+    
+    <div id="chat-body" style="
+      display:flex;
+      flex-direction:column;
+      height:320px;
+      background:#f9fafb;
+    ">
+      <div id="chat-messages" style="
+        flex:1;
+        padding:10px;
+        overflow-y:auto;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+      ">
+        <div style="
+          align-self:flex-start;
+          max-width:90%;
+          padding:8px 10px;
+          border-radius:12px;
+          background:#e5e7eb;
+          color:#111827;
+          font-size:0.8rem;
+          line-height:1.4;
+        ">
+          👋 I can answer questions about the stories on this page. Try: "What are today's IT highlights?" or "Summarise the sports news."
+        </div>
+      </div>
+      
+      <form id="chat-form" style="
+        display:flex;
+        padding:8px;
+        gap:6px;
+        border-top:1px solid #e5e7eb;
+        background:#ffffff;
+      ">
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="Ask about today's news..."
+          style="
+            flex:1;
+            background:#ffffff;
+            border:1px solid #d1d5db;
+            border-radius:999px;
+            padding:6px 10px;
+            color:#111827;
+            font-size:0.8rem;
+            outline:none;
+          "
+        />
+        <button type="submit" style="
+          border:none;
+          border-radius:999px;
+          padding:6px 12px;
+          background:#38bdf8;
+          color:#020617;
+          font-weight:600;
+          font-size:0.8rem;
+          cursor:pointer;
+          transition: background 0.2s;
+        ">Send</button>
+      </form>
+    </div>
+  </div>
+
   <script>
     // ======================
     // CONFIGURATION
@@ -1438,6 +1549,156 @@
     }
 
     // ======================
+    // CHAT FUNCTIONALITY
+    // ======================
+    function fallbackChatAnswer(question, articles) {
+      const q = question.toLowerCase();
+
+      if (q.includes("today") || q.includes("news") || q.includes("headlines")) {
+        const top = articles.slice(0, 5);
+        return "Here's a quick snapshot of today's positive news:\n\n" +
+          top.map((a, i) => `${i + 1}. ${a.title}`).join("\n");
+      }
+
+      if (q.includes("politics")) {
+        const politics = articles.filter(a => a.category === "politics").slice(0, 3);
+        if (!politics.length) {
+          return "There aren't many major political stories in today's positive feed.";
+        }
+        return "Today's political highlights:\n\n" +
+          politics.map(a => `• ${a.title}`).join("\n");
+      }
+
+      if (q.includes("sports")) {
+        const sports = articles.filter(a => a.category === "sports").slice(0, 3);
+        if (!sports.length) {
+          return "No major sports stories in today's feed.";
+        }
+        return "Sports highlights today:\n\n" +
+          sports.map(a => `• ${a.title}`).join("\n");
+      }
+
+      if (q.includes("ai") || q.includes("tech") || q.includes("technology")) {
+        const tech = articles.filter(a => a.category === "ai").slice(0, 3);
+        if (!tech.length) {
+          return "No major AI/tech stories highlighted today.";
+        }
+        return "AI and technology highlights:\n\n" +
+          tech.map(a => `• ${a.title}`).join("\n");
+      }
+
+      if (q.includes("market") || q.includes("stock") || q.includes("economy")) {
+        const markets = articles.filter(a => a.category === "markets").slice(0, 3);
+        if (!markets.length) {
+          return "No major market stories in today's feed.";
+        }
+        return "Market highlights:\n\n" +
+          markets.map(a => `• ${a.title}`).join("\n");
+      }
+
+      if (q.includes("automobile") || q.includes("car") || q.includes("vehicle")) {
+        const auto = articles.filter(a => a.category === "automobiles").slice(0, 3);
+        if (!auto.length) {
+          return "No automobile stories highlighted today.";
+        }
+        return "Automobile highlights:\n\n" +
+          auto.map(a => `• ${a.title}`).join("\n");
+      }
+
+      return "I can help summarise today's news by topic — try asking about politics, sports, markets, AI/tech, or today's highlights.";
+    }
+
+    function addChatBubble(text, from = "user") {
+      const chatMessages = document.getElementById("chat-messages");
+      const bubble = document.createElement("div");
+      
+      bubble.style.maxWidth = "90%";
+      bubble.style.padding = "8px 10px";
+      bubble.style.borderRadius = "12px";
+      bubble.style.fontSize = "0.8rem";
+      bubble.style.lineHeight = "1.4";
+
+      if (from === "user") {
+        bubble.style.alignSelf = "flex-end";
+        bubble.style.background = "#38bdf8";
+        bubble.style.color = "#020617";
+      } else {
+        bubble.style.alignSelf = "flex-start";
+        bubble.style.background = "#e5e7eb";
+        bubble.style.color = "#111827";
+      }
+
+      bubble.textContent = text;
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function setupChatWidget() {
+      const chatWidget = document.getElementById("chat-widget");
+      const chatBody = document.getElementById("chat-body");
+      const chatToggle = document.getElementById("chat-toggle");
+      const chatHeader = document.getElementById("chat-header");
+      const chatForm = document.getElementById("chat-form");
+      const chatInput = document.getElementById("chat-input");
+
+      // Toggle chat on button click
+      chatToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isHidden = chatBody.style.display === "none";
+        chatBody.style.display = isHidden ? "flex" : "none";
+        chatToggle.textContent = isHidden ? "−" : "+";
+      });
+
+      // Toggle on header click (except button)
+      chatHeader.addEventListener("click", (e) => {
+        if (e.target !== chatToggle && !chatToggle.contains(e.target)) {
+          const isHidden = chatBody.style.display === "none";
+          chatBody.style.display = isHidden ? "flex" : "none";
+          chatToggle.textContent = isHidden ? "−" : "+";
+        }
+      });
+
+      // Handle chat form submission
+      chatForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const question = chatInput.value.trim();
+        if (!question) return;
+
+        addChatBubble(question, "user");
+        chatInput.value = "";
+
+        // Add thinking indicator
+        const chatMessages = document.getElementById("chat-messages");
+        const thinking = document.createElement("div");
+        thinking.style.alignSelf = "flex-start";
+        thinking.style.maxWidth = "90%";
+        thinking.style.padding = "8px 10px";
+        thinking.style.borderRadius = "12px";
+        thinking.style.background = "#e5e7eb";
+        thinking.style.color = "#6b7280";
+        thinking.style.fontSize = "0.8rem";
+        thinking.textContent = "Thinking...";
+        chatMessages.appendChild(thinking);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Simulate thinking delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        thinking.remove();
+        const answer = fallbackChatAnswer(question, state.allArticles);
+        addChatBubble(answer, "bot");
+      });
+
+      // Hover effect on toggle button
+      chatToggle.addEventListener("mouseenter", () => {
+        chatToggle.style.background = "#f3f4f6";
+      });
+      chatToggle.addEventListener("mouseleave", () => {
+        chatToggle.style.background = "none";
+      });
+    }
+
+    // ======================
     // EVENT HANDLERS
     // ======================
     function setupEventListeners() {
@@ -1581,6 +1842,7 @@
     // ======================
     document.addEventListener("DOMContentLoaded", () => {
       setupEventListeners();
+      setupChatWidget();
       loadNews();
     });
   </script>
