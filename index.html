@@ -3281,41 +3281,54 @@
     </div>
   </div>
 
-  <!-- AI News Chat Widget -->
+  <!-- AI News Chat Widget - Enhanced with Hope -->
   <div id="chat-widget" style="
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 320px;
+    width: 360px;
     max-width: 90vw;
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 10px 25px rgba(15,23,42,0.15);
+    background: linear-gradient(135deg, #ffffff, #faf5ff);
+    border-radius: 20px;
+    border: 2px solid #a78bfa;
+    box-shadow: 0 12px 40px rgba(139, 92, 246, 0.25);
     font-size: 0.8rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     z-index: 9999;
+    animation: chatBounce 0.5s ease-out;
   ">
     <div id="chat-header" style="
-      padding: 10px 12px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(to right, #e0f2fe, #f9fafb);
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
       cursor: pointer;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: none;
     ">
-      <div>
-        <div style="font-size:0.85rem;font-weight:600;color:#0f172a;">💬 News Chat</div>
-        <div style="font-size:0.7rem;color:#6b7280;margin-top:2px;">Ask about today's feed</div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="
+          width: 36px;
+          height: 36px;
+          background: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.3rem;
+        ">🌟</div>
+        <div>
+          <div style="font-size:0.9rem;font-weight:700;color:#ffffff;">Chat with Hope</div>
+          <div style="font-size:0.7rem;color:rgba(255,255,255,0.9);margin-top:2px;">Your AI news companion</div>
+        </div>
       </div>
       <button id="chat-toggle" style="
-        background:none;
+        background:rgba(255,255,255,0.2);
         border:none;
-        color:#0f172a;
-        font-size:1.3rem;
+        color:#ffffff;
+        font-size:1.2rem;
         cursor:pointer;
         width:32px;
         height:32px;
@@ -3323,74 +3336,94 @@
         align-items:center;
         justify-content:center;
         border-radius:50%;
-        transition: background 0.2s;
-      ">−</button>
+        transition: all 0.2s;
+      " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">−</button>
     </div>
     
     <div id="chat-body" style="
       display:flex;
       flex-direction:column;
-      height:320px;
-      background:#f9fafb;
+      height:380px;
+      background:#faf5ff;
     ">
       <div id="chat-messages" style="
         flex:1;
-        padding:10px;
+        padding:12px;
         overflow-y:auto;
         display:flex;
         flex-direction:column;
-        gap:8px;
+        gap:10px;
       ">
         <div style="
           align-self:flex-start;
-          max-width:90%;
-          padding:8px 10px;
-          border-radius:12px;
-          background:#e5e7eb;
-          color:#111827;
-          font-size:0.8rem;
-          line-height:1.4;
+          max-width:85%;
+          padding:10px 12px;
+          border-radius:16px;
+          background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+          color:#ffffff;
+          font-size:0.85rem;
+          line-height:1.5;
+          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
         ">
-          👋 I can answer questions about the stories on this page. Try: "What are today's IT highlights?" or "Summarise the sports news."
+          <div style="font-weight: 600; margin-bottom: 4px;">👋 Hi! I'm Hope!</div>
+          I'm here to help you explore today's positive news. Ask me anything like:
+          <div style="margin-top: 6px; font-size: 0.8rem; opacity: 0.95;">
+            • "What's the most inspiring story?"<br>
+            • "Show me science news"<br>
+            • "What can I do to help?"<br>
+            • "How's my Hope Score?"
+          </div>
         </div>
       </div>
       
       <form id="chat-form" style="
         display:flex;
-        padding:8px;
-        gap:6px;
-        border-top:1px solid #e5e7eb;
+        padding:10px;
+        gap:8px;
+        border-top:2px solid #e9d5ff;
         background:#ffffff;
       ">
         <input
           id="chat-input"
           type="text"
-          placeholder="Ask about today's news..."
+          placeholder="Ask Hope anything..."
           style="
             flex:1;
-            background:#ffffff;
-            border:1px solid #d1d5db;
+            background:#faf5ff;
+            border:2px solid #e9d5ff;
             border-radius:999px;
-            padding:6px 10px;
+            padding:8px 14px;
             color:#111827;
-            font-size:0.8rem;
+            font-size:0.85rem;
             outline:none;
+            transition: border-color 0.2s;
           "
+          onfocus="this.style.borderColor='#a78bfa'"
+          onblur="this.style.borderColor='#e9d5ff'"
         />
         <button type="submit" style="
           border:none;
           border-radius:999px;
-          padding:6px 12px;
-          background:#38bdf8;
-          color:#020617;
+          padding:8px 16px;
+          background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+          color:#ffffff;
           font-weight:600;
-          font-size:0.8rem;
+          font-size:0.85rem;
           cursor:pointer;
-          transition: background 0.2s;
-        ">Send</button>
+          transition: transform 0.2s;
+          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Send</button>
       </form>
     </div>
   </div>
+
+  <style>
+    @keyframes chatBounce {
+      0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+      50% { transform: scale(1.05) translateY(-5px); }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+  </style>
 
   <!-- Keyboard Shortcuts Modal -->
   <div class="keyboard-shortcuts-modal" id="shortcuts-modal">
@@ -4042,85 +4075,150 @@
     }
 
     // ======================
-    // CHAT FUNCTIONALITY
+    // CHAT FUNCTIONALITY - Enhanced with Hope's Personality
     // ======================
-    function fallbackChatAnswer(question, articles) {
+    function hopeChat Answer(question, articles) {
       const q = question.toLowerCase();
 
-      if (q.includes("today") || q.includes("news") || q.includes("headlines")) {
-        const top = articles.slice(0, 5);
-        return "Here's a quick snapshot of today's positive news:\n\n" +
-          top.map((a, i) => `${i + 1}. ${a.title}`).join("\n");
+      // Hope Score queries
+      if (q.includes("hope score") || q.includes("my score")) {
+        const score = calculateHopeScore();
+        return `✨ Your Hope Score is ${score}! ${score >= 80 ? "You're doing amazing!" : score >= 60 ? "Keep up the great work!" : "Let's boost it by reading more positive news!"} Click the score widget to learn more!`;
+      }
+
+      // Action/Help queries
+      if (q.includes("what can i do") || q.includes("how can i help") || q.includes("take action")) {
+        return `💪 I love your enthusiasm! Every article has a "What Can I Do?" button with specific actions. You can also:\n\n• Share positive news with friends\n• Support causes you care about\n• Practice gratitude daily\n• Spread kindness in your community`;
+      }
+
+      // Mood/Wellness queries
+      if (q.includes("mood") || q.includes("feeling") || q.includes("wellness")) {
+        return `😊 I care about how you're feeling! Use the mood tracker (😊 button on the right) to check in. Reading positive news can boost your mood by up to 30%! How are you feeling today?`;
+      }
+
+      // Community queries
+      if (q.includes("community") || q.includes("readers") || q.includes("others")) {
+        const stats = document.getElementById('global-reads')?.textContent || "1M+";
+        return `🌍 You're part of an amazing community! ${stats} people have read positive news with us. Together, we're spreading hope and making a difference!`;
+      }
+
+      // Inspiring/best story
+      if (q.includes("inspiring") || q.includes("best") || q.includes("favorite") || q.includes("top")) {
+        const top = articles.slice(0, 3);
+        return `🌟 Here are today's most inspiring stories I found for you:\n\n${top.map((a, i) => `${i + 1}. ${a.title}`).join("\n\n")}\n\nWhich one speaks to you?`;
+      }
+
+      // Category-specific queries with personality
+      if (q.includes("science")) {
+        const science = articles.filter(a => a.category === "science").slice(0, 3);
+        if (!science.length) {
+          return "🔬 No major science stories today, but check back soon! Science is always advancing!";
+        }
+        return `🔬 Science is amazing! Here's what's happening:\n\n${science.map(a => `• ${a.title}`).join("\n\n")}`;
+      }
+
+      if (q.includes("space") || q.includes("astronomy")) {
+        const space = articles.filter(a => a.category === "space").slice(0, 3);
+        if (!space.length) {
+          return "🚀 No space news today, but the universe is always full of wonders!";
+        }
+        return `🚀 The cosmos is calling! Check out:\n\n${space.map(a => `• ${a.title}`).join("\n\n")}`;
+      }
+
+      if (q.includes("health") || q.includes("medical")) {
+        const health = articles.filter(a => a.category === "health").slice(0, 3);
+        if (!health.length) {
+          return "💚 No major health stories today, but remember: your wellbeing matters!";
+        }
+        return `💚 Health breakthroughs:\n\n${health.map(a => `• ${a.title}`).join("\n\n")}`;
+      }
+
+      if (q.includes("environment") || q.includes("climate")) {
+        const env = articles.filter(a => a.category === "environment").slice(0, 3);
+        if (!env.length) {
+          return "🌱 No environment stories today, but every day is Earth Day!";
+        }
+        return `🌱 Great news for our planet:\n\n${env.map(a => `• ${a.title}`).join("\n\n")}`;
       }
 
       if (q.includes("politics")) {
         const politics = articles.filter(a => a.category === "politics").slice(0, 3);
         if (!politics.length) {
-          return "There aren't many major political stories in today's positive feed.";
+          return "🏛️ No major political stories in today's positive feed.";
         }
-        return "Today's political highlights:\n\n" +
-          politics.map(a => `• ${a.title}`).join("\n");
+        return `🏛️ Political progress:\n\n${politics.map(a => `• ${a.title}`).join("\n\n")}`;
       }
 
       if (q.includes("sports")) {
         const sports = articles.filter(a => a.category === "sports").slice(0, 3);
         if (!sports.length) {
-          return "No major sports stories in today's feed.";
+          return "⚽ No sports stories today, but champions are made every day!";
         }
-        return "Sports highlights today:\n\n" +
-          sports.map(a => `• ${a.title}`).join("\n");
+        return `⚽ Sports victories:\n\n${sports.map(a => `• ${a.title}`).join("\n\n")}`;
       }
 
       if (q.includes("ai") || q.includes("tech") || q.includes("technology")) {
         const tech = articles.filter(a => a.category === "ai").slice(0, 3);
         if (!tech.length) {
-          return "No major AI/tech stories highlighted today.";
+          return "🤖 No major AI/tech stories today, but innovation never stops!";
         }
-        return "AI and technology highlights:\n\n" +
-          tech.map(a => `• ${a.title}`).join("\n");
+        return `🤖 Tech innovations:\n\n${tech.map(a => `• ${a.title}`).join("\n\n")}`;
       }
 
       if (q.includes("market") || q.includes("stock") || q.includes("economy")) {
         const markets = articles.filter(a => a.category === "markets").slice(0, 3);
         if (!markets.length) {
-          return "No major market stories in today's feed.";
+          return "📈 No major market stories today, but opportunities are everywhere!";
         }
-        return "Market highlights:\n\n" +
-          markets.map(a => `• ${a.title}`).join("\n");
+        return `📈 Market highlights:\n\n${markets.map(a => `• ${a.title}`).join("\n\n")}`;
       }
 
-      if (q.includes("automobile") || q.includes("car") || q.includes("vehicle")) {
-        const auto = articles.filter(a => a.category === "automobiles").slice(0, 3);
-        if (!auto.length) {
-          return "No automobile stories highlighted today.";
-        }
-        return "Automobile highlights:\n\n" +
-          auto.map(a => `• ${a.title}`).join("\n");
+      // Today's news summary
+      if (q.includes("today") || q.includes("summary") || q.includes("headlines")) {
+        const top = articles.slice(0, 5);
+        return `📰 Here's what I've curated for you today:\n\n${top.map((a, i) => `${i + 1}. ${a.title}`).join("\n\n")}\n\nWant to know more about any category?`;
       }
 
-      return "I can help summarise today's news by topic — try asking about politics, sports, markets, AI/tech, or today's highlights.";
+      // Gratitude/positive
+      if (q.includes("thank") || q.includes("grateful") || q.includes("appreciate")) {
+        return `💝 Aww, you're so sweet! I'm grateful for YOU! Keep spreading positivity. You're making the world brighter! ✨`;
+      }
+
+      // Who are you
+      if (q.includes("who are you") || q.includes("what are you") || q.includes("your name")) {
+        return `🌟 I'm Hope, your AI news companion! I'm here to help you discover positive, uplifting news and turn inspiration into action. Think of me as your friend who always sees the bright side! What would you like to know?`;
+      }
+
+      // Default response with personality
+      return `💫 I'm here to help! You can ask me about:\n\n• Today's inspiring stories\n• Specific topics (science, health, space, etc.)\n• Your Hope Score\n• What you can do to help\n• Community stats\n\nWhat interests you most?`;
     }
 
     function addChatBubble(text, from = "user") {
       const chatMessages = document.getElementById("chat-messages");
       const bubble = document.createElement("div");
       
-      bubble.style.maxWidth = "90%";
-      bubble.style.padding = "8px 10px";
-      bubble.style.borderRadius = "12px";
-      bubble.style.fontSize = "0.8rem";
-      bubble.style.lineHeight = "1.4";
+      bubble.style.maxWidth = "85%";
+      bubble.style.padding = "10px 12px";
+      bubble.style.borderRadius = "16px";
+      bubble.style.fontSize = "0.85rem";
+      bubble.style.lineHeight = "1.5";
+      bubble.style.marginBottom = "4px";
+      bubble.style.animation = "fadeIn 0.3s ease";
 
       if (from === "user") {
         bubble.style.alignSelf = "flex-end";
-        bubble.style.background = "#38bdf8";
-        bubble.style.color = "#020617";
+        bubble.style.background = "linear-gradient(135deg, #60a5fa, #3b82f6)";
+        bubble.style.color = "#ffffff";
+        bubble.style.boxShadow = "0 2px 8px rgba(59, 130, 246, 0.3)";
       } else {
         bubble.style.alignSelf = "flex-start";
-        bubble.style.background = "#e5e7eb";
-        bubble.style.color = "#111827";
+        bubble.style.background = "linear-gradient(135deg, #8b5cf6, #7c3aed)";
+        bubble.style.color = "#ffffff";
+        bubble.style.boxShadow = "0 2px 8px rgba(139, 92, 246, 0.3)";
       }
 
+      // Preserve line breaks
+      bubble.style.whiteSpace = "pre-wrap";
       bubble.textContent = text;
       chatMessages.appendChild(bubble);
       chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -4160,32 +4258,28 @@
         addChatBubble(question, "user");
         chatInput.value = "";
 
-        // Add thinking indicator
+        // Add thinking indicator with Hope's personality
         const chatMessages = document.getElementById("chat-messages");
         const thinking = document.createElement("div");
         thinking.style.alignSelf = "flex-start";
-        thinking.style.maxWidth = "90%";
-        thinking.style.padding = "8px 10px";
-        thinking.style.borderRadius = "12px";
-        thinking.style.background = "#e5e7eb";
-        thinking.style.color = "#6b7280";
-        thinking.style.fontSize = "0.8rem";
-        thinking.textContent = "Thinking...";
+        thinking.style.maxWidth = "85%";
+        thinking.style.padding = "10px 12px";
+        thinking.style.borderRadius = "16px";
+        thinking.style.background = "linear-gradient(135deg, #8b5cf6, #7c3aed)";
+        thinking.style.color = "#ffffff";
+        thinking.style.fontSize = "0.85rem";
+        thinking.innerHTML = "✨ Hope is thinking...";
         chatMessages.appendChild(thinking);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         // Simulate thinking delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 800));
 
         thinking.remove();
-        const answer = fallbackChatAnswer(question, state.allArticles);
+        const answer = hopeChatAnswer(question, state.allArticles);
         addChatBubble(answer, "bot");
       });
-
-      // Hover effect on toggle button
-      chatToggle.addEventListener("mouseenter", () => {
-        chatToggle.style.background = "#f3f4f6";
-      });
+    }      });
       chatToggle.addEventListener("mouseleave", () => {
         chatToggle.style.background = "none";
       });
