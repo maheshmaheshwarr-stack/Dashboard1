@@ -1293,20 +1293,20 @@
       box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
       animation: pulse-glow 2s ease-in-out infinite;
     ">
-      <span style="font-size: 1.5rem;">🎉</span>
+      <span style="font-size: 1.5rem;">📱</span>
       <div style="flex: 1;">
         <div style="
           font-size: 0.9rem;
           font-weight: 700;
           color: #ffffff;
           margin-bottom: 2px;
-        ">NEW: Community Discussions!</div>
+        ">Install as Mobile App!</div>
         <div style="
           font-size: 0.75rem;
           color: #ffedd5;
-        ">Join the conversation • Share insights • Collaborate with readers</div>
+        ">Works offline • Push notifications • No app store needed</div>
       </div>
-      <button onclick="document.getElementById('discussion-section').scrollIntoView({behavior: 'smooth'})" style="
+      <button onclick="triggerInstall()" style="
         padding: 8px 16px;
         background: #ffffff;
         color: #ea580c;
@@ -1318,7 +1318,7 @@
         transition: transform 0.2s;
         white-space: nowrap;
       " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-        Try it now →
+        Install Now →
       </button>
     </div>
   </header>
@@ -1610,6 +1610,7 @@
         <span class="footer-badge">📚 Curated, not addictive</span>
         <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
         <span class="footer-badge">🇮🇳 Built in India</span>
+        <span class="footer-badge" style="background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; border-color: #f97316;">� Installable PWA</span>
         <span class="footer-badge" style="background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; border-color: #f97316;">💬 Community Discussions</span>
       </div>
 
@@ -3147,6 +3148,42 @@
     window.showStatsModal = showStatsModal;
     window.resetStats = resetStats;
     window.trackArticleRead = trackArticleRead;
+
+    // ======================
+    // TRIGGER INSTALL FUNCTION
+    // ======================
+    window.triggerInstall = function() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        // Show manual install instructions
+        showInstallInstructions();
+      }
+    };
+
+    function showInstallInstructions() {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      
+      let message = '';
+      
+      if (isIOS) {
+        message = `To install on iPhone/iPad:\n\n1. Tap the Share button (⬆️) at the bottom\n2. Scroll and tap "Add to Home Screen"\n3. Tap "Add"\n\nThe app will appear on your home screen!`;
+      } else if (isAndroid) {
+        message = `To install on Android:\n\n1. Tap the menu (⋮) in your browser\n2. Select "Install app" or "Add to Home screen"\n3. Tap "Install"\n\nThe app will appear on your home screen!`;
+      } else {
+        message = `To install on Desktop:\n\n1. Look for the install icon (⊕) in the address bar\n2. Click it and select "Install"\n\nOr:\n1. Click the menu (⋮) in your browser\n2. Select "Install Mahesh +ve Pill..."\n\nThe app will open in its own window!`;
+      }
+      
+      alert(message);
+    }
 
     // ======================
     // PWA INSTALLATION
