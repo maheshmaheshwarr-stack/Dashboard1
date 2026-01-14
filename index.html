@@ -1329,6 +1329,20 @@
         <nav aria-label="Main navigation">
           <a class="nav-link active" href="index.html">News Feed</a>
           <a class="nav-link" href="about.html">About</a>
+          <button id="pwa-install-btn" style="
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 2px solid #f97316;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.16s ease-out;
+            display: none;
+          ">
+            📱 Install App
+          </button>
         </nav>
 
         <div class="meta">
@@ -3143,7 +3157,24 @@
       e.preventDefault();
       deferredPrompt = e;
       
-      // Show install prompt
+      // Show install button in nav
+      const installBtn = document.getElementById('pwa-install-btn');
+      if (installBtn) {
+        installBtn.style.display = 'inline-block';
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response: ${outcome}`);
+            if (outcome === 'accepted') {
+              installBtn.style.display = 'none';
+            }
+            deferredPrompt = null;
+          }
+        });
+      }
+      
+      // Show install prompt banner
       showInstallPrompt();
     });
 
