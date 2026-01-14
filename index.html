@@ -1251,6 +1251,94 @@
     .skip-link:focus {
       top: 0;
     }
+
+    /* Language Selector */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+    }
+
+    .language-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #fed7aa;
+      background: transparent;
+      color: #78716c;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease-out;
+    }
+
+    .language-btn:hover {
+      border-color: #fed7aa;
+      background: #fff8ed;
+      color: #292524;
+    }
+
+    .language-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      border: 2px solid #fed7aa;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.2);
+      display: none;
+      min-width: 180px;
+      z-index: 1000;
+    }
+
+    .language-dropdown.show {
+      display: block;
+    }
+
+    .language-option {
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #292524;
+    }
+
+    .language-option:first-child {
+      border-radius: 10px 10px 0 0;
+    }
+
+    .language-option:last-child {
+      border-radius: 0 0 10px 10px;
+    }
+
+    .language-option:hover {
+      background: #fff8ed;
+    }
+
+    .language-option.active {
+      background: #ffedd5;
+      font-weight: 600;
+      color: #ea580c;
+    }
+
+    /* Loading Spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #fed7aa;
+      border-top-color: #f97316;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -1329,6 +1417,36 @@
         <nav aria-label="Main navigation">
           <a class="nav-link active" href="index.html">News Feed</a>
           <a class="nav-link" href="about.html">About</a>
+          
+          <!-- Language Selector -->
+          <div class="language-selector">
+            <button class="language-btn" id="language-btn" aria-label="Select language">
+              <span id="current-language-flag">🌐</span>
+              <span id="current-language-text">English</span>
+              <span style="font-size: 0.7rem;">▼</span>
+            </button>
+            <div class="language-dropdown" id="language-dropdown">
+              <div class="language-option active" data-lang="en" data-flag="🇬🇧">
+                <span>🇬🇧</span> English
+              </div>
+              <div class="language-option" data-lang="hi" data-flag="🇮🇳">
+                <span>🇮🇳</span> हिंदी (Hindi)
+              </div>
+              <div class="language-option" data-lang="ta" data-flag="🇮🇳">
+                <span>🇮🇳</span> தமிழ் (Tamil)
+              </div>
+              <div class="language-option" data-lang="te" data-flag="🇮🇳">
+                <span>🇮🇳</span> తెలుగు (Telugu)
+              </div>
+              <div class="language-option" data-lang="kn" data-flag="🇮🇳">
+                <span>🇮🇳</span> ಕನ್ನಡ (Kannada)
+              </div>
+              <div class="language-option" data-lang="ml" data-flag="🇮🇳">
+                <span>🇮🇳</span> മലയാളം (Malayalam)
+              </div>
+            </div>
+          </div>
+          
           <button id="pwa-install-btn" style="
             padding: 6px 12px;
             border-radius: 999px;
@@ -2710,6 +2828,9 @@
         // Sort by positivity score
         state.allArticles.sort((a, b) => b.aiScore - a.aiScore);
 
+        // Cache articles for offline access
+        cacheArticles(state.allArticles);
+
         // Calculate positivity meter
         const positiveCount = state.allArticles.filter(a => a.aiScore > 50).length;
         const positivityPercent = (positiveCount * 100) / state.allArticles.length;
@@ -3261,9 +3382,13 @@
     document.addEventListener("DOMContentLoaded", () => {
       setupEventListeners();
       setupChatWidget();
+      setupLanguageSelector();
       loadNews();
       initReadingStats();
       updateStatsDisplay();
+      
+      // Setup lazy loading after content loads
+      setTimeout(setupLazyLoading, 1000);
     });
 
     // ======================
@@ -3471,6 +3596,230 @@
     window.showStatsModal = showStatsModal;
     window.resetStats = resetStats;
     window.trackArticleRead = trackArticleRead;
+
+    // ======================
+    // MULTI-LANGUAGE SUPPORT
+    // ======================
+    const translations = {
+      en: {
+        name: 'English',
+        flag: '🇬🇧',
+        ui: {
+          todaysHighlights: "Today's Highlights",
+          readMore: "Read",
+          source: "Source",
+          aiSummary: "AI Summary",
+          whySelected: "Why the AI selected this"
+        }
+      },
+      hi: {
+        name: 'हिंदी',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "आज की मुख्य बातें",
+          readMore: "पढ़ें",
+          source: "स्रोत",
+          aiSummary: "एआई सारांश",
+          whySelected: "एआई ने इसे क्यों चुना"
+        }
+      },
+      ta: {
+        name: 'தமிழ்',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "இன்றைய சிறப்புகள்",
+          readMore: "படிக்க",
+          source: "மூலம்",
+          aiSummary: "AI சுருக்கம்",
+          whySelected: "AI இதை ஏன் தேர்ந்தெடுத்தது"
+        }
+      },
+      te: {
+        name: 'తెలుగు',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "నేటి ముఖ్యాంశాలు",
+          readMore: "చదవండి",
+          source: "మూలం",
+          aiSummary: "AI సారాంశం",
+          whySelected: "AI దీన్ని ఎందుకు ఎంచుకుంది"
+        }
+      },
+      kn: {
+        name: 'ಕನ್ನಡ',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "ಇಂದಿನ ಮುಖ್ಯಾಂಶಗಳು",
+          readMore: "ಓದಿ",
+          source: "ಮೂಲ",
+          aiSummary: "AI ಸಾರಾಂಶ",
+          whySelected: "AI ಇದನ್ನು ಏಕೆ ಆಯ್ಕೆ ಮಾಡಿದೆ"
+        }
+      },
+      ml: {
+        name: 'മലയാളം',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "ഇന്നത്തെ പ്രധാന വാർത്തകൾ",
+          readMore: "വായിക്കുക",
+          source: "ഉറവിടം",
+          aiSummary: "AI സംഗ്രഹം",
+          whySelected: "AI ഇത് തിരഞ്ഞെടുത്തത് എന്തുകൊണ്ട്"
+        }
+      }
+    };
+
+    let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+
+    // Auto-detect browser language
+    function detectLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      const langCode = browserLang.split('-')[0];
+      if (translations[langCode]) {
+        return langCode;
+      }
+      return 'en';
+    }
+
+    // Initialize language
+    if (!localStorage.getItem('preferredLanguage')) {
+      currentLanguage = detectLanguage();
+      localStorage.setItem('preferredLanguage', currentLanguage);
+    }
+
+    // Setup language selector
+    function setupLanguageSelector() {
+      const languageBtn = document.getElementById('language-btn');
+      const languageDropdown = document.getElementById('language-dropdown');
+      const languageOptions = document.querySelectorAll('.language-option');
+
+      if (!languageBtn) return;
+
+      // Update current language display
+      updateLanguageDisplay();
+
+      // Toggle dropdown
+      languageBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        languageDropdown.classList.toggle('show');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        languageDropdown.classList.remove('show');
+      });
+
+      // Language selection
+      languageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const lang = option.getAttribute('data-lang');
+          changeLanguage(lang);
+          languageDropdown.classList.remove('show');
+        });
+      });
+    }
+
+    function updateLanguageDisplay() {
+      const currentLangFlag = document.getElementById('current-language-flag');
+      const currentLangText = document.getElementById('current-language-text');
+      
+      if (currentLangFlag && currentLangText && translations[currentLanguage]) {
+        currentLangFlag.textContent = translations[currentLanguage].flag;
+        currentLangText.textContent = translations[currentLanguage].name;
+      }
+
+      // Update active state
+      document.querySelectorAll('.language-option').forEach(option => {
+        if (option.getAttribute('data-lang') === currentLanguage) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
+
+    async function changeLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('preferredLanguage', lang);
+      updateLanguageDisplay();
+      
+      // Show loading indicator
+      const newsList = document.getElementById('news-list');
+      if (newsList) {
+        newsList.innerHTML = '<div style="text-align:center;padding:20px;"><div class="loading-spinner"></div><p style="margin-top:10px;color:#78716c;">Translating articles...</p></div>';
+      }
+
+      // Reload news with translation
+      await loadNews();
+    }
+
+    // Translate text using browser's built-in translation or fallback
+    async function translateText(text, targetLang) {
+      if (targetLang === 'en' || !text) return text;
+
+      // In production, use Google Translate API or similar
+      // For now, return original text with a note
+      // You can integrate with: https://cloud.google.com/translate
+      
+      return text; // Placeholder - integrate translation API here
+    }
+
+    // ======================
+    // PERFORMANCE OPTIMIZATIONS
+    // ======================
+    
+    // Lazy load images with Intersection Observer
+    function setupLazyLoading() {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+              observer.unobserve(img);
+            }
+          }
+        });
+      }, {
+        rootMargin: '50px'
+      });
+
+      // Observe all images with data-src
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+
+    // Cache articles in localStorage for offline access
+    function cacheArticles(articles) {
+      try {
+        const cache = {
+          articles: articles.slice(0, 20), // Cache first 20 articles
+          timestamp: Date.now(),
+          language: currentLanguage
+        };
+        localStorage.setItem('cachedArticles', JSON.stringify(cache));
+      } catch (e) {
+        console.warn('Failed to cache articles:', e);
+      }
+    }
+
+    function getCachedArticles() {
+      try {
+        const cache = JSON.parse(localStorage.getItem('cachedArticles'));
+        if (cache && cache.language === currentLanguage) {
+          const age = Date.now() - cache.timestamp;
+          // Cache valid for 1 hour
+          if (age < 3600000) {
+            return cache.articles;
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to get cached articles:', e);
+      }
+      return null;
+    }
 
     // ======================
     // PREMIUM FEATURES
