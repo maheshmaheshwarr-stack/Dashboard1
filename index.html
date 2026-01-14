@@ -1093,6 +1093,13 @@
       color: #111827;
     }
 
+    /* Mood Button Styles */
+    .mood-btn.active {
+      background: #fed7aa !important;
+      border-color: #f97316 !important;
+      font-weight: 600;
+    }
+
     /* Print Styles */
     @media print {
       body {
@@ -1719,6 +1726,115 @@
           </button>
         </section>
 
+        <!-- AI Agent Card -->
+        <section class="sidebar-card" style="margin-top: 10px; background: linear-gradient(135deg, #ede9fe, #ddd6fe); border-color: #a78bfa;">
+          <h3 style="display: flex; align-items: center; gap: 8px;">
+            🤖 AI Agent
+          </h3>
+          <p style="font-size:0.78rem;color:#78716c;">Learning your preferences</p>
+          
+          <div id="ai-learning-stats" style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 8px;">
+            <div style="font-size: 0.75rem; color: #78716c;">
+              🌱 Building your profile...
+            </div>
+          </div>
+
+          <div id="ai-agent-insight" style="
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: #292524;
+            line-height: 1.4;
+          ">
+            🤖 AI is learning your preferences. Keep reading to get personalized recommendations!
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
+            <button onclick="showAIRecommendations()" style="
+              width: 100%;
+              padding: 8px;
+              background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+              color: #ffffff;
+              border: none;
+              border-radius: 999px;
+              font-size: 0.75rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: transform 0.2s;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              ✨ AI Recommendations
+            </button>
+
+            <button onclick="showQuickReads()" style="
+              width: 100%;
+              padding: 8px;
+              background: linear-gradient(135deg, #06b6d4, #0891b2);
+              color: #ffffff;
+              border: none;
+              border-radius: 999px;
+              font-size: 0.75rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: transform 0.2s;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              ⚡ Quick Reads (< 3 min)
+            </button>
+
+            <button id="toggle-ai-learning-btn" onclick="toggleAILearning()" style="
+              width: 100%;
+              padding: 8px;
+              background: linear-gradient(135deg, #f97316, #ea580c);
+              color: #ffffff;
+              border: none;
+              border-radius: 999px;
+              font-size: 0.75rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: transform 0.2s;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              🤖 AI Learning: ON
+            </button>
+          </div>
+
+          <div style="margin-top: 10px; padding: 8px; background: rgba(255,255,255,0.7); border-radius: 8px;">
+            <div style="font-size: 0.7rem; color: #78716c; margin-bottom: 6px; font-weight: 600;">Mood Preference:</div>
+            <div style="display: flex; gap: 4px;">
+              <button class="mood-btn active" data-mood="uplifting" onclick="changeMoodPreference('uplifting')" style="
+                flex: 1;
+                padding: 6px;
+                background: #fed7aa;
+                border: 2px solid #f97316;
+                border-radius: 8px;
+                font-size: 0.65rem;
+                cursor: pointer;
+                transition: all 0.2s;
+              ">😊 Uplifting</button>
+              <button class="mood-btn" data-mood="balanced" onclick="changeMoodPreference('balanced')" style="
+                flex: 1;
+                padding: 6px;
+                background: #e5e7eb;
+                border: 2px solid transparent;
+                border-radius: 8px;
+                font-size: 0.65rem;
+                cursor: pointer;
+                transition: all 0.2s;
+              ">⚖️ Balanced</button>
+              <button class="mood-btn" data-mood="serious" onclick="changeMoodPreference('serious')" style="
+                flex: 1;
+                padding: 6px;
+                background: #e5e7eb;
+                border: 2px solid transparent;
+                border-radius: 8px;
+                font-size: 0.65rem;
+                cursor: pointer;
+                transition: all 0.2s;
+              ">📰 Serious</button>
+            </div>
+          </div>
+        </section>
+
         <section class="sidebar-card" style="margin-top: 10px;">
           <h3>Today's Mood</h3>
           <p>A quick snapshot of why today's feed is net-positive.</p>
@@ -2227,6 +2343,40 @@
       ">
         Reset Statistics
       </button>
+    </div>
+  </div>
+
+  <!-- AI Recommendations Modal -->
+  <div class="modal" id="ai-recommendations-modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 style="display: flex; align-items: center; gap: 8px;">
+        ✨ AI Recommendations
+      </h2>
+      <p style="font-size: 0.85rem; color: #78716c; margin-bottom: 16px;">
+        Based on your reading patterns, here are articles you might enjoy:
+      </p>
+      
+      <div id="ai-recommendations-list" style="max-height: 400px; overflow-y: auto;">
+        <!-- Will be populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Reads Modal -->
+  <div class="modal" id="quick-reads-modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 style="display: flex; align-items: center; gap: 8px;">
+        ⚡ Quick Reads
+      </h2>
+      <p style="font-size: 0.85rem; color: #78716c; margin-bottom: 16px;">
+        Short articles you can read in under 3 minutes:
+      </p>
+      
+      <div id="quick-reads-list" style="max-height: 400px; overflow-y: auto;">
+        <!-- Will be populated by JS -->
+      </div>
     </div>
   </div>
 
@@ -2830,6 +2980,11 @@
 
         // Sort by positivity score
         state.allArticles.sort((a, b) => b.aiScore - a.aiScore);
+
+        // Apply AI curation if enabled
+        if (typeof applyAICuration === 'function') {
+          state.allArticles = applyAICuration(state.allArticles);
+        }
 
         // Cache articles for offline access
         cacheArticles(state.allArticles);
@@ -4169,6 +4324,372 @@
     if (nav) {
       nav.appendChild(printBtn);
     }
+
+    // ======================
+    // AGENTIC AI FEATURES
+    // ======================
+    
+    // AI Agent Profile - learns from user behavior
+    class AIAgent {
+      constructor() {
+        this.profile = this.loadProfile();
+      }
+
+      loadProfile() {
+        const saved = localStorage.getItem('aiAgentProfile');
+        if (saved) {
+          return JSON.parse(saved);
+        }
+        return {
+          readingHistory: [],
+          categoryPreferences: {},
+          sourcePreferences: {},
+          timePreferences: {},
+          readingSpeed: 200, // words per minute
+          preferredLength: 'medium', // short, medium, long
+          moodPreference: 'balanced', // uplifting, balanced, serious
+          lastActive: null,
+          totalInteractions: 0,
+          learningEnabled: true
+        };
+      }
+
+      saveProfile() {
+        localStorage.setItem('aiAgentProfile', JSON.stringify(this.profile));
+      }
+
+      // Learn from reading behavior
+      learnFromRead(article, timeSpent) {
+        if (!this.profile.learningEnabled) return;
+
+        this.profile.readingHistory.push({
+          url: article.url,
+          category: article.category,
+          source: article.sourceKey,
+          timestamp: Date.now(),
+          timeSpent: timeSpent,
+          title: article.title
+        });
+
+        // Keep only last 100 reads
+        if (this.profile.readingHistory.length > 100) {
+          this.profile.readingHistory = this.profile.readingHistory.slice(-100);
+        }
+
+        // Update category preferences
+        this.profile.categoryPreferences[article.category] = 
+          (this.profile.categoryPreferences[article.category] || 0) + 1;
+
+        // Update source preferences
+        this.profile.sourcePreferences[article.sourceKey] = 
+          (this.profile.sourcePreferences[article.sourceKey] || 0) + 1;
+
+        // Update time preferences
+        const hour = new Date().getHours();
+        const timeSlot = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+        this.profile.timePreferences[timeSlot] = 
+          (this.profile.timePreferences[timeSlot] || 0) + 1;
+
+        this.profile.totalInteractions++;
+        this.profile.lastActive = Date.now();
+        this.saveProfile();
+      }
+
+      // Calculate article relevance score
+      calculateRelevance(article) {
+        let score = 50; // Base score
+
+        // Category preference boost
+        const categoryReads = this.profile.categoryPreferences[article.category] || 0;
+        const totalReads = Object.values(this.profile.categoryPreferences).reduce((a, b) => a + b, 0);
+        if (totalReads > 0) {
+          score += (categoryReads / totalReads) * 30;
+        }
+
+        // Source preference boost
+        const sourceReads = this.profile.sourcePreferences[article.sourceKey] || 0;
+        const totalSourceReads = Object.values(this.profile.sourcePreferences).reduce((a, b) => a + b, 0);
+        if (totalSourceReads > 0) {
+          score += (sourceReads / totalSourceReads) * 20;
+        }
+
+        // Recency boost
+        if (article.publishedAt) {
+          const ageHours = (Date.now() - new Date(article.publishedAt).getTime()) / (1000 * 60 * 60);
+          if (ageHours < 6) score += 15;
+          else if (ageHours < 24) score += 10;
+          else if (ageHours < 48) score += 5;
+        }
+
+        return Math.min(100, score);
+      }
+
+      // Get personalized recommendations
+      getRecommendations(articles, count = 5) {
+        if (this.profile.totalInteractions < 3) {
+          // Not enough data, return diverse selection
+          return this.getDiverseSelection(articles, count);
+        }
+
+        // Score all articles
+        const scored = articles.map(article => ({
+          article,
+          score: this.calculateRelevance(article)
+        }));
+
+        // Sort by score and return top N
+        return scored
+          .sort((a, b) => b.score - a.score)
+          .slice(0, count)
+          .map(item => item.article);
+      }
+
+      getDiverseSelection(articles, count) {
+        const categories = [...new Set(articles.map(a => a.category))];
+        const perCategory = Math.ceil(count / categories.length);
+        const selected = [];
+
+        categories.forEach(cat => {
+          const catArticles = articles.filter(a => a.category === cat);
+          selected.push(...catArticles.slice(0, perCategory));
+        });
+
+        return selected.slice(0, count);
+      }
+
+      // Estimate reading time
+      estimateReadingTime(article) {
+        const text = `${article.title || ''} ${article.description || ''} ${article.content || ''}`;
+        const wordCount = text.split(/\s+/).length;
+        const minutes = Math.ceil(wordCount / this.profile.readingSpeed);
+        return minutes;
+      }
+
+      // Get articles matching available time
+      getArticlesForTime(articles, availableMinutes) {
+        return articles.filter(article => {
+          const readTime = this.estimateReadingTime(article);
+          return readTime <= availableMinutes;
+        });
+      }
+
+      // Mood-based filtering
+      filterByMood(articles) {
+        if (this.profile.moodPreference === 'balanced') {
+          return articles;
+        }
+
+        return articles.map(article => {
+          const text = `${article.title || ''} ${article.description || ''}`.toLowerCase();
+          let moodScore = 0;
+
+          // Uplifting keywords
+          if (text.match(/success|win|achievement|breakthrough|innovation|growth|positive/i)) {
+            moodScore += 2;
+          }
+
+          // Serious keywords
+          if (text.match(/crisis|concern|challenge|issue|problem|decline/i)) {
+            moodScore -= 1;
+          }
+
+          article.moodScore = moodScore;
+          return article;
+        }).filter(article => {
+          if (this.profile.moodPreference === 'uplifting') {
+            return article.moodScore >= 0;
+          }
+          return true; // serious mode shows all
+        });
+      }
+
+      // Generate personalized insight
+      getPersonalizedInsight() {
+        if (this.profile.totalInteractions < 5) {
+          return "🤖 AI is learning your preferences. Keep reading to get personalized recommendations!";
+        }
+
+        const topCategory = Object.entries(this.profile.categoryPreferences)
+          .sort((a, b) => b[1] - a[1])[0];
+
+        const topTime = Object.entries(this.profile.timePreferences)
+          .sort((a, b) => b[1] - a[1])[0];
+
+        return `🤖 AI Insight: You love ${topCategory[0]} news and prefer reading in the ${topTime[0]}. I've prioritized similar content for you!`;
+      }
+
+      // Reset learning
+      reset() {
+        this.profile = {
+          readingHistory: [],
+          categoryPreferences: {},
+          sourcePreferences: {},
+          timePreferences: {},
+          readingSpeed: 200,
+          preferredLength: 'medium',
+          moodPreference: 'balanced',
+          lastActive: null,
+          totalInteractions: 0,
+          learningEnabled: true
+        };
+        this.saveProfile();
+      }
+    }
+
+    // Initialize AI Agent
+    const aiAgent = new AIAgent();
+
+    // Enhanced article tracking with AI learning
+    const originalTrackArticleRead = window.trackArticleRead || function() {};
+    window.trackArticleRead = function(url, category, source) {
+      originalTrackArticleRead(url, category, source);
+      
+      // Find the article
+      const article = state.allArticles.find(a => a.url === url);
+      if (article) {
+        // Estimate time spent (in production, track actual time)
+        const estimatedTime = aiAgent.estimateReadingTime(article);
+        aiAgent.learnFromRead(article, estimatedTime);
+        
+        // Update AI insights display
+        updateAIInsights();
+      }
+    };
+
+    // Apply AI curation to articles
+    function applyAICuration(articles) {
+      if (!aiAgent.profile.learningEnabled) {
+        return articles;
+      }
+
+      // Filter by mood
+      let curated = aiAgent.filterByMood(articles);
+
+      // Add relevance scores
+      curated = curated.map(article => {
+        article.aiRelevance = aiAgent.calculateRelevance(article);
+        article.readingTime = aiAgent.estimateReadingTime(article);
+        return article;
+      });
+
+      // Sort by relevance
+      curated.sort((a, b) => b.aiRelevance - a.aiRelevance);
+
+      return curated;
+    }
+
+    // Update AI insights in UI
+    function updateAIInsights() {
+      const insightEl = document.getElementById('ai-agent-insight');
+      if (insightEl) {
+        insightEl.textContent = aiAgent.getPersonalizedInsight();
+      }
+
+      const statsEl = document.getElementById('ai-learning-stats');
+      if (statsEl) {
+        const topCat = Object.entries(aiAgent.profile.categoryPreferences)
+          .sort((a, b) => b[1] - a[1])[0];
+        
+        statsEl.innerHTML = `
+          <div style="font-size: 0.75rem; color: #78716c;">
+            📊 ${aiAgent.profile.totalInteractions} interactions<br>
+            ${topCat ? `❤️ Favorite: ${topCat[0]}` : '🌱 Building your profile...'}
+          </div>
+        `;
+      }
+    }
+
+    // Show AI recommendations panel
+    function showAIRecommendations() {
+      const modal = document.getElementById('ai-recommendations-modal');
+      if (!modal) return;
+
+      const recommendations = aiAgent.getRecommendations(state.allArticles, 5);
+      const container = document.getElementById('ai-recommendations-list');
+      
+      if (recommendations.length === 0) {
+        container.innerHTML = '<p style="color: #78716c; text-align: center;">No recommendations available yet. Keep reading!</p>';
+      } else {
+        container.innerHTML = recommendations.map(article => `
+          <div style="padding: 12px; background: #fff8ed; border-radius: 12px; margin-bottom: 10px; border-left: 3px solid #f97316;">
+            <div style="font-weight: 600; color: #292524; margin-bottom: 4px;">${article.title}</div>
+            <div style="font-size: 0.75rem; color: #78716c; margin-bottom: 6px;">
+              ${article.category.toUpperCase()} • ${article.readingTime || 3} min read • ${Math.round(article.aiRelevance || 50)}% match
+            </div>
+            <a href="${article.url}" target="_blank" style="font-size: 0.8rem; color: #f97316; text-decoration: none;">
+              Read article ↗
+            </a>
+          </div>
+        `).join('');
+      }
+
+      modal.classList.add('show');
+    }
+
+    // Quick read mode - articles under 3 minutes
+    function showQuickReads() {
+      const quickReads = aiAgent.getArticlesForTime(state.allArticles, 3);
+      const modal = document.getElementById('quick-reads-modal');
+      if (!modal) return;
+
+      const container = document.getElementById('quick-reads-list');
+      container.innerHTML = quickReads.slice(0, 8).map(article => `
+        <div style="padding: 10px; background: #fff8ed; border-radius: 10px; margin-bottom: 8px;">
+          <div style="font-weight: 600; font-size: 0.85rem; color: #292524; margin-bottom: 4px;">${article.title}</div>
+          <div style="font-size: 0.7rem; color: #78716c; margin-bottom: 6px;">
+            ⏱️ ${article.readingTime || 2} min • ${article.category.toUpperCase()}
+          </div>
+          <a href="${article.url}" target="_blank" style="font-size: 0.75rem; color: #f97316; text-decoration: none;">
+            Quick read ↗
+          </a>
+        </div>
+      `).join('');
+
+      modal.classList.add('show');
+    }
+
+    // Toggle AI learning
+    function toggleAILearning() {
+      aiAgent.profile.learningEnabled = !aiAgent.profile.learningEnabled;
+      aiAgent.saveProfile();
+      
+      const btn = document.getElementById('toggle-ai-learning-btn');
+      if (btn) {
+        btn.textContent = aiAgent.profile.learningEnabled ? '🤖 AI Learning: ON' : '🤖 AI Learning: OFF';
+        btn.style.background = aiAgent.profile.learningEnabled ? 
+          'linear-gradient(135deg, #f97316, #ea580c)' : '#9ca3af';
+      }
+
+      alert(aiAgent.profile.learningEnabled ? 
+        'AI learning enabled! The system will learn from your reading patterns.' : 
+        'AI learning disabled. Your reading patterns will not be tracked.');
+    }
+
+    // Change mood preference
+    function changeMoodPreference(mood) {
+      aiAgent.profile.moodPreference = mood;
+      aiAgent.saveProfile();
+      
+      // Update button states
+      document.querySelectorAll('.mood-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-mood="${mood}"]`)?.classList.add('active');
+      
+      // Reload with new mood filter
+      renderNews();
+    }
+
+    // Make functions globally accessible
+    window.showAIRecommendations = showAIRecommendations;
+    window.showQuickReads = showQuickReads;
+    window.toggleAILearning = toggleAILearning;
+    window.changeMoodPreference = changeMoodPreference;
+    window.aiAgent = aiAgent;
+
+    // Initialize AI insights on load
+    updateAIInsights();
+
   </script>
 
   <!-- Buy Me a Coffee Widget -->
