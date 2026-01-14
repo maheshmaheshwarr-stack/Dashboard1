@@ -1568,6 +1568,198 @@
         padding: 0;
       }
 
+    /* Unique Features Styles */
+    
+    /* Living Background */
+    body {
+      position: relative;
+      transition: background 1s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.4;
+      pointer-events: none;
+      transition: background 2s ease;
+    }
+
+    body.time-morning::before {
+      background: radial-gradient(circle at 30% 20%, rgba(251, 191, 36, 0.15), transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(252, 211, 77, 0.1), transparent 50%);
+    }
+
+    body.time-afternoon::before {
+      background: radial-gradient(circle at 50% 30%, rgba(96, 165, 250, 0.12), transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(147, 197, 253, 0.08), transparent 50%);
+    }
+
+    body.time-evening::before {
+      background: radial-gradient(circle at 40% 40%, rgba(251, 146, 60, 0.15), transparent 50%),
+                  radial-gradient(circle at 60% 60%, rgba(254, 215, 170, 0.1), transparent 50%);
+    }
+
+    body.time-night::before {
+      background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1), transparent 50%),
+                  radial-gradient(circle at 30% 70%, rgba(139, 92, 246, 0.08), transparent 50%);
+    }
+
+    /* Hope Score Widget */
+    .hope-score-widget {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      padding: 12px 16px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .hope-score-widget:hover {
+      transform: scale(1.05);
+    }
+
+    .hope-score-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+    }
+
+    .hope-score-label {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Action Button on Cards */
+    .action-button {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Community Stats Banner */
+    .community-banner {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .community-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .community-stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .community-stat-label {
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+
+    /* Story Arc Badge */
+    .story-arc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      color: white;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    /* Time Capsule Section */
+    .time-capsule {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .time-capsule-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Hope AI Personality */
+    .hope-message {
+      background: linear-gradient(135deg, #ddd6fe, #e9d5ff);
+      border: 2px solid #a78bfa;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .hope-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .hope-text {
+      margin-left: 50px;
+      font-size: 0.9rem;
+      color: #4c1d95;
+      line-height: 1.5;
+    }
+
+    /* Print Styles */
+
       .app-shell {
         box-shadow: none;
         border: none;
@@ -1822,6 +2014,15 @@
     <button class="tts-btn" id="tts-stop-btn" title="Stop reading (Alt+S)" aria-label="Stop reading" style="display:none;">
       ⏹️
     </button>
+  </div>
+
+  <!-- Hope Score Widget -->
+  <div class="hope-score-widget" id="hope-score-widget" onclick="showHopeScoreModal()" title="Click to see details">
+    <div>
+      <div class="hope-score-number" id="hope-score-number">85</div>
+      <div class="hope-score-label">Hope Score</div>
+    </div>
+    <div style="font-size: 2rem;">✨</div>
   </div>
 
   <!-- Wellness Controls -->
@@ -2232,6 +2433,41 @@
                 <rect x="3" y="17" width="2" height="2"></rect>
               </svg>
             </button>
+          </div>
+        </div>
+
+        <!-- Hope's Personality Message -->
+        <div class="hope-message" id="hope-message">
+          <div class="hope-avatar">🌟</div>
+          <div class="hope-text" id="hope-text">
+            Hey! I'm Hope, your AI news companion. I've found some amazing stories for you today! 💫
+          </div>
+        </div>
+
+        <!-- Community Stats Banner -->
+        <div class="community-banner" id="community-banner">
+          <div class="community-stat">
+            <div class="community-stat-number" id="global-reads">1,247,893</div>
+            <div class="community-stat-label">Global Reads</div>
+          </div>
+          <div class="community-stat">
+            <div class="community-stat-number" id="active-readers">2,341</div>
+            <div class="community-stat-label">Reading Now</div>
+          </div>
+          <div class="community-stat">
+            <div class="community-stat-number" id="hope-spread">94%</div>
+            <div class="community-stat-label">Hope Spread</div>
+          </div>
+        </div>
+
+        <!-- Time Capsule -->
+        <div class="time-capsule" id="time-capsule" style="display: none;">
+          <div class="time-capsule-title">
+            <span>⏰</span>
+            <span>One Year Ago Today</span>
+          </div>
+          <div id="time-capsule-content" style="font-size: 0.85rem; color: #78350f;">
+            Loading historical positive news...
           </div>
         </div>
 
@@ -3500,6 +3736,7 @@
           <div class="news-badges">
             <span class="badge badge--category">${article.category.toUpperCase()}</span>
             <span class="badge badge--positive">Net positive impact</span>
+            ${article.isStoryArc ? '<span class="story-arc-badge">📖 Ongoing Story</span>' : ''}
           </div>
           <h3 class="news-title">${title}</h3>
           
@@ -3524,6 +3761,10 @@
             <span class="source">${t.source}: ${sourceName}</span>
             ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">${t.readMore} <span>↗</span></a>` : ""}
           </div>
+          <button class="action-button" onclick="showActionModal('${article.category}', '${encodeURIComponent(article.title)}')">
+            <span>💪</span>
+            <span>What Can I Do?</span>
+          </button>
           <div class="agent-reason">
             <strong>🧠 ${t.whySelected}</strong><br>
             ${getAgentReason(article)}
@@ -5946,6 +6187,275 @@
     window.selectMood = selectMood;
     window.submitMood = submitMood;
     window.closeMoodTracker = closeMoodTracker;
+
+    // ======================
+    // UNIQUE FEATURES
+    // ======================
+    
+    // 1. AI PERSONALITY - HOPE
+    const hopePersonality = {
+      greetings: [
+        "Hey! I'm Hope, your AI news companion. I've found some amazing stories for you today! 💫",
+        "Good to see you! I'm Hope, and I've curated the best positive news just for you! ✨",
+        "Welcome back! I'm Hope, and I'm excited to share today's uplifting stories with you! 🌟",
+        "Hi there! I'm Hope, your personal curator of good news. Let's brighten your day! 🌈",
+        "Hello! I'm Hope, and I've been busy finding the most inspiring stories for you! 💝"
+      ],
+      insights: [
+        "I noticed you love {category} news! I've prioritized similar stories today.",
+        "You've been on a {streak}-day reading streak! That's amazing! Keep it up!",
+        "I found {count} stories that match your interests perfectly!",
+        "Today's news is particularly uplifting - I'm excited for you to read them!",
+        "I've learned what you like, and today's selection is tailored just for you!"
+      ]
+    };
+
+    function updateHopeMessage() {
+      const greeting = hopePersonality.greetings[Math.floor(Math.random() * hopePersonality.greetings.length)];
+      const hopeText = document.getElementById('hope-text');
+      if (hopeText) {
+        hopeText.textContent = greeting;
+      }
+    }
+
+    // 2. HOPE SCORE CALCULATION
+    function calculateHopeScore() {
+      const stats = JSON.parse(localStorage.getItem('readingStats') || '{}');
+      const moodData = JSON.parse(localStorage.getItem('moodData') || '{}');
+      
+      let score = 50; // Base score
+      
+      // Reading activity boost
+      if (stats.readToday) score += Math.min(stats.readToday * 2, 20);
+      if (stats.streak) score += Math.min(stats.streak, 15);
+      
+      // Mood improvement boost
+      if (moodData.before && moodData.after) {
+        const moodValues = { stressed: 1, sad: 2, neutral: 3, good: 4, happy: 5 };
+        const improvement = moodValues[moodData.after] - moodValues[moodData.before];
+        score += improvement * 5;
+      }
+      
+      // AI learning boost
+      if (aiAgent && aiAgent.profile.totalInteractions > 10) {
+        score += 10;
+      }
+      
+      return Math.min(Math.max(score, 0), 100);
+    }
+
+    function updateHopeScore() {
+      const score = calculateHopeScore();
+      const scoreEl = document.getElementById('hope-score-number');
+      if (scoreEl) {
+        scoreEl.textContent = score;
+      }
+    }
+
+    function showHopeScoreModal() {
+      const score = calculateHopeScore();
+      let message = '';
+      
+      if (score >= 90) {
+        message = 'Amazing! Your Hope Score is outstanding! You\'re spreading positivity everywhere! 🌟';
+      } else if (score >= 75) {
+        message = 'Great job! Your Hope Score shows you\'re actively engaging with positive news! 💫';
+      } else if (score >= 50) {
+        message = 'Good start! Keep reading to boost your Hope Score even higher! ✨';
+      } else {
+        message = 'Welcome! Start reading positive news to build your Hope Score! 🌈';
+      }
+      
+      showAffirmation(message);
+    }
+
+    // 3. COMMUNITY STATS (Simulated)
+    function updateCommunityStats() {
+      const baseReads = 1247893;
+      const baseReaders = 2341;
+      const randomReads = Math.floor(Math.random() * 100);
+      const randomReaders = Math.floor(Math.random() * 50);
+      
+      document.getElementById('global-reads').textContent = (baseReads + randomReads).toLocaleString();
+      document.getElementById('active-readers').textContent = (baseReaders + randomReaders).toLocaleString();
+      
+      // Hope spread percentage (always high!)
+      const hopeSpread = 92 + Math.floor(Math.random() * 6);
+      document.getElementById('hope-spread').textContent = hopeSpread + '%';
+    }
+
+    // Update community stats every 30 seconds
+    setInterval(updateCommunityStats, 30000);
+
+    // 4. STORY ARCS TRACKER
+    const storyArcs = [
+      { keywords: ['climate', 'renewable', 'solar', 'wind'], category: 'environment' },
+      { keywords: ['vaccine', 'cure', 'treatment', 'medical'], category: 'health' },
+      { keywords: ['space', 'mars', 'moon', 'rocket'], category: 'space' },
+      { keywords: ['ai', 'artificial intelligence', 'machine learning'], category: 'ai' }
+    ];
+
+    function detectStoryArc(article) {
+      const text = `${article.title || ''} ${article.description || ''}`.toLowerCase();
+      
+      for (const arc of storyArcs) {
+        if (arc.keywords.some(keyword => text.includes(keyword))) {
+          article.isStoryArc = true;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // 5. TIME CAPSULE
+    function loadTimeCapsule() {
+      const oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      
+      const timeCapsuleStories = [
+        "One year ago: Scientists announced a breakthrough in renewable energy storage.",
+        "One year ago: Global poverty rates hit historic lows according to UN report.",
+        "One year ago: New conservation efforts saved 3 endangered species from extinction.",
+        "One year ago: Revolutionary cancer treatment showed 90% success rate in trials.",
+        "One year ago: Record number of countries committed to carbon neutrality."
+      ];
+      
+      const randomStory = timeCapsuleStories[Math.floor(Math.random() * timeCapsuleStories.length)];
+      const capsuleEl = document.getElementById('time-capsule');
+      const contentEl = document.getElementById('time-capsule-content');
+      
+      if (capsuleEl && contentEl) {
+        contentEl.textContent = randomStory;
+        capsuleEl.style.display = 'block';
+      }
+    }
+
+    // 6. LIVING BACKGROUND
+    function updateLivingBackground() {
+      const hour = new Date().getHours();
+      const body = document.body;
+      
+      // Remove all time classes
+      body.classList.remove('time-morning', 'time-afternoon', 'time-evening', 'time-night');
+      
+      // Add appropriate class
+      if (hour >= 5 && hour < 12) {
+        body.classList.add('time-morning');
+      } else if (hour >= 12 && hour < 17) {
+        body.classList.add('time-afternoon');
+      } else if (hour >= 17 && hour < 21) {
+        body.classList.add('time-evening');
+      } else {
+        body.classList.add('time-night');
+      }
+    }
+
+    // Update background every minute
+    setInterval(updateLivingBackground, 60000);
+
+    // 7. ACTION MODAL
+    const actionSuggestions = {
+      environment: [
+        "🌱 Plant a tree in your community",
+        "♻️ Start composting at home",
+        "🚴 Use public transport or bike this week",
+        "💡 Switch to LED bulbs",
+        "🛍️ Bring reusable bags when shopping"
+      ],
+      health: [
+        "🏃 Take a 15-minute walk today",
+        "🥗 Add one more vegetable to your meals",
+        "💧 Drink 8 glasses of water",
+        "😴 Get 7-8 hours of sleep",
+        "🧘 Try 5 minutes of meditation"
+      ],
+      science: [
+        "📚 Read a science article today",
+        "🔬 Visit a science museum",
+        "👨‍🔬 Support science education",
+        "🌟 Share science news with friends",
+        "💻 Learn about a new technology"
+      ],
+      ai: [
+        "💻 Learn basic coding online",
+        "🤖 Explore AI tools responsibly",
+        "📖 Read about AI ethics",
+        "🎓 Take a free AI course",
+        "💡 Think about AI's positive impact"
+      ],
+      default: [
+        "💝 Do one kind act today",
+        "📱 Share positive news with someone",
+        "🙏 Express gratitude to someone",
+        "😊 Smile at a stranger",
+        "🤝 Help someone in need"
+      ]
+    };
+
+    function showActionModal(category, title) {
+      const actions = actionSuggestions[category] || actionSuggestions.default;
+      const randomActions = actions.sort(() => 0.5 - Math.random()).slice(0, 3);
+      
+      const message = `Inspired by this story? Here's what you can do:\n\n${randomActions.join('\n')}`;
+      showAffirmation(message);
+    }
+
+    // 8. AUDIO SUMMARIES WITH PERSONALITY
+    function startReadingWithPersonality() {
+      if (isReading) {
+        stopReading();
+        return;
+      }
+
+      const articles = Array.from(document.querySelectorAll('.news-card:not(.hidden)'));
+      
+      if (articles.length === 0) {
+        alert('No articles to read');
+        return;
+      }
+
+      let textToRead = 'Hi! I\'m Hope, your AI news companion. Let me share today\'s most inspiring stories with you. ';
+      
+      articles.slice(0, 5).forEach((article, index) => {
+        const title = article.querySelector('.news-title')?.textContent || '';
+        const summary = article.querySelector('.ai-summary')?.textContent || '';
+        textToRead += `Story number ${index + 1}. ${title}. ${summary}. `;
+      });
+
+      textToRead += ' That\'s all for now! Remember, every day brings new reasons to hope. Stay positive!';
+
+      currentUtterance = new SpeechSynthesisUtterance(textToRead);
+      currentUtterance.rate = 0.9;
+      currentUtterance.pitch = 1.1; // Slightly higher pitch for Hope's voice
+      currentUtterance.volume = 1;
+
+      currentUtterance.onstart = () => {
+        isReading = true;
+        document.getElementById('tts-play-btn').style.display = 'none';
+        document.getElementById('tts-stop-btn').style.display = 'flex';
+        document.getElementById('tts-stop-btn').classList.add('active');
+      };
+
+      currentUtterance.onend = () => {
+        stopReading();
+      };
+
+      speechSynthesis.speak(currentUtterance);
+    }
+
+    // Override the original TTS function
+    document.getElementById('tts-play-btn').onclick = startReadingWithPersonality;
+
+    // Initialize unique features
+    updateHopeMessage();
+    updateHopeScore();
+    updateCommunityStats();
+    loadTimeCapsule();
+    updateLivingBackground();
+
+    // Make functions globally accessible
+    window.showHopeScoreModal = showHopeScoreModal;
+    window.showActionModal = showActionModal;
 
   </script>
 
