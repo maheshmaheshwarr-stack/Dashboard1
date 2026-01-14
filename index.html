@@ -346,6 +346,200 @@
       }
     }
 
+    .multimedia-section {
+      grid-column: 1 / -1;
+      margin-top: 16px;
+      padding: 20px;
+      background: #fff8ed;
+      border-radius: 20px;
+      border: 2px solid #fed7aa;
+    }
+
+    .multimedia-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .multimedia-tab {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 2px solid #fed7aa;
+      background: #ffffff;
+      color: #78716c;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .multimedia-tab:hover {
+      border-color: #f97316;
+      transform: translateY(-2px);
+    }
+
+    .multimedia-tab.active {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #ffffff;
+      border-color: #f97316;
+    }
+
+    .multimedia-content {
+      display: none;
+    }
+
+    .multimedia-content.active {
+      display: block;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 2px solid #fed7aa;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(249, 115, 22, 0.2);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .gallery-item-content {
+      padding: 12px;
+    }
+
+    .gallery-item-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #292524;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .gallery-item-source {
+      font-size: 0.7rem;
+      color: #78716c;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .video-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 2px solid #fed7aa;
+    }
+
+    .video-item iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    .video-item-content {
+      padding: 12px;
+    }
+
+    .podcast-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .podcast-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 2px solid #fed7aa;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+
+    .podcast-item:hover {
+      transform: translateX(4px);
+    }
+
+    .podcast-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .podcast-info {
+      flex: 1;
+    }
+
+    .podcast-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #292524;
+      margin-bottom: 4px;
+    }
+
+    .podcast-meta {
+      font-size: 0.75rem;
+      color: #78716c;
+    }
+
+    .infographic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .infographic-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 2px solid #fed7aa;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .infographic-item:hover {
+      transform: scale(1.02);
+    }
+
+    .infographic-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .infographic-item-content {
+      padding: 12px;
+    }
+
     .column {
       display: flex;
       flex-direction: column;
@@ -1160,6 +1354,61 @@
       </aside>
     </main>
 
+    <!-- Multimedia Section -->
+    <section class="multimedia-section">
+      <div style="margin-bottom: 16px;">
+        <h2 style="font-size: 1.3rem; font-weight: 600; color: #292524; margin-bottom: 6px;">
+          🎬 Multimedia News Experience
+        </h2>
+        <p style="font-size: 0.85rem; color: #78716c;">
+          Explore news through images, videos, podcasts, and infographics
+        </p>
+      </div>
+
+      <div class="multimedia-tabs">
+        <button class="multimedia-tab active" onclick="switchMultimediaTab('gallery')">
+          <span>🖼️</span> Image Gallery
+        </button>
+        <button class="multimedia-tab" onclick="switchMultimediaTab('videos')">
+          <span>📹</span> Video News
+        </button>
+        <button class="multimedia-tab" onclick="switchMultimediaTab('podcasts')">
+          <span>🎙️</span> Podcasts
+        </button>
+        <button class="multimedia-tab" onclick="switchMultimediaTab('infographics')">
+          <span>📊</span> Infographics
+        </button>
+      </div>
+
+      <!-- Image Gallery -->
+      <div id="gallery-content" class="multimedia-content active">
+        <div class="gallery-grid" id="gallery-grid">
+          <p style="color: #78716c; font-size: 0.85rem;">Loading visual stories...</p>
+        </div>
+      </div>
+
+      <!-- Video News -->
+      <div id="videos-content" class="multimedia-content">
+        <div class="video-grid" id="video-grid">
+          <!-- Videos will be populated here -->
+        </div>
+      </div>
+
+      <!-- Podcasts -->
+      <div id="podcasts-content" class="multimedia-content">
+        <div class="podcast-list" id="podcast-list">
+          <!-- Podcasts will be populated here -->
+        </div>
+      </div>
+
+      <!-- Infographics -->
+      <div id="infographics-content" class="multimedia-content">
+        <div class="infographic-grid" id="infographic-grid">
+          <!-- Infographics will be populated here -->
+        </div>
+      </div>
+    </section>
+
     <footer>
       <span>Built for a calm information diet. Tweak this page as your interests evolve.</span>
       <div class="footer-badges">
@@ -1911,6 +2160,9 @@
         updateAgentNote(state.allArticles);
         updateIgnoredList(state.allArticles);
 
+        // Load multimedia content
+        loadMultimediaContent(state.allArticles);
+
       } catch (error) {
         console.error("Error loading news:", error);
         newsList.innerHTML = '<p style="color:#b91c1c;font-size:0.8rem;">Network error while loading stories. Please try again.</p>';
@@ -2206,6 +2458,225 @@
         copyEl.textContent = new Date().getFullYear();
       }
     }
+
+    // ======================
+    // MULTIMEDIA CONTENT
+    // ======================
+    function switchMultimediaTab(tabName) {
+      // Update tab buttons
+      document.querySelectorAll('.multimedia-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.closest('.multimedia-tab').classList.add('active');
+
+      // Update content sections
+      document.querySelectorAll('.multimedia-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`${tabName}-content`).classList.add('active');
+    }
+
+    function loadMultimediaContent(articles) {
+      loadImageGallery(articles);
+      loadVideoNews();
+      loadPodcasts();
+      loadInfographics();
+    }
+
+    function loadImageGallery(articles) {
+      const galleryGrid = document.getElementById('gallery-grid');
+      
+      // Filter articles with images
+      const articlesWithImages = articles.filter(a => {
+        // Check if article has image in content or use placeholder
+        return true; // We'll show all articles with generated images
+      }).slice(0, 12);
+
+      if (articlesWithImages.length === 0) {
+        galleryGrid.innerHTML = '<p style="color: #78716c; font-size: 0.85rem;">No images available at the moment.</p>';
+        return;
+      }
+
+      galleryGrid.innerHTML = articlesWithImages.map(article => {
+        // Generate a placeholder image URL based on category
+        const imageUrl = getPlaceholderImage(article.category);
+        
+        return `
+          <div class="gallery-item" onclick="window.open('${article.url}', '_blank')">
+            <img src="${imageUrl}" alt="${article.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/f97316/ffffff?text=News+Image'">
+            <div class="gallery-item-content">
+              <div class="gallery-item-title">${shortenText(article.title, 80)}</div>
+              <div class="gallery-item-source">${article.source?.name || 'News Source'}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getPlaceholderImage(category) {
+      const images = {
+        sports: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=300&fit=crop',
+        markets: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop',
+        ai: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop',
+        automobiles: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400&h=300&fit=crop',
+        politics: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=400&h=300&fit=crop',
+        startups: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop',
+        current: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop'
+      };
+      return images[category] || images.current;
+    }
+
+    function loadVideoNews() {
+      const videoGrid = document.getElementById('video-grid');
+      
+      // Curated news video channels and recent videos
+      const newsVideos = [
+        {
+          id: 'dQw4w9WgXcQ', // Replace with actual news video IDs
+          title: 'BBC News: Today\'s Top Stories',
+          channel: 'BBC News'
+        },
+        {
+          id: 'jNQXAC9IVRw', // Replace with actual news video IDs
+          title: 'Tech News Roundup',
+          channel: 'TechCrunch'
+        },
+        {
+          id: 'y6120QOlsfU', // Replace with actual news video IDs
+          title: 'Market Analysis Today',
+          channel: 'Financial Times'
+        },
+        {
+          id: 'dQw4w9WgXcQ', // Replace with actual news video IDs
+          title: 'AI Developments This Week',
+          channel: 'MIT Technology Review'
+        }
+      ];
+
+      videoGrid.innerHTML = newsVideos.map(video => `
+        <div class="video-item">
+          <iframe 
+            src="https://www.youtube.com/embed/${video.id}" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+          <div class="video-item-content">
+            <div class="gallery-item-title">${video.title}</div>
+            <div class="gallery-item-source">${video.channel}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadPodcasts() {
+      const podcastList = document.getElementById('podcast-list');
+      
+      // Curated news podcasts
+      const podcasts = [
+        {
+          title: 'The Daily - New York Times',
+          description: 'Today\'s biggest stories in 20 minutes',
+          duration: '20 min',
+          url: 'https://www.nytimes.com/column/the-daily'
+        },
+        {
+          title: 'Up First - NPR',
+          description: 'Morning news briefing',
+          duration: '15 min',
+          url: 'https://www.npr.org/podcasts/510318/up-first'
+        },
+        {
+          title: 'Today in Focus - The Guardian',
+          description: 'Deep dive into the day\'s news',
+          duration: '25 min',
+          url: 'https://www.theguardian.com/news/series/todayinfocus'
+        },
+        {
+          title: 'Tech News Briefing - WSJ',
+          description: 'Latest in technology',
+          duration: '10 min',
+          url: 'https://www.wsj.com/podcasts/tech-news-briefing'
+        },
+        {
+          title: 'The Intelligence - The Economist',
+          description: 'Global news analysis',
+          duration: '22 min',
+          url: 'https://www.economist.com/podcasts'
+        }
+      ];
+
+      podcastList.innerHTML = podcasts.map(podcast => `
+        <div class="podcast-item" onclick="window.open('${podcast.url}', '_blank')">
+          <div class="podcast-icon">🎙️</div>
+          <div class="podcast-info">
+            <div class="podcast-title">${podcast.title}</div>
+            <div class="podcast-meta">${podcast.description} • ${podcast.duration}</div>
+          </div>
+          <button style="
+            padding: 6px 12px;
+            background: #f97316;
+            color: #ffffff;
+            border: none;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+          ">Listen</button>
+        </div>
+      `).join('');
+    }
+
+    function loadInfographics() {
+      const infographicGrid = document.getElementById('infographic-grid');
+      
+      // Sample infographics (in production, these would come from your data sources)
+      const infographics = [
+        {
+          title: 'Global AI Investment Trends 2025',
+          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
+          source: 'Visual Capitalist'
+        },
+        {
+          title: 'Climate Change Impact by Region',
+          image: 'https://images.unsplash.com/photo-1569163139394-de4798aa62b6?w=400&h=300&fit=crop',
+          source: 'Our World in Data'
+        },
+        {
+          title: 'Stock Market Performance YTD',
+          image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=300&fit=crop',
+          source: 'Financial Times'
+        },
+        {
+          title: 'Tech Startup Funding Landscape',
+          image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
+          source: 'CB Insights'
+        },
+        {
+          title: 'Renewable Energy Growth',
+          image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=400&h=300&fit=crop',
+          source: 'IEA'
+        },
+        {
+          title: 'Global Trade Routes 2025',
+          image: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400&h=300&fit=crop',
+          source: 'World Bank'
+        }
+      ];
+
+      infographicGrid.innerHTML = infographics.map(infographic => `
+        <div class="infographic-item">
+          <img src="${infographic.image}" alt="${infographic.title}" loading="lazy">
+          <div class="infographic-item-content">
+            <div class="gallery-item-title">${infographic.title}</div>
+            <div class="gallery-item-source">${infographic.source}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Make function globally accessible
+    window.switchMultimediaTab = switchMultimediaTab;
 
     // ======================
     // INITIALIZATION
