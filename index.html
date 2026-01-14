@@ -1494,13 +1494,25 @@
               <span class="dot"></span>Current Affairs
             </button>
             <button class="filter-chip" data-filter="ai">
-              <span class="dot"></span>IT &amp; AI Trends
+              <span class="dot"></span>AI &amp; Tech
             </button>
             <button class="filter-chip" data-filter="startups">
               <span class="dot"></span>Startups
             </button>
             <button class="filter-chip" data-filter="markets">
-              <span class="dot"></span>Stock Market &amp; Economy
+              <span class="dot"></span>Markets
+            </button>
+            <button class="filter-chip" data-filter="science">
+              <span class="dot"></span>Science
+            </button>
+            <button class="filter-chip" data-filter="space">
+              <span class="dot"></span>Space
+            </button>
+            <button class="filter-chip" data-filter="health">
+              <span class="dot"></span>Health
+            </button>
+            <button class="filter-chip" data-filter="environment">
+              <span class="dot"></span>Environment
             </button>
             <button class="filter-chip" data-filter="politics">
               <span class="dot"></span>Politics
@@ -1508,8 +1520,14 @@
             <button class="filter-chip" data-filter="sports">
               <span class="dot"></span>Sports
             </button>
-            <button class="filter-chip" data-filter="automobiles">
-              <span class="dot"></span>Automobiles
+            <button class="filter-chip" data-filter="culture">
+              <span class="dot"></span>Culture
+            </button>
+            <button class="filter-chip" data-filter="design">
+              <span class="dot"></span>Design
+            </button>
+            <button class="filter-chip" data-filter="positive">
+              <span class="dot"></span>Positive News
             </button>
             <button id="refresh-btn" class="filter-chip" style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.85);">
               <span class="dot"></span>Refresh
@@ -1539,6 +1557,9 @@
                   <button class="filter-chip source-chip" data-source="ndtv">NDTV</button>
                   <button class="filter-chip source-chip" data-source="indiatoday">India Today</button>
                   <button class="filter-chip source-chip" data-source="toi">Times of India</button>
+                  <button class="filter-chip source-chip" data-source="deccanherald">Deccan Herald</button>
+                  <button class="filter-chip source-chip" data-source="theprint">The Print</button>
+                  <button class="filter-chip source-chip" data-source="scroll">Scroll</button>
                 </div>
 
                 <div class="source-group">
@@ -1546,6 +1567,7 @@
                   <button class="filter-chip source-chip" data-source="bbc">BBC</button>
                   <button class="filter-chip source-chip" data-source="reuters">Reuters</button>
                   <button class="filter-chip source-chip" data-source="aljazeera">Al Jazeera</button>
+                  <button class="filter-chip source-chip" data-source="apnews">AP News</button>
                 </div>
 
                 <div class="source-group">
@@ -1555,6 +1577,8 @@
                   <button class="filter-chip source-chip" data-source="moneycontrol">Moneycontrol</button>
                   <button class="filter-chip source-chip" data-source="financialexpress">Financial Express</button>
                   <button class="filter-chip source-chip" data-source="businessstandard">Business Standard</button>
+                  <button class="filter-chip source-chip" data-source="forbes">Forbes</button>
+                  <button class="filter-chip source-chip" data-source="entrepreneur">Entrepreneur</button>
                 </div>
 
                 <div class="source-group">
@@ -1564,11 +1588,65 @@
                   <button class="filter-chip source-chip" data-source="theverge">The Verge</button>
                   <button class="filter-chip source-chip" data-source="wired">Wired</button>
                   <button class="filter-chip source-chip" data-source="yourstory">YourStory</button>
+                  <button class="filter-chip source-chip" data-source="hackernews">Hacker News</button>
+                  <button class="filter-chip source-chip" data-source="arstechnica">Ars Technica</button>
                 </div>
 
                 <div class="source-group">
-                  <div class="source-group-title">Automobiles</div>
-                  <button class="filter-chip source-chip" data-source="autocarindia">Autocar India</button>
+                  <div class="source-group-title">Science & Research</div>
+                  <button class="filter-chip source-chip" data-source="sciencedaily">Science Daily</button>
+                  <button class="filter-chip source-chip" data-source="nature">Nature</button>
+                  <button class="filter-chip source-chip" data-source="newscientist">New Scientist</button>
+                  <button class="filter-chip source-chip" data-source="phys">Phys.org</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Space & Astronomy</div>
+                  <button class="filter-chip source-chip" data-source="nasa">NASA</button>
+                  <button class="filter-chip source-chip" data-source="spacenews">Space News</button>
+                  <button class="filter-chip source-chip" data-source="universetoday">Universe Today</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Environment & Climate</div>
+                  <button class="filter-chip source-chip" data-source="treehugger">Treehugger</button>
+                  <button class="filter-chip source-chip" data-source="earthorg">Earth.org</button>
+                  <button class="filter-chip source-chip" data-source="mongabay">Mongabay</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Health & Wellness</div>
+                  <button class="filter-chip source-chip" data-source="healthline">Healthline</button>
+                  <button class="filter-chip source-chip" data-source="medicalnews">Medical News Today</button>
+                  <button class="filter-chip source-chip" data-source="webmd">WebMD</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Culture & Society</div>
+                  <button class="filter-chip source-chip" data-source="smithsonian">Smithsonian</button>
+                  <button class="filter-chip source-chip" data-source="theconversation">The Conversation</button>
+                  <button class="filter-chip source-chip" data-source="aeon">Aeon</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Design & Creativity</div>
+                  <button class="filter-chip source-chip" data-source="designboom">Designboom</button>
+                  <button class="filter-chip source-chip" data-source="dezeen">Dezeen</button>
+                  <button class="filter-chip source-chip" data-source="creativebloq">Creative Bloq</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Open Source & Dev</div>
+                  <button class="filter-chip source-chip" data-source="opensource">Opensource.com</button>
+                  <button class="filter-chip source-chip" data-source="devto">Dev.to</button>
+                  <button class="filter-chip source-chip" data-source="githubtrending">GitHub Trending</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Positive News</div>
+                  <button class="filter-chip source-chip" data-source="goodnewsnetwork">Good News Network</button>
+                  <button class="filter-chip source-chip" data-source="positivenews">Positive News</button>
+                  <button class="filter-chip source-chip" data-source="optimistdaily">Optimist Daily</button>
                 </div>
 
                 <div class="source-group">
@@ -2591,15 +2669,83 @@
       theverge: "https://www.theverge.com/rss/index.xml",
       wired: "https://www.wired.com/feed/rss",
       yourstory: "https://yourstory.com/feed",
+      hackernews: "https://hnrss.org/frontpage",
+      arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
       
       // International News
       bbc: "http://feeds.bbci.co.uk/news/rss.xml",
       reuters: "https://www.reutersagency.com/feed/",
       aljazeera: "https://www.aljazeera.com/xml/rss/all.xml",
+      apnews: "https://rsshub.app/apnews/topics/apf-topnews",
       
       // Business & Markets
       financialexpress: "https://www.financialexpress.com/feed/",
-      businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss"
+      businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss",
+      forbes: "https://www.forbes.com/innovation/feed2/",
+      entrepreneur: "https://www.entrepreneur.com/latest.rss",
+      
+      // Science & Research
+      sciencedaily: "https://www.sciencedaily.com/rss/all.xml",
+      nature: "https://www.nature.com/nature.rss",
+      newscientist: "https://www.newscientist.com/feed/home",
+      phys: "https://phys.org/rss-feed/",
+      
+      // Space & Astronomy
+      nasa: "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+      spacenews: "https://spacenews.com/feed/",
+      universetoday: "https://www.universetoday.com/feed/",
+      
+      // Environment & Climate
+      treehugger: "https://www.treehugger.com/feeds/rss",
+      earthorg: "https://earth.org/feed/",
+      mongabay: "https://news.mongabay.com/feed/",
+      
+      // Health & Wellness
+      healthline: "https://www.healthline.com/rss",
+      medicalnews: "https://www.medicalnewstoday.com/rss",
+      webmd: "https://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC",
+      
+      // Culture & Society
+      smithsonian: "https://www.smithsonianmag.com/rss/latest_articles/",
+      theconversation: "https://theconversation.com/articles.atom",
+      aeon: "https://aeon.co/feed.rss",
+      
+      // Education & Learning
+      edutopia: "https://www.edutopia.org/rss.xml",
+      chronicle: "https://www.chronicle.com/section/news/feed",
+      
+      // Design & Creativity
+      designboom: "https://www.designboom.com/feed/",
+      dezeen: "https://www.dezeen.com/feed/",
+      creativebloq: "https://www.creativebloq.com/feed",
+      
+      // Gaming & Entertainment
+      ign: "https://feeds.feedburner.com/ign/all",
+      polygon: "https://www.polygon.com/rss/index.xml",
+      variety: "https://variety.com/feed/",
+      
+      // Cybersecurity & Privacy
+      krebs: "https://krebsonsecurity.com/feed/",
+      bleepingcomputer: "https://www.bleepingcomputer.com/feed/",
+      
+      // Open Source & Dev
+      opensource: "https://opensource.com/feed",
+      devto: "https://dev.to/feed",
+      githubtrending: "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+      
+      // Indian Regional
+      deccanherald: "https://www.deccanherald.com/rss/national.rss",
+      theprint: "https://theprint.in/feed/",
+      scroll: "https://scroll.in/feeds/all.rss",
+      
+      // Alternative Perspectives
+      restofworld: "https://restofworld.org/feed/latest/",
+      propublica: "https://www.propublica.org/feeds/propublica/main",
+      
+      // Positive News Focus
+      goodnewsnetwork: "https://www.goodnewsnetwork.org/feed/",
+      positivenews: "https://www.positive.news/feed/",
+      optimistdaily: "https://www.optimistdaily.com/feed/"
     };
 
     // ======================
@@ -2632,13 +2778,38 @@
 
     function classifyArticle(article) {
       const text = ((article.title || "") + " " + (article.description || "")).toLowerCase();
+      const source = article.sourceKey || "";
       
-      if (text.match(/cricket|football|t20|ipl|world cup|olympic/i)) return "sports";
-      if (text.match(/sensex|nifty|stock|market|shares|economy|gdp|inflation/i)) return "markets";
-      if (text.match(/election|minister|parliament|bill passed|policy|government/i)) return "politics";
-      if (text.match(/startup|start-up|funding|valuation|unicorn|series [ab]|venture capital/i)) return "startups";
-      if (text.match(/\bai\b|artificial intelligence|machine learning|openai|chatgpt/i)) return "ai";
+      // Source-based classification first
+      if (source.match(/nasa|space|universe/i)) return "space";
+      if (source.match(/science|nature|phys/i)) return "science";
+      if (source.match(/health|medical|webmd/i)) return "health";
+      if (source.match(/treehugger|earth|mongabay/i)) return "environment";
+      if (source.match(/design|dezeen|creative/i)) return "design";
+      if (source.match(/ign|polygon|variety/i)) return "entertainment";
+      if (source.match(/krebs|bleeping|security/i)) return "cybersecurity";
+      if (source.match(/opensource|devto|github/i)) return "opensource";
+      if (source.match(/smithsonian|conversation|aeon/i)) return "culture";
+      if (source.match(/edutopia|chronicle/i)) return "education";
+      if (source.match(/goodnews|positive|optimist/i)) return "positive";
+      
+      // Content-based classification
+      if (text.match(/cricket|football|t20|ipl|world cup|olympic|tennis|basketball/i)) return "sports";
+      if (text.match(/sensex|nifty|stock|market|shares|economy|gdp|inflation|trading/i)) return "markets";
+      if (text.match(/election|minister|parliament|bill passed|policy|government|congress/i)) return "politics";
+      if (text.match(/startup|start-up|funding|valuation|unicorn|series [ab]|venture capital|entrepreneur/i)) return "startups";
+      if (text.match(/\bai\b|artificial intelligence|machine learning|openai|chatgpt|neural|deep learning/i)) return "ai";
       if (text.match(/car|automobile|vehicle|\bev\b|electric vehicle|hybrid|suv|bike|two-wheeler/i)) return "automobiles";
+      if (text.match(/space|rocket|satellite|mars|moon|asteroid|planet|galaxy|cosmos/i)) return "space";
+      if (text.match(/research|study|scientist|discovery|experiment|laboratory|peer-review/i)) return "science";
+      if (text.match(/health|medical|disease|treatment|vaccine|hospital|doctor|patient/i)) return "health";
+      if (text.match(/climate|environment|carbon|emission|renewable|solar|wind|sustainability/i)) return "environment";
+      if (text.match(/design|architecture|art|creative|aesthetic|visual/i)) return "design";
+      if (text.match(/game|gaming|esports|console|playstation|xbox|nintendo/i)) return "entertainment";
+      if (text.match(/hack|breach|cyber|security|malware|vulnerability|encryption/i)) return "cybersecurity";
+      if (text.match(/open source|github|linux|developer|programming|code|software/i)) return "opensource";
+      if (text.match(/culture|society|history|philosophy|anthropology/i)) return "culture";
+      if (text.match(/education|learning|school|university|student|teacher/i)) return "education";
       
       return "current";
     }
