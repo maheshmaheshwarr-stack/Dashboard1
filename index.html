@@ -568,10 +568,69 @@
       text-transform: uppercase;
     }
 
+    /* View Toggle Buttons */
+    .view-toggle-btn {
+      padding: 6px 8px;
+      border: 2px solid #e5e7eb;
+      background: #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+    }
+
+    .view-toggle-btn:hover {
+      background: #f9fafb;
+      border-color: #fed7aa;
+      color: #f97316;
+    }
+
+    .view-toggle-btn.active {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      border-color: #f97316;
+      color: #ffffff;
+    }
+
+    .view-toggle-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
     .news-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      transition: all 0.3s ease;
+    }
+
+    /* Grid View Layout */
+    .news-list.grid-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .news-list.grid-view {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Compact View Layout */
+    .news-list.compact-view .news-card {
+      padding: 8px 10px;
+      gap: 4px;
+    }
+
+    .news-list.compact-view .news-title {
+      font-size: 0.88rem;
+    }
+
+    .news-list.compact-view .tagline {
+      -webkit-line-clamp: 2;
     }
 
     .news-card {
@@ -584,12 +643,111 @@
       grid-template-columns: minmax(0, 1fr);
       gap: 6px;
       transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+      position: relative;
+      overflow: hidden;
+      animation: cardFadeIn 0.4s ease-out;
+    }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .news-card:hover {
       transform: translateY(-3px) translateZ(0);
       box-shadow: 0 16px 32px rgba(194, 65, 12, 0.16);
       border-color: rgba(249, 115, 22, 0.7);
+    }
+
+    /* Card with Image */
+    .news-card.has-image {
+      grid-template-columns: 120px 1fr;
+      gap: 12px;
+    }
+
+    .news-list.grid-view .news-card.has-image {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .news-card-image {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fed7aa, #fecaca);
+    }
+
+    .news-list.grid-view .news-card-image {
+      height: 180px;
+    }
+
+    .news-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Category Color Coding */
+    .news-card[data-category="ai"] {
+      border-left: 4px solid #8b5cf6;
+      background: linear-gradient(to right, #f5f3ff, #fff8ed);
+    }
+
+    .news-card[data-category="science"] {
+      border-left: 4px solid #06b6d4;
+      background: linear-gradient(to right, #ecfeff, #fff8ed);
+    }
+
+    .news-card[data-category="space"] {
+      border-left: 4px solid #6366f1;
+      background: linear-gradient(to right, #eef2ff, #fff8ed);
+    }
+
+    .news-card[data-category="health"] {
+      border-left: 4px solid #10b981;
+      background: linear-gradient(to right, #ecfdf5, #fff8ed);
+    }
+
+    .news-card[data-category="environment"] {
+      border-left: 4px solid #22c55e;
+      background: linear-gradient(to right, #f0fdf4, #fff8ed);
+    }
+
+    .news-card[data-category="markets"] {
+      border-left: 4px solid #f59e0b;
+      background: linear-gradient(to right, #fffbeb, #fff8ed);
+    }
+
+    .news-card[data-category="startups"] {
+      border-left: 4px solid #ec4899;
+      background: linear-gradient(to right, #fdf2f8, #fff8ed);
+    }
+
+    .news-card[data-category="sports"] {
+      border-left: 4px solid #ef4444;
+      background: linear-gradient(to right, #fef2f2, #fff8ed);
+    }
+
+    .news-card[data-category="culture"] {
+      border-left: 4px solid #a855f7;
+      background: linear-gradient(to right, #faf5ff, #fff8ed);
+    }
+
+    .news-card[data-category="design"] {
+      border-left: 4px solid #f97316;
+      background: linear-gradient(to right, #fff7ed, #fff8ed);
+    }
+
+    .news-card[data-category="positive"] {
+      border-left: 4px solid #84cc16;
+      background: linear-gradient(to right, #f7fee7, #fff8ed);
     }
 
     .news-badges {
@@ -611,6 +769,74 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    /* Category Badge Colors */
+    .news-card[data-category="ai"] .badge--category {
+      background: #ede9fe;
+      color: #6b21a8;
+      border-color: #a78bfa;
+    }
+
+    .news-card[data-category="science"] .badge--category {
+      background: #cffafe;
+      color: #0e7490;
+      border-color: #22d3ee;
+    }
+
+    .news-card[data-category="space"] .badge--category {
+      background: #e0e7ff;
+      color: #3730a3;
+      border-color: #818cf8;
+    }
+
+    .news-card[data-category="health"] .badge--category {
+      background: #d1fae5;
+      color: #065f46;
+      border-color: #34d399;
+    }
+
+    .news-card[data-category="environment"] .badge--category {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #4ade80;
+    }
+
+    .news-card[data-category="markets"] .badge--category {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #fbbf24;
+    }
+
+    .news-card[data-category="startups"] .badge--category {
+      background: #fce7f3;
+      color: #9f1239;
+      border-color: #f9a8d4;
+    }
+
+    .news-card[data-category="sports"] .badge--category {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fca5a5;
+    }
+
+    .news-card[data-category="culture"] .badge--category {
+      background: #f3e8ff;
+      color: #6b21a8;
+      border-color: #c084fc;
+    }
+
+    .news-card[data-category="design"] .badge--category {
+      background: #ffedd5;
+      color: #9a3412;
+      border-color: #fb923c;
+    }
+
+    .news-card[data-category="positive"] .badge--category {
+      background: #ecfccb;
+      color: #3f6212;
+      border-color: #a3e635;
     }
 
     .badge--positive {
@@ -1669,6 +1895,36 @@
       <section class="column" aria-label="Main news feed">
         <div class="section-title">
           <h2>Today's Highlights</h2>
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button id="list-view-btn" class="view-toggle-btn active" title="List View" onclick="changeView('list')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </button>
+            <button id="grid-view-btn" class="view-toggle-btn" title="Grid View" onclick="changeView('grid')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </button>
+            <button id="compact-view-btn" class="view-toggle-btn" title="Compact View" onclick="changeView('compact')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <rect x="3" y="5" width="2" height="2"></rect>
+                <rect x="3" y="11" width="2" height="2"></rect>
+                <rect x="3" y="17" width="2" height="2"></rect>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div class="agent-note">
@@ -2880,6 +3136,12 @@
       card.dataset.source = article.sourceKey;
       card.dataset.articleId = article.url; // For tracking
 
+      // Check if article has image
+      const hasImage = article.enclosure?.link || article.thumbnail || article.image;
+      if (hasImage) {
+        card.classList.add('has-image');
+      }
+
       const published = article.publishedAt ? 
         new Date(article.publishedAt).toLocaleString("en-IN", {
           day: "2-digit", 
@@ -2898,37 +3160,47 @@
       // Get translations
       const t = translations[currentLanguage].ui;
 
+      // Get image URL
+      const imageUrl = article.enclosure?.link || article.thumbnail || article.image || '';
+
+      const imageHTML = imageUrl ? `
+        <img src="${imageUrl}" alt="${title}" class="news-card-image" loading="lazy" onerror="this.style.display='none'">
+      ` : '';
+
       card.innerHTML = `
-        <div class="news-badges">
-          <span class="badge badge--category">${article.category.toUpperCase()}</span>
-          <span class="badge badge--positive">Net positive impact</span>
-        </div>
-        <h3 class="news-title">${title}</h3>
-        
-        <div class="ai-summary" style="
-          margin: 8px 0;
-          padding: 10px 12px;
-          background: #fff8ed;
-          border-left: 3px solid #f97316;
-          border-radius: 8px;
-          font-size: 0.78rem;
-          color: #78716c;
-          line-height: 1.5;
-        ">
-          <strong style="color: #ea580c;">🤖 ${t.aiSummary}:</strong> ${summary}
-        </div>
-        
-        <p class="tagline">${description}</p>
-        <div class="news-meta-row">
-          <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
-        </div>
-        <div class="news-footer">
-          <span class="source">${t.source}: ${sourceName}</span>
-          ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">${t.readMore} <span>↗</span></a>` : ""}
-        </div>
-        <div class="agent-reason">
-          <strong>🧠 ${t.whySelected}</strong><br>
-          ${getAgentReason(article)}
+        ${imageHTML}
+        <div class="news-card-content">
+          <div class="news-badges">
+            <span class="badge badge--category">${article.category.toUpperCase()}</span>
+            <span class="badge badge--positive">Net positive impact</span>
+          </div>
+          <h3 class="news-title">${title}</h3>
+          
+          <div class="ai-summary" style="
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: #fff8ed;
+            border-left: 3px solid #f97316;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: #78716c;
+            line-height: 1.5;
+          ">
+            <strong style="color: #ea580c;">🤖 ${t.aiSummary}:</strong> ${summary}
+          </div>
+          
+          <p class="tagline">${description}</p>
+          <div class="news-meta-row">
+            <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
+          </div>
+          <div class="news-footer">
+            <span class="source">${t.source}: ${sourceName}</span>
+            ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">${t.readMore} <span>↗</span></a>` : ""}
+          </div>
+          <div class="agent-reason">
+            <strong>🧠 ${t.whySelected}</strong><br>
+            ${getAgentReason(article)}
+          </div>
         </div>
       `;
 
@@ -5028,6 +5300,54 @@
 
     // Refresh weather every 30 minutes
     setInterval(loadWeather, 30 * 60 * 1000);
+
+    // ======================
+    // VIEW LAYOUT CONTROLS
+    // ======================
+    
+    let currentView = localStorage.getItem('preferredView') || 'list';
+
+    function changeView(view) {
+      currentView = view;
+      localStorage.setItem('preferredView', view);
+      
+      const newsList = document.getElementById('news-list');
+      const listBtn = document.getElementById('list-view-btn');
+      const gridBtn = document.getElementById('grid-view-btn');
+      const compactBtn = document.getElementById('compact-view-btn');
+      
+      // Remove all view classes
+      newsList.classList.remove('grid-view', 'compact-view');
+      listBtn.classList.remove('active');
+      gridBtn.classList.remove('active');
+      compactBtn.classList.remove('active');
+      
+      // Apply selected view
+      if (view === 'grid') {
+        newsList.classList.add('grid-view');
+        gridBtn.classList.add('active');
+      } else if (view === 'compact') {
+        newsList.classList.add('compact-view');
+        compactBtn.classList.add('active');
+      } else {
+        listBtn.classList.add('active');
+      }
+    }
+
+    // Initialize view on load
+    function initView() {
+      changeView(currentView);
+    }
+
+    // Make function globally accessible
+    window.changeView = changeView;
+
+    // Initialize view after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initView);
+    } else {
+      initView();
+    }
 
   </script>
 
