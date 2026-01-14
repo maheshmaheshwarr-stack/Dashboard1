@@ -1100,6 +1100,32 @@
 
       <aside class="column" aria-label="Summary and quick stats">
         <section class="sidebar-card">
+          <h3>📊 Your Reading Stats</h3>
+          <p style="font-size:0.78rem;color:#78716c;">Track your news consumption habits</p>
+          <ul class="sidebar-list">
+            <li>Articles read today<span class="pill-mini" id="articles-read-today">0</span></li>
+            <li>This week<span class="pill-mini" id="articles-read-week">0</span></li>
+            <li>Favorite category<span class="pill-mini" id="favorite-category">—</span></li>
+            <li>Reading streak<span class="pill-mini" id="reading-streak">0 days</span></li>
+          </ul>
+          <button onclick="showStatsModal()" style="
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #ffffff;
+            border: none;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+          " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            View Detailed Stats →
+          </button>
+        </section>
+
+        <section class="sidebar-card" style="margin-top: 10px;">
           <h3>Today's Mood</h3>
           <p>A quick snapshot of why today's feed is net-positive.</p>
           <ul class="sidebar-list">
@@ -1258,6 +1284,64 @@
         <li>Content is provided without warranties of any kind.</li>
       </ul>
       <p>By using this site, you accept these terms.</p>
+    </div>
+  </div>
+
+  <!-- Reading Stats Modal -->
+  <div class="modal" id="stats-modal">
+    <div class="modal-content" style="max-width: 640px;">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 style="display: flex; align-items: center; gap: 8px;">
+        📊 Your Reading Statistics
+      </h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 16px 0;">
+        <div style="padding: 16px; background: #fff8ed; border: 2px solid #fed7aa; border-radius: 12px; text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: #ea580c;" id="modal-total-read">0</div>
+          <div style="font-size: 0.75rem; color: #78716c; margin-top: 4px;">Total Articles Read</div>
+        </div>
+        <div style="padding: 16px; background: #fff8ed; border: 2px solid #fed7aa; border-radius: 12px; text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: #ea580c;" id="modal-week-read">0</div>
+          <div style="font-size: 0.75rem; color: #78716c; margin-top: 4px;">This Week</div>
+        </div>
+        <div style="padding: 16px; background: #fff8ed; border: 2px solid #fed7aa; border-radius: 12px; text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: #ea580c;" id="modal-streak">0</div>
+          <div style="font-size: 0.75rem; color: #78716c; margin-top: 4px;">Day Streak 🔥</div>
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <h3 style="font-size: 1rem; margin-bottom: 12px;">📚 Reading by Category</h3>
+        <div id="category-breakdown" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <h3 style="font-size: 1rem; margin-bottom: 12px;">📰 Reading by Source</h3>
+        <div id="source-breakdown" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+
+      <div style="margin: 20px 0; padding: 12px; background: #fff8ed; border-radius: 8px; border-left: 3px solid #f97316;">
+        <strong>💡 Insight:</strong> <span id="reading-insight">Keep reading to unlock insights!</span>
+      </div>
+
+      <button onclick="resetStats()" style="
+        width: 100%;
+        padding: 10px;
+        background: #fed7aa;
+        color: #9a3412;
+        border: 2px solid #fed7aa;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 12px;
+      ">
+        Reset Statistics
+      </button>
     </div>
   </div>
 
@@ -1525,6 +1609,7 @@
       card.className = "news-card";
       card.dataset.category = article.category;
       card.dataset.source = article.sourceKey;
+      card.dataset.articleId = article.url; // For tracking
 
       const published = article.publishedAt ? 
         new Date(article.publishedAt).toLocaleString("en-IN", {
@@ -1537,6 +1622,9 @@
       const sourceName = article.source?.name || "News source";
       const title = article.title || "Untitled story";
       const description = shortenText(article.description || "A positive development worth noting today.");
+      
+      // Generate AI summary (extract key points)
+      const summary = generateAISummary(article);
 
       card.innerHTML = `
         <div class="news-badges">
@@ -1544,13 +1632,27 @@
           <span class="badge badge--positive">Net positive impact</span>
         </div>
         <h3 class="news-title">${title}</h3>
+        
+        <div class="ai-summary" style="
+          margin: 8px 0;
+          padding: 10px 12px;
+          background: #fff8ed;
+          border-left: 3px solid #f97316;
+          border-radius: 8px;
+          font-size: 0.78rem;
+          color: #78716c;
+          line-height: 1.5;
+        ">
+          <strong style="color: #ea580c;">🤖 AI Summary:</strong> ${summary}
+        </div>
+        
         <p class="tagline">${description}</p>
         <div class="news-meta-row">
           <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
         </div>
         <div class="news-footer">
           <span class="source">Source: ${sourceName}</span>
-          ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer">Read <span>↗</span></a>` : ""}
+          ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">Read <span>↗</span></a>` : ""}
         </div>
         <div class="agent-reason">
           <strong>🧠 Why the AI selected this</strong><br>
@@ -1559,6 +1661,50 @@
       `;
 
       return card;
+    }
+
+    // Generate AI Summary from article content
+    function generateAISummary(article) {
+      const text = (article.description || article.content || "").toLowerCase();
+      const title = (article.title || "").toLowerCase();
+      
+      // Extract key information based on content
+      let summary = "";
+      
+      // Check for numbers/statistics
+      const numbers = text.match(/\d+%|\d+\s*(million|billion|thousand|crore|lakh)/gi);
+      if (numbers && numbers.length > 0) {
+        summary += `Key figures: ${numbers.slice(0, 2).join(", ")}. `;
+      }
+      
+      // Check for key actions/events
+      if (text.includes("launch") || text.includes("announce")) {
+        summary += "New announcement or launch. ";
+      } else if (text.includes("growth") || text.includes("increase") || text.includes("rise")) {
+        summary += "Positive growth trend reported. ";
+      } else if (text.includes("innovation") || text.includes("breakthrough")) {
+        summary += "Innovative development highlighted. ";
+      } else if (text.includes("policy") || text.includes("regulation")) {
+        summary += "Policy or regulatory update. ";
+      } else if (text.includes("win") || text.includes("victory") || text.includes("champion")) {
+        summary += "Achievement or victory reported. ";
+      }
+      
+      // Add category-specific context
+      const category = article.category;
+      if (category === "markets") {
+        summary += "Market movement with potential long-term implications.";
+      } else if (category === "ai" || category === "startups") {
+        summary += "Technology advancement with practical applications.";
+      } else if (category === "sports") {
+        summary += "Sports achievement showcasing human excellence.";
+      } else if (category === "politics") {
+        summary += "Policy development with societal impact.";
+      } else {
+        summary += "Development worth noting for its constructive impact.";
+      }
+      
+      return summary || "A positive development highlighting progress and constructive change.";
     }
 
     // ======================
@@ -2068,7 +2214,215 @@
       setupEventListeners();
       setupChatWidget();
       loadNews();
+      initReadingStats();
+      updateStatsDisplay();
     });
+
+    // ======================
+    // READING STATS TRACKING
+    // ======================
+    function initReadingStats() {
+      // Initialize stats in localStorage if not exists
+      if (!localStorage.getItem('readingStats')) {
+        const initialStats = {
+          totalRead: 0,
+          readToday: 0,
+          readThisWeek: 0,
+          lastReadDate: null,
+          streak: 0,
+          categoryBreakdown: {},
+          sourceBreakdown: {},
+          readArticles: []
+        };
+        localStorage.setItem('readingStats', JSON.stringify(initialStats));
+      }
+      
+      // Check if we need to reset daily/weekly counters
+      checkAndResetCounters();
+    }
+
+    function checkAndResetCounters() {
+      const stats = JSON.parse(localStorage.getItem('readingStats'));
+      const today = new Date().toDateString();
+      const lastRead = stats.lastReadDate ? new Date(stats.lastReadDate).toDateString() : null;
+      
+      // Reset daily counter if it's a new day
+      if (lastRead !== today) {
+        stats.readToday = 0;
+        
+        // Update streak
+        if (lastRead) {
+          const lastReadDate = new Date(lastRead);
+          const todayDate = new Date(today);
+          const diffDays = Math.floor((todayDate - lastReadDate) / (1000 * 60 * 60 * 24));
+          
+          if (diffDays === 1) {
+            // Consecutive day - increment streak
+            stats.streak += 1;
+          } else if (diffDays > 1) {
+            // Missed days - reset streak
+            stats.streak = 0;
+          }
+        }
+      }
+      
+      // Reset weekly counter if it's a new week
+      const weekStart = getWeekStart(new Date());
+      const lastWeekStart = stats.lastReadDate ? getWeekStart(new Date(stats.lastReadDate)) : null;
+      if (!lastWeekStart || weekStart.getTime() !== lastWeekStart.getTime()) {
+        stats.readThisWeek = 0;
+      }
+      
+      localStorage.setItem('readingStats', JSON.stringify(stats));
+    }
+
+    function getWeekStart(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day;
+      return new Date(d.setDate(diff));
+    }
+
+    function trackArticleRead(url, category, source) {
+      const stats = JSON.parse(localStorage.getItem('readingStats'));
+      
+      // Check if already read
+      if (stats.readArticles.includes(url)) {
+        return;
+      }
+      
+      // Update counters
+      stats.totalRead += 1;
+      stats.readToday += 1;
+      stats.readThisWeek += 1;
+      stats.lastReadDate = new Date().toISOString();
+      stats.readArticles.push(url);
+      
+      // Update category breakdown
+      stats.categoryBreakdown[category] = (stats.categoryBreakdown[category] || 0) + 1;
+      
+      // Update source breakdown
+      stats.sourceBreakdown[source] = (stats.sourceBreakdown[source] || 0) + 1;
+      
+      // Keep only last 100 articles to prevent storage bloat
+      if (stats.readArticles.length > 100) {
+        stats.readArticles = stats.readArticles.slice(-100);
+      }
+      
+      localStorage.setItem('readingStats', JSON.stringify(stats));
+      updateStatsDisplay();
+    }
+
+    function updateStatsDisplay() {
+      const stats = JSON.parse(localStorage.getItem('readingStats'));
+      
+      // Update sidebar stats
+      document.getElementById('articles-read-today').textContent = stats.readToday;
+      document.getElementById('articles-read-week').textContent = stats.readThisWeek;
+      document.getElementById('reading-streak').textContent = `${stats.streak} days`;
+      
+      // Find favorite category
+      const categories = Object.entries(stats.categoryBreakdown);
+      if (categories.length > 0) {
+        const favorite = categories.sort((a, b) => b[1] - a[1])[0];
+        document.getElementById('favorite-category').textContent = favorite[0].toUpperCase();
+      } else {
+        document.getElementById('favorite-category').textContent = '—';
+      }
+    }
+
+    function showStatsModal() {
+      const stats = JSON.parse(localStorage.getItem('readingStats'));
+      const modal = document.getElementById('stats-modal');
+      
+      // Update modal stats
+      document.getElementById('modal-total-read').textContent = stats.totalRead;
+      document.getElementById('modal-week-read').textContent = stats.readThisWeek;
+      document.getElementById('modal-streak').textContent = stats.streak;
+      
+      // Category breakdown
+      const categoryDiv = document.getElementById('category-breakdown');
+      const categories = Object.entries(stats.categoryBreakdown).sort((a, b) => b[1] - a[1]);
+      
+      if (categories.length > 0) {
+        categoryDiv.innerHTML = categories.map(([cat, count]) => {
+          const percentage = Math.round((count / stats.totalRead) * 100);
+          return `
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; font-size: 0.8rem; color: #292524; text-transform: capitalize;">${cat}</div>
+              <div style="flex: 2; background: #fed7aa; height: 8px; border-radius: 999px; overflow: hidden;">
+                <div style="width: ${percentage}%; height: 100%; background: linear-gradient(to right, #f97316, #ea580c);"></div>
+              </div>
+              <div style="font-size: 0.75rem; color: #78716c; min-width: 50px; text-align: right;">${count} (${percentage}%)</div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        categoryDiv.innerHTML = '<p style="font-size: 0.8rem; color: #78716c;">No articles read yet. Start reading to see your stats!</p>';
+      }
+      
+      // Source breakdown
+      const sourceDiv = document.getElementById('source-breakdown');
+      const sources = Object.entries(stats.sourceBreakdown).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      
+      if (sources.length > 0) {
+        sourceDiv.innerHTML = sources.map(([source, count]) => {
+          const percentage = Math.round((count / stats.totalRead) * 100);
+          return `
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; font-size: 0.8rem; color: #292524; text-transform: uppercase;">${source}</div>
+              <div style="flex: 2; background: #fed7aa; height: 8px; border-radius: 999px; overflow: hidden;">
+                <div style="width: ${percentage}%; height: 100%; background: linear-gradient(to right, #f97316, #ea580c);"></div>
+              </div>
+              <div style="font-size: 0.75rem; color: #78716c; min-width: 50px; text-align: right;">${count} (${percentage}%)</div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        sourceDiv.innerHTML = '<p style="font-size: 0.8rem; color: #78716c;">No articles read yet.</p>';
+      }
+      
+      // Generate insight
+      const insightEl = document.getElementById('reading-insight');
+      if (stats.totalRead === 0) {
+        insightEl.textContent = "Start reading to unlock personalized insights!";
+      } else if (stats.streak >= 7) {
+        insightEl.textContent = `Amazing! You've maintained a ${stats.streak}-day reading streak. Keep it up!`;
+      } else if (stats.readThisWeek >= 10) {
+        insightEl.textContent = "You're an active reader this week! Great job staying informed.";
+      } else if (categories.length > 0) {
+        const topCat = categories[0][0];
+        insightEl.textContent = `You seem to enjoy ${topCat} news. Try exploring other categories for diverse perspectives!`;
+      } else {
+        insightEl.textContent = "Keep reading to discover your reading patterns and preferences!";
+      }
+      
+      modal.classList.add('show');
+    }
+
+    function resetStats() {
+      if (confirm('Are you sure you want to reset all reading statistics? This cannot be undone.')) {
+        const initialStats = {
+          totalRead: 0,
+          readToday: 0,
+          readThisWeek: 0,
+          lastReadDate: null,
+          streak: 0,
+          categoryBreakdown: {},
+          sourceBreakdown: {},
+          readArticles: []
+        };
+        localStorage.setItem('readingStats', JSON.stringify(initialStats));
+        updateStatsDisplay();
+        document.getElementById('stats-modal').classList.remove('show');
+        alert('Statistics have been reset!');
+      }
+    }
+
+    // Make functions globally accessible
+    window.showStatsModal = showStatsModal;
+    window.resetStats = resetStats;
+    window.trackArticleRead = trackArticleRead;
   </script>
 </body>
 </html>
