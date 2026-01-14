@@ -20,18 +20,19 @@
 
   <style>
     :root {
-      --bg: #ffffff;
-      --bg-soft: #f9fafb;
-      --bg-softer: #f3f4f6;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.12);
-      --accent-strong: #22c55e;
-      --text-main: #111827;
-      --text-muted: #6b7280;
-      --card-border: #e5e7eb;
-      --chip-bg: #f3f4f6;
-      --shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
-      --radius-xl: 18px;
+      --bg: #fffbf5;
+      --bg-soft: #fff8ed;
+      --bg-softer: #ffedd5;
+      --accent: #f97316;
+      --accent-soft: rgba(249, 115, 22, 0.12);
+      --accent-strong: #ea580c;
+      --text-main: #292524;
+      --text-muted: #78716c;
+      --card-border: #fed7aa;
+      --chip-bg: #ffedd5;
+      --shadow-soft: 0 6px 16px rgba(194, 65, 12, 0.08);
+      --radius-xl: 20px;
+      --warm-gradient: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fecaca 100%);
     }
 
     * {
@@ -41,11 +42,11 @@
     }
 
     html, body {
-      background: #ffffff !important;
+      background: #fffbf5 !important;
     }
 
     body {
-      background: radial-gradient(circle at top, #f0fdf4 0%, #f8fafc 35%, #ffffff 70%) !important;
+      background: radial-gradient(circle at top, #fef3c7 0%, #fff8ed 35%, #fffbf5 70%) !important;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
       color: var(--text-main);
       min-height: 100vh;
@@ -65,8 +66,8 @@
       background: #ffffff;
       border-radius: 28px;
       padding: 20px 20px 24px;
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
-      border: 1px solid #e5e7eb;
+      box-shadow: 0 20px 40px rgba(194, 65, 12, 0.12);
+      border: 2px solid #fed7aa;
       position: relative;
     }
 
@@ -85,14 +86,14 @@
     }
 
     header {
-      background: linear-gradient(to bottom, #f0fdf4, #ffffff);
+      background: linear-gradient(to bottom, #fef3c7, #ffffff);
       display: flex;
       flex-direction: column;
       gap: 14px;
       margin-bottom: 0px;
       padding: 16px 20px; 
       align-items: flex-start;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 2px solid #fed7aa;
       padding-bottom: 8px;
     }
 
@@ -115,11 +116,11 @@
       width: 36px;
       height: 36px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #38bdf8, #22c55e);
+      background: radial-gradient(circle at 30% 20%, #f97316, #ea580c);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.3);
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.4);
       position: relative;
       overflow: hidden;
     }
@@ -169,16 +170,16 @@
     }
 
     .nav-link:hover {
-      border-color: #e5e7eb;
-      background: #f9fafb;
-      color: #111827;
+      border-color: #fed7aa;
+      background: #fff8ed;
+      color: #292524;
     }
 
     .nav-link.active {
-      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), #e0f2fe);
-      border-color: rgba(56, 189, 248, 0.9);
-      color: #0f172a;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      background: radial-gradient(circle at 0 0, rgba(249, 115, 22, 0.18), #ffedd5);
+      border-color: rgba(249, 115, 22, 0.9);
+      color: #292524;
+      box-shadow: 0 10px 24px rgba(194, 65, 12, 0.12);
     }
 
     .meta {
@@ -256,15 +257,15 @@
     }
 
     .filter-chip.active {
-      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), #e0f2fe);
-      color: #0f172a;
-      border-color: rgba(56, 189, 248, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(249, 115, 22, 0.18), #ffedd5);
+      color: #292524;
+      border-color: rgba(249, 115, 22, 0.9);
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 24px rgba(194, 65, 12, 0.12);
     }
 
     .filter-chip.active span.dot {
-      background: #38bdf8;
+      background: #f97316;
     }
 
     .sources-wrapper {
@@ -311,9 +312,9 @@
     }
 
     .sources-wrapper[open] .sources-summary {
-      border-color: rgba(56, 189, 248, 0.9);
-      background: #e0f2fe;
-      color: #0f172a;
+      border-color: rgba(249, 115, 22, 0.9);
+      background: #ffedd5;
+      color: #292524;
     }
 
     .sources-wrapper[open] .sources-caret {
@@ -373,7 +374,7 @@
 
     .news-card {
       border-radius: var(--radius-xl);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       background: var(--bg-soft);
       padding: 12px 13px;
       box-shadow: var(--shadow-soft);
@@ -385,8 +386,8 @@
 
     .news-card:hover {
       transform: translateY(-3px) translateZ(0);
-      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
-      border-color: rgba(56, 189, 248, 0.7);
+      box-shadow: 0 16px 32px rgba(194, 65, 12, 0.16);
+      border-color: rgba(249, 115, 22, 0.7);
     }
 
     .news-badges {
@@ -411,9 +412,9 @@
     }
 
     .badge--positive {
-      border-color: rgba(34, 197, 94, 0.9);
-      color: #15803d;
-      background: #dcfce7;
+      border-color: rgba(249, 115, 22, 0.9);
+      color: #9a3412;
+      background: #ffedd5;
     }
 
     .news-title {
@@ -437,7 +438,7 @@
 
     .tagline {
       font-size: 0.75rem;
-      color: #4f46e5;
+      color: #c2410c;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -459,7 +460,7 @@
     .read-link {
       font-size: 0.72rem;
       text-decoration: none;
-      color: var(--accent);
+      color: #ea580c;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -471,10 +472,10 @@
 
     .sidebar-card {
       border-radius: 20px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
+      border: 2px solid #fed7aa;
+      background: #fff8ed;
       padding: 12px 14px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 6px 16px rgba(194, 65, 12, 0.08);
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -484,7 +485,7 @@
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: #0f172a;
+      color: #292524;
     }
 
     .sidebar-card p {
@@ -511,10 +512,10 @@
     .pill-mini {
       border-radius: 999px;
       padding: 3px 7px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
+      border: 1px solid rgba(249, 115, 22, 0.8);
       font-size: 0.7rem;
-      color: #4f46e5;
-      background: #eef2ff;
+      color: #c2410c;
+      background: #ffedd5;
     }
 
     .positivity-meter {
@@ -547,7 +548,7 @@
       bottom: 0;
       width: 0%;
       border-radius: 999px;
-      background: linear-gradient(to right, #22c55e, #38bdf8);
+      background: linear-gradient(to right, #f97316, #ea580c);
       transition: width 0.4s ease-out;
     }
 
@@ -563,7 +564,7 @@
     }
 
     .input:focus, .textarea:focus {
-      border-color: #38bdf8;
+      border-color: #f97316;
     }
 
     .textarea {
@@ -579,8 +580,8 @@
       font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
-      background: #38bdf8;
-      color: #020617;
+      background: #f97316;
+      color: #ffffff;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -588,7 +589,7 @@
     }
 
     .btn-primary:hover {
-      background: #0ea5e9;
+      background: #ea580c;
     }
 
     .btn-primary:disabled {
@@ -612,13 +613,13 @@
     }
 
     .agent-note {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
+      background: #fff8ed;
+      border: 2px solid #fed7aa;
       border-radius: 12px;
       padding: 12px 14px;
       margin-bottom: 16px;
       font-size: 0.85rem;
-      color: #0f172a;
+      color: #292524;
       animation: agentFadeIn 0.5s ease-out;
     }
 
@@ -637,9 +638,9 @@
       margin-top: 10px;
       padding: 10px 12px;
       font-size: 0.8rem;
-      color: #1f2937;
-      background: #f0f9ff;
-      border-left: 3px solid #60a5fa;
+      color: #292524;
+      background: #fff8ed;
+      border-left: 3px solid #f97316;
       border-radius: 8px;
       line-height: 1.4;
     }
@@ -679,11 +680,11 @@
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: radial-gradient(circle at top left, #34d399, #0ea5e9);
+      background: radial-gradient(circle at top left, #f97316, #ea580c);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 12px 24px rgba(14,165,233,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
+      box-shadow: 0 12px 24px rgba(249, 115, 22, 0.35), inset 0 1px 0 rgba(255,255,255,0.35);
     }
 
     .agentic-logo-icon {
@@ -726,7 +727,7 @@
     }
 
     footer a {
-      color: #4f46e5;
+      color: #ea580c;
       text-decoration: none;
       cursor: pointer;
     }
@@ -756,10 +757,10 @@
 
     @keyframes pulse-glow {
       0%, 100% {
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
       }
       50% {
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
+        box-shadow: 0 4px 20px rgba(249, 115, 22, 0.5);
       }
     }
 
@@ -778,14 +779,14 @@
       right: 30px;
       z-index: 9998;
       padding: 14px 20px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
       color: #ffffff;
       border: none;
       border-radius: 999px;
       font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -795,12 +796,12 @@
 
     .floating-discussion-btn:hover {
       transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 12px 32px rgba(249, 115, 22, 0.5);
     }
 
     .floating-discussion-btn .badge-new {
       background: #ffffff;
-      color: #059669;
+      color: #ea580c;
       padding: 2px 6px;
       border-radius: 999px;
       font-size: 0.65rem;
@@ -909,13 +910,13 @@
     <div style="
       margin-top: 16px;
       padding: 12px 16px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
       animation: pulse-glow 2s ease-in-out infinite;
     ">
       <span style="font-size: 1.5rem;">🎉</span>
@@ -928,13 +929,13 @@
         ">NEW: Community Discussions!</div>
         <div style="
           font-size: 0.75rem;
-          color: #d1fae5;
+          color: #ffedd5;
         ">Join the conversation • Share insights • Collaborate with readers</div>
       </div>
       <button onclick="document.getElementById('discussion-section').scrollIntoView({behavior: 'smooth'})" style="
         padding: 8px 16px;
         background: #ffffff;
-        color: #059669;
+        color: #ea580c;
         border: none;
         border-radius: 999px;
         font-size: 0.8rem;
@@ -1140,7 +1141,7 @@
         <span class="footer-badge">📚 Curated, not addictive</span>
         <span class="footer-badge">🤖 AI, markets, sport &amp; more</span>
         <span class="footer-badge">🇮🇳 Built in India</span>
-        <span class="footer-badge" style="background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; border-color: #10b981;">💬 Community Discussions</span>
+        <span class="footer-badge" style="background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; border-color: #f97316;">💬 Community Discussions</span>
       </div>
 
       <div style="width:100%;text-align:center;margin-top:8px;font-size:0.7rem;color:#6b7280;">
@@ -1176,7 +1177,7 @@
         ">💬 Community Discussion</h2>
         <span style="
           padding: 4px 10px;
-          background: linear-gradient(135deg, #10b981, #059669);
+          background: linear-gradient(135deg, #f97316, #ea580c);
           color: #ffffff;
           font-size: 0.7rem;
           font-weight: 700;
