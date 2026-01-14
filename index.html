@@ -906,35 +906,56 @@
                   <div class="source-group-title">Institutions</div>
                   <button class="filter-chip source-chip" data-source="pib">PIB</button>
                   <button class="filter-chip source-chip" data-source="rbi">RBI</button>
-                  <button class="filter-chip source-chip" data-source="prs">PRS</button>
-                  <button class="filter-chip source-chip" data-source="wef">WEF</button>
+                  <button class="filter-chip source-chip" data-source="tbi">The Better India</button>
                 </div>
 
                 <div class="source-group">
-                  <div class="source-group-title">Markets</div>
-                  <button class="filter-chip source-chip" data-source="etmarkets">ET</button>
+                  <div class="source-group-title">Indian News</div>
+                  <button class="filter-chip source-chip" data-source="thehindu">The Hindu</button>
+                  <button class="filter-chip source-chip" data-source="hindustantimes">Hindustan Times</button>
+                  <button class="filter-chip source-chip" data-source="ndtv">NDTV</button>
+                  <button class="filter-chip source-chip" data-source="indiatoday">India Today</button>
+                  <button class="filter-chip source-chip" data-source="toi">Times of India</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">International News</div>
+                  <button class="filter-chip source-chip" data-source="bbc">BBC</button>
+                  <button class="filter-chip source-chip" data-source="reuters">Reuters</button>
+                  <button class="filter-chip source-chip" data-source="aljazeera">Al Jazeera</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Markets & Business</div>
+                  <button class="filter-chip source-chip" data-source="etmarkets">ET Markets</button>
                   <button class="filter-chip source-chip" data-source="livemint">Livemint</button>
                   <button class="filter-chip source-chip" data-source="moneycontrol">Moneycontrol</button>
+                  <button class="filter-chip source-chip" data-source="financialexpress">Financial Express</button>
+                  <button class="filter-chip source-chip" data-source="businessstandard">Business Standard</button>
                 </div>
 
                 <div class="source-group">
-                  <div class="source-group-title">Technology & AI</div>
+                  <div class="source-group-title">Technology & Startups</div>
                   <button class="filter-chip source-chip" data-source="ietech">IE Tech</button>
-                  <button class="filter-chip source-chip" data-source="mittech">MIT Tech</button>
-                  <button class="filter-chip source-chip" data-source="ieee">IEEE</button>
+                  <button class="filter-chip source-chip" data-source="techcrunch">TechCrunch</button>
+                  <button class="filter-chip source-chip" data-source="theverge">The Verge</button>
+                  <button class="filter-chip source-chip" data-source="wired">Wired</button>
+                  <button class="filter-chip source-chip" data-source="yourstory">YourStory</button>
                 </div>
 
                 <div class="source-group">
                   <div class="source-group-title">Automobiles</div>
-                  <button class="filter-chip source-chip" data-source="autocarindia">Autocar</button>
-                  <button class="filter-chip source-chip" data-source="rushlane">RushLane</button>
+                  <button class="filter-chip source-chip" data-source="autocarindia">Autocar India</button>
                 </div>
 
                 <div class="source-group">
                   <div class="source-group-title">Sports</div>
                   <button class="filter-chip source-chip" data-source="iesports">IE Sports</button>
-                  <button class="filter-chip source-chip" data-source="ndtvsports">NDTV</button>
-                  <button class="filter-chip source-chip" data-source="espncricinfo">ESPN</button>
+                </div>
+
+                <div class="source-group">
+                  <div class="source-group-title">Politics</div>
+                  <button class="filter-chip source-chip" data-source="politics">Indian Express Politics</button>
                 </div>
               </div>
             </div>
@@ -1184,16 +1205,39 @@
 
     // RSS Feed URLs
     const RSS_FEEDS = {
+      // Existing feeds
       tbi: "https://www.thebetterindia.com/feed/",
       pib: "https://pib.gov.in/rss.aspx",
       rbi: "https://rbi.org.in/Scripts/Rss.aspx",
-      tech: "https://indianexpress.com/section/technology/feed/",
+      ietech: "https://indianexpress.com/section/technology/feed/",
       politics: "https://indianexpress.com/section/india/politics/feed/",
-      sports: "https://indianexpress.com/section/sports/feed/",
-      markets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+      iesports: "https://indianexpress.com/section/sports/feed/",
+      etmarkets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
       livemint: "https://www.livemint.com/rss/markets",
       moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
-      autocar: "https://www.autocarindia.com/RSS/rss.ashx?type=all"
+      autocarindia: "https://www.autocarindia.com/RSS/rss.ashx?type=all",
+      
+      // Indian News Sources
+      thehindu: "https://www.thehindu.com/feeder/default.rss",
+      hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+      ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+      indiatoday: "https://www.indiatoday.in/rss/1206578",
+      toi: "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+      
+      // Technology & Startups
+      techcrunch: "https://techcrunch.com/feed/",
+      theverge: "https://www.theverge.com/rss/index.xml",
+      wired: "https://www.wired.com/feed/rss",
+      yourstory: "https://yourstory.com/feed",
+      
+      // International News
+      bbc: "http://feeds.bbci.co.uk/news/rss.xml",
+      reuters: "https://www.reutersagency.com/feed/",
+      aljazeera: "https://www.aljazeera.com/xml/rss/all.xml",
+      
+      // Business & Markets
+      financialexpress: "https://www.financialexpress.com/feed/",
+      businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss"
     };
 
     // ======================
