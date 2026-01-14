@@ -1950,48 +1950,6 @@
         — Peter Drucker
       </div>
     </div>
-    
-    <!-- NEW FEATURE ANNOUNCEMENT -->
-    <div style="
-      margin-top: 16px;
-      padding: 12px 16px;
-      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
-      animation: pulse-glow 2s ease-in-out infinite;
-    ">
-      <span style="font-size: 1.5rem;">📱</span>
-      <div style="flex: 1;">
-        <div style="
-          font-size: 0.9rem;
-          font-weight: 700;
-          color: #ffffff;
-          margin-bottom: 2px;
-        ">Install as Mobile App!</div>
-        <div style="
-          font-size: 0.75rem;
-          color: #ffedd5;
-        ">Works offline • Push notifications • No app store needed</div>
-      </div>
-      <button onclick="triggerInstall()" style="
-        padding: 8px 16px;
-        background: #ffffff;
-        color: #ea580c;
-        border: none;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s;
-        white-space: nowrap;
-      " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-        Install Now →
-      </button>
-    </div>
   </header>
 
   <div class="app-shell">
@@ -2277,16 +2235,35 @@
           </div>
         </div>
 
-        <div class="agent-note">
-          <div id="agent-note-text" class="agent-note-text">Loading AI curator insights...</div>
+        <!-- Simplified Agent Note -->
+        <div class="agent-note" style="padding: 10px 12px; margin-bottom: 10px;">
+          <div id="agent-note-text" class="agent-note-text" style="font-size: 0.8rem;">Loading AI curator insights...</div>
         </div>
 
-        <div class="agent-ignored">
-          <strong>🧠 What the AI intentionally ignored today</strong>
-          <ul id="ignored-list">
-            <li>Evaluating headlines...</li>
-          </ul>
-        </div>
+        <!-- Collapsible "What AI Ignored" Section -->
+        <details style="margin-bottom: 12px; cursor: pointer;">
+          <summary style="
+            padding: 8px 12px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            font-size: 0.8rem;
+            color: #6b7280;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          ">
+            <span style="font-size: 0.9rem;">🧠</span>
+            <span>What the AI filtered out</span>
+            <span style="margin-left: auto; font-size: 0.7rem;">▼</span>
+          </summary>
+          <div class="agent-ignored" style="margin-top: 8px; padding: 10px 12px;">
+            <ul id="ignored-list" style="font-size: 0.75rem;">
+              <li>Evaluating headlines...</li>
+            </ul>
+          </div>
+        </details>
 
         <div class="news-list" id="news-list">
           <p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>
