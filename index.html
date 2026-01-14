@@ -1487,7 +1487,95 @@
       </section>
 
       <aside class="column" aria-label="Summary and quick stats">
-        <section class="sidebar-card">
+        <!-- Support/Sponsor Card -->
+        <section class="sidebar-card" style="background: linear-gradient(135deg, #fef3c7, #fed7aa); border-color: #f97316;">
+          <h3 style="display: flex; align-items: center; gap: 8px;">
+            ☕ Support This Project
+          </h3>
+          <p style="font-size:0.78rem;color:#78716c;">Help keep this ad-free and growing!</p>
+          
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+            <a href="https://www.buymeacoffee.com/maheshramanathan" target="_blank" rel="noopener noreferrer" style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              padding: 10px;
+              background: #FFDD00;
+              color: #000000;
+              text-decoration: none;
+              border-radius: 999px;
+              font-weight: 600;
+              font-size: 0.85rem;
+              transition: transform 0.2s;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              <span>☕</span> Buy Me a Coffee
+            </a>
+            
+            <a href="https://github.com/sponsors/maheshmaheshwarr-stack" target="_blank" rel="noopener noreferrer" style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              padding: 10px;
+              background: #ea4aaa;
+              color: #ffffff;
+              text-decoration: none;
+              border-radius: 999px;
+              font-weight: 600;
+              font-size: 0.85rem;
+              transition: transform 0.2s;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              <span>💖</span> GitHub Sponsor
+            </a>
+          </div>
+          
+          <div style="margin-top: 12px; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 8px; font-size: 0.75rem; color: #78716c;">
+            <strong>Your support helps:</strong><br>
+            • Keep the site ad-free<br>
+            • Add more news sources<br>
+            • Improve AI features<br>
+            • Maintain servers
+          </div>
+        </section>
+
+        <!-- Premium Tier Teaser -->
+        <section class="sidebar-card" style="margin-top: 10px; background: linear-gradient(135deg, #292524, #44403c); color: #ffffff; border-color: #78716c;">
+          <h3 style="color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            ⭐ Premium Coming Soon
+          </h3>
+          <p style="font-size:0.78rem;color: #d6d3d1;">Unlock advanced features</p>
+          
+          <ul style="list-style: none; padding: 0; margin: 12px 0; font-size: 0.8rem; color: #e7e5e4;">
+            <li style="margin-bottom: 8px;">✨ Ad-free experience (forever)</li>
+            <li style="margin-bottom: 8px;">📊 Advanced analytics & insights</li>
+            <li style="margin-bottom: 8px;">🎯 Custom news filters</li>
+            <li style="margin-bottom: 8px;">🔔 Priority notifications</li>
+            <li style="margin-bottom: 8px;">🚀 Early access to features</li>
+            <li style="margin-bottom: 8px;">💾 Export reading history</li>
+          </ul>
+          
+          <button onclick="showPremiumModal()" style="
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #ffffff;
+            border: none;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+          " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            Join Waitlist →
+          </button>
+          
+          <div style="margin-top: 8px; text-align: center; font-size: 0.7rem; color: #a8a29e;">
+            Early bird: $2.99/month
+          </div>
+        </section>
+
+        <section class="sidebar-card" style="margin-top: 10px;">
           <h3>📊 Your Reading Stats</h3>
           <p style="font-size:0.78rem;color:#78716c;">Track your news consumption habits</p>
           <ul class="sidebar-list">
@@ -1600,6 +1688,138 @@
         <div class="infographic-grid" id="infographic-grid">
           <!-- Infographics will be populated here -->
         </div>
+      </div>
+    </section>
+
+    <!-- Recommended Resources (Affiliate Section) -->
+    <section class="multimedia-section" style="margin-top: 16px;">
+      <div style="margin-bottom: 16px;">
+        <h2 style="font-size: 1.3rem; font-weight: 600; color: #292524; margin-bottom: 6px;">
+          📚 Recommended Resources
+        </h2>
+        <p style="font-size: 0.85rem; color: #78716c;">
+          Curated books, courses, and tools to deepen your understanding
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <!-- Book Recommendations -->
+        <div style="
+          padding: 16px;
+          background: #ffffff;
+          border: 2px solid #fed7aa;
+          border-radius: 16px;
+          transition: transform 0.2s;
+        " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 1.5rem; margin-bottom: 8px;">📖</div>
+          <h3 style="font-size: 1rem; font-weight: 600; color: #292524; margin-bottom: 8px;">
+            The Signal and the Noise
+          </h3>
+          <p style="font-size: 0.8rem; color: #78716c; margin-bottom: 12px;">
+            By Nate Silver - Learn to distinguish signal from noise in data and news
+          </p>
+          <a href="https://www.amazon.com/Signal-Noise-Many-Predictions-Fail-but/dp/0143125087?&linkCode=ll1&tag=maheshnews-20" 
+             target="_blank" 
+             rel="noopener noreferrer sponsored"
+             style="
+               display: inline-block;
+               padding: 8px 16px;
+               background: #f97316;
+               color: #ffffff;
+               text-decoration: none;
+               border-radius: 999px;
+               font-size: 0.8rem;
+               font-weight: 600;
+               transition: background 0.2s;
+             "
+             onmouseover="this.style.background='#ea580c'"
+             onmouseout="this.style.background='#f97316'">
+            View on Amazon →
+          </a>
+          <div style="margin-top: 8px; font-size: 0.7rem; color: #a8a29e;">
+            Affiliate link - supports this project
+          </div>
+        </div>
+
+        <!-- Course Recommendation -->
+        <div style="
+          padding: 16px;
+          background: #ffffff;
+          border: 2px solid #fed7aa;
+          border-radius: 16px;
+          transition: transform 0.2s;
+        " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 1.5rem; margin-bottom: 8px;">🎓</div>
+          <h3 style="font-size: 1rem; font-weight: 600; color: #292524; margin-bottom: 8px;">
+            AI for Everyone
+          </h3>
+          <p style="font-size: 0.8rem; color: #78716c; margin-bottom: 12px;">
+            By Andrew Ng on Coursera - Understand AI without coding
+          </p>
+          <a href="https://www.coursera.org/learn/ai-for-everyone" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             style="
+               display: inline-block;
+               padding: 8px 16px;
+               background: #f97316;
+               color: #ffffff;
+               text-decoration: none;
+               border-radius: 999px;
+               font-size: 0.8rem;
+               font-weight: 600;
+               transition: background 0.2s;
+             "
+             onmouseover="this.style.background='#ea580c'"
+             onmouseout="this.style.background='#f97316'">
+            Enroll Free →
+          </a>
+          <div style="margin-top: 8px; font-size: 0.7rem; color: #a8a29e;">
+            Free to audit
+          </div>
+        </div>
+
+        <!-- Tool Recommendation -->
+        <div style="
+          padding: 16px;
+          background: #ffffff;
+          border: 2px solid #fed7aa;
+          border-radius: 16px;
+          transition: transform 0.2s;
+        " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 1.5rem; margin-bottom: 8px;">🛠️</div>
+          <h3 style="font-size: 1rem; font-weight: 600; color: #292524; margin-bottom: 8px;">
+            Feedly Pro
+          </h3>
+          <p style="font-size: 0.8rem; color: #78716c; margin-bottom: 12px;">
+            Advanced RSS reader with AI-powered insights and filtering
+          </p>
+          <a href="https://feedly.com/" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             style="
+               display: inline-block;
+               padding: 8px 16px;
+               background: #f97316;
+               color: #ffffff;
+               text-decoration: none;
+               border-radius: 999px;
+               font-size: 0.8rem;
+               font-weight: 600;
+               transition: background 0.2s;
+             "
+             onmouseover="this.style.background='#ea580c'"
+             onmouseout="this.style.background='#f97316'">
+            Try Feedly →
+          </a>
+          <div style="margin-top: 8px; font-size: 0.7rem; color: #a8a29e;">
+            Free plan available
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; padding: 12px; background: #fff8ed; border-radius: 8px; border-left: 3px solid #f97316; font-size: 0.8rem; color: #78716c;">
+        <strong>💡 Transparency Note:</strong> Some links above are affiliate links. If you purchase through them, we may earn a small commission at no extra cost to you. This helps keep the site ad-free and supports development. We only recommend products we genuinely believe in.
       </div>
     </section>
 
@@ -1728,6 +1948,109 @@
         <li>Content is provided without warranties of any kind.</li>
       </ul>
       <p>By using this site, you accept these terms.</p>
+    </div>
+  </div>
+
+  <!-- Premium Waitlist Modal -->
+  <div class="modal" id="premium-modal">
+    <div class="modal-content" style="max-width: 540px;">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+        <span>⭐</span> Premium Features Coming Soon
+      </h2>
+      
+      <div style="background: linear-gradient(135deg, #fef3c7, #fed7aa); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+        <div style="font-size: 2rem; font-weight: 700; color: #ea580c; margin-bottom: 4px;">
+          $2.99<span style="font-size: 1rem; font-weight: 400; color: #78716c;">/month</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #78716c;">
+          Early bird pricing - Lock in this rate forever!
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1rem; margin-bottom: 12px;">What You'll Get:</h3>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+          <li style="display: flex; align-items: start; gap: 10px;">
+            <span style="color: #f97316; font-size: 1.2rem;">✨</span>
+            <div>
+              <strong>Ad-Free Forever</strong><br>
+              <span style="font-size: 0.8rem; color: #78716c;">No ads, no distractions, pure news</span>
+            </div>
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px;">
+            <span style="color: #f97316; font-size: 1.2rem;">📊</span>
+            <div>
+              <strong>Advanced Analytics</strong><br>
+              <span style="font-size: 0.8rem; color: #78716c;">Deep insights into your reading habits</span>
+            </div>
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px;">
+            <span style="color: #f97316; font-size: 1.2rem;">🎯</span>
+            <div>
+              <strong>Custom Filters</strong><br>
+              <span style="font-size: 0.8rem; color: #78716c;">Create your own news categories</span>
+            </div>
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px;">
+            <span style="color: #f97316; font-size: 1.2rem;">🔔</span>
+            <div>
+              <strong>Priority Notifications</strong><br>
+              <span style="font-size: 0.8rem; color: #78716c;">Get alerts for topics you care about</span>
+            </div>
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px;">
+            <span style="color: #f97316; font-size: 1.2rem;">🚀</span>
+            <div>
+              <strong>Early Access</strong><br>
+              <span style="font-size: 0.8rem; color: #78716c;">Try new features before everyone else</span>
+            </div>
+          </li>
+          <li style="display: flex; align-items: start; gap: 10px;">
+            <span style="color: #f97316; font-size: 1.2rem;">💾</span>
+            <div>
+              <strong>Export Data</strong><br>
+              <span style="font-size: 0.8rem; color: #78716c;">Download your reading history anytime</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <form id="premium-waitlist-form" style="display: flex; flex-direction: column; gap: 12px;">
+        <input 
+          type="email" 
+          id="premium-email" 
+          placeholder="Enter your email" 
+          required
+          style="
+            padding: 12px;
+            border: 2px solid #fed7aa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+          "
+        />
+        <button type="submit" style="
+          padding: 12px;
+          background: linear-gradient(135deg, #f97316, #ea580c);
+          color: #ffffff;
+          border: none;
+          border-radius: 999px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: transform 0.2s;
+        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          Join Waitlist - Get Notified! 🎉
+        </button>
+      </form>
+
+      <div id="premium-waitlist-status" style="margin-top: 12px; text-align: center; font-size: 0.85rem;"></div>
+
+      <div style="margin-top: 16px; padding: 12px; background: #fff8ed; border-radius: 8px; font-size: 0.75rem; color: #78716c; text-align: center;">
+        <strong>100% Money-Back Guarantee</strong><br>
+        Not satisfied? Get a full refund within 30 days, no questions asked.
+      </div>
     </div>
   </div>
 
@@ -3148,6 +3471,38 @@
     window.showStatsModal = showStatsModal;
     window.resetStats = resetStats;
     window.trackArticleRead = trackArticleRead;
+
+    // ======================
+    // PREMIUM FEATURES
+    // ======================
+    window.showPremiumModal = function() {
+      document.getElementById('premium-modal').classList.add('show');
+    };
+
+    // Premium waitlist form
+    const premiumForm = document.getElementById('premium-waitlist-form');
+    if (premiumForm) {
+      premiumForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('premium-email').value;
+        const statusEl = document.getElementById('premium-waitlist-status');
+        
+        // Store in localStorage (in production, send to backend)
+        const waitlist = JSON.parse(localStorage.getItem('premiumWaitlist') || '[]');
+        if (!waitlist.includes(email)) {
+          waitlist.push(email);
+          localStorage.setItem('premiumWaitlist', JSON.stringify(waitlist));
+        }
+        
+        statusEl.innerHTML = '<span style="color: #15803d;">✅ You\'re on the list! We\'ll notify you when Premium launches.</span>';
+        document.getElementById('premium-email').value = '';
+        
+        setTimeout(() => {
+          document.getElementById('premium-modal').classList.remove('show');
+          statusEl.innerHTML = '';
+        }, 3000);
+      });
+    }
 
     // ======================
     // TRIGGER INSTALL FUNCTION
