@@ -3376,7 +3376,7 @@
         </div>
       </div>
       
-      <form id="chat-form" style="
+      <form id="chat-form" onsubmit="return false;" style="
         display:flex;
         padding:10px;
         gap:8px;
@@ -4250,39 +4250,46 @@
       });
 
       // Handle chat form submission
-      chatForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const question = chatInput.value.trim();
-        if (!question) return;
+      if (chatForm) {
+        chatForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const question = chatInput.value.trim();
+          if (!question) return false;
 
-        addChatBubble(question, "user");
-        chatInput.value = "";
+          try {
+            addChatBubble(question, "user");
+            chatInput.value = "";
 
-        // Add thinking indicator with Hope's personality
-        const chatMessages = document.getElementById("chat-messages");
-        const thinking = document.createElement("div");
-        thinking.style.alignSelf = "flex-start";
-        thinking.style.maxWidth = "85%";
-        thinking.style.padding = "10px 12px";
-        thinking.style.borderRadius = "16px";
-        thinking.style.background = "linear-gradient(135deg, #8b5cf6, #7c3aed)";
-        thinking.style.color = "#ffffff";
-        thinking.style.fontSize = "0.85rem";
-        thinking.innerHTML = "✨ Hope is thinking...";
-        chatMessages.appendChild(thinking);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Add thinking indicator with Hope's personality
+            const chatMessages = document.getElementById("chat-messages");
+            const thinking = document.createElement("div");
+            thinking.style.alignSelf = "flex-start";
+            thinking.style.maxWidth = "85%";
+            thinking.style.padding = "10px 12px";
+            thinking.style.borderRadius = "16px";
+            thinking.style.background = "linear-gradient(135deg, #8b5cf6, #7c3aed)";
+            thinking.style.color = "#ffffff";
+            thinking.style.fontSize = "0.85rem";
+            thinking.innerHTML = "✨ Hope is thinking...";
+            chatMessages.appendChild(thinking);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Simulate thinking delay
-        await new Promise(resolve => setTimeout(resolve, 800));
+            // Simulate thinking delay
+            await new Promise(resolve => setTimeout(resolve, 800));
 
-        thinking.remove();
-        const answer = hopeChatAnswer(question, state.allArticles);
-        addChatBubble(answer, "bot");
-      });
-    }      });
-      chatToggle.addEventListener("mouseleave", () => {
-        chatToggle.style.background = "none";
-      });
+            thinking.remove();
+            const answer = hopeChatAnswer(question, state.allArticles);
+            addChatBubble(answer, "bot");
+          } catch (error) {
+            console.error('Chat error:', error);
+            addChatBubble("Oops! Something went wrong. Please try again!", "bot");
+          }
+          
+          return false;
+        });
+      }
     }
 
     // ======================
