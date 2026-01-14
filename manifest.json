@@ -1,0 +1,32 @@
+{
+  "name": "Mahesh +ve Pill - AI News Dashboard",
+  "short_name": "Mahesh News",
+  "description": "AI-curated news that resists panic and highlights positivity",
+  "start_url": "/Dashboard1/",
+  "display": "standalone",
+  "background_color": "#fffbf5",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["news", "productivity"],
+  "screenshots": [
+    {
+      "src": "og-preview.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ]
+}

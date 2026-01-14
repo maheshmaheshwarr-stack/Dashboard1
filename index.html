@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mahesh +ve Pill — AI-Curated Signal Over Noise</title>
 
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#f97316" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Mahesh News" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
   <!-- Open Graph / LinkedIn Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Mahesh +ve Pill — AI-Curated Signal Over Noise" />
@@ -1084,9 +1092,181 @@
       background: #f3f4f6;
       color: #111827;
     }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white !important;
+        padding: 0;
+      }
+
+      .app-shell {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+      }
+
+      header, .filters-bar, .sources-wrapper, 
+      .floating-discussion-btn, #chat-widget,
+      .multimedia-section, footer, 
+      .agent-ignored, .feedback-form,
+      .sidebar-card, .nav-link, .pill-row,
+      .filter-chip, .btn-primary {
+        display: none !important;
+      }
+
+      .news-card {
+        page-break-inside: avoid;
+        border: 1px solid #ddd;
+        margin-bottom: 16px;
+      }
+
+      .news-title {
+        font-size: 1rem;
+        color: black;
+      }
+
+      .tagline, .agent-reason {
+        font-size: 0.85rem;
+        color: #333;
+      }
+
+      .read-link {
+        color: black;
+        text-decoration: underline;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .column:last-child {
+        display: none;
+      }
+    }
+
+    /* Text-to-Speech Controls */
+    .tts-controls {
+      position: fixed;
+      bottom: 180px;
+      right: 30px;
+      z-index: 9997;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tts-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tts-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4);
+    }
+
+    .tts-btn.active {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Keyboard Shortcuts Help */
+    .keyboard-shortcuts-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100001;
+    }
+
+    .keyboard-shortcuts-modal.show {
+      display: flex;
+    }
+
+    .shortcuts-content {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .shortcut-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #fed7aa;
+    }
+
+    .shortcut-key {
+      background: #ffedd5;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-weight: 600;
+      color: #ea580c;
+      border: 2px solid #fed7aa;
+    }
+
+    /* Accessibility Focus Styles */
+    *:focus-visible {
+      outline: 3px solid #f97316;
+      outline-offset: 2px;
+    }
+
+    /* Skip to Content Link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #f97316;
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 0 0 8px 0;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
   </style>
 </head>
 <body>
+  
+  <!-- Skip to Content Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Text-to-Speech Controls -->
+  <div class="tts-controls">
+    <button class="tts-btn" id="tts-play-btn" title="Read articles aloud (Alt+R)" aria-label="Read articles aloud">
+      🔊
+    </button>
+    <button class="tts-btn" id="tts-stop-btn" title="Stop reading (Alt+S)" aria-label="Stop reading" style="display:none;">
+      ⏹️
+    </button>
+  </div>
   
   <header class="agentic-header">
     <div class="agentic-brand">
@@ -1702,6 +1882,65 @@
           transition: background 0.2s;
         ">Send</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div class="keyboard-shortcuts-modal" id="shortcuts-modal">
+    <div class="shortcuts-content">
+      <h2 style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+        <span>⌨️ Keyboard Shortcuts</span>
+        <button class="modal-close" onclick="document.getElementById('shortcuts-modal').classList.remove('show')" aria-label="Close">&times;</button>
+      </h2>
+      
+      <div class="shortcut-item">
+        <span>Show this help</span>
+        <span class="shortcut-key">?</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Refresh news feed</span>
+        <span class="shortcut-key">R</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Read articles aloud</span>
+        <span class="shortcut-key">Alt + R</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Stop reading</span>
+        <span class="shortcut-key">Alt + S</span>
+      </div>
+      <div class="shortcut-item">
+        <span>View reading stats</span>
+        <span class="shortcut-key">S</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Jump to discussions</span>
+        <span class="shortcut-key">D</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Print page</span>
+        <span class="shortcut-key">Ctrl/Cmd + P</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Filter: All</span>
+        <span class="shortcut-key">1</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Filter: Current Affairs</span>
+        <span class="shortcut-key">2</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Filter: AI & Tech</span>
+        <span class="shortcut-key">3</span>
+      </div>
+      <div class="shortcut-item">
+        <span>Filter: Markets</span>
+        <span class="shortcut-key">4</span>
+      </div>
+      
+      <p style="margin-top: 16px; font-size: 0.8rem; color: #78716c; text-align: center;">
+        Press <strong>Esc</strong> to close this dialog
+      </p>
     </div>
   </div>
 
@@ -2894,6 +3133,253 @@
     window.showStatsModal = showStatsModal;
     window.resetStats = resetStats;
     window.trackArticleRead = trackArticleRead;
+
+    // ======================
+    // PWA INSTALLATION
+    // ======================
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show install prompt
+      showInstallPrompt();
+    });
+
+    function showInstallPrompt() {
+      // Create install banner
+      const banner = document.createElement('div');
+      banner.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 16px;
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      `;
+      
+      banner.innerHTML = `
+        <span style="font-size: 1.5rem;">📱</span>
+        <div style="flex: 1;">
+          <div style="font-weight: 600; margin-bottom: 4px;">Install App</div>
+          <div style="font-size: 0.8rem; opacity: 0.9;">Get offline access and notifications</div>
+        </div>
+        <button id="install-btn" style="
+          padding: 8px 16px;
+          background: white;
+          color: #ea580c;
+          border: none;
+          border-radius: 999px;
+          font-weight: 600;
+          cursor: pointer;
+        ">Install</button>
+        <button id="dismiss-install" style="
+          padding: 8px;
+          background: transparent;
+          color: white;
+          border: none;
+          cursor: pointer;
+          font-size: 1.2rem;
+        ">&times;</button>
+      `;
+      
+      document.body.appendChild(banner);
+      
+      document.getElementById('install-btn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log(`User response: ${outcome}`);
+          deferredPrompt = null;
+          banner.remove();
+        }
+      });
+      
+      document.getElementById('dismiss-install').addEventListener('click', () => {
+        banner.remove();
+      });
+    }
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/Dashboard1/service-worker.js')
+          .then((registration) => {
+            console.log('ServiceWorker registered:', registration);
+          })
+          .catch((error) => {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
+    }
+
+    // ======================
+    // TEXT-TO-SPEECH
+    // ======================
+    let speechSynthesis = window.speechSynthesis;
+    let currentUtterance = null;
+    let isReading = false;
+
+    document.getElementById('tts-play-btn').addEventListener('click', startReading);
+    document.getElementById('tts-stop-btn').addEventListener('click', stopReading);
+
+    function startReading() {
+      if (isReading) {
+        stopReading();
+        return;
+      }
+
+      // Get all visible article titles and descriptions
+      const articles = Array.from(document.querySelectorAll('.news-card:not(.hidden)'));
+      
+      if (articles.length === 0) {
+        alert('No articles to read');
+        return;
+      }
+
+      let textToRead = 'Reading today\'s positive news. ';
+      
+      articles.slice(0, 5).forEach((article, index) => {
+        const title = article.querySelector('.news-title')?.textContent || '';
+        const summary = article.querySelector('.ai-summary')?.textContent || '';
+        textToRead += `Article ${index + 1}. ${title}. ${summary}. `;
+      });
+
+      currentUtterance = new SpeechSynthesisUtterance(textToRead);
+      currentUtterance.rate = 0.9;
+      currentUtterance.pitch = 1;
+      currentUtterance.volume = 1;
+
+      currentUtterance.onstart = () => {
+        isReading = true;
+        document.getElementById('tts-play-btn').style.display = 'none';
+        document.getElementById('tts-stop-btn').style.display = 'flex';
+        document.getElementById('tts-stop-btn').classList.add('active');
+      };
+
+      currentUtterance.onend = () => {
+        stopReading();
+      };
+
+      speechSynthesis.speak(currentUtterance);
+    }
+
+    function stopReading() {
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+      }
+      isReading = false;
+      document.getElementById('tts-play-btn').style.display = 'flex';
+      document.getElementById('tts-stop-btn').style.display = 'none';
+      document.getElementById('tts-stop-btn').classList.remove('active');
+    }
+
+    // ======================
+    // KEYBOARD SHORTCUTS
+    // ======================
+    document.addEventListener('keydown', (e) => {
+      // Ignore if user is typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        return;
+      }
+
+      // Show shortcuts help
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        e.preventDefault();
+        document.getElementById('shortcuts-modal').classList.add('show');
+      }
+
+      // Close modals with Escape
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal, .keyboard-shortcuts-modal').forEach(modal => {
+          modal.classList.remove('show');
+        });
+      }
+
+      // Refresh feed
+      if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        document.getElementById('refresh-btn')?.click();
+      }
+
+      // Read aloud
+      if (e.altKey && (e.key === 'r' || e.key === 'R')) {
+        e.preventDefault();
+        startReading();
+      }
+
+      // Stop reading
+      if (e.altKey && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+        stopReading();
+      }
+
+      // View stats
+      if (e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        showStatsModal();
+      }
+
+      // Jump to discussions
+      if (e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        document.getElementById('discussion-section')?.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Filter shortcuts
+      const filterButtons = document.querySelectorAll('.filter-chip[data-filter]');
+      if (e.key >= '1' && e.key <= '9') {
+        const index = parseInt(e.key) - 1;
+        if (filterButtons[index]) {
+          e.preventDefault();
+          filterButtons[index].click();
+        }
+      }
+    });
+
+    // ======================
+    // PRINT FUNCTIONALITY
+    // ======================
+    // Add print button to header
+    const printBtn = document.createElement('button');
+    printBtn.innerHTML = '🖨️ Print';
+    printBtn.style.cssText = `
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #fed7aa;
+      background: transparent;
+      color: #78716c;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+    `;
+    printBtn.onmouseover = () => {
+      printBtn.style.borderColor = '#fed7aa';
+      printBtn.style.background = '#fff8ed';
+      printBtn.style.color = '#292524';
+    };
+    printBtn.onmouseout = () => {
+      printBtn.style.borderColor = '#fed7aa';
+      printBtn.style.background = 'transparent';
+      printBtn.style.color = '#78716c';
+    };
+    printBtn.onclick = () => window.print();
+    
+    // Add to nav
+    const nav = document.querySelector('nav');
+    if (nav) {
+      nav.appendChild(printBtn);
+    }
   </script>
 </body>
 </html>
