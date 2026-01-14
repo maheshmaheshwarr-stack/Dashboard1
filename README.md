@@ -4,11 +4,21 @@
 > An AI-powered news aggregator that prioritizes positivity, constructive content, and meaningful discussions over breaking noise.
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-orange?style=for-the-badge)](https://maheshmaheshwarr-stack.github.io/Dashboard1/)
+[![Install PWA](https://img.shields.io/badge/📱-Install_App-orange?style=for-the-badge)](https://maheshmaheshwarr-stack.github.io/Dashboard1/)
 [![GitHub Discussions](https://img.shields.io/badge/Join-Discussion-orange?style=for-the-badge)](https://github.com/maheshmaheshwarr-stack/Dashboard1/discussions)
 
 ---
 
 ## ✨ What's New
+
+### 📱 **Progressive Web App (PWA)**
+- **Install as mobile app** - No app store needed!
+- **Works offline** - Read cached articles without internet
+- **Push notifications** - Get alerts for important news (Android)
+- **Home screen icon** - Launch like a native app
+- **Faster loading** - Instant access with service workers
+
+[📖 Installation Guide](INSTALL_GUIDE.md) | [🎨 Create Icons](CREATE_ICONS.md)
 
 ### 🎨 **Fresh Warm & Friendly Design**
 - Complete visual overhaul with warm orange/amber color palette
