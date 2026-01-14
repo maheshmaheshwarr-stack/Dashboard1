@@ -2570,6 +2570,9 @@
       // Generate AI summary (extract key points)
       const summary = generateAISummary(article);
 
+      // Get translations
+      const t = translations[currentLanguage].ui;
+
       card.innerHTML = `
         <div class="news-badges">
           <span class="badge badge--category">${article.category.toUpperCase()}</span>
@@ -2587,7 +2590,7 @@
           color: #78716c;
           line-height: 1.5;
         ">
-          <strong style="color: #ea580c;">🤖 AI Summary:</strong> ${summary}
+          <strong style="color: #ea580c;">🤖 ${t.aiSummary}:</strong> ${summary}
         </div>
         
         <p class="tagline">${description}</p>
@@ -2595,11 +2598,11 @@
           <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
         </div>
         <div class="news-footer">
-          <span class="source">Source: ${sourceName}</span>
-          ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">Read <span>↗</span></a>` : ""}
+          <span class="source">${t.source}: ${sourceName}</span>
+          ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">${t.readMore} <span>↗</span></a>` : ""}
         </div>
         <div class="agent-reason">
-          <strong>🧠 Why the AI selected this</strong><br>
+          <strong>🧠 ${t.whySelected}</strong><br>
           ${getAgentReason(article)}
         </div>
       `;
@@ -3742,6 +3745,7 @@
       currentLanguage = lang;
       localStorage.setItem('preferredLanguage', lang);
       updateLanguageDisplay();
+      updateUITranslations();
       
       // Show loading indicator
       const newsList = document.getElementById('news-list');
@@ -3751,6 +3755,19 @@
 
       // Reload news with translation
       await loadNews();
+    }
+
+    function updateUITranslations() {
+      const t = translations[currentLanguage].ui;
+      
+      // Update section titles
+      const sectionTitle = document.querySelector('.section-title h2');
+      if (sectionTitle) {
+        sectionTitle.textContent = t.todaysHighlights;
+      }
+
+      // Note: News cards will be recreated by loadNews() which is called after this function
+      // So we don't need to update individual card elements here
     }
 
     // Translate text using browser's built-in translation or fallback
