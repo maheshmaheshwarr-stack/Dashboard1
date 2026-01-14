@@ -1413,7 +1413,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease;
       opacity: 0;
     }
 
@@ -1422,15 +1422,48 @@
     }
 
     .theme-ocean {
-      background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.05), transparent 70%);
+      background: linear-gradient(180deg, 
+        rgba(6, 182, 212, 0.12) 0%, 
+        rgba(14, 165, 233, 0.08) 50%,
+        rgba(3, 105, 161, 0.15) 100%);
     }
 
     .theme-forest {
-      background: radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.05), transparent 70%);
+      background: linear-gradient(180deg, 
+        rgba(34, 197, 94, 0.12) 0%, 
+        rgba(22, 163, 74, 0.08) 50%,
+        rgba(21, 128, 61, 0.15) 100%);
     }
 
     .theme-sunset {
-      background: radial-gradient(circle at 50% 50%, rgba(251, 146, 60, 0.05), transparent 70%);
+      background: linear-gradient(180deg, 
+        rgba(251, 146, 60, 0.15) 0%, 
+        rgba(249, 115, 22, 0.1) 50%,
+        rgba(234, 88, 12, 0.18) 100%);
+    }
+
+    /* Theme notification */
+    .theme-notification {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+      z-index: 10001;
+      opacity: 0;
+      transform: translateX(100px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .theme-notification.show {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     /* Zen Mode */
@@ -2053,6 +2086,7 @@
   <div class="theme-overlay theme-ocean" id="theme-ocean"></div>
   <div class="theme-overlay theme-forest" id="theme-forest"></div>
   <div class="theme-overlay theme-sunset" id="theme-sunset"></div>
+  <div class="theme-notification" id="theme-notification"></div>
 
   <!-- Breathing Exercise Modal -->
   <div class="breathing-modal" id="breathing-modal">
@@ -6133,6 +6167,22 @@
       if (currentTheme !== 'default') {
         document.getElementById(`theme-${currentTheme}`).classList.add('active');
       }
+      
+      // Show notification
+      const themeNames = {
+        'default': 'Default Theme',
+        'ocean': '🌊 Ocean Theme',
+        'forest': '🌲 Forest Theme',
+        'sunset': '🌅 Sunset Theme'
+      };
+      
+      const notification = document.getElementById('theme-notification');
+      notification.textContent = themeNames[currentTheme];
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 2000);
       
       localStorage.setItem('preferredTheme', currentTheme);
     }
