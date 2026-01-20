@@ -7547,174 +7547,28 @@
     document.head.appendChild(style);
 
     // ======================
-    // NUCLEAR TESTIMONIALS REMOVAL
+    // SAFE TESTIMONIALS REMOVAL
     // ======================
-    function nuclearRemoveTestimonials() {
-      console.log('NUCLEAR: Removing all testimonials...');
+    function safeRemoveTestimonials() {
+      console.log('Safely removing testimonials...');
       
-      // Method 1: Remove by exact text content
-      document.querySelectorAll('*').forEach(element => {
-        const text = element.textContent || '';
-        if (text.includes('What People Say') || 
-            text.includes('Testimonials from LinkedIn') ||
-            text.includes('John Doe') ||
-            text.includes('Sarah Kumar') ||
-            text.includes('Alex Patel')) {
-          
-          // Find the sidebar-card parent
-          let current = element;
-          while (current && current !== document.body) {
-            if (current.classList && current.classList.contains('sidebar-card')) {
-              console.log('NUCLEAR: Removing sidebar-card with testimonials:', current);
-              current.remove();
-              return;
-            }
-            current = current.parentElement;
-          }
-          
-          // If no sidebar-card parent, remove the element itself
-          console.log('NUCLEAR: Removing testimonials element:', element);
-          element.remove();
-        }
-      });
-
-      // Method 2: Remove all sidebar-card sections that contain testimonials
+      // Only target very specific testimonials content
       document.querySelectorAll('.sidebar-card').forEach(card => {
-        const html = card.innerHTML || '';
         const text = card.textContent || '';
-        if (html.includes('What People Say') || 
-            html.includes('Testimonials') ||
-            text.includes('John Doe') ||
-            text.includes('Sarah Kumar') ||
+        // Only remove if it contains ALL these specific testimonials indicators
+        if (text.includes('What People Say') && 
+            text.includes('John Doe') && 
+            text.includes('Sarah Kumar') && 
             text.includes('Alex Patel')) {
-          console.log('NUCLEAR: Removing testimonials sidebar-card:', card);
-          card.remove();
-        }
-      });
-
-      // Method 3: Remove by HTML comments
-      const walker = document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_COMMENT,
-        null,
-        false
-      );
-      
-      let comment;
-      const commentsToRemove = [];
-      while (comment = walker.nextNode()) {
-        if (comment.textContent.includes('Testimonials Section')) {
-          commentsToRemove.push(comment);
-        }
-      }
-      
-      commentsToRemove.forEach(comment => {
-        let parent = comment.parentElement;
-        while (parent && parent !== document.body) {
-          if (parent.classList && parent.classList.contains('sidebar-card')) {
-            console.log('NUCLEAR: Removing testimonials section by comment:', parent);
-            parent.remove();
-            break;
-          }
-          parent = parent.parentElement;
-        }
-      });
-
-      // Method 4: Remove by specific styling patterns
-      document.querySelectorAll('div[style*="background: rgba(255,255,255,0.9)"]').forEach(div => {
-        const text = div.textContent || '';
-        if (text.includes('John Doe') || text.includes('Sarah Kumar') || text.includes('Alex Patel')) {
-          let parent = div;
-          while (parent && parent !== document.body) {
-            if (parent.classList && parent.classList.contains('sidebar-card')) {
-              console.log('NUCLEAR: Removing testimonials by styling:', parent);
-              parent.remove();
-              return;
-            }
-            parent = parent.parentElement;
-          }
-        }
-      });
-
-      // Method 5: Brute force - hide everything that looks like testimonials
-      document.querySelectorAll('*').forEach(element => {
-        const text = (element.textContent || '').toLowerCase();
-        if ((text.includes('product manager') && text.includes('john')) ||
-            (text.includes('tech entrepreneur') && text.includes('sarah')) ||
-            (text.includes('data scientist') && text.includes('alex'))) {
-          element.style.display = 'none';
-          element.style.visibility = 'hidden';
-          element.style.opacity = '0';
-          element.style.height = '0';
-          element.style.overflow = 'hidden';
-          console.log('NUCLEAR: Hiding testimonials element:', element);
+          console.log('Removing testimonials sidebar-card:', card);
+          card.style.display = 'none';
         }
       });
     }
 
-    // Run nuclear removal immediately
-    nuclearRemoveTestimonials();
-    
-    // Run it multiple times aggressively
-    for (let i = 0; i < 10; i++) {
-      setTimeout(nuclearRemoveTestimonials, i * 200);
-    }
-
-    // Run on all possible events
-    document.addEventListener('DOMContentLoaded', nuclearRemoveTestimonials);
-    window.addEventListener('load', nuclearRemoveTestimonials);
-    document.addEventListener('readystatechange', nuclearRemoveTestimonials);
-
-    // Monitor and remove continuously
-    const aggressiveObserver = new MutationObserver(() => {
-      nuclearRemoveTestimonials();
-    });
-    aggressiveObserver.observe(document.body, { 
-      childList: true, 
-      subtree: true, 
-      attributes: true,
-      attributeOldValue: true,
-      characterData: true,
-      characterDataOldValue: true
-    });
-
-    // Add super aggressive CSS
-    const nuclearCSS = `
-      /* Hide testimonials by content */
-      .sidebar-card:has(*:contains("What People Say")),
-      .sidebar-card:has(*:contains("John Doe")),
-      .sidebar-card:has(*:contains("Sarah Kumar")),
-      .sidebar-card:has(*:contains("Alex Patel")),
-      *:contains("What People Say"),
-      *:contains("Testimonials from LinkedIn"),
-      *:contains("John Doe"),
-      *:contains("Sarah Kumar"),
-      *:contains("Alex Patel"),
-      *:contains("exactly what I needed"),
-      *:contains("signal over sensationalism"),
-      *:contains("positivity meter is genius") {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        overflow: hidden !important;
-        position: absolute !important;
-        left: -9999px !important;
-        top: -9999px !important;
-      }
-      
-      /* Hide by partial text matches */
-      div[style*="background: rgba(255,255,255,0.9)"]:has(*:contains("John")),
-      div[style*="background: rgba(255,255,255,0.9)"]:has(*:contains("Sarah")),
-      div[style*="background: rgba(255,255,255,0.9)"]:has(*:contains("Alex")) {
-        display: none !important;
-      }
-    `;
-    
-    const nuclearStyle = document.createElement('style');
-    nuclearStyle.textContent = nuclearCSS;
-    document.head.appendChild(nuclearStyle);
+    // Run safely after page loads
+    document.addEventListener('DOMContentLoaded', safeRemoveTestimonials);
+    window.addEventListener('load', safeRemoveTestimonials);
   </script>
 
 </body>
