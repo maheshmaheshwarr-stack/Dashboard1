@@ -198,6 +198,109 @@
       box-shadow: 0 10px 24px rgba(194, 65, 12, 0.12);
     }
 
+    /* Authentication Buttons */
+    .auth-section {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .auth-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .auth-btn:hover {
+      color: #f97316;
+      border-color: #fed7aa;
+      background: #fff8ed;
+    }
+
+    .login-btn {
+      color: #6366f1;
+      border-color: #c7d2fe;
+    }
+
+    .login-btn:hover {
+      background: #eef2ff;
+      border-color: #a5b4fc;
+    }
+
+    .signup-btn {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border-color: #6366f1;
+    }
+
+    .signup-btn:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    /* User Profile Dropdown */
+    .user-profile {
+      position: relative;
+    }
+
+    .profile-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #64748b;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .profile-btn:hover {
+      color: #f97316;
+      border-color: #fed7aa;
+      background: #fff8ed;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 8px 0;
+      min-width: 160px;
+      display: none;
+      z-index: 1000;
+    }
+
+    .profile-dropdown a {
+      display: block;
+      padding: 8px 16px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: background 0.2s ease;
+    }
+
+    .profile-dropdown a:hover {
+      background: #f8fafc;
+      color: #f97316;
+    }
+
     .meta {
       display: flex;
       flex-direction: column;
@@ -2217,6 +2320,31 @@
         <nav aria-label="Main navigation">
           <a class="nav-link active" href="index.html">News Feed</a>
           <a class="nav-link" href="about.html">About</a>
+          
+          <!-- User Authentication -->
+          <div class="auth-section" id="auth-section">
+            <button class="auth-btn login-btn" id="login-btn" onclick="showLoginModal()">
+              👤 Login
+            </button>
+            <button class="auth-btn signup-btn" id="signup-btn" onclick="showSignupModal()">
+              ✨ Sign Up
+            </button>
+          </div>
+          
+          <!-- User Profile (hidden by default) -->
+          <div class="user-profile" id="user-profile" style="display: none;">
+            <button class="profile-btn" id="profile-btn" onclick="toggleProfileMenu()">
+              <span id="user-avatar">👤</span>
+              <span id="user-name">User</span>
+              <span style="font-size: 0.7rem;">▼</span>
+            </button>
+            <div class="profile-dropdown" id="profile-dropdown">
+              <a href="#" onclick="showProfileSettings()">⚙️ Settings</a>
+              <a href="#" onclick="showReadingStats()">📊 My Stats</a>
+              <a href="#" onclick="showPreferences()">🎯 Preferences</a>
+              <a href="#" onclick="logout()">🚪 Logout</a>
+            </div>
+          </div>
           
           <!-- Language Selector -->
           <div class="language-selector">
@@ -7033,6 +7161,718 @@
     window.showHopeScoreModal = showHopeScoreModal;
     window.showActionModal = showActionModal;
 
+  </script>
+
+  <!-- Authentication Modals -->
+  <div id="auth-modal" class="auth-modal" style="display: none;">
+    <div class="auth-modal-content">
+      <span class="auth-modal-close" onclick="closeAuthModal()">&times;</span>
+      
+      <!-- Login Form -->
+      <div id="login-form" class="auth-form">
+        <h2>Welcome Back! 👋</h2>
+        <p>Sign in to get personalized news and track your reading habits</p>
+        
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-email">Email or Username</label>
+            <input type="text" id="login-email" required placeholder="Enter your email or username">
+          </div>
+          
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" required placeholder="Enter your password">
+          </div>
+          
+          <button type="submit" class="auth-submit-btn" id="login-submit-btn">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-loading" style="display: none;">Signing in...</span>
+          </button>
+        </form>
+        
+        <div class="auth-switch">
+          Don't have an account? 
+          <a href="#" onclick="switchToSignup()">Sign up here</a>
+        </div>
+      </div>
+      
+      <!-- Signup Form -->
+      <div id="signup-form" class="auth-form" style="display: none;">
+        <h2>Join Dashboard1! ✨</h2>
+        <p>Create your account to get personalized news and wellness features</p>
+        
+        <form onsubmit="handleSignup(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-firstname">First Name</label>
+              <input type="text" id="signup-firstname" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label for="signup-lastname">Last Name</label>
+              <input type="text" id="signup-lastname" placeholder="Doe">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <input type="text" id="signup-username" required placeholder="Choose a username">
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" required placeholder="your@email.com">
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" required placeholder="Create a secure password" minlength="6">
+          </div>
+          
+          <button type="submit" class="auth-submit-btn" id="signup-submit-btn">
+            <span class="btn-text">Create Account</span>
+            <span class="btn-loading" style="display: none;">Creating account...</span>
+          </button>
+        </form>
+        
+        <div class="auth-switch">
+          Already have an account? 
+          <a href="#" onclick="switchToLogin()">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Preferences Modal -->
+  <div id="preferences-modal" class="auth-modal" style="display: none;">
+    <div class="auth-modal-content">
+      <span class="auth-modal-close" onclick="closePreferencesModal()">&times;</span>
+      
+      <div class="preferences-form">
+        <h2>📰 News Preferences</h2>
+        <p>Customize your news feed for the best experience</p>
+        
+        <div class="form-group">
+          <label>Favorite Categories</label>
+          <div class="category-grid">
+            <label class="category-checkbox">
+              <input type="checkbox" value="technology" checked>
+              <span>💻 Technology</span>
+            </label>
+            <label class="category-checkbox">
+              <input type="checkbox" value="business">
+              <span>💼 Business</span>
+            </label>
+            <label class="category-checkbox">
+              <input type="checkbox" value="science">
+              <span>🔬 Science</span>
+            </label>
+            <label class="category-checkbox">
+              <input type="checkbox" value="health">
+              <span>🏥 Health</span>
+            </label>
+            <label class="category-checkbox">
+              <input type="checkbox" value="ai">
+              <span>🤖 AI & ML</span>
+            </label>
+            <label class="category-checkbox">
+              <input type="checkbox" value="startups">
+              <span>🚀 Startups</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="positivity-slider">Positivity Filter</label>
+          <input type="range" id="positivity-slider" min="-1" max="1" step="0.1" value="0.1">
+          <div class="slider-labels">
+            <span>All News</span>
+            <span>Balanced</span>
+            <span>Positive Only</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="digest-frequency">News Digest</label>
+          <select id="digest-frequency">
+            <option value="realtime">Real-time updates</option>
+            <option value="hourly">Hourly digest</option>
+            <option value="daily" selected>Daily digest</option>
+            <option value="weekly">Weekly summary</option>
+          </select>
+        </div>
+        
+        <button onclick="savePreferences()" class="auth-submit-btn">
+          Save Preferences
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Authentication Modal Styles */
+    .auth-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 400px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .auth-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #64748b;
+      transition: color 0.2s ease;
+    }
+
+    .auth-modal-close:hover {
+      color: #f97316;
+    }
+
+    .auth-form h2 {
+      margin-bottom: 8px;
+      color: #1e293b;
+      font-size: 1.5rem;
+    }
+
+    .auth-form p {
+      margin-bottom: 24px;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: #374151;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 16px;
+    }
+
+    .auth-submit-btn:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .auth-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .auth-switch {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .auth-switch a {
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .auth-switch a:hover {
+      text-decoration: underline;
+    }
+
+    /* Category Selection */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .category-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-checkbox:hover {
+      border-color: #6366f1;
+      background: #f8fafc;
+    }
+
+    .category-checkbox input:checked + span {
+      color: #6366f1;
+      font-weight: 600;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .auth-modal-content {
+        padding: 24px;
+        margin: 10px;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <script>
+    // Authentication State
+    let currentUser = null;
+    let authToken = localStorage.getItem('dashboard1_token');
+
+    // API Configuration
+    const API_BASE_URL = 'http://localhost:5000/api'; // Change to your backend URL
+
+    // Initialize authentication state
+    document.addEventListener('DOMContentLoaded', function() {
+      if (authToken) {
+        verifyToken();
+      }
+    });
+
+    // Show/Hide Authentication Modals
+    function showLoginModal() {
+      document.getElementById('auth-modal').style.display = 'flex';
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('signup-form').style.display = 'none';
+    }
+
+    function showSignupModal() {
+      document.getElementById('auth-modal').style.display = 'flex';
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('signup-form').style.display = 'block';
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').style.display = 'none';
+    }
+
+    function switchToSignup() {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('signup-form').style.display = 'block';
+    }
+
+    function switchToLogin() {
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('login-form').style.display = 'block';
+    }
+
+    // Handle Login
+    async function handleLogin(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('login-submit-btn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnLoading = submitBtn.querySelector('.btn-loading');
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'inline';
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            login: document.getElementById('login-email').value,
+            password: document.getElementById('login-password').value
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Store token and user data
+          localStorage.setItem('dashboard1_token', data.data.token);
+          currentUser = data.data.user;
+          
+          // Update UI
+          updateAuthUI();
+          closeAuthModal();
+          
+          // Show success message
+          showNotification('Welcome back! 🎉', 'success');
+          
+          // Refresh news feed with personalized content
+          refreshNewsFeed();
+        } else {
+          showNotification(data.message || 'Login failed', 'error');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showNotification('Connection error. Please try again.', 'error');
+      } finally {
+        // Reset button state
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+      }
+    }
+
+    // Handle Signup
+    async function handleSignup(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('signup-submit-btn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnLoading = submitBtn.querySelector('.btn-loading');
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'inline';
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: document.getElementById('signup-username').value,
+            email: document.getElementById('signup-email').value,
+            password: document.getElementById('signup-password').value,
+            firstName: document.getElementById('signup-firstname').value,
+            lastName: document.getElementById('signup-lastname').value
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Store token and user data
+          localStorage.setItem('dashboard1_token', data.data.token);
+          currentUser = data.data.user;
+          
+          // Update UI
+          updateAuthUI();
+          closeAuthModal();
+          
+          // Show success message
+          showNotification('Account created successfully! 🎉', 'success');
+          
+          // Show preferences modal for new users
+          setTimeout(() => {
+            showPreferencesModal();
+          }, 1000);
+        } else {
+          showNotification(data.message || 'Signup failed', 'error');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        showNotification('Connection error. Please try again.', 'error');
+      } finally {
+        // Reset button state
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+      }
+    }
+
+    // Verify Token
+    async function verifyToken() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          currentUser = data.data.user;
+          updateAuthUI();
+        } else {
+          // Token invalid, clear it
+          localStorage.removeItem('dashboard1_token');
+          authToken = null;
+        }
+      } catch (error) {
+        console.error('Token verification error:', error);
+        localStorage.removeItem('dashboard1_token');
+        authToken = null;
+      }
+    }
+
+    // Update Authentication UI
+    function updateAuthUI() {
+      const authSection = document.getElementById('auth-section');
+      const userProfile = document.getElementById('user-profile');
+      
+      if (currentUser) {
+        // Hide auth buttons, show user profile
+        authSection.style.display = 'none';
+        userProfile.style.display = 'block';
+        
+        // Update user info
+        document.getElementById('user-name').textContent = currentUser.username;
+        
+        // Update avatar if available
+        if (currentUser.profile && currentUser.profile.avatar) {
+          document.getElementById('user-avatar').textContent = currentUser.profile.avatar;
+        }
+      } else {
+        // Show auth buttons, hide user profile
+        authSection.style.display = 'flex';
+        userProfile.style.display = 'none';
+      }
+    }
+
+    // Profile Menu Toggle
+    function toggleProfileMenu() {
+      const dropdown = document.getElementById('profile-dropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Close profile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const profileBtn = document.getElementById('profile-btn');
+      const dropdown = document.getElementById('profile-dropdown');
+      
+      if (!profileBtn.contains(event.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+
+    // Logout
+    function logout() {
+      localStorage.removeItem('dashboard1_token');
+      authToken = null;
+      currentUser = null;
+      updateAuthUI();
+      showNotification('Logged out successfully', 'info');
+      refreshNewsFeed();
+    }
+
+    // Show Preferences Modal
+    function showPreferencesModal() {
+      document.getElementById('preferences-modal').style.display = 'flex';
+      
+      // Load current preferences if user is logged in
+      if (currentUser && currentUser.preferences) {
+        loadUserPreferences();
+      }
+    }
+
+    function closePreferencesModal() {
+      document.getElementById('preferences-modal').style.display = 'none';
+    }
+
+    // Load User Preferences
+    function loadUserPreferences() {
+      const prefs = currentUser.preferences;
+      
+      // Set category checkboxes
+      const categoryCheckboxes = document.querySelectorAll('.category-checkbox input');
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = prefs.categories.includes(checkbox.value);
+      });
+      
+      // Set positivity slider
+      document.getElementById('positivity-slider').value = prefs.positivityThreshold || 0.1;
+      
+      // Set digest frequency
+      document.getElementById('digest-frequency').value = prefs.digestFrequency || 'daily';
+    }
+
+    // Save Preferences
+    async function savePreferences() {
+      if (!currentUser) return;
+      
+      const categories = Array.from(document.querySelectorAll('.category-checkbox input:checked'))
+        .map(cb => cb.value);
+      
+      const preferences = {
+        categories: categories,
+        positivityThreshold: parseFloat(document.getElementById('positivity-slider').value),
+        digestFrequency: document.getElementById('digest-frequency').value
+      };
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/preferences`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify(preferences)
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          currentUser.preferences = data.data.preferences;
+          closePreferencesModal();
+          showNotification('Preferences saved! 🎯', 'success');
+          refreshNewsFeed();
+        } else {
+          showNotification('Failed to save preferences', 'error');
+        }
+      } catch (error) {
+        console.error('Save preferences error:', error);
+        showNotification('Connection error', 'error');
+      }
+    }
+
+    // Show Profile Settings
+    function showProfileSettings() {
+      showPreferencesModal();
+    }
+
+    // Show Reading Stats
+    function showReadingStats() {
+      if (currentUser && currentUser.analytics) {
+        const stats = currentUser.analytics;
+        alert(`📊 Your Reading Stats:\n\nTotal Articles Read: ${stats.totalReads}\nReading Time: ${Math.round(stats.readingTime / 60)} minutes\nFavorite Categories: ${stats.favoriteCategories.join(', ')}`);
+      }
+    }
+
+    // Show Preferences
+    function showPreferences() {
+      showPreferencesModal();
+    }
+
+    // Refresh News Feed
+    function refreshNewsFeed() {
+      // This would trigger a refresh of the news feed with user preferences
+      // For now, just reload the page
+      location.reload();
+    }
+
+    // Show Notification
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 10001;
+        animation: slideIn 0.3s ease;
+      `;
+      
+      // Set background color based on type
+      switch (type) {
+        case 'success':
+          notification.style.background = '#10b981';
+          break;
+        case 'error':
+          notification.style.background = '#ef4444';
+          break;
+        case 'info':
+        default:
+          notification.style.background = '#6366f1';
+          break;
+      }
+      
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // Add slide-in animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 
 </body>
