@@ -13,9 +13,13 @@ const newsRoutes = require('./routes/news');
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
 const analyticsRoutes = require('./routes/analytics');
+const aiRoutes = require('./routes/ai');
 
 // Import middleware
 const { errorHandler } = require('./middleware/errorHandler');
+
+// Import scheduler
+const SchedulerService = require('./services/scheduler');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -71,6 +75,7 @@ app.use('/api/news', newsRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/ai', aiRoutes);
 
 // API Documentation endpoint
 app.get('/api', (req, res) => {
@@ -84,7 +89,8 @@ app.get('/api', (req, res) => {
       news: '/api/news - News and content endpoints',
       users: '/api/users - User management endpoints',
       admin: '/api/admin - Admin panel endpoints',
-      analytics: '/api/analytics - Analytics and tracking endpoints'
+      analytics: '/api/analytics - Analytics and tracking endpoints',
+      ai: '/api/ai - AI-powered features and curation'
     },
     documentation: 'https://github.com/maheshmaheshwarr-stack/Dashboard1/blob/main/backend/README.md'
   });
@@ -115,6 +121,10 @@ app.listen(PORT, () => {
   console.log(`🚀 Dashboard1 Backend running on port ${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔗 API Documentation: http://localhost:${PORT}/api`);
+  
+  // Start scheduled tasks
+  const scheduler = new SchedulerService();
+  scheduler.start();
 });
 
 module.exports = app;
