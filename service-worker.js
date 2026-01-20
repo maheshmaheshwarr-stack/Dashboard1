@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mahesh-news-v1';
+const CACHE_NAME = 'mahesh-news-v2';
 const urlsToCache = [
   '/Dashboard1/',
   '/Dashboard1/index.html',
