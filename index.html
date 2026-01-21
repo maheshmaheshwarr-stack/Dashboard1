@@ -3562,6 +3562,120 @@
     </div>
   </div>
 
+  <!-- AI Details Modal -->
+  <div class="modal" id="ai-details-modal">
+    <div class="modal-content" style="max-width: 700px;">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 style="display: flex; align-items: center; gap: 8px; color: #0ea5e9;">
+        🤖 AI-Powered Curation System
+      </h2>
+      <p style="font-size: 0.9rem; color: #075985; margin-bottom: 20px;">
+        Deep dive into how our AI filters signal from noise
+      </p>
+      
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Sentiment Analysis Section -->
+        <div style="padding: 16px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 12px; border-left: 4px solid #0ea5e9;">
+          <h3 style="display: flex; align-items: center; gap: 8px; color: #0c4a6e; margin-bottom: 12px;">
+            📊 Sentiment Analysis Engine
+          </h3>
+          <p style="font-size: 0.85rem; color: #0f172a; line-height: 1.6; margin-bottom: 12px;">
+            Our AI analyzes every article's emotional tone and constructiveness using advanced natural language processing:
+          </p>
+          <ul style="font-size: 0.8rem; color: #374151; line-height: 1.5; margin-left: 20px;">
+            <li><strong>Positivity Scoring:</strong> Measures constructive vs. destructive language patterns</li>
+            <li><strong>Solution Focus:</strong> Identifies articles that propose solutions rather than just problems</li>
+            <li><strong>Emotional Impact:</strong> Filters content that promotes anxiety or fear-based engagement</li>
+            <li><strong>Context Awareness:</strong> Understands nuanced topics that may be serious but constructive</li>
+          </ul>
+        </div>
+
+        <!-- Quality Filtering Section -->
+        <div style="padding: 16px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 12px; border-left: 4px solid #0ea5e9;">
+          <h3 style="display: flex; align-items: center; gap: 8px; color: #0c4a6e; margin-bottom: 12px;">
+            🎯 Quality Assessment Algorithm
+          </h3>
+          <p style="font-size: 0.85rem; color: #0f172a; line-height: 1.6; margin-bottom: 12px;">
+            Multi-factor analysis ensures only high-quality journalism reaches your feed:
+          </p>
+          <ul style="font-size: 0.8rem; color: #374151; line-height: 1.5; margin-left: 20px;">
+            <li><strong>Source Credibility:</strong> Evaluates publisher reputation and journalistic standards</li>
+            <li><strong>Content Depth:</strong> Prioritizes in-depth analysis over surface-level reporting</li>
+            <li><strong>Fact Density:</strong> Measures information value vs. opinion or speculation</li>
+            <li><strong>Clickbait Detection:</strong> Filters out sensationalized headlines and engagement bait</li>
+          </ul>
+        </div>
+
+        <!-- Personalization Section -->
+        <div style="padding: 16px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 12px; border-left: 4px solid #0ea5e9;">
+          <h3 style="display: flex; align-items: center; gap: 8px; color: #0c4a6e; margin-bottom: 12px;">
+            ✨ Adaptive Personalization
+          </h3>
+          <p style="font-size: 0.85rem; color: #0f172a; line-height: 1.6; margin-bottom: 12px;">
+            The system learns your preferences while maintaining editorial integrity:
+          </p>
+          <ul style="font-size: 0.8rem; color: #374151; line-height: 1.5; margin-left: 20px;">
+            <li><strong>Reading Patterns:</strong> Adapts to your preferred topics and article lengths</li>
+            <li><strong>Engagement Signals:</strong> Learns from your reading behavior and time spent</li>
+            <li><strong>Mood Preferences:</strong> Adjusts content mix based on your selected mood settings</li>
+            <li><strong>Diversity Balance:</strong> Ensures exposure to varied perspectives and topics</li>
+          </ul>
+        </div>
+
+        <!-- Technical Implementation -->
+        <div style="padding: 16px; background: linear-gradient(135deg, #fef3c7, #fed7aa); border-radius: 12px; border-left: 4px solid #f97316;">
+          <h3 style="display: flex; align-items: center; gap: 8px; color: #9a3412; margin-bottom: 12px;">
+            ⚙️ Technical Implementation
+          </h3>
+          <p style="font-size: 0.85rem; color: #292524; line-height: 1.6; margin-bottom: 12px;">
+            Built with enterprise-grade architecture for reliability and scale:
+          </p>
+          <ul style="font-size: 0.8rem; color: #44403c; line-height: 1.5; margin-left: 20px;">
+            <li><strong>Real-time Processing:</strong> Node.js backend processes 15+ RSS feeds continuously</li>
+            <li><strong>AI APIs Integration:</strong> Leverages multiple AI services for comprehensive analysis</li>
+            <li><strong>Caching Strategy:</strong> Optimized performance with intelligent content caching</li>
+            <li><strong>Scalable Architecture:</strong> MongoDB database designed for growth and reliability</li>
+          </ul>
+        </div>
+
+        <!-- Ethics & Transparency -->
+        <div style="padding: 16px; background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-radius: 12px; border-left: 4px solid #10b981;">
+          <h3 style="display: flex; align-items: center; gap: 8px; color: #065f46; margin-bottom: 12px;">
+            🛡️ Ethics & Transparency
+          </h3>
+          <p style="font-size: 0.85rem; color: #0f172a; line-height: 1.6; margin-bottom: 12px;">
+            Our AI curation follows strict ethical guidelines:
+          </p>
+          <ul style="font-size: 0.8rem; color: #374151; line-height: 1.5; margin-left: 20px;">
+            <li><strong>No Censorship:</strong> Filters for quality and constructiveness, not viewpoints</li>
+            <li><strong>Source Diversity:</strong> Maintains balanced representation across publishers</li>
+            <li><strong>Transparency:</strong> Users can see why articles were selected or filtered</li>
+            <li><strong>Human Oversight:</strong> Regular auditing ensures AI decisions align with values</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 12px; text-align: center;">
+        <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 12px;">
+          Questions about our AI system? Want to suggest improvements?
+        </p>
+        <button onclick="toggleAIChat()" style="
+          padding: 10px 20px;
+          background: linear-gradient(135deg, #0ea5e9, #0284c7);
+          color: white;
+          border: none;
+          border-radius: 999px;
+          font-weight: 600;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: transform 0.2s;
+        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          💬 Chat with Hope AI →
+        </button>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- AI News Chat Widget - Enhanced with Hope -->
@@ -6045,6 +6159,14 @@
       `).join('');
 
       modal.classList.add('show');
+    }
+
+    // Show AI Details Modal
+    function showAIDetails() {
+      const modal = document.getElementById('ai-details-modal');
+      if (modal) {
+        modal.classList.add('show');
+      }
     }
 
     // Toggle AI learning
