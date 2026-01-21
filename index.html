@@ -361,10 +361,10 @@
     }
 
     .pill {
-      border-radius: 999px;
+      border-radius: var(--radius-md);
       padding: 4px 10px;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
+      background: var(--chip-bg);
+      border: 1px solid var(--card-border);
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
@@ -916,10 +916,10 @@
 
     .badge {
       padding: 4px 8px;
-      border-radius: 999px;
-      background: #e5e7eb;
+      border-radius: var(--radius-sm);
+      background: var(--chip-bg);
       color: var(--text-muted);
-      border: 1px solid rgba(148, 163, 184, 0.8);
+      border: 1px solid var(--card-border);
     }
 
     .badge--category {
@@ -1099,12 +1099,12 @@
     }
 
     .pill-mini {
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       padding: 3px 7px;
-      border: 1px solid rgba(249, 115, 22, 0.8);
+      border: 1px solid var(--accent);
       font-size: 0.7rem;
-      color: #c2410c;
-      background: #ffedd5;
+      color: var(--accent-strong);
+      background: var(--accent-soft);
     }
 
     .positivity-meter {
@@ -1125,8 +1125,8 @@
       position: relative;
       width: 100%;
       height: 8px;
-      border-radius: 999px;
-      background: #e5e7eb;
+      border-radius: var(--radius-sm);
+      background: var(--bg-softer);
       overflow: hidden;
     }
 
@@ -1136,49 +1136,55 @@
       top: 0;
       bottom: 0;
       width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(to right, #f97316, #ea580c);
+      border-radius: var(--radius-sm);
+      background: var(--gradient-primary);
       transition: width 0.4s ease-out;
     }
 
     .input, .textarea {
       width: 100%;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      padding: 6px 9px;
-      font-size: 0.78rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--card-border);
+      padding: 8px 12px;
+      font-size: 0.875rem;
       color: var(--text-main);
-      background: #ffffff;
+      background: var(--bg);
       outline: none;
+      transition: border-color 0.2s;
     }
 
     .input:focus, .textarea:focus {
-      border-color: #f97316;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
     }
 
     .textarea {
-      border-radius: 10px;
-      min-height: 60px;
+      border-radius: var(--radius-md);
+      min-height: 80px;
       resize: vertical;
+      padding: 12px;
     }
 
     .btn-primary {
       border: none;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.78rem;
+      border-radius: var(--radius-md);
+      padding: 8px 16px;
+      font-size: 0.875rem;
       font-weight: 600;
       cursor: pointer;
-      background: #f97316;
+      background: var(--gradient-primary);
       color: #ffffff;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      transition: background 0.2s;
+      gap: 6px;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-soft);
     }
 
     .btn-primary:hover {
-      background: #ea580c;
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-medium);
     }
 
     .btn-primary:disabled {
@@ -1353,57 +1359,60 @@
       }
     }
 
-    @keyframes float-bounce {
+    @keyframes fadeIn {
       0%, 100% {
-        transform: translateY(0);
+        opacity: 0;
       }
-      50% {
-        transform: translateY(-8px);
+      100% {
+        opacity: 1;
       }
     }
 
     .floating-discussion-btn {
       position: fixed;
-      bottom: 100px;
-      right: 30px;
+      bottom: 120px;
+      right: 24px;
       z-index: 9998;
-      padding: 14px 20px;
-      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 600;
+      padding: 12px 20px;
+      background: var(--bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      box-shadow: var(--shadow-medium);
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.3s ease;
-      animation: float-bounce 3s ease-in-out infinite;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
     }
 
     .floating-discussion-btn:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-strong);
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     .floating-discussion-btn .badge-new {
-      background: #ffffff;
-      color: #ea580c;
-      padding: 2px 6px;
-      border-radius: 999px;
-      font-size: 0.65rem;
-      font-weight: 700;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      font-weight: 600;
       text-transform: uppercase;
+      letter-spacing: 0.025em;
     }
 
     @media (max-width: 640px) {
       .floating-discussion-btn {
-        bottom: 80px;
-        right: 20px;
-        padding: 12px 16px;
-        font-size: 0.85rem;
+        bottom: 100px;
+        right: 16px;
+        padding: 10px 16px;
+        font-size: 0.8rem;
       }
     }
 
@@ -3693,147 +3702,153 @@
 
 
 
-  <!-- AI News Chat Widget - Enhanced with Hope -->
+  <!-- AI News Chat Widget - Professional Design -->
   <div id="chat-widget" style="
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 360px;
+    bottom: 24px;
+    right: 24px;
+    width: 380px;
     max-width: 90vw;
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-strong);
     font-size: 0.875rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     z-index: 9999;
-    animation: chatBounce 0.5s ease-out;
+    backdrop-filter: blur(8px);
   ">
     <div id="chat-header" style="
-      padding: 16px;
+      padding: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      background: var(--gradient-primary);
       cursor: pointer;
       border-bottom: none;
     ">
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="
-          width: 36px;
-          height: 36px;
-          background: white;
-          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          background: rgba(255,255,255,0.2);
+          border-radius: var(--radius-md);
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.3rem;
-        ">🌟</div>
+          font-size: 1.2rem;
+          backdrop-filter: blur(4px);
+        ">🤖</div>
         <div>
-          <div style="font-size:0.9rem;font-weight:700;color:#ffffff;">Chat with Hope</div>
-          <div style="font-size:0.7rem;color:rgba(255,255,255,0.9);margin-top:2px;">Your AI news companion</div>
+          <div style="font-size:0.95rem;font-weight:600;color:#ffffff;">AI Assistant</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.8);margin-top:2px;">News & Analysis Support</div>
         </div>
       </div>
       <button id="chat-toggle" style="
-        background:rgba(255,255,255,0.2);
-        border:none;
+        background:rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
         color:#ffffff;
-        font-size:1.2rem;
+        font-size:1rem;
         cursor:pointer;
         width:32px;
         height:32px;
         display:flex;
         align-items:center;
         justify-content:center;
-        border-radius:50%;
+        border-radius: var(--radius-sm);
         transition: all 0.2s;
-      " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">−</button>
+      " onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">−</button>
     </div>
     
     <div id="chat-body" style="
       display:flex;
       flex-direction:column;
-      height:380px;
-      background:#faf5ff;
+      height:400px;
+      background: var(--bg-soft);
     ">
       <div id="chat-messages" style="
         flex:1;
-        padding:12px;
+        padding:16px;
         overflow-y:auto;
         display:flex;
         flex-direction:column;
-        gap:10px;
+        gap:12px;
       ">
         <div style="
           align-self:flex-start;
           max-width:85%;
-          padding:10px 12px;
-          border-radius:16px;
-          background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+          padding:12px 16px;
+          border-radius: var(--radius-md);
+          background: var(--accent);
           color:#ffffff;
-          font-size:0.85rem;
+          font-size:0.875rem;
           line-height:1.5;
-          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+          box-shadow: var(--shadow-soft);
         ">
-          <div style="font-weight: 600; margin-bottom: 4px;">👋 Hi! I'm Hope!</div>
-          I'm here to help you explore today's positive news. Ask me anything like:
-          <div style="margin-top: 6px; font-size: 0.8rem; opacity: 0.95;">
-            • "What's the most inspiring story?"<br>
-            • "Show me science news"<br>
-            • "What can I do to help?"<br>
-            • "How's my Hope Score?"
+          <div style="font-weight: 600; margin-bottom: 6px;">👋 AI Assistant</div>
+          I'm here to help you explore today's curated news. Ask me anything like:
+          <div style="margin-top: 8px; font-size: 0.8rem; opacity: 0.9;">
+            • "What's the most important story?"<br>
+            • "Show me technology news"<br>
+            • "Explain this article's significance"<br>
+            • "What are the key insights today?"
           </div>
         </div>
       </div>
       
       <form id="chat-form" onsubmit="return false;" style="
         display:flex;
-        padding:10px;
-        gap:8px;
-        border-top:2px solid #e9d5ff;
-        background:#ffffff;
+        padding:16px;
+        gap:12px;
+        border-top: 1px solid var(--card-border);
+        background: var(--bg);
       ">
         <input
           id="chat-input"
           type="text"
-          placeholder="Ask Hope anything..."
+          placeholder="Ask about today's news..."
           style="
             flex:1;
-            background:#faf5ff;
-            border:2px solid #e9d5ff;
-            border-radius:999px;
-            padding:8px 14px;
-            color:#111827;
-            font-size:0.85rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            padding:10px 14px;
+            color: var(--text-main);
+            font-size:0.875rem;
             outline:none;
             transition: border-color 0.2s;
           "
-          onfocus="this.style.borderColor='#a78bfa'"
-          onblur="this.style.borderColor='#e9d5ff'"
+          onfocus="this.style.borderColor='var(--accent)'"
+          onblur="this.style.borderColor='var(--card-border)'"
         />
         <button type="submit" style="
           border:none;
-          border-radius:999px;
-          padding:8px 16px;
-          background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+          border-radius: var(--radius-md);
+          padding:10px 16px;
+          background: var(--gradient-primary);
           color:#ffffff;
           font-weight:600;
-          font-size:0.85rem;
+          font-size:0.875rem;
           cursor:pointer;
-          transition: transform 0.2s;
-          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
-        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Send</button>
+          transition: all 0.2s;
+          box-shadow: var(--shadow-soft);
+        " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='var(--shadow-medium)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-soft)'">Send</button>
       </form>
     </div>
   </div>
 
   <style>
-    @keyframes chatBounce {
-      0% { transform: scale(0.8) translateY(20px); opacity: 0; }
-      50% { transform: scale(1.05) translateY(-5px); }
-      100% { transform: scale(1) translateY(0); opacity: 1; }
+    @keyframes slideIn {
+      from {
+        transform: translateY(8px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 
