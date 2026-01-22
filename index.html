@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   <title>Mahesh +ve Pill — AI-Curated Signal Over Noise</title>
   
   <!-- SEO Meta Tags -->
@@ -5758,24 +5755,26 @@
     // Register service worker with update handling
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/Dashboard1/service-worker.js?v=3')
+        navigator.serviceWorker.register('/Dashboard1/service-worker.js?v=4')
           .then((registration) => {
             console.log('ServiceWorker registered:', registration);
             
-            // Check for updates every 30 seconds
+            // Check for updates every 60 seconds
             setInterval(() => {
               registration.update();
-            }, 30000);
+            }, 60000);
             
             // Handle service worker updates
             registration.addEventListener('updatefound', () => {
               const newWorker = registration.installing;
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  // New service worker is available, show update notification
-                  showUpdateNotification();
-                }
-              });
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // New service worker is available, show update notification
+                    showUpdateNotification();
+                  }
+                });
+              }
             });
           })
           .catch((error) => {
