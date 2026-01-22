@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Mahesh +ve Pill — AI-Curated Signal Over Noise</title>
   
   <!-- SEO Meta Tags -->
@@ -2237,6 +2240,17 @@
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
     }
   </style>
 </head>
@@ -4788,14 +4802,24 @@
         });
       });
 
-      // Refresh button
+      // Refresh button with cache clearing
       const refreshBtn = document.getElementById("refresh-btn");
       if (refreshBtn) {
-        refreshBtn.addEventListener("click", () => {
+        refreshBtn.addEventListener("click", async () => {
           const lastUpdatedEl = document.getElementById("last-updated");
-          if (lastUpdatedEl) lastUpdatedEl.textContent = "Refreshing now…";
-          state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
-          loadNews();
+          if (lastUpdatedEl) lastUpdatedEl.textContent = "Clearing cache & refreshing…";
+          
+          // Clear service worker caches
+          if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+              cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            console.log('All caches cleared');
+          }
+          
+          // Force reload from server
+          window.location.reload(true);
         });
       }
 
@@ -5731,17 +5755,67 @@
       });
     }
 
-    // Register service worker
+    // Register service worker with update handling
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/Dashboard1/service-worker.js')
+        navigator.serviceWorker.register('/Dashboard1/service-worker.js?v=3')
           .then((registration) => {
             console.log('ServiceWorker registered:', registration);
+            
+            // Check for updates every 30 seconds
+            setInterval(() => {
+              registration.update();
+            }, 30000);
+            
+            // Handle service worker updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New service worker is available, show update notification
+                  showUpdateNotification();
+                }
+              });
+            });
           })
           .catch((error) => {
             console.log('ServiceWorker registration failed:', error);
           });
       });
+    }
+
+    // Show update notification
+    function showUpdateNotification() {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--accent);
+        color: white;
+        padding: 12px 20px;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-strong);
+        z-index: 10000;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        animation: slideDown 0.3s ease;
+      `;
+      notification.innerHTML = '🔄 New version available! Click to refresh';
+      notification.onclick = () => {
+        window.location.reload();
+      };
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 10 seconds
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 10000);
     }
 
     // ======================

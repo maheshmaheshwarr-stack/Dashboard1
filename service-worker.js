@@ -1,50 +1,109 @@
-const CACHE_NAME = 'mahesh-news-v2';
-const urlsToCache = [
-  '/Dashboard1/',
-  '/Dashboard1/index.html',
-  '/Dashboard1/about.html',
-  '/Dashboard1/og-preview.png'
+const CACHE_NAME = 'mahesh-news-v3';
+const STATIC_CACHE = 'static-v3';
+const DYNAMIC_CACHE = 'dynamic-v3';
+
+// Static resources that rarely change
+const staticAssets = [
+  '/Dashboard1/icon-192.png',
+  '/Dashboard1/icon-512.png',
+  '/Dashboard1/og-preview.png',
+  '/Dashboard1/manifest.json'
 ];
 
-// Install event - cache resources
+// Install event - cache static resources only
 self.addEventListener('install', (event) => {
+  console.log('Service Worker installing...');
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.open(STATIC_CACHE)
       .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        console.log('Caching static assets');
+        return cache.addAll(staticAssets);
+      })
+      .then(() => {
+        // Force the waiting service worker to become the active service worker
+        return self.skipWaiting();
       })
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - Network first for HTML, cache first for assets
 self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+  
+  // Handle HTML files with network-first strategy
+  if (request.headers.get('accept').includes('text/html')) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          // Clone the response before caching
+          const responseClone = networkResponse.clone();
+          caches.open(DYNAMIC_CACHE)
+            .then((cache) => {
+              cache.put(request, responseClone);
+            });
+          return networkResponse;
+        })
+        .catch(() => {
+          // Fallback to cache if network fails
+          return caches.match(request);
+        })
+    );
+    return;
+  }
+  
+  // Handle static assets with cache-first strategy
+  if (staticAssets.some(asset => request.url.includes(asset))) {
+    event.respondWith(
+      caches.match(request)
+        .then((cachedResponse) => {
+          return cachedResponse || fetch(request);
+        })
+    );
+    return;
+  }
+  
+  // Handle API calls and other resources with network-first
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+    fetch(request)
+      .then((networkResponse) => {
+        // Don't cache API responses or external resources
+        if (url.origin === location.origin) {
+          const responseClone = networkResponse.clone();
+          caches.open(DYNAMIC_CACHE)
+            .then((cache) => {
+              cache.put(request, responseClone);
+            });
         }
-        return fetch(event.request);
-      }
-    )
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(request);
+      })
   );
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches and take control immediately
 self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
+  console.log('Service Worker activating...');
+  const cacheWhitelist = [STATIC_CACHE, DYNAMIC_CACHE];
+  
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    Promise.all([
+      // Clean up old caches
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (!cacheWhitelist.includes(cacheName)) {
+              console.log('Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      // Take control of all clients immediately
+      self.clients.claim()
+    ])
   );
 });
 
