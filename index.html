@@ -5343,15 +5343,61 @@
     // INITIALIZATION
     // ======================
     document.addEventListener("DOMContentLoaded", () => {
-      setupEventListeners();
-      setupChatWidget();
-      setupLanguageSelector();
-      loadNews();
-      initReadingStats();
-      updateStatsDisplay();
+      console.log('DOM Content Loaded - Starting Dashboard1 initialization...');
+      
+      try {
+        setupEventListeners();
+        console.log('✅ Event listeners setup complete');
+      } catch (error) {
+        console.error('❌ Event listeners setup failed:', error);
+      }
+      
+      try {
+        setupChatWidget();
+        console.log('✅ Chat widget setup complete');
+      } catch (error) {
+        console.error('❌ Chat widget setup failed:', error);
+      }
+      
+      try {
+        setupLanguageSelector();
+        console.log('✅ Language selector setup complete');
+      } catch (error) {
+        console.error('❌ Language selector setup failed:', error);
+      }
+      
+      try {
+        loadNews();
+        console.log('✅ News loading initiated');
+      } catch (error) {
+        console.error('❌ News loading failed:', error);
+      }
+      
+      try {
+        initReadingStats();
+        console.log('✅ Reading stats initialized');
+      } catch (error) {
+        console.error('❌ Reading stats initialization failed:', error);
+      }
+      
+      try {
+        updateStatsDisplay();
+        console.log('✅ Stats display updated');
+      } catch (error) {
+        console.error('❌ Stats display update failed:', error);
+      }
       
       // Setup lazy loading after content loads
-      setTimeout(setupLazyLoading, 1000);
+      setTimeout(() => {
+        try {
+          setupLazyLoading();
+          console.log('✅ Lazy loading setup complete');
+        } catch (error) {
+          console.error('❌ Lazy loading setup failed:', error);
+        }
+      }, 1000);
+      
+      console.log('🎉 Dashboard1 initialization completed');
     });
 
     // ======================
@@ -5669,49 +5715,74 @@
 
     // Setup language selector
     function setupLanguageSelector() {
+      console.log('🌐 Setting up language selector...');
+      
       const languageBtn = document.getElementById('language-btn');
       const languageDropdown = document.getElementById('language-dropdown');
       const languageOptions = document.querySelectorAll('.language-option');
 
-      console.log('Setting up language selector:', {
+      console.log('Language selector elements check:', {
         languageBtn: !!languageBtn,
         languageDropdown: !!languageDropdown,
         languageOptionsCount: languageOptions.length
       });
 
-      if (!languageBtn || !languageDropdown) {
-        console.error('Language selector elements not found');
-        return;
+      if (!languageBtn) {
+        console.error('❌ Language button not found');
+        return false;
+      }
+      
+      if (!languageDropdown) {
+        console.error('❌ Language dropdown not found');
+        return false;
+      }
+      
+      if (languageOptions.length === 0) {
+        console.error('❌ No language options found');
+        return false;
       }
 
       // Update current language display
       updateLanguageDisplay();
 
-      // Toggle dropdown
-      languageBtn.addEventListener('click', (e) => {
+      // Toggle dropdown - simplified event handling
+      languageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
         e.stopPropagation();
-        console.log('Language button clicked, toggling dropdown');
+        console.log('🖱️ Language button clicked');
+        
+        const isVisible = languageDropdown.classList.contains('show');
         languageDropdown.classList.toggle('show');
+        
+        console.log('Dropdown visibility:', !isVisible ? 'showing' : 'hiding');
         console.log('Dropdown classes:', languageDropdown.className);
       });
 
       // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', function(e) {
         if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
           languageDropdown.classList.remove('show');
         }
       });
 
       // Language selection
-      languageOptions.forEach(option => {
-        option.addEventListener('click', (e) => {
+      languageOptions.forEach(function(option) {
+        option.addEventListener('click', function(e) {
+          e.preventDefault();
           e.stopPropagation();
+          
           const lang = option.getAttribute('data-lang');
-          console.log('Language selected:', lang);
-          changeLanguage(lang);
-          languageDropdown.classList.remove('show');
+          console.log('🌍 Language selected:', lang);
+          
+          if (lang) {
+            changeLanguage(lang);
+            languageDropdown.classList.remove('show');
+          }
         });
       });
+      
+      console.log('✅ Language selector setup completed successfully');
+      return true;
     }
 
     function updateLanguageDisplay() {
