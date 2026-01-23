@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Mahesh +ve Pill — AI-Curated Signal Over Noise (Complete v4.0)</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="AI-curated positive news platform with advanced features: user authentication, personalized feeds, sentiment analysis, and multi-language support." />
+  <meta name="keywords" content="AI news, positive news, curated news, constructive journalism, tech news, startup news, news aggregator, sentiment analysis, anti-clickbait, user authentication, personalized news" />
+  <meta name="author" content="Mahesh Ramanathan" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://maheshmaheshwarr-stack.github.io/Dashboard1/" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Mahesh News" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <!-- Open Graph / LinkedIn Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mahesh +ve Pill — AI-Curated Signal Over Noise" />
+  <meta property="og:description" content="Advanced AI news system with user authentication, personalized feeds, and multi-language support." />
+  <meta property="og:url" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/" />
+  <meta property="og:image" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/og-preview.png" />
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f8fafc;
+      --bg-softer: #f1f5f9;
+      --bg-dark: #0f172a;
+      --accent: #1e40af;
+      --accent-soft: rgba(30, 64, 175, 0.08);
+      --accent-strong: #1d4ed8;
+      --accent-light: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --card-border: #e2e8f0;
+      --card-border-hover: #cbd5e1;
+      --chip-bg: #f1f5f9;
+      --success: #059669;
+      --success-soft: #d1fae5;
+      --warning: #d97706;
+      --warning-soft: #fed7aa;
+      --error: #dc2626;
+      --error-soft: #fecaca;
+      --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --gradient-primary: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+      --gradient-secondary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: var(--bg-soft) !important;
+    }
+
+    body {
+      background: var(--gradient-secondary) !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "SF Pro Display", system-ui, sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column; 
+      justify-content: flex-start;
+      align-items: center;
+      padding: 24px 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1400px;
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      padding: 0;
+      box-shadow: var(--shadow-strong);
+      border: 1px solid var(--card-border);
+      position: relative;
+    }
+
+    /* Header Styles */
+    header {
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 0;
+      padding: 32px 32px 24px; 
+      align-items: flex-start;
+      border-bottom: 2px solid var(--card-border);
+    }
+
+    @media (min-width: 768px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 32px 40px 24px;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-text h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 4px;
+      line-height: 1.2;
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    .brand-text p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 768px) {
+      .header-right {
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+
+    /* User Authentication */
+    .auth-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .user-avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-soft);
+    }
+
+    /* Language Selector */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+    }
+
+    .language-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
+      background: white;
+      color: var(--accent);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
+    }
+
+    .language-btn:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
+    }
+
+    .language-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(30, 64, 175, 0.15);
+      display: none;
+      min-width: 200px;
+      z-index: 9999;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .language-dropdown.show {
+      display: block !important;
+    }
+
+    .language-option {
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .language-option:first-child {
+      border-radius: 10px 10px 0 0;
+    }
+
+    .language-option:last-child {
+      border-radius: 0 0 10px 10px;
+    }
+
+    .language-option:hover {
+      background: var(--accent-soft);
+    }
+
+    .language-option.active {
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 2px;
+      background: var(--bg-softer);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+    }
+
+    .nav-tab {
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-tab.active {
+      background: white;
+      color: var(--accent);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav-tab:hover:not(.active) {
+      color: var(--text-main);
+    }
+
+    /* Main Content */
+    main {
+      margin-top: 0;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    @media (min-width: 640px) {
+      main {
+        padding: 40px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .section-title h2 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* News Feed Filters */
+    .feed-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 16px;
+      background: var(--bg-softer);
+      border-radius: var(--radius-md);
+    }
+
+    .filter-chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-chip.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .filter-chip:hover:not(.active) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* News List */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .news-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      background: var(--bg);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: cardFadeIn 0.4s ease-out;
+    }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .news-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--card-border-hover);
+    }
+
+    .news-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.68rem;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--chip-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+    }
+
+    .badge--category {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .badge--positive {
+      border-color: rgba(5, 150, 105, 0.3);
+      color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .badge--ai {
+      border-color: rgba(30, 64, 175, 0.3);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .news-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .news-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .news-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .sentiment-score {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .sentiment-positive {
+      color: var(--success);
+    }
+
+    .sentiment-neutral {
+      color: var(--text-muted);
+    }
+
+    .sentiment-negative {
+      color: var(--error);
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .source {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .news-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .read-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+    }
+
+    .read-link:hover {
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+    }
+
+    .bookmark-btn {
+      background: none;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .bookmark-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .bookmark-btn.bookmarked {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* Sidebar Cards */
+    .sidebar-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      background: var(--bg);
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sidebar-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* User Stats */
+    .user-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 12px;
+      background: var(--bg-softer);
+      border-radius: var(--radius-md);
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Loading States */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 50%;
+      border-top-color: var(--accent);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 600px;
+      margin: 20px;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.show .modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 16px;
+    }
+
+    .modal-title {
+      margin: 0;
+      color: var(--accent);
+      font-size: 1.25rem;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 32px 24px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 640px) {
+      .header-right {
+        width: 100%;
+      }
+      
+      .auth-section {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .feed-filters {
+        padding: 12px;
+      }
+      
+      .news-card {
+        padding: 16px;
+      }
+    }
+
+    /* Dark mode support (future enhancement) */
+    @media (prefers-color-scheme: dark) {
+      /* Dark mode styles would go here */
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="brand-badge">
+          <span style="font-size: 1.5rem; color: white;">✨</span>
+        </div>
+        <div class="brand-text">
+          <h1 id="brand-title">Mahesh +ve Pill</h1>
+          <p id="brand-subtitle">AI-Curated Signal Over Noise</p>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <!-- User Authentication Section -->
+        <div class="auth-section" id="auth-section">
+          <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <!-- Language Selector -->
+        <div class="language-selector">
+          <button class="language-btn" id="language-btn" aria-label="Select language">
+            <span id="current-language-flag">🌐</span>
+            <span id="current-language-text">English</span>
+            <span style="font-size: 0.8rem;">▼</span>
+          </button>
+          <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option active" data-lang="en" data-flag="🇬🇧">
+              <span>🇬🇧</span> English
+            </div>
+            <div class="language-option" data-lang="hi" data-flag="🇮🇳">
+              <span>🇮🇳</span> हिंदी (Hindi)
+            </div>
+            <div class="language-option" data-lang="ta" data-flag="🇮🇳">
+              <span>🇮🇳</span> தமிழ் (Tamil)
+            </div>
+            <div class="language-option" data-lang="te" data-flag="🇮🇳">
+              <span>🇮🇳</span> తెలుగు (Telugu)
+            </div>
+            <div class="language-option" data-lang="kn" data-flag="🇮🇳">
+              <span>🇮🇳</span> ಕನ್ನಡ (Kannada)
+            </div>
+            <div class="language-option" data-lang="ml" data-flag="🇮🇳">
+              <span>🇮🇳</span> മലയാളം (Malayalam)
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="column">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs" id="nav-tabs">
+          <button class="nav-tab active" data-tab="feed">
+            <i class="fas fa-newspaper"></i>
+            <span id="tab-feed">Feed</span>
+          </button>
+          <button class="nav-tab" data-tab="bookmarks">
+            <i class="fas fa-bookmark"></i>
+            <span id="tab-bookmarks">Bookmarks</span>
+          </button>
+          <button class="nav-tab" data-tab="trending">
+            <i class="fas fa-fire"></i>
+            <span id="tab-trending">Trending</span>
+          </button>
+          <button class="nav-tab" data-tab="ai-insights">
+            <i class="fas fa-brain"></i>
+            <span id="tab-ai">AI Insights</span>
+          </button>
+        </div>
+
+        <!-- Feed Filters -->
+        <div class="feed-filters" id="feed-filters">
+          <div class="filter-chip active" data-filter="all">All</div>
+          <div class="filter-chip" data-filter="technology">Technology</div>
+          <div class="filter-chip" data-filter="business">Business</div>
+          <div class="filter-chip" data-filter="science">Science</div>
+          <div class="filter-chip" data-filter="health">Health</div>
+          <div class="filter-chip" data-filter="startups">Startups</div>
+          <div class="filter-chip" data-filter="ai">AI</div>
+          <div class="filter-chip" data-filter="positive">Positive Only</div>
+        </div>
+
+        <!-- Section Title -->
+        <div class="section-title">
+          <h2 id="section-title">Today's Highlights</h2>
+          <div class="section-actions">
+            <button class="btn btn-secondary" id="refresh-btn">
+              <i class="fas fa-sync-alt"></i>
+              <span id="refresh-text">Refresh</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- News List -->
+        <div class="news-list" id="news-list">
+          <div class="loading">
+            <div class="loading-spinner"></div>
+            <p style="margin-top: 10px;">Loading personalized news feed...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <!-- User Stats (if logged in) -->
+        <div class="sidebar-card" id="user-stats-card" style="display: none;">
+          <h3 id="stats-title">Your Activity</h3>
+          <div class="user-stats">
+            <div class="stat-item">
+              <div class="stat-number" id="articles-read">0</div>
+              <div class="stat-label" id="articles-label">Articles Read</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" id="bookmarks-count">0</div>
+              <div class="stat-label" id="bookmarks-label">Bookmarks</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Curation Info -->
+        <div class="sidebar-card">
+          <h3 id="ai-curation-title">AI Curation</h3>
+          <p id="ai-curation-description">Our advanced AI system analyzes thousands of news articles using sentiment analysis, fact-checking, and relevance scoring to bring you constructive, solution-focused journalism.</p>
+        </div>
+        
+        <!-- Tamil Translation Info -->
+        <div class="sidebar-card">
+          <h3 id="tamil-ready-title">Multi-Language Support</h3>
+          <p id="tamil-ready-description">Experience the complete interface in your preferred language. Select from English, Hindi, Tamil, Telugu, Kannada, or Malayalam for localized news and navigation.</p>
+        </div>
+
+        <!-- Features Info -->
+        <div class="sidebar-card">
+          <h3 id="features-title">Advanced Features</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-user-shield" style="color: var(--accent);"></i>
+              <span id="feature-auth">User Authentication</span>
+            </li>
+            <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-heart" style="color: var(--success);"></i>
+              <span id="feature-sentiment">Sentiment Analysis</span>
+            </li>
+            <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-bookmark" style="color: var(--warning);"></i>
+              <span id="feature-bookmarks">Personal Bookmarks</span>
+            </li>
+            <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-filter" style="color: var(--accent-light);"></i>
+              <span id="feature-filters">Smart Filtering</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        <strong>Mahesh Ramanathan</strong> • 
+        <a href="mailto:mahesh@example.com">Contact</a> • 
+        <a href="#" onclick="showPremiumModal()">Premium Features</a> •
+        <a href="#" onclick="showAboutModal()">About</a>
+      </p>
+    </footer>
+  </div>
+
+  <!-- Authentication Modal -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="auth-modal-title">Sign In</h2>
+        <button class="modal-close" onclick="closeModal('auth-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="auth-modal-body">
+        <!-- Auth form will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Modal -->
+  <div class="modal-overlay" id="article-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="article-modal-title">Article</h2>
+        <button class="modal-close" onclick="closeModal('article-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="article-modal-body">
+        <!-- Article content will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    console.log('🚀 Dashboard1 v4.0 Complete - Starting...');
+    
+    // Configuration
+    const CONFIG = {
+      API_BASE: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:5000/api' 
+        : 'https://dashboard1-api.maheshramanathan.com/api',
+      RSS_API_BASE: "https://api.rss2json.com/v1/api.json?rss_url=",
+      STORAGE_KEYS: {
+        AUTH_TOKEN: 'dashboard1_auth_token',
+        USER_DATA: 'dashboard1_user_data',
+        LANGUAGE: 'dashboard1_language',
+        BOOKMARKS: 'dashboard1_bookmarks',
+        PREFERENCES: 'dashboard1_preferences'
+      }
+    };
+
+    // Enhanced translations with complete UI coverage
+    const translations = {
+      en: {
+        name: 'English',
+        flag: '🇬🇧',
+        ui: {
+          // Header
+          brandTitle: 'Mahesh +ve Pill',
+          brandSubtitle: 'AI-Curated Signal Over Noise',
+          
+          // Navigation
+          tabFeed: 'Feed',
+          tabBookmarks: 'Bookmarks',
+          tabTrending: 'Trending',
+          tabAi: 'AI Insights',
+          
+          // Content
+          todaysHighlights: "Today's Highlights",
+          readMore: "Read More",
+          source: "Source",
+          aiSummary: "AI Summary",
+          loading: "Loading...",
+          refresh: "Refresh",
+          
+          // Authentication
+          signIn: "Sign In",
+          signUp: "Sign Up",
+          signOut: "Sign Out",
+          welcome: "Welcome",
+          
+          // Stats
+          statsTitle: "Your Activity",
+          articlesRead: "Articles Read",
+          bookmarksLabel: "Bookmarks",
+          
+          // Sidebar
+          aiCurationTitle: 'Advanced AI Curation',
+          aiCurationDescription: 'Our advanced AI system analyzes thousands of news articles using sentiment analysis, fact-checking, and relevance scoring to bring you constructive, solution-focused journalism.',
+          tamilReadyTitle: 'Multi-Language Support',
+          tamilReadyDescription: 'Experience the complete interface in your preferred language. Select from English, Hindi, Tamil, Telugu, Kannada, or Malayalam for localized news and navigation.',
+          featuresTitle: 'Advanced Features',
+          featureAuth: 'User Authentication',
+          featureSentiment: 'Sentiment Analysis',
+          featureBookmarks: 'Personal Bookmarks',
+          featureFilters: 'Smart Filtering'
+        }
+      },
+      ta: {
+        name: 'தமிழ்',
+        flag: '🇮🇳',
+        ui: {
+          // Header
+          brandTitle: 'மகேஷ் +ve மாத்திரை',
+          brandSubtitle: 'AI-தேர்வு செய்யப்பட்ட சிக்னல் ஓவர் நாய்ஸ்',
+          
+          // Navigation
+          tabFeed: 'ஊட்டம்',
+          tabBookmarks: 'புக்மார்க்குகள்',
+          tabTrending: 'டிரெண்டிங்',
+          tabAi: 'AI நுண்ணறிவு',
+          
+          // Content
+          todaysHighlights: "இன்றைய சிறப்புகள்",
+          readMore: "மேலும் படிக்க",
+          source: "மூலம்",
+          aiSummary: "AI சுருக்கம்",
+          loading: "ஏற்றுகிறது...",
+          refresh: "புதுப்பிக்க",
+          
+          // Authentication
+          signIn: "உள்நுழைய",
+          signUp: "பதிவு செய்ய",
+          signOut: "வெளியேறு",
+          welcome: "வரவேற்கிறோம்",
+          
+          // Stats
+          statsTitle: "உங்கள் செயல்பாடு",
+          articlesRead: "படித்த கட்டுரைகள்",
+          bookmarksLabel: "புக்மார்க்குகள்",
+          
+          // Sidebar
+          aiCurationTitle: 'மேம்பட்ட AI தேர்வு',
+          aiCurationDescription: 'எங்கள் மேம்பட்ட AI அமைப்பு உணர்வு பகுப்பாய்வு, உண்மை சரிபார்ப்பு மற்றும் பொருத்தம் மதிப்பீடு ஆகியவற்றைப் பயன்படுத்தி ஆயிரக்கணக்கான செய்தி கட்டுரைகளை பகுப்பாய்வு செய்கிறது.',
+          tamilReadyTitle: 'பல மொழி ஆதரவு',
+          tamilReadyDescription: 'உங்கள் விருப்பமான மொழியில் முழு இடைமுகத்தையும் அனுபவிக்கவும். உள்ளூர்மயமாக்கப்பட்ட செய்திகள் மற்றும் வழிசெலுத்தலுக்காக ஆங்கிலம், இந்தி, தமிழ், தெலுங்கு, கன்னடம் அல்லது மலையாளம் ஆகியவற்றில் இருந்து தேர்ந்தெடுக்கவும்.',
+          featuresTitle: 'மேம்பட்ட அம்சங்கள்',
+          featureAuth: 'பயனர் அங்கீகாரம்',
+          featureSentiment: 'உணர்வு பகுப்பாய்வு',
+          featureBookmarks: 'தனிப்பட்ட புக்மார்க்குகள்',
+          featureFilters: 'ஸ்மார்ட் வடிகட்டுதல்'
+        }
+      },
+      hi: {
+        name: 'हिंदी',
+        flag: '🇮🇳',
+        ui: {
+          // Header
+          brandTitle: 'महेश +ve पिल',
+          brandSubtitle: 'AI-क्यूरेटेड सिग्नल ओवर नॉइज़',
+          
+          // Navigation
+          tabFeed: 'फ़ीड',
+          tabBookmarks: 'बुकमार्क',
+          tabTrending: 'ट्रेंडिंग',
+          tabAi: 'AI इनसाइट्स',
+          
+          // Content
+          todaysHighlights: "आज की मुख्य बातें",
+          readMore: "और पढ़ें",
+          source: "स्रोत",
+          aiSummary: "एआई सारांश",
+          loading: "लोड हो रहा है...",
+          refresh: "रिफ्रेश",
+          
+          // Authentication
+          signIn: "साइन इन",
+          signUp: "साइन अप",
+          signOut: "साइन आउट",
+          welcome: "स्वागत है",
+          
+          // Stats
+          statsTitle: "आपकी गतिविधि",
+          articlesRead: "पढ़े गए लेख",
+          bookmarksLabel: "बुकमार्क",
+          
+          // Sidebar
+          aiCurationTitle: 'उन्नत AI क्यूरेशन',
+          aiCurationDescription: 'हमारा उन्नत AI सिस्टम भावना विश्लेषण, तथ्य-जांच और प्रासंगिकता स्कोरिंग का उपयोग करके हजारों समाचार लेखों का विश्लेषण करता है।',
+          tamilReadyTitle: 'बहु-भाषा समर्थन',
+          tamilReadyDescription: 'अपनी पसंदीदा भाषा में पूर्ण इंटरफ़ेस का अनुभव करें। स्थानीयकृत समाचार और नेवीगेशन के लिए अंग्रेजी, हिंदी, तमिल, तेलुगु, कन्नड़ या मलयालम में से चुनें।',
+          featuresTitle: 'उन्नत सुविधाएं',
+          featureAuth: 'उपयोगकर्ता प्रमाणीकरण',
+          featureSentiment: 'भावना विश्लेषण',
+          featureBookmarks: 'व्यक्तिगत बुकमार्क',
+          featureFilters: 'स्मार्ट फ़िल्टरिंग'
+        }
+      }
+    };
+
+    // RSS Feeds with enhanced sources
+    const RSS_FEEDS = {
+      en: {
+        hackernews: "https://hnrss.org/frontpage",
+        techcrunch: "https://techcrunch.com/feed/",
+        wired: "https://www.wired.com/feed/rss",
+        arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
+        theverge: "https://www.theverge.com/rss/index.xml",
+        goodnewsnetwork: "https://www.goodnewsnetwork.org/feed/",
+        positivenews: "https://www.positive.news/feed/",
+        optimistdaily: "https://www.optimistdaily.com/feed/",
+        reuters: "https://feeds.reuters.com/reuters/technologyNews",
+        bbc: "https://feeds.bbci.co.uk/news/technology/rss.xml"
+      },
+      ta: {
+        tbi: "https://www.thebetterindia.com/feed/",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        dinamalar: "https://www.dinamalar.com/rss/rss_news.xml",
+        tamilnews: "https://www.news18.com/rss/tamil.xml"
+      },
+      hi: {
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        jagran: "https://www.jagran.com/rss/news.xml",
+        aajtak: "https://www.aajtak.in/rss/top-stories.xml"
+      }
+    };
+
+    // Global state
+    let currentLanguage = localStorage.getItem(CONFIG.STORAGE_KEYS.LANGUAGE) || 'en';
+    let currentUser = null;
+    let authToken = localStorage.getItem(CONFIG.STORAGE_KEYS.AUTH_TOKEN);
+    let allArticles = [];
+    let bookmarks = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.BOOKMARKS) || '[]');
+    let currentTab = 'feed';
+    let currentFilter = 'all';
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Dashboard1 v4.0 Complete initializing...');
+      
+      initializeAuth();
+      setupLanguageSelector();
+      setupNavigation();
+      setupFilters();
+      updateInterface();
+      loadContent();
+      
+      console.log('🎉 Dashboard1 v4.0 Complete initialization completed!');
+    });
+
+    // Authentication functions
+    function initializeAuth() {
+      if (authToken) {
+        validateToken();
+      } else {
+        renderAuthSection(false);
+      }
+    }
+
+    async function validateToken() {
+      try {
+        const response = await fetch(`${CONFIG.API_BASE}/auth/validate`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          currentUser = data.user;
+          renderAuthSection(true);
+          loadUserStats();
+        } else {
+          // Token invalid
+          localStorage.removeItem(CONFIG.STORAGE_KEYS.AUTH_TOKEN);
+          localStorage.removeItem(CONFIG.STORAGE_KEYS.USER_DATA);
+          authToken = null;
+          renderAuthSection(false);
+        }
+      } catch (error) {
+        console.warn('Auth validation failed:', error);
+        renderAuthSection(false);
+      }
+    }
+
+    function renderAuthSection(isLoggedIn) {
+      const authSection = document.getElementById('auth-section');
+      
+      if (isLoggedIn && currentUser) {
+        authSection.innerHTML = `
+          <div class="user-menu">
+            <div class="user-avatar" onclick="toggleUserMenu()" title="${currentUser.username}">
+              ${currentUser.firstName ? currentUser.firstName.charAt(0).toUpperCase() : currentUser.username.charAt(0).toUpperCase()}
+            </div>
+          </div>
+          <button class="btn btn-secondary" onclick="signOut()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span id="sign-out-text">${translations[currentLanguage].ui.signOut}</span>
+          </button>
+        `;
+        
+        // Show user stats card
+        document.getElementById('user-stats-card').style.display = 'block';
+      } else {
+        authSection.innerHTML = `
+          <div class="auth-buttons">
+            <button class="btn btn-secondary" onclick="showAuthModal('signin')">
+              <i class="fas fa-sign-in-alt"></i>
+              <span id="sign-in-text">${translations[currentLanguage].ui.signIn}</span>
+            </button>
+            <button class="btn btn-primary" onclick="showAuthModal('signup')">
+              <i class="fas fa-user-plus"></i>
+              <span id="sign-up-text">${translations[currentLanguage].ui.signUp}</span>
+            </button>
+          </div>
+        `;
+        
+        // Hide user stats card
+        document.getElementById('user-stats-card').style.display = 'none';
+      }
+    }
+
+    function signOut() {
+      localStorage.removeItem(CONFIG.STORAGE_KEYS.AUTH_TOKEN);
+      localStorage.removeItem(CONFIG.STORAGE_KEYS.USER_DATA);
+      authToken = null;
+      currentUser = null;
+      renderAuthSection(false);
+      loadContent(); // Reload content without personalization
+    }
+
+    // Language functions
+    function setupLanguageSelector() {
+      const languageBtn = document.getElementById('language-btn');
+      const languageDropdown = document.getElementById('language-dropdown');
+      const languageOptions = document.querySelectorAll('.language-option');
+
+      if (!languageBtn || !languageDropdown) {
+        console.error('❌ Language selector elements not found');
+        return;
+      }
+
+      // Toggle dropdown
+      languageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        languageDropdown.classList.toggle('show');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+          languageDropdown.classList.remove('show');
+        }
+      });
+
+      // Language selection
+      languageOptions.forEach(function(option) {
+        option.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const lang = option.getAttribute('data-lang');
+          if (lang && translations[lang]) {
+            currentLanguage = lang;
+            localStorage.setItem(CONFIG.STORAGE_KEYS.LANGUAGE, lang);
+            
+            updateInterface();
+            loadContent();
+            
+            languageDropdown.classList.remove('show');
+          }
+        });
+      });
+    }
+
+    // Navigation functions
+    function setupNavigation() {
+      const navTabs = document.querySelectorAll('.nav-tab');
+      
+      navTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+          switchTab(tabName);
+        });
+      });
+    }
+
+    function switchTab(tabName) {
+      // Update active tab
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+      
+      currentTab = tabName;
+      loadContent();
+    }
+
+    // Filter functions
+    function setupFilters() {
+      const filterChips = document.querySelectorAll('.filter-chip');
+      
+      filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+          const filter = this.getAttribute('data-filter');
+          
+          // Update active filter
+          document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+          this.classList.add('active');
+          
+          currentFilter = filter;
+          renderNews();
+        });
+      });
+    }
+
+    // Interface update function
+    function updateInterface() {
+      const t = translations[currentLanguage];
+      if (!t) return;
+
+      console.log('🔄 Updating interface to:', t.name);
+
+      // Update brand elements
+      document.getElementById('brand-title').textContent = t.ui.brandTitle;
+      document.getElementById('brand-subtitle').textContent = t.ui.brandSubtitle;
+      
+      // Update language selector
+      document.getElementById('current-language-flag').textContent = t.flag;
+      document.getElementById('current-language-text').textContent = t.name;
+
+      // Update navigation tabs
+      document.getElementById('tab-feed').textContent = t.ui.tabFeed;
+      document.getElementById('tab-bookmarks').textContent = t.ui.tabBookmarks;
+      document.getElementById('tab-trending').textContent = t.ui.tabTrending;
+      document.getElementById('tab-ai').textContent = t.ui.tabAi;
+
+      // Update section title
+      document.getElementById('section-title').textContent = t.ui.todaysHighlights;
+      document.getElementById('refresh-text').textContent = t.ui.refresh;
+
+      // Update sidebar content
+      document.getElementById('ai-curation-title').textContent = t.ui.aiCurationTitle;
+      document.getElementById('ai-curation-description').textContent = t.ui.aiCurationDescription;
+      document.getElementById('tamil-ready-title').textContent = t.ui.tamilReadyTitle;
+      document.getElementById('tamil-ready-description').textContent = t.ui.tamilReadyDescription;
+      document.getElementById('features-title').textContent = t.ui.featuresTitle;
+      document.getElementById('feature-auth').textContent = t.ui.featureAuth;
+      document.getElementById('feature-sentiment').textContent = t.ui.featureSentiment;
+      document.getElementById('feature-bookmarks').textContent = t.ui.featureBookmarks;
+      document.getElementById('feature-filters').textContent = t.ui.featureFilters;
+
+      // Update user stats if visible
+      const statsTitle = document.getElementById('stats-title');
+      if (statsTitle) {
+        statsTitle.textContent = t.ui.statsTitle;
+        document.getElementById('articles-label').textContent = t.ui.articlesRead;
+        document.getElementById('bookmarks-label').textContent = t.ui.bookmarksLabel;
+      }
+
+      // Update active language option
+      document.querySelectorAll('.language-option').forEach(function(option) {
+        if (option.getAttribute('data-lang') === currentLanguage) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+
+      // Update auth section if needed
+      if (currentUser) {
+        const signOutText = document.getElementById('sign-out-text');
+        if (signOutText) signOutText.textContent = t.ui.signOut;
+      } else {
+        const signInText = document.getElementById('sign-in-text');
+        const signUpText = document.getElementById('sign-up-text');
+        if (signInText) signInText.textContent = t.ui.signIn;
+        if (signUpText) signUpText.textContent = t.ui.signUp;
+      }
+
+      console.log('✅ Interface updated to:', t.name);
+    }
+
+    // Content loading functions
+    async function loadContent() {
+      switch (currentTab) {
+        case 'feed':
+          await loadNewsFeed();
+          break;
+        case 'bookmarks':
+          loadBookmarks();
+          break;
+        case 'trending':
+          await loadTrending();
+          break;
+        case 'ai-insights':
+          await loadAIInsights();
+          break;
+      }
+    }
+
+    async function loadNewsFeed() {
+      console.log('📰 Loading news feed for:', currentLanguage);
+      
+      const newsList = document.getElementById('news-list');
+      const t = translations[currentLanguage];
+      
+      newsList.innerHTML = `
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p style="margin-top: 10px;">${t.ui.loading} ${t.name} news...</p>
+        </div>
+      `;
+
+      try {
+        // Try backend API first if user is authenticated
+        if (authToken && currentUser) {
+          try {
+            const response = await fetch(`${CONFIG.API_BASE}/news/feed?language=${currentLanguage}`, {
+              headers: {
+                'Authorization': `Bearer ${authToken}`
+              }
+            });
+            
+            if (response.ok) {
+              const data = await response.json();
+              allArticles = data.articles || [];
+              renderNews();
+              return;
+            }
+          } catch (error) {
+            console.warn('Backend API failed, falling back to RSS:', error);
+          }
+        }
+
+        // Fallback to RSS feeds
+        await loadRSSFeeds();
+        
+      } catch (error) {
+        console.error('❌ News loading failed:', error);
+        newsList.innerHTML = `
+          <div class="loading">
+            <p style="color: var(--error);">Failed to load news. Please try again.</p>
+            <button onclick="loadContent()" class="btn btn-primary" style="margin-top: 10px;">
+              Try Again
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    async function loadRSSFeeds() {
+      const currentFeeds = RSS_FEEDS[currentLanguage] || RSS_FEEDS.en;
+      const fetchPromises = Object.entries(currentFeeds).map(function([key, url]) {
+        return fetch(CONFIG.RSS_API_BASE + encodeURIComponent(url))
+          .then(function(r) { return r.json(); })
+          .then(function(data) { return { key: key, data: data }; })
+          .catch(function(err) {
+            console.warn('Failed to fetch ' + key + ':', err);
+            return { key: key, data: null };
+          });
+      });
+
+      const results = await Promise.all(fetchPromises);
+      allArticles = [];
+
+      results.forEach(function(result) {
+        const key = result.key;
+        const data = result.data;
+        
+        if (!data || data.status !== "ok" || !data.items || !data.items.length) {
+          return;
+        }
+
+        const sourceName = (data.feed && data.feed.title) ? data.feed.title : "News Source";
+        
+        data.items.slice(0, 6).forEach(function(item) {
+          if (!item.title || !item.link) return;
+          
+          const article = {
+            id: item.link,
+            title: item.title,
+            description: item.description || '',
+            url: item.link,
+            publishedAt: item.pubDate,
+            source: { name: sourceName },
+            sourceKey: key,
+            category: getCategoryFromSource(key),
+            sentiment: calculateSentiment(item.title + ' ' + (item.description || '')),
+            isBookmarked: bookmarks.includes(item.link)
+          };
+
+          allArticles.push(article);
+        });
+      });
+
+      renderNews();
+    }
+
+    function getCategoryFromSource(sourceKey) {
+      const categoryMap = {
+        hackernews: 'technology',
+        techcrunch: 'technology',
+        wired: 'technology',
+        arstechnica: 'technology',
+        theverge: 'technology',
+        reuters: 'business',
+        bbc: 'world',
+        goodnewsnetwork: 'positive',
+        positivenews: 'positive',
+        optimistdaily: 'positive',
+        tbi: 'positive',
+        thehindu: 'world',
+        ndtv: 'world',
+        indiatoday: 'world'
+      };
+      return categoryMap[sourceKey] || 'general';
+    }
+
+    function calculateSentiment(text) {
+      // Simple sentiment analysis
+      const positiveWords = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'success', 'breakthrough', 'innovation', 'positive', 'growth'];
+      const negativeWords = ['bad', 'terrible', 'awful', 'crisis', 'disaster', 'failure', 'problem', 'issue', 'concern', 'decline'];
+      
+      const words = text.toLowerCase().split(/\s+/);
+      let score = 0;
+      
+      words.forEach(word => {
+        if (positiveWords.includes(word)) score += 1;
+        if (negativeWords.includes(word)) score -= 1;
+      });
+      
+      if (score > 0) return { score: score / words.length, label: 'positive' };
+      if (score < 0) return { score: score / words.length, label: 'negative' };
+      return { score: 0, label: 'neutral' };
+    }
+
+    function renderNews() {
+      const newsList = document.getElementById('news-list');
+      const t = translations[currentLanguage];
+      
+      // Filter articles based on current filter
+      let filteredArticles = allArticles;
+      
+      if (currentFilter !== 'all') {
+        if (currentFilter === 'positive') {
+          filteredArticles = allArticles.filter(article => 
+            article.sentiment && article.sentiment.label === 'positive'
+          );
+        } else {
+          filteredArticles = allArticles.filter(article => 
+            article.category === currentFilter
+          );
+        }
+      }
+      
+      if (!filteredArticles.length) {
+        newsList.innerHTML = `
+          <div class="loading">
+            <p style="color: var(--text-muted);">No articles found for the selected filter.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      newsList.innerHTML = '';
+
+      filteredArticles.forEach(function(article, index) {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        
+        const published = article.publishedAt ? 
+          new Date(article.publishedAt).toLocaleString("en-IN", {
+            day: "2-digit", 
+            month: "short", 
+            hour: "2-digit", 
+            minute: "2-digit"
+          }) : "";
+
+        // Add language prefix for non-English
+        const titlePrefix = currentLanguage !== 'en' ? '[' + translations[currentLanguage].name + '] ' : '';
+        const descPrefix = currentLanguage !== 'en' ? '[' + translations[currentLanguage].name + '] ' : '';
+
+        // Sentiment display
+        const sentimentClass = article.sentiment ? `sentiment-${article.sentiment.label}` : 'sentiment-neutral';
+        const sentimentIcon = article.sentiment && article.sentiment.label === 'positive' ? '😊' : 
+                             article.sentiment && article.sentiment.label === 'negative' ? '😟' : '😐';
+
+        card.innerHTML = `
+          <div class="news-badges">
+            <span class="badge badge--category">${article.category.toUpperCase()}</span>
+            ${article.sentiment && article.sentiment.label === 'positive' ? '<span class="badge badge--positive">POSITIVE</span>' : ''}
+            ${article.category === 'technology' || article.sourceKey === 'hackernews' ? '<span class="badge badge--ai">AI CURATED</span>' : ''}
+          </div>
+          <h3 class="news-title">${titlePrefix}${article.title}</h3>
+          <p class="tagline">${descPrefix}${article.description.substring(0, 150)}...</p>
+          <div class="news-meta-row">
+            <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
+            ${article.sentiment ? `<div class="sentiment-score ${sentimentClass}">${sentimentIcon} ${Math.abs(article.sentiment.score * 100).toFixed(0)}%</div>` : ''}
+          </div>
+          <div class="news-footer">
+            <span class="source">${t.ui.source}: ${article.source.name}</span>
+            <div class="news-actions">
+              <button class="bookmark-btn ${article.isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${article.id}', this)">
+                <i class="fas fa-bookmark"></i>
+              </button>
+              <a class="read-link" href="#" onclick="openArticleModal('${article.url}', '${encodeURIComponent(article.title)}', '${currentLanguage}')">
+                ${t.ui.readMore} <span>↗</span>
+              </a>
+            </div>
+          </div>
+        `;
+
+        newsList.appendChild(card);
+      });
+    }
+
+    // Bookmark functions
+    function toggleBookmark(articleId, buttonElement) {
+      const isBookmarked = bookmarks.includes(articleId);
+      
+      if (isBookmarked) {
+        bookmarks = bookmarks.filter(id => id !== articleId);
+        buttonElement.classList.remove('bookmarked');
+      } else {
+        bookmarks.push(articleId);
+        buttonElement.classList.add('bookmarked');
+      }
+      
+      localStorage.setItem(CONFIG.STORAGE_KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+      
+      // Update article in allArticles
+      const article = allArticles.find(a => a.id === articleId);
+      if (article) {
+        article.isBookmarked = !isBookmarked;
+      }
+      
+      // Update user stats if logged in
+      if (currentUser) {
+        updateUserStats();
+      }
+    }
+
+    function loadBookmarks() {
+      const newsList = document.getElementById('news-list');
+      const bookmarkedArticles = allArticles.filter(article => bookmarks.includes(article.id));
+      
+      if (!bookmarkedArticles.length) {
+        newsList.innerHTML = `
+          <div class="loading">
+            <p style="color: var(--text-muted);">No bookmarked articles yet.</p>
+            <button onclick="switchTab('feed')" class="btn btn-primary" style="margin-top: 10px;">
+              Browse Articles
+            </button>
+          </div>
+        `;
+        return;
+      }
+      
+      // Temporarily set allArticles to bookmarked articles for rendering
+      const originalArticles = allArticles;
+      allArticles = bookmarkedArticles;
+      renderNews();
+      allArticles = originalArticles;
+    }
+
+    async function loadTrending() {
+      // Placeholder for trending functionality
+      const newsList = document.getElementById('news-list');
+      newsList.innerHTML = `
+        <div class="loading">
+          <p style="color: var(--text-muted);">Trending analysis coming soon...</p>
+        </div>
+      `;
+    }
+
+    async function loadAIInsights() {
+      // Placeholder for AI insights functionality
+      const newsList = document.getElementById('news-list');
+      newsList.innerHTML = `
+        <div class="loading">
+          <p style="color: var(--text-muted);">AI insights feature coming soon...</p>
+        </div>
+      `;
+    }
+
+    // User stats functions
+    function loadUserStats() {
+      if (!currentUser) return;
+      
+      // Update stats display
+      document.getElementById('articles-read').textContent = currentUser.stats?.articlesRead || 0;
+      document.getElementById('bookmarks-count').textContent = bookmarks.length;
+    }
+
+    function updateUserStats() {
+      document.getElementById('bookmarks-count').textContent = bookmarks.length;
+    }
+
+    // Modal functions
+    function openArticleModal(url, title, language) {
+      if (language === 'en') {
+        window.open(url, '_blank');
+        return;
+      }
+
+      const t = translations[language];
+      const modal = document.getElementById('article-modal');
+      const modalTitle = document.getElementById('article-modal-title');
+      const modalBody = document.getElementById('article-modal-body');
+      
+      modalTitle.textContent = `${t.name} மொழிபெயர்ப்பு`;
+      
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <h3 style="color: var(--accent); margin-bottom: 12px;">[${t.name}] ${decodeURIComponent(title)}</h3>
+          <p style="line-height: 1.6; margin-bottom: 16px;">
+            இந்த கட்டுரை ${t.name} மொழியில் கிடைக்கிறது. முழு உள்ளடக்கத்தைப் பார்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.
+          </p>
+          <div style="background: var(--bg-softer); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px;">
+            <strong style="color: var(--accent);">குறிப்பு:</strong> 
+            <span style="color: var(--text-muted);">இது தமிழ் மொழிபெயர்ப்பு அம்சத்தின் செயல்பாடு. முழு கட்டுரைக்கு மூல இணைப்பைப் பார்க்கவும்.</span>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <button onclick="window.open('${url}', '_blank')" class="btn btn-primary" style="margin-right: 12px;">
+            மூல கட்டுரையைப் பார்க்கவும்
+          </button>
+          <button onclick="closeModal('article-modal')" class="btn btn-secondary">
+            மூடு
+          </button>
+        </div>
+      `;
+      
+      showModal('article-modal');
+    }
+
+    function showAuthModal(type) {
+      const modal = document.getElementById('auth-modal');
+      const modalTitle = document.getElementById('auth-modal-title');
+      const modalBody = document.getElementById('auth-modal-body');
+      
+      modalTitle.textContent = type === 'signin' ? 'Sign In' : 'Sign Up';
+      
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <p style="color: var(--text-muted); margin-bottom: 20px;">
+            Authentication features are coming soon! This will include:
+          </p>
+          <ul style="text-align: left; max-width: 300px; margin: 0 auto;">
+            <li>Personalized news feeds</li>
+            <li>Bookmark synchronization</li>
+            <li>Reading history</li>
+            <li>Custom preferences</li>
+          </ul>
+          <button onclick="closeModal('auth-modal')" class="btn btn-primary" style="margin-top: 20px;">
+            Got it!
+          </button>
+        </div>
+      `;
+      
+      showModal('auth-modal');
+    }
+
+    function showPremiumModal() {
+      // Placeholder for premium features modal
+      alert('Premium features coming soon! This will include advanced AI analysis, unlimited bookmarks, and priority support.');
+    }
+
+    function showAboutModal() {
+      // Placeholder for about modal
+      alert('Dashboard1 v4.0 - Advanced AI-curated news platform with multi-language support and user authentication.');
+    }
+
+    function showModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.add('show');
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('show');
+    }
+
+    // Utility functions
+    function refreshContent() {
+      loadContent();
+    }
+
+    // Make functions global for onclick handlers
+    window.openArticleModal = openArticleModal;
+    window.toggleBookmark = toggleBookmark;
+    window.showAuthModal = showAuthModal;
+    window.showPremiumModal = showPremiumModal;
+    window.showAboutModal = showAboutModal;
+    window.closeModal = closeModal;
+    window.signOut = signOut;
+    window.switchTab = switchTab;
+    window.refreshContent = refreshContent;
+
+    // Setup refresh button
+    document.getElementById('refresh-btn').addEventListener('click', refreshContent);
+
+    console.log('✅ Dashboard1 v4.0 Complete script loaded successfully');
+  </script>
+</body>
+</html>
