@@ -2168,6 +2168,14 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .language-btn:hover {
+      border-color: #fed7aa;
+      background: #fff8ed;
+      color: #292524;
+    }
       transition: all 0.16s ease-out;
     }
 
@@ -2188,11 +2196,13 @@
       box-shadow: 0 8px 24px rgba(249, 115, 22, 0.2);
       display: none;
       min-width: 180px;
-      z-index: 1000;
+      z-index: 9999;
+      max-height: 300px;
+      overflow-y: auto;
     }
 
     .language-dropdown.show {
-      display: block;
+      display: block !important;
     }
 
     .language-option {
@@ -5663,7 +5673,16 @@
       const languageDropdown = document.getElementById('language-dropdown');
       const languageOptions = document.querySelectorAll('.language-option');
 
-      if (!languageBtn) return;
+      console.log('Setting up language selector:', {
+        languageBtn: !!languageBtn,
+        languageDropdown: !!languageDropdown,
+        languageOptionsCount: languageOptions.length
+      });
+
+      if (!languageBtn || !languageDropdown) {
+        console.error('Language selector elements not found');
+        return;
+      }
 
       // Update current language display
       updateLanguageDisplay();
@@ -5671,18 +5690,24 @@
       // Toggle dropdown
       languageBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        console.log('Language button clicked, toggling dropdown');
         languageDropdown.classList.toggle('show');
+        console.log('Dropdown classes:', languageDropdown.className);
       });
 
       // Close dropdown when clicking outside
-      document.addEventListener('click', () => {
-        languageDropdown.classList.remove('show');
+      document.addEventListener('click', (e) => {
+        if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+          languageDropdown.classList.remove('show');
+        }
       });
 
       // Language selection
       languageOptions.forEach(option => {
-        option.addEventListener('click', () => {
+        option.addEventListener('click', (e) => {
+          e.stopPropagation();
           const lang = option.getAttribute('data-lang');
+          console.log('Language selected:', lang);
           changeLanguage(lang);
           languageDropdown.classList.remove('show');
         });
