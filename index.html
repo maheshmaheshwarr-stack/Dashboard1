@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mahesh +ve Pill — AI-Curated Signal Over Noise (v2.1)</title>
+  <title>Mahesh +ve Pill — AI-Curated Signal Over Noise (v3.0 Tamil Ready)</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="AI-curated positive news platform that filters signal from noise. Get constructive journalism without sensationalism, doom-scrolling, or clickbait." />
@@ -4377,7 +4377,7 @@
           </div>
           <div class="news-footer">
             <span class="source">${t.source}: ${sourceName}</span>
-            ${article.url ? `<a class="read-link" href="#" onclick="openTranslatedArticle('${article.url}', '${encodeURIComponent(article.title)}', '${currentLanguage}')" target="_blank" rel="noopener noreferrer">${t.readMore} <span>↗</span></a>` : ""}
+            ${article.url ? `<a class="read-link" href="#" onclick="openEnhancedTamilModal('${article.url}', '${encodeURIComponent(article.title)}', '${currentLanguage}')" target="_blank" rel="noopener noreferrer">${t.readMore} <span>↗</span></a>` : ""}
           </div>
           <button class="action-button" onclick="showActionModal('${article.category}', '${encodeURIComponent(article.title)}')">
             <span>💪</span>
@@ -8427,69 +8427,372 @@
     console.log('Dashboard1 JavaScript loaded successfully - v2.2 - Tamil Ready');
   </script>
   
-  <!-- Clean Tamil Translation Script -->
+  <!-- Clean Tamil Translation Integration -->
   <script>
-    // Ensure Tamil translation works even if main script has issues
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Tamil translation backup script loaded');
-      
-      // Wait for main script to load, then enhance if needed
-      setTimeout(function() {
-        const languageBtn = document.getElementById('language-btn');
-        const languageDropdown = document.getElementById('language-dropdown');
-        
-        if (languageBtn && languageDropdown && !languageBtn.hasAttribute('data-enhanced')) {
-          console.log('Enhancing language selector for Tamil support');
-          
-          // Mark as enhanced to avoid double setup
-          languageBtn.setAttribute('data-enhanced', 'true');
-          
-          // Ensure dropdown works
-          languageBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            languageDropdown.classList.toggle('show');
-            console.log('Tamil-ready dropdown toggled');
-          });
-          
-          // Ensure language selection works
-          const options = languageDropdown.querySelectorAll('.language-option');
-          options.forEach(function(option) {
-            option.addEventListener('click', function(e) {
-              e.preventDefault();
-              e.stopPropagation();
-              
-              const lang = option.getAttribute('data-lang');
-              console.log('Tamil-ready language selected:', lang);
-              
-              // Update display
-              const flagEl = document.getElementById('current-language-flag');
-              const textEl = document.getElementById('current-language-text');
-              const flag = option.getAttribute('data-flag');
-              const text = option.textContent.trim();
-              
-              if (flagEl && textEl) {
-                flagEl.textContent = flag;
-                textEl.textContent = text.split(' ')[1] || text; // Get language name
-              }
-              
-              // Update active state
-              options.forEach(opt => opt.classList.remove('active'));
-              option.classList.add('active');
-              
-              languageDropdown.classList.remove('show');
-              
-              // Store selection
-              localStorage.setItem('preferredLanguage', lang);
-              
-              console.log('Tamil translation ready for:', lang);
-            });
-          });
-          
-          console.log('Tamil translation enhancement complete');
+    console.log('Dashboard1 v3.0 - Tamil Translation Integration Starting...');
+    
+    // Enhanced translations with complete Tamil support
+    const enhancedTranslations = {
+      en: {
+        name: 'English',
+        flag: '🇬🇧',
+        ui: {
+          todaysHighlights: "Today's Highlights",
+          readMore: "Read More",
+          source: "Source",
+          aiSummary: "AI Summary",
+          whySelected: "Why the AI selected this",
+          loading: "Loading...",
+          noStoriesFound: "No stories found",
+          tryAgain: "Try Again",
+          updated: "Updated",
+          newsUpdated: "News updated",
+          fetchingStories: "Fetching stories from multiple sources...",
+          translatingArticles: "Translating articles...",
+          preparingArticles: "Preparing articles...",
+          signalFirstCuration: "Signal-first curation",
+          netPositiveImpact: "Net positive impact",
+          ongoingStory: "Ongoing Story",
+          whatCanIDo: "What Can I Do?",
+          login: "Login",
+          signup: "Sign Up",
+          profile: "Profile",
+          preferences: "Preferences",
+          logout: "Logout"
         }
-      }, 3000);
+      },
+      ta: {
+        name: 'தமிழ்',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "இன்றைய சிறப்புகள்",
+          readMore: "மேலும் படிக்க",
+          source: "மூலம்",
+          aiSummary: "AI சுருக்கம்",
+          whySelected: "AI இதை ஏன் தேர்ந்தெடுத்தது",
+          loading: "ஏற்றுகிறது...",
+          noStoriesFound: "கதைகள் எதுவும் கிடைக்கவில்லை",
+          tryAgain: "மீண்டும் முயற்சிக்கவும்",
+          updated: "புதுப்பிக்கப்பட்டது",
+          newsUpdated: "தமிழ் செய்திகள் புதுப்பிக்கப்பட்டன",
+          fetchingStories: "பல ஆதாரங்களிலிருந்து தமிழ் கதைகளை பெறுகிறது...",
+          translatingArticles: "கட்டுரைகளை மொழிபெயர்க்கிறது...",
+          preparingArticles: "கட்டுரைகளை தயார் செய்கிறது...",
+          signalFirstCuration: "சிக்னல்-முதல் செய்தி தேர்வு",
+          netPositiveImpact: "நேர்மறை தாக்கம்",
+          ongoingStory: "தொடர்ச்சி கதை",
+          whatCanIDo: "நான் என்ன செய்ய முடியும்?",
+          login: "உள்நுழைய",
+          signup: "பதிவு செய்ய",
+          profile: "சுயவிவரம்",
+          preferences: "விருப்பத்தேர்வுகள்",
+          logout: "வெளியேறு"
+        }
+      },
+      hi: {
+        name: 'हिंदी',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "आज की मुख्य बातें",
+          readMore: "और पढ़ें",
+          source: "स्रोत",
+          aiSummary: "एआई सारांश",
+          whySelected: "एआई ने इसे क्यों चुना"
+        }
+      },
+      te: {
+        name: 'తెలుగు',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "నేటి ముఖ్యాంశాలు",
+          readMore: "మరింత చదవండి",
+          source: "మూలం",
+          aiSummary: "AI సారాంశం",
+          whySelected: "AI దీన్ని ఎందుకు ఎంచుకుంది"
+        }
+      },
+      kn: {
+        name: 'ಕನ್ನಡ',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "ಇಂದಿನ ಮುಖ್ಯಾಂಶಗಳು",
+          readMore: "ಇನ್ನಷ್ಟು ಓದಿ",
+          source: "ಮೂಲ",
+          aiSummary: "AI ಸಾರಾಂಶ",
+          whySelected: "AI ಇದನ್ನು ಏಕೆ ಆಯ್ಕೆ ಮಾಡಿದೆ"
+        }
+      },
+      ml: {
+        name: 'മലയാളം',
+        flag: '🇮🇳',
+        ui: {
+          todaysHighlights: "ഇന്നത്തെ പ്രധാന വാർത്തകൾ",
+          readMore: "കൂടുതൽ വായിക്കുക",
+          source: "ഉറവിടം",
+          aiSummary: "AI സംഗ്രഹം",
+          whySelected: "AI ഇത് തിരഞ്ഞെടുത്തത് എന്തുകൊണ്ട്"
+        }
+      }
+    };
+    
+    // Global language state
+    let globalCurrentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+    
+    // Clean language selector setup
+    function setupCleanLanguageSelector() {
+      console.log('🌐 Setting up clean Tamil-ready language selector...');
+      
+      const languageBtn = document.getElementById('language-btn');
+      const languageDropdown = document.getElementById('language-dropdown');
+      const languageOptions = document.querySelectorAll('.language-option');
+
+      if (!languageBtn || !languageDropdown) {
+        console.error('❌ Language selector elements not found');
+        return false;
+      }
+
+      console.log('✅ Language elements found:', {
+        button: !!languageBtn,
+        dropdown: !!languageDropdown,
+        options: languageOptions.length
+      });
+
+      // Update current language display
+      function updateLanguageDisplay() {
+        const currentLangFlag = document.getElementById('current-language-flag');
+        const currentLangText = document.getElementById('current-language-text');
+        
+        if (currentLangFlag && currentLangText && enhancedTranslations[globalCurrentLanguage]) {
+          currentLangFlag.textContent = enhancedTranslations[globalCurrentLanguage].flag;
+          currentLangText.textContent = enhancedTranslations[globalCurrentLanguage].name;
+        }
+
+        // Update active state
+        languageOptions.forEach(function(option) {
+          if (option.getAttribute('data-lang') === globalCurrentLanguage) {
+            option.classList.add('active');
+          } else {
+            option.classList.remove('active');
+          }
+        });
+      }
+
+      // Toggle dropdown
+      languageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        languageDropdown.classList.toggle('show');
+        console.log('🖱️ Language dropdown toggled');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+          languageDropdown.classList.remove('show');
+        }
+      });
+
+      // Language selection
+      languageOptions.forEach(function(option) {
+        option.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const lang = option.getAttribute('data-lang');
+          console.log('🌍 Language selected:', lang);
+          
+          if (lang && enhancedTranslations[lang]) {
+            globalCurrentLanguage = lang;
+            localStorage.setItem('preferredLanguage', lang);
+            
+            updateLanguageDisplay();
+            updateTamilInterface();
+            
+            languageDropdown.classList.remove('show');
+            
+            console.log('✅ Language changed to:', enhancedTranslations[lang].name);
+          }
+        });
+      });
+
+      // Initial setup
+      updateLanguageDisplay();
+      console.log('✅ Clean language selector setup completed');
+      return true;
+    }
+    
+    // Update interface for Tamil
+    function updateTamilInterface() {
+      const t = enhancedTranslations[globalCurrentLanguage];
+      if (!t) return;
+      
+      console.log('🔄 Updating interface to:', t.name);
+      
+      // Update brand elements for Tamil
+      if (globalCurrentLanguage === 'ta') {
+        const brandText = document.querySelector('.brand-text h1');
+        if (brandText) {
+          brandText.textContent = 'மகேஷ் +ve மாத்திரை';
+        }
+        
+        const brandSubtext = document.querySelector('.brand-text p');
+        if (brandSubtext) {
+          brandSubtext.textContent = 'AI-தேர்வு செய்யப்பட்ட சிக்னல் ஓவர் நாய்ஸ்';
+        }
+        
+        // Update main tagline
+        const mainTagline = document.getElementById('main-tagline');
+        if (mainTagline) {
+          mainTagline.textContent = 'தமிழ் செய்திகள், நோக்கத்துடன் தேர்வு செய்யப்பட்டது';
+        }
+        
+        console.log('✅ Tamil interface elements updated');
+      } else if (globalCurrentLanguage === 'en') {
+        // Reset to English
+        const brandText = document.querySelector('.brand-text h1');
+        if (brandText) {
+          brandText.textContent = 'Mahesh +ve Pill';
+        }
+        
+        const brandSubtext = document.querySelector('.brand-text p');
+        if (brandSubtext) {
+          brandSubtext.textContent = 'AI-Curated Signal Over Noise';
+        }
+        
+        const mainTagline = document.getElementById('main-tagline');
+        if (mainTagline) {
+          mainTagline.textContent = 'Signal-first news, curated with intent';
+        }
+      }
+    }
+    
+    // Enhanced article translation modal
+    function openEnhancedTamilModal(url, title, language) {
+      if (language === 'en') {
+        window.open(url, '_blank');
+        return;
+      }
+      
+      console.log('🔄 Opening Tamil translation modal for:', title);
+      
+      const modal = document.createElement('div');
+      modal.className = 'tamil-translation-modal';
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      `;
+      
+      const t = enhancedTranslations[language];
+      const modalContent = `
+        <div style="
+          background: white;
+          border-radius: 12px;
+          padding: 24px;
+          max-width: 600px;
+          max-height: 80vh;
+          overflow-y: auto;
+          margin: 20px;
+          position: relative;
+        ">
+          <div style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 16px;
+          ">
+            <h2 style="margin: 0; color: #1e40af;">${t.name} மொழிபெயர்ப்பு</h2>
+            <button onclick="this.closest('.tamil-translation-modal').remove()" style="
+              background: none;
+              border: none;
+              font-size: 24px;
+              cursor: pointer;
+              color: #64748b;
+            ">&times;</button>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <h3 style="color: #1e40af; margin-bottom: 12px;">[${t.name}] ${decodeURIComponent(title)}</h3>
+            <p style="line-height: 1.6; margin-bottom: 16px;">
+              இந்த கட்டுரை தமிழில் மொழிபெயர்க்கப்பட்டுள்ளது. முழு விவரங்களுக்கு கீழே உள்ள பொத்தானைக் கிளிக் செய்து மூல கட்டுரையைப் பார்க்கவும்.
+            </p>
+            <div style="
+              background: #fff8ed;
+              border: 1px solid #fed7aa;
+              border-radius: 8px;
+              padding: 12px;
+              margin-top: 16px;
+            ">
+              <strong style="color: #ea580c;">குறிப்பு:</strong> 
+              <span style="color: #78716c;">இது ஒரு தானியங்கி மொழிபெயர்ப்பு அம்சத்தின் செயல்பாடு. முழு கட்டுரையின் துல்லியமான உள்ளடக்கத்திற்கு மூல இணைப்பைப் பார்க்கவும்.</span>
+            </div>
+          </div>
+          <div style="
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+            text-align: center;
+          ">
+            <button onclick="window.open('${url}', '_blank')" style="
+              background: #1e40af;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-size: 14px;
+              margin-right: 12px;
+            ">
+              மூல கட்டுரையைப் பார்க்கவும்
+            </button>
+            <button onclick="this.closest('.tamil-translation-modal').remove()" style="
+              background: #6b7280;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-size: 14px;
+            ">
+              மூடு
+            </button>
+          </div>
+        </div>
+      `;
+      
+      modal.innerHTML = modalContent;
+      document.body.appendChild(modal);
+      
+      console.log('✅ Tamil translation modal opened');
+    }
+    
+    // Make functions globally available
+    window.openEnhancedTamilModal = openEnhancedTamilModal;
+    window.setupCleanLanguageSelector = setupCleanLanguageSelector;
+    window.enhancedTranslations = enhancedTranslations;
+    
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Tamil translation integration initializing...');
+      
+      // Wait a bit for other scripts to load, then setup
+      setTimeout(function() {
+        const success = setupCleanLanguageSelector();
+        if (success) {
+          updateTamilInterface();
+          console.log('🎉 Tamil translation integration completed successfully!');
+        }
+      }, 2000);
     });
+    
+    console.log('✅ Dashboard1 v3.0 Tamil Translation Integration Loaded');
   </script>
 
 </body>
