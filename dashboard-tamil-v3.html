@@ -6,14 +6,13 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>Mahesh +ve Pill — AI-Curated Signal Over Noise (v3.0 Tamil Ready)</title>
+  <title>Mahesh +ve Pill — Tamil Ready Dashboard (Fresh Load)</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="AI-curated positive news platform that filters signal from noise. Get constructive journalism without sensationalism, doom-scrolling, or clickbait." />
   <meta name="keywords" content="AI news, positive news, curated news, constructive journalism, tech news, startup news, news aggregator, sentiment analysis, anti-clickbait" />
   <meta name="author" content="Mahesh Ramanathan" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://maheshmaheshwarr-stack.github.io/Dashboard1/" />
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json" />
@@ -22,13 +21,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Mahesh News" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-
-  <!-- Open Graph / LinkedIn Sharing -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Mahesh +ve Pill — AI-Curated Signal Over Noise" />
-  <meta property="og:description" content="An agentic AI news system that resists panic, deprioritises breaking noise, and highlights durable, constructive signals." />
-  <meta property="og:url" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/" />
-  <meta property="og:image" content="https://maheshmaheshwarr-stack.github.io/Dashboard1/og-preview.png" />
 
   <style>
     :root {
@@ -84,6 +76,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+
     .app-shell {
       width: 100%;
       max-width: 1400px;
@@ -175,23 +168,26 @@
     }
 
     .language-btn {
-      padding: 6px 12px;
+      padding: 8px 16px;
       border-radius: 999px;
-      border: 1px solid #fed7aa;
-      background: transparent;
-      color: #78716c;
-      font-size: 0.85rem;
+      border: 2px solid #1e40af;
+      background: white;
+      color: #1e40af;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
     }
 
     .language-btn:hover {
-      border-color: #fed7aa;
-      background: #fff8ed;
-      color: #292524;
+      background: #1e40af;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(30, 64, 175, 0.2);
     }
 
     .language-dropdown {
@@ -200,11 +196,11 @@
       right: 0;
       margin-top: 8px;
       background: white;
-      border: 2px solid #fed7aa;
+      border: 2px solid #1e40af;
       border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.2);
+      box-shadow: 0 8px 24px rgba(30, 64, 175, 0.15);
       display: none;
-      min-width: 180px;
+      min-width: 200px;
       z-index: 9999;
       max-height: 300px;
       overflow-y: auto;
@@ -215,14 +211,15 @@
     }
 
     .language-option {
-      padding: 10px 16px;
+      padding: 12px 16px;
       cursor: pointer;
       transition: background 0.2s;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      color: #292524;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #1e40af;
+      font-weight: 500;
     }
 
     .language-option:first-child {
@@ -234,13 +231,13 @@
     }
 
     .language-option:hover {
-      background: #fff8ed;
+      background: #f1f5f9;
     }
 
     .language-option.active {
-      background: #ffedd5;
-      font-weight: 600;
-      color: #ea580c;
+      background: #1e40af;
+      color: white;
+      font-weight: 700;
     }
 
     main {
@@ -345,9 +342,9 @@
     }
 
     .badge--positive {
-      border-color: rgba(249, 115, 22, 0.9);
-      color: #9a3412;
-      background: #ffedd5;
+      border-color: rgba(30, 64, 175, 0.3);
+      color: #1e40af;
+      background: rgba(30, 64, 175, 0.1);
     }
 
     .news-title {
@@ -371,7 +368,7 @@
 
     .tagline {
       font-size: 0.75rem;
-      color: #c2410c;
+      color: #64748b;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       line-clamp: 3;
@@ -393,18 +390,22 @@
 
     .read-link {
       font-size: 0.875rem;
-      font-weight: 500;
+      font-weight: 600;
       text-decoration: none;
-      color: #6366f1;
+      color: #1e40af;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: color 0.2s;
+      transition: all 0.2s;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #1e40af;
     }
 
     .read-link:hover {
-      color: #4f46e5;
-      text-decoration: underline;
+      background: #1e40af;
+      color: white;
+      text-decoration: none;
     }
 
     .sidebar-card {
@@ -466,7 +467,7 @@
     }
 
     footer a {
-      color: #ea580c;
+      color: #1e40af;
       text-decoration: none;
       cursor: pointer;
     }
@@ -474,10 +475,24 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    .cache-info {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #1e40af;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      z-index: 10000;
+    }
   </style>
 </head>
 
 <body>
+  <div class="cache-info">Fresh Load - No Cache</div>
+  
   <div class="app-shell">
     <header>
       <div class="brand">
@@ -495,7 +510,7 @@
           <button class="language-btn" id="language-btn" aria-label="Select language">
             <span id="current-language-flag">🌐</span>
             <span id="current-language-text">English</span>
-            <span style="font-size: 0.7rem;">▼</span>
+            <span style="font-size: 0.8rem;">▼</span>
           </button>
           <div class="language-dropdown" id="language-dropdown">
             <div class="language-option active" data-lang="en" data-flag="🇬🇧">
@@ -557,9 +572,9 @@
   </div>
 
   <script>
-    console.log('Dashboard1 v3.0 Tamil Ready - Starting...');
+    console.log('🚀 Dashboard1 Tamil Ready - Fresh Load Starting...');
     
-    // Enhanced translations
+    // Enhanced translations with complete Tamil support
     const translations = {
       en: {
         name: 'English',
@@ -605,12 +620,14 @@
           aiSummary: "एआई सारांश",
           loading: "लोड हो रहा है...",
           brandTitle: 'महेश +ve पिल',
-          brandSubtitle: 'AI-क्यूरेटेड सिग्नल ओवर नॉइज़'
+          brandSubtitle: 'AI-क्यूरेटेड सिग्नल ओवर नॉइज़',
+          aiCurationTitle: 'AI क्यूरेशन',
+          aiCurationDescription: 'हमारा AI सिस्टम हजारों समाचार लेखों को फिल्टर करता है।'
         }
       }
     };
 
-    // RSS Feeds
+    // RSS Feeds for different languages
     const RSS_FEEDS = {
       en: {
         hackernews: "https://hnrss.org/frontpage",
@@ -627,6 +644,11 @@
         thehindu: "https://www.thehindu.com/feeder/default.rss",
         ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
         indiatoday: "https://www.indiatoday.in/rss/1206578"
+      },
+      hi: {
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        thehindu: "https://www.thehindu.com/feeder/default.rss"
       }
     };
 
@@ -670,6 +692,7 @@
 
       console.log('✅ Interface updated to:', t.name);
     }
+
     // Load news articles
     async function loadNews() {
       console.log('📰 Loading news for:', currentLanguage);
@@ -677,36 +700,34 @@
       const newsList = document.getElementById('news-list');
       const t = translations[currentLanguage];
       
-      newsList.innerHTML = `
-        <div class="loading">
-          <div class="loading-spinner"></div>
-          <p style="margin-top: 10px;">${t.ui.loading} ${t.name} news...</p>
-        </div>
-      `;
+      newsList.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p style="margin-top: 10px;">' + t.ui.loading + ' ' + t.name + ' news...</p></div>';
 
       try {
         const currentFeeds = RSS_FEEDS[currentLanguage] || RSS_FEEDS.en;
-        const fetchPromises = Object.entries(currentFeeds).map(([key, url]) => 
-          fetch(RSS_API_BASE + encodeURIComponent(url))
-            .then(r => r.json())
-            .then(data => ({ key, data }))
-            .catch(err => {
-              console.warn(`Failed to fetch ${key}:`, err);
-              return { key, data: null };
-            })
-        );
+        const fetchPromises = Object.entries(currentFeeds).map(function([key, url]) {
+          return fetch(RSS_API_BASE + encodeURIComponent(url))
+            .then(function(r) { return r.json(); })
+            .then(function(data) { return { key: key, data: data }; })
+            .catch(function(err) {
+              console.warn('Failed to fetch ' + key + ':', err);
+              return { key: key, data: null };
+            });
+        });
 
         const results = await Promise.all(fetchPromises);
         allArticles = [];
 
-        results.forEach(({ key, data }) => {
+        results.forEach(function(result) {
+          const key = result.key;
+          const data = result.data;
+          
           if (!data || data.status !== "ok" || !data.items || !data.items.length) {
             return;
           }
 
-          const sourceName = data.feed?.title || "News Source";
+          const sourceName = (data.feed && data.feed.title) ? data.feed.title : "News Source";
           
-          data.items.slice(0, 4).forEach(item => {
+          data.items.slice(0, 4).forEach(function(item) {
             if (!item.title || !item.link) return;
             
             const article = {
@@ -723,14 +744,7 @@
         });
 
         if (!allArticles.length) {
-          newsList.innerHTML = `
-            <div class="loading">
-              <p style="color: #ef4444;">No stories found. Please try again later.</p>
-              <button onclick="loadNews()" style="margin-top: 10px; padding: 8px 16px; background: #1e40af; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                Try Again
-              </button>
-            </div>
-          `;
+          newsList.innerHTML = '<div class="loading"><p style="color: #ef4444;">No stories found. Please try again later.</p><button onclick="loadNews()" style="margin-top: 10px; padding: 8px 16px; background: #1e40af; color: white; border: none; border-radius: 6px; cursor: pointer;">Try Again</button></div>';
           return;
         }
 
@@ -739,14 +753,7 @@
 
       } catch (error) {
         console.error('❌ News loading failed:', error);
-        newsList.innerHTML = `
-          <div class="loading">
-            <p style="color: #ef4444;">Failed to load news. Please try again.</p>
-            <button onclick="loadNews()" style="margin-top: 10px; padding: 8px 16px; background: #1e40af; color: white; border: none; border-radius: 6px; cursor: pointer;">
-              Try Again
-            </button>
-          </div>
-        `;
+        newsList.innerHTML = '<div class="loading"><p style="color: #ef4444;">Failed to load news. Please try again.</p><button onclick="loadNews()" style="margin-top: 10px; padding: 8px 16px; background: #1e40af; color: white; border: none; border-radius: 6px; cursor: pointer;">Try Again</button></div>';
       }
     }
 
@@ -770,26 +777,10 @@
           }) : "";
 
         // Add language prefix for non-English
-        const titlePrefix = currentLanguage !== 'en' ? `[${t.name}] ` : '';
-        const descPrefix = currentLanguage !== 'en' ? `[${t.name}] ` : '';
+        const titlePrefix = currentLanguage !== 'en' ? '[' + t.name + '] ' : '';
+        const descPrefix = currentLanguage !== 'en' ? '[' + t.name + '] ' : '';
 
-        card.innerHTML = `
-          <div class="news-badges">
-            <span class="badge badge--category">NEWS</span>
-            <span class="badge badge--positive">POSITIVE</span>
-          </div>
-          <h3 class="news-title">${titlePrefix}${article.title}</h3>
-          <p class="tagline">${descPrefix}${article.description.substring(0, 150)}...</p>
-          <div class="news-meta-row">
-            <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
-          </div>
-          <div class="news-footer">
-            <span class="source">${t.ui.source}: ${article.source.name}</span>
-            <a class="read-link" href="#" onclick="openTamilModal('${article.url}', '${encodeURIComponent(article.title)}', '${currentLanguage}')">
-              ${t.ui.readMore} <span>↗</span>
-            </a>
-          </div>
-        `;
+        card.innerHTML = '<div class="news-badges"><span class="badge badge--category">NEWS</span><span class="badge badge--positive">POSITIVE</span></div><h3 class="news-title">' + titlePrefix + article.title + '</h3><p class="tagline">' + descPrefix + article.description.substring(0, 150) + '...</p><div class="news-meta-row"><div class="news-meta">' + (published ? '⏱ ' + published : "") + '</div></div><div class="news-footer"><span class="source">' + t.ui.source + ': ' + article.source.name + '</span><a class="read-link" href="#" onclick="openTamilModal(\'' + article.url + '\', \'' + encodeURIComponent(article.title) + '\', \'' + currentLanguage + '\')">' + t.ui.readMore + ' <span>↗</span></a></div>';
 
         newsList.appendChild(card);
       });
@@ -804,85 +795,9 @@
 
       const t = translations[language];
       const modal = document.createElement('div');
-      modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10000;
-      `;
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 10000;';
 
-      modal.innerHTML = `
-        <div style="
-          background: white;
-          border-radius: 12px;
-          padding: 24px;
-          max-width: 600px;
-          margin: 20px;
-          position: relative;
-        ">
-          <div style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 16px;
-          ">
-            <h2 style="margin: 0; color: #1e40af;">${t.name} மொழிபெயர்ப்பு</h2>
-            <button onclick="this.closest('div').parentElement.remove()" style="
-              background: none;
-              border: none;
-              font-size: 24px;
-              cursor: pointer;
-              color: #64748b;
-            ">&times;</button>
-          </div>
-          <div style="margin-bottom: 20px;">
-            <h3 style="color: #1e40af; margin-bottom: 12px;">[${t.name}] ${decodeURIComponent(title)}</h3>
-            <p style="line-height: 1.6; margin-bottom: 16px;">
-              இந்த கட்டுரை ${t.name} மொழியில் கிடைக்கிறது. முழு உள்ளடக்கத்தைப் பார்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.
-            </p>
-            <div style="
-              background: #fff8ed;
-              border: 1px solid #fed7aa;
-              border-radius: 8px;
-              padding: 12px;
-            ">
-              <strong style="color: #ea580c;">குறிப்பு:</strong> 
-              <span style="color: #78716c;">இது தமிழ் மொழிபெயர்ப்பு அம்சத்தின் செயல்பாடு. முழு கட்டுரைக்கு மூல இணைப்பைப் பார்க்கவும்.</span>
-            </div>
-          </div>
-          <div style="text-align: center;">
-            <button onclick="window.open('${url}', '_blank')" style="
-              background: #1e40af;
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              border-radius: 6px;
-              cursor: pointer;
-              margin-right: 12px;
-            ">
-              மூல கட்டுரையைப் பார்க்கவும்
-            </button>
-            <button onclick="this.closest('div').parentElement.remove()" style="
-              background: #6b7280;
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              border-radius: 6px;
-              cursor: pointer;
-            ">
-              மூடு
-            </button>
-          </div>
-        </div>
-      `;
+      modal.innerHTML = '<div style="background: white; border-radius: 12px; padding: 24px; max-width: 600px; margin: 20px; position: relative;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px;"><h2 style="margin: 0; color: #1e40af;">' + t.name + ' மொழிபெயர்ப்பு</h2><button onclick="this.closest(\'div\').parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button></div><div style="margin-bottom: 20px;"><h3 style="color: #1e40af; margin-bottom: 12px;">[' + t.name + '] ' + decodeURIComponent(title) + '</h3><p style="line-height: 1.6; margin-bottom: 16px;">இந்த கட்டுரை ' + t.name + ' மொழியில் கிடைக்கிறது. முழு உள்ளடக்கத்தைப் பார்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.</p><div style="background: #f1f5f9; border: 1px solid #1e40af; border-radius: 8px; padding: 12px;"><strong style="color: #1e40af;">குறிப்பு:</strong> <span style="color: #64748b;">இது தமிழ் மொழிபெயர்ப்பு அம்சத்தின் செயல்பாடு. முழு கட்டுரைக்கு மூல இணைப்பைப் பார்க்கவும்.</span></div></div><div style="text-align: center;"><button onclick="window.open(\'' + url + '\', \'_blank\')" style="background: #1e40af; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-right: 12px;">மூல கட்டுரையைப் பார்க்கவும்</button><button onclick="this.closest(\'div\').parentElement.remove()" style="background: #6b7280; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">மூடு</button></div></div>';
 
       document.body.appendChild(modal);
       console.log('✅ Tamil modal opened for:', decodeURIComponent(title));
@@ -947,16 +862,16 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🚀 Dashboard1 v3.0 Tamil Ready initializing...');
+      console.log('🚀 Dashboard1 Tamil Ready initializing...');
       
       setupLanguageSelector();
       updateInterface();
       loadNews();
       
-      console.log('🎉 Dashboard1 v3.0 Tamil Ready initialization completed!');
+      console.log('🎉 Dashboard1 Tamil Ready initialization completed!');
     });
 
-    console.log('✅ Dashboard1 v3.0 Tamil Ready script loaded successfully');
+    console.log('✅ Dashboard1 Tamil Ready script loaded successfully - Fresh Version');
   </script>
 </body>
 </html>
