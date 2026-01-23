@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard1 - Minimal Working Version</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+            margin: 0; 
+            padding: 20px; 
+            background: #f8fafc;
+        }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 20px; 
+            background: white; 
+            border-radius: 12px; 
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .brand h1 { margin: 0; color: #1e40af; }
+        .language-selector { position: relative; }
+        .language-btn { 
+            padding: 8px 16px; 
+            border: 1px solid #e2e8f0; 
+            background: white; 
+            cursor: pointer; 
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            display: none;
+            min-width: 180px;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .language-dropdown.show { display: block; }
+        .language-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .language-option:hover { background: #f8fafc; }
+        .language-option.active { background: #eff6ff; font-weight: 600; }
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 16px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="brand">
+            <h1 id="brand-title">Mahesh +ve Pill</h1>
+        </div>
+        
+        <div class="language-selector">
+            <button class="language-btn" id="language-btn">
+                <span id="current-language-flag">🌐</span>
+                <span id="current-language-text">English</span>
+                <span>▼</span>
+            </button>
+            <div class="language-dropdown" id="language-dropdown">
+                <div class="language-option active" data-lang="en" data-flag="🇬🇧">
+                    <span>🇬🇧</span> English
+                </div>
+                <div class="language-option" data-lang="hi" data-flag="🇮🇳">
+                    <span>🇮🇳</span> हिंदी (Hindi)
+                </div>
+                <div class="language-option" data-lang="ta" data-flag="🇮🇳">
+                    <span>🇮🇳</span> தமிழ் (Tamil)
+                </div>
+                <div class="language-option" data-lang="te" data-flag="🇮🇳">
+                    <span>🇮🇳</span> తెలుగు (Telugu)
+                </div>
+                <div class="language-option" data-lang="kn" data-flag="🇮🇳">
+                    <span>🇮🇳</span> ಕನ್ನಡ (Kannada)
+                </div>
+                <div class="language-option" data-lang="ml" data-flag="🇮🇳">
+                    <span>🇮🇳</span> മലയാളം (Malayalam)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content">
+        <h2 id="main-heading">AI-Curated Signal Over Noise</h2>
+        <p id="main-description">This is a minimal working version to test the Tamil translation feature.</p>
+        
+        <div class="status" id="status">
+            Status: Initializing...
+        </div>
+    </div>
+
+    <script>
+        console.log('Minimal Dashboard1 starting...');
+        
+        const translations = {
+            en: { 
+                name: 'English', 
+                flag: '🇬🇧',
+                title: 'Mahesh +ve Pill',
+                heading: 'AI-Curated Signal Over Noise',
+                description: 'This is a minimal working version to test the Tamil translation feature.'
+            },
+            hi: { 
+                name: 'हिंदी', 
+                flag: '🇮🇳',
+                title: 'महेश +ve पिल',
+                heading: 'AI-क्यूरेटेड सिग्नल ओवर नॉइज़',
+                description: 'यह तमिल अनुवाद सुविधा का परीक्षण करने के लिए एक न्यूनतम कार्यशील संस्करण है।'
+            },
+            ta: { 
+                name: 'தமிழ்', 
+                flag: '🇮🇳',
+                title: 'மகேஷ் +ve மாத்திரை',
+                heading: 'AI-தேர்வு செய்யப்பட்ட சிக்னல் ஓவர் நாய்ஸ்',
+                description: 'தமிழ் மொழிபெயர்ப்பு அம்சத்தை சோதிக்க இது ஒரு குறைந்தபட்ச வேலை செய்யும் பதிப்பு.'
+            },
+            te: { 
+                name: 'తెలుగు', 
+                flag: '🇮🇳',
+                title: 'మహేష్ +ve పిల్',
+                heading: 'AI-క్యూరేటెడ్ సిగ్నల్ ఓవర్ నాయిస్',
+                description: 'తమిళ అనువాద లక్షణాన్ని పరీక్షించడానికి ఇది కనీస పని చేసే వెర్షన్.'
+            },
+            kn: { 
+                name: 'ಕನ್ನಡ', 
+                flag: '🇮🇳',
+                title: 'ಮಹೇಶ್ +ve ಪಿಲ್',
+                heading: 'AI-ಕ್ಯೂರೇಟೆಡ್ ಸಿಗ್ನಲ್ ಓವರ್ ನಾಯ್ಸ್',
+                description: 'ತಮಿಳು ಅನುವಾದ ವೈಶಿಷ್ಟ್ಯವನ್ನು ಪರೀಕ್ಷಿಸಲು ಇದು ಕನಿಷ್ಠ ಕೆಲಸ ಮಾಡುವ ಆವೃತ್ತಿ.'
+            },
+            ml: { 
+                name: 'മലയാളം', 
+                flag: '🇮🇳',
+                title: 'മഹേഷ് +ve പിൽ',
+                heading: 'AI-ക്യൂറേറ്റഡ് സിഗ്നൽ ഓവർ നോയ്സ്',
+                description: 'തമിഴ് വിവർത്തന സവിശേഷത പരീക്ഷിക്കുന്നതിനുള്ള ഏറ്റവും കുറഞ്ഞ പ്രവർത്തന പതിപ്പാണിത്.'
+            }
+        };
+        
+        let currentLanguage = 'en';
+        
+        function updateContent() {
+            const t = translations[currentLanguage];
+            
+            document.getElementById('brand-title').textContent = t.title;
+            document.getElementById('main-heading').textContent = t.heading;
+            document.getElementById('main-description').textContent = t.description;
+            document.getElementById('current-language-flag').textContent = t.flag;
+            document.getElementById('current-language-text').textContent = t.name;
+            
+            // Update active state
+            document.querySelectorAll('.language-option').forEach(option => {
+                if (option.getAttribute('data-lang') === currentLanguage) {
+                    option.classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                }
+            });
+            
+            document.getElementById('status').innerHTML = `
+                <strong>✅ Language: ${t.name}</strong><br>
+                Current selection working perfectly!
+            `;
+        }
+        
+        function setupLanguageSelector() {
+            const languageBtn = document.getElementById('language-btn');
+            const languageDropdown = document.getElementById('language-dropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            console.log('Setting up language selector...');
+            
+            if (!languageBtn || !languageDropdown) {
+                console.error('Language elements not found');
+                return;
+            }
+            
+            // Toggle dropdown
+            languageBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                languageDropdown.classList.toggle('show');
+                console.log('Dropdown toggled');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                    languageDropdown.classList.remove('show');
+                }
+            });
+            
+            // Language selection
+            languageOptions.forEach(function(option) {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const lang = option.getAttribute('data-lang');
+                    console.log('Language selected:', lang);
+                    
+                    currentLanguage = lang;
+                    updateContent();
+                    languageDropdown.classList.remove('show');
+                });
+            });
+            
+            console.log('Language selector setup complete');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            setupLanguageSelector();
+            updateContent();
+            
+            document.getElementById('status').innerHTML = `
+                <strong>✅ Minimal Dashboard1 Ready</strong><br>
+                Language selector is working! Try selecting Tamil (தமிழ்).
+            `;
+        });
+        
+        console.log('Minimal Dashboard1 script loaded');
+    </script>
+</body>
+</html>
