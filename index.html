@@ -4298,19 +4298,29 @@
 
       const sourceName = article.source?.name || "News source";
       
-      // Translate content if not English
-      const title = currentLanguage !== 'en' ? 
-        await translateText(article.title || "Untitled story", currentLanguage) :
-        article.title || "Untitled story";
-        
-      const description = currentLanguage !== 'en' ?
-        await translateText(shortenText(article.description || "A positive development worth noting today."), currentLanguage) :
-        shortenText(article.description || "A positive development worth noting today.");
+      // Translate content if not English with error handling
+      let title, description, summary;
       
-      // Generate AI summary (extract key points)
-      const summary = await (currentLanguage !== 'en' ? 
-        translateText(generateAISummary(article), currentLanguage) :
-        Promise.resolve(generateAISummary(article)));
+      try {
+        title = currentLanguage !== 'en' ? 
+          await translateText(article.title || "Untitled story", currentLanguage) :
+          article.title || "Untitled story";
+          
+        description = currentLanguage !== 'en' ?
+          await translateText(shortenText(article.description || "A positive development worth noting today."), currentLanguage) :
+          shortenText(article.description || "A positive development worth noting today.");
+        
+        // Generate AI summary (extract key points)
+        summary = await (currentLanguage !== 'en' ? 
+          translateText(generateAISummary(article), currentLanguage) :
+          Promise.resolve(generateAISummary(article)));
+      } catch (error) {
+        console.warn('Translation error:', error);
+        // Fallback to original text if translation fails
+        title = article.title || "Untitled story";
+        description = shortenText(article.description || "A positive development worth noting today.");
+        summary = generateAISummary(article);
+      }
 
       // Get translations
       const t = translations[currentLanguage].ui;
@@ -4537,45 +4547,76 @@
       const newsList = document.getElementById("news-list");
       const lastUpdatedEl = document.getElementById("last-updated");
       
-      newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
+      const langName = translations[currentLanguage]?.name || 'English';
+      newsList.innerHTML = `<p style="color:#6b7280;font-size:0.8rem;">Fetching ${langName} stories from multiple sources…</p>`;
 
       try {
         // Get feeds for current language
         const currentFeeds = RSS_FEEDS[currentLanguage] || RSS_FEEDS.en;
+        console.log(`Loading news for language: ${currentLanguage}`, currentFeeds);
         
-        // Build fetch promises
+        // Build fetch promises with better error handling
         const fetchPromises = Object.entries(currentFeeds).map(([key, url]) => 
           fetch(CONFIG.RSS_API_BASE + encodeURIComponent(url))
-            .then(r => r.json())
-            .then(data => ({ key, data }))
+            .then(r => {
+              if (!r.ok) {
+                throw new Error(`HTTP ${r.status}: ${r.statusText}`);
+              }
+              return r.json();
+            })
+            .then(data => {
+              console.log(`Successfully fetched ${key}:`, data?.items?.length || 0, 'items');
+              return { key, data };
+            })
             .catch(err => {
-              console.warn(`Failed to fetch ${key}:`, err);
-              return { key, data: null };
+              console.warn(`Failed to fetch ${key} (${url}):`, err.message);
+              return { key, data: null, error: err.message };
             })
         );
 
         const results = await Promise.all(fetchPromises);
         state.allArticles = [];
 
-        // Process all feeds
-        results.forEach(({ key, data }) => {
-          if (!data || data.status !== "ok" || !data.items || !data.items.length) {
+        // Process all feeds with detailed logging
+        let totalProcessed = 0;
+        results.forEach(({ key, data, error }) => {
+          if (error) {
+            console.warn(`Skipping ${key} due to error: ${error}`);
+            return;
+          }
+          
+          if (!data || data.status !== "ok") {
+            console.warn(`Skipping ${key}: Invalid response status`, data?.status);
+            return;
+          }
+          
+          if (!data.items || !data.items.length) {
+            console.warn(`Skipping ${key}: No items found`);
             return;
           }
 
           const sourceName = data.feed?.title || "News Source";
+          console.log(`Processing ${key}: ${data.items.length} items from ${sourceName}`);
           
           data.items.slice(0, 6).forEach(item => {
+            if (!item.title || !item.link) {
+              console.warn(`Skipping invalid item from ${key}:`, item);
+              return;
+            }
+            
             const article = {
               title: item.title,
-              description: stripHtml(item.description),
-              content: stripHtml(item.content),
+              description: stripHtml(item.description || ''),
+              content: stripHtml(item.content || ''),
               url: item.link,
               publishedAt: item.pubDate,
               source: { name: sourceName },
               sourceKey: key,
               category: null,
-              aiScore: 0
+              aiScore: 0,
+              enclosure: item.enclosure,
+              thumbnail: item.thumbnail,
+              image: item.image
             };
 
             // Classify and score
@@ -4583,11 +4624,24 @@
             article.aiScore = calculatePositivityScore(article);
 
             state.allArticles.push(article);
+            totalProcessed++;
           });
         });
 
+        console.log(`Total articles processed: ${totalProcessed}`);
+
         if (!state.allArticles.length) {
-          newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">No stories found. Please try again later.</p>';
+          const errorMsg = currentLanguage !== 'en' ? 
+            `No ${langName} stories found. This might be due to RSS feed issues. Try switching back to English or refresh the page.` :
+            'No stories found. Please try again later.';
+          
+          newsList.innerHTML = `<div style="text-align:center;padding:40px;">
+            <p style="color:#ef4444;font-size:0.9rem;margin-bottom:10px;">⚠️ ${errorMsg}</p>
+            <button onclick="loadNews()" style="padding:8px 16px;background:#1e40af;color:white;border:none;border-radius:6px;cursor:pointer;">
+              🔄 Try Again
+            </button>
+          </div>`;
+          
           if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
           return;
         }
@@ -4608,27 +4662,47 @@
         const positivityPercent = (positiveCount * 100) / state.allArticles.length;
         updatePositivityMeter(positivityPercent);
 
-        // Render cards with translation
-        newsList.innerHTML = "";
+        // Show loading message for translation
+        if (currentLanguage !== 'en') {
+          newsList.innerHTML = `
+            <div style="text-align:center;padding:20px;">
+              <div class="loading-spinner"></div>
+              <p style="margin-top:10px;color:#78716c;">Loading ${langName} news...</p>
+              <p class="translation-progress" style="font-size:0.8rem;color:#94a3b8;margin-top:5px;">Preparing ${state.allArticles.length} articles...</p>
+            </div>`;
+        } else {
+          newsList.innerHTML = "";
+        }
         
         // Process articles in batches for better performance
         for (let i = 0; i < state.allArticles.length; i++) {
           const article = state.allArticles[i];
-          const card = await createNewsCard(article);
-          newsList.appendChild(card);
           
-          // Show progress for language translation
-          if (currentLanguage !== 'en' && i % 5 === 0) {
-            const progress = Math.round((i / state.allArticles.length) * 100);
-            const loadingMsg = newsList.querySelector('.translation-progress');
-            if (loadingMsg) {
-              loadingMsg.textContent = `Translating articles... ${progress}%`;
+          try {
+            const card = await createNewsCard(article);
+            
+            // Clear loading message on first card
+            if (i === 0 && currentLanguage !== 'en') {
+              newsList.innerHTML = "";
             }
+            
+            newsList.appendChild(card);
+            
+            // Show progress for language translation
+            if (currentLanguage !== 'en' && i % 3 === 0) {
+              const progress = Math.round(((i + 1) / state.allArticles.length) * 100);
+              const progressEl = document.querySelector('.translation-progress');
+              if (progressEl) {
+                progressEl.textContent = `Translating articles... ${progress}%`;
+              }
+            }
+          } catch (error) {
+            console.error(`Error creating card for article ${i}:`, error);
           }
         }
         
         // Remove any loading messages
-        const loadingMsg = newsList.querySelector('.translation-progress');
+        const loadingMsg = document.querySelector('.translation-progress');
         if (loadingMsg) loadingMsg.remove();
 
         // Reset visibility
@@ -4637,10 +4711,13 @@
 
         // Update UI elements
         if (lastUpdatedEl) {
-          lastUpdatedEl.textContent = `Updated ${new Date().toLocaleTimeString("en-IN", { 
+          const timestamp = new Date().toLocaleTimeString("en-IN", { 
             hour: "2-digit", 
             minute: "2-digit" 
-          })}`;
+          });
+          lastUpdatedEl.textContent = currentLanguage !== 'en' ? 
+            `${langName} news updated ${timestamp}` : 
+            `Updated ${timestamp}`;
         }
 
         updateAgentNote(state.allArticles);
@@ -5673,7 +5750,9 @@
       };
       
       // Add language indicator to show translation is working
-      return `[${languageNames[targetLang]}] ${text}`;
+      // This is a placeholder - in production you would call a real translation API
+      const langIndicator = languageNames[targetLang] || targetLang.toUpperCase();
+      return `[${langIndicator}] ${text}`;
     }
 
     // ======================
