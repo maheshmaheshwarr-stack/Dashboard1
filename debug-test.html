@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test Page</h1>
+    <div id="status">Loading...</div>
+    
+    <script>
+        console.log('Debug test script starting...');
+        
+        // Test basic functionality
+        document.getElementById('status').textContent = 'JavaScript is working!';
+        
+        // Test language selector elements
+        setTimeout(() => {
+            console.log('Checking for language elements...');
+            
+            const languageBtn = document.getElementById('language-btn');
+            const languageDropdown = document.getElementById('language-dropdown');
+            
+            console.log('Language button found:', !!languageBtn);
+            console.log('Language dropdown found:', !!languageDropdown);
+            
+            if (!languageBtn) {
+                document.getElementById('status').innerHTML += '<br>❌ Language button not found';
+            } else {
+                document.getElementById('status').innerHTML += '<br>✅ Language button found';
+            }
+            
+            if (!languageDropdown) {
+                document.getElementById('status').innerHTML += '<br>❌ Language dropdown not found';
+            } else {
+                document.getElementById('status').innerHTML += '<br>✅ Language dropdown found';
+            }
+        }, 1000);
+        
+        console.log('Debug test script completed');
+    </script>
+</body>
+</html>

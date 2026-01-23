@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Language Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .language-selector { position: relative; display: inline-block; }
+        .language-btn { 
+            padding: 8px 16px; 
+            border: 1px solid #ccc; 
+            background: white; 
+            cursor: pointer; 
+            border-radius: 5px;
+        }
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            min-width: 150px;
+            z-index: 1000;
+        }
+        .language-dropdown.show { display: block; }
+        .language-option {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .language-option:hover { background: #f0f0f0; }
+        .language-option.active { background: #e0e0e0; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Language Selector Test</h1>
+    
+    <div class="language-selector">
+        <button class="language-btn" id="language-btn">
+            <span id="current-language-flag">🌐</span>
+            <span id="current-language-text">English</span>
+            <span>▼</span>
+        </button>
+        <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option active" data-lang="en" data-flag="🇬🇧">
+                <span>🇬🇧</span> English
+            </div>
+            <div class="language-option" data-lang="hi" data-flag="🇮🇳">
+                <span>🇮🇳</span> हिंदी (Hindi)
+            </div>
+            <div class="language-option" data-lang="ta" data-flag="🇮🇳">
+                <span>🇮🇳</span> தமிழ் (Tamil)
+            </div>
+            <div class="language-option" data-lang="te" data-flag="🇮🇳">
+                <span>🇮🇳</span> తెలుగు (Telugu)
+            </div>
+            <div class="language-option" data-lang="kn" data-flag="🇮🇳">
+                <span>🇮🇳</span> ಕನ್ನಡ (Kannada)
+            </div>
+            <div class="language-option" data-lang="ml" data-flag="🇮🇳">
+                <span>🇮🇳</span> മലയാളം (Malayalam)
+            </div>
+        </div>
+    </div>
+    
+    <div id="status" style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+        Status: Loading...
+    </div>
+
+    <script>
+        console.log('Simple test starting...');
+        
+        const translations = {
+            en: { name: 'English', flag: '🇬🇧' },
+            hi: { name: 'हिंदी', flag: '🇮🇳' },
+            ta: { name: 'தமிழ்', flag: '🇮🇳' },
+            te: { name: 'తెలుగు', flag: '🇮🇳' },
+            kn: { name: 'ಕನ್ನಡ', flag: '🇮🇳' },
+            ml: { name: 'മലയാളം', flag: '🇮🇳' }
+        };
+        
+        let currentLanguage = 'en';
+        
+        function setupLanguageSelector() {
+            const languageBtn = document.getElementById('language-btn');
+            const languageDropdown = document.getElementById('language-dropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            console.log('Setting up language selector:', {
+                languageBtn: !!languageBtn,
+                languageDropdown: !!languageDropdown,
+                languageOptionsCount: languageOptions.length
+            });
+            
+            if (!languageBtn || !languageDropdown) {
+                console.error('Language selector elements not found');
+                document.getElementById('status').innerHTML = '❌ Language selector elements not found';
+                return;
+            }
+            
+            document.getElementById('status').innerHTML = '✅ Language selector initialized successfully';
+            
+            // Toggle dropdown
+            languageBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                console.log('Language button clicked');
+                languageDropdown.classList.toggle('show');
+                document.getElementById('status').innerHTML = `✅ Dropdown toggled. Classes: ${languageDropdown.className}`;
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                    languageDropdown.classList.remove('show');
+                }
+            });
+            
+            // Language selection
+            languageOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const lang = option.getAttribute('data-lang');
+                    console.log('Language selected:', lang);
+                    
+                    currentLanguage = lang;
+                    
+                    // Update display
+                    const currentLangFlag = document.getElementById('current-language-flag');
+                    const currentLangText = document.getElementById('current-language-text');
+                    
+                    if (currentLangFlag && currentLangText && translations[lang]) {
+                        currentLangFlag.textContent = translations[lang].flag;
+                        currentLangText.textContent = translations[lang].name;
+                    }
+                    
+                    // Update active state
+                    document.querySelectorAll('.language-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    option.classList.add('active');
+                    
+                    languageDropdown.classList.remove('show');
+                    document.getElementById('status').innerHTML = `✅ Language changed to: ${translations[lang].name}`;
+                });
+            });
+        }
+        
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, setting up language selector...');
+            setupLanguageSelector();
+        });
+        
+        console.log('Simple test script loaded');
+    </script>
+</body>
+</html>
