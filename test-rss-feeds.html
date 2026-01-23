@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .feed-test { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .loading { background: #fff3cd; border-color: #ffeaa7; }
+        button { padding: 10px 20px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>RSS Feed Tester for Dashboard1</h1>
+    <button onclick="testAllFeeds()">Test All RSS Feeds</button>
+    <div id="results"></div>
+
+    <script>
+        const RSS_FEEDS = {
+            en: {
+                hackernews: "https://hnrss.org/frontpage",
+                techcrunch: "https://techcrunch.com/feed/",
+                wired: "https://www.wired.com/feed/rss",
+                arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
+                theverge: "https://www.theverge.com/rss/index.xml",
+                goodnewsnetwork: "https://www.goodnewsnetwork.org/feed/",
+                positivenews: "https://www.positive.news/feed/",
+                optimistdaily: "https://www.optimistdaily.com/feed/"
+            },
+            hi: {
+                tbi: "https://www.thebetterindia.com/feed/",
+                pib: "https://pib.gov.in/rss.aspx",
+                rbi: "https://rbi.org.in/Scripts/Rss.aspx",
+                ietech: "https://indianexpress.com/section/technology/feed/",
+                thehindu: "https://www.thehindu.com/feeder/default.rss",
+                hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+                ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories"
+            }
+        };
+
+        const RSS_API_BASE = "https://api.rss2json.com/v1/api.json?rss_url=";
+
+        async function testFeed(key, url, language) {
+            const resultsDiv = document.getElementById('results');
+            const feedDiv = document.createElement('div');
+            feedDiv.className = 'feed-test loading';
+            feedDiv.innerHTML = `<strong>${language.toUpperCase()} - ${key}</strong>: Testing ${url}...`;
+            resultsDiv.appendChild(feedDiv);
+
+            try {
+                const response = await fetch(RSS_API_BASE + encodeURIComponent(url));
+                const data = await response.json();
+
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    feedDiv.className = 'feed-test success';
+                    feedDiv.innerHTML = `<strong>${language.toUpperCase()} - ${key}</strong>: ✅ SUCCESS - ${data.items.length} items found<br>
+                        <small>Feed: ${data.feed?.title || 'Unknown'}</small><br>
+                        <small>Latest: ${data.items[0]?.title || 'No title'}</small>`;
+                } else {
+                    feedDiv.className = 'feed-test error';
+                    feedDiv.innerHTML = `<strong>${language.toUpperCase()} - ${key}</strong>: ❌ FAILED - ${data.message || 'No items found'}<br>
+                        <small>Status: ${data.status}</small>`;
+                }
+            } catch (error) {
+                feedDiv.className = 'feed-test error';
+                feedDiv.innerHTML = `<strong>${language.toUpperCase()} - ${key}</strong>: ❌ ERROR - ${error.message}<br>
+                    <small>URL: ${url}</small>`;
+            }
+        }
+
+        async function testAllFeeds() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>Testing RSS Feeds...</h2>';
+
+            for (const [language, feeds] of Object.entries(RSS_FEEDS)) {
+                for (const [key, url] of Object.entries(feeds)) {
+                    await testFeed(key, url, language);
+                    // Small delay to avoid overwhelming the API
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mahesh-news-v4';
+const CACHE_NAME = 'mahesh-news-v5';
 
 // Install event - skip waiting to activate immediately
 self.addEventListener('install', (event) => {

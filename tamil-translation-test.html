@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .loading { background: #fff3cd; border-color: #ffeaa7; }
+        button { padding: 10px 20px; margin: 10px 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .translation-result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>தமிழ் மொழிபெயர்ப்பு சோதனை (Tamil Translation Test)</h1>
+    
+    <div class="test-section">
+        <h2>Translation API Test</h2>
+        <button onclick="testTranslation()">Test Tamil Translation</button>
+        <div id="translation-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Sample Tamil Interface Elements</h2>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button>மேலும் படிக்க</button>
+            <button>உள்நுழைய</button>
+            <button>பதிவு செய்ய</button>
+            <button>மீண்டும் முயற்சிக்கவும்</button>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Sample News Card in Tamil</h2>
+        <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; background: white;">
+            <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+                <span style="padding: 4px 8px; background: #ede9fe; color: #6b21a8; border-radius: 6px; font-size: 12px;">தொழில்நுட்பம்</span>
+                <span style="padding: 4px 8px; background: #ffedd5; color: #9a3412; border-radius: 6px; font-size: 12px;">நேர்மறை தாக்கம்</span>
+            </div>
+            <h3 style="margin: 0 0 12px 0; color: #1e40af;">[தமிழ்] புதிய AI தொழில்நுட்பம் சுகாதார துறையில் புரட்சி</h3>
+            <div style="margin: 8px 0; padding: 10px 12px; background: #fff8ed; border-left: 3px solid #f97316; border-radius: 8px;">
+                <strong style="color: #ea580c;">🤖 AI சுருக்கம்:</strong> [தமிழ்] முக்கிய புள்ளிவிவரங்கள்: 20%, 4 பில்லியன். கவனிக்கத்தக்க நேர்மறை தாக்கத்துடன் கூடிய வளர்ச்சி.
+            </div>
+            <p style="color: #c2410c; font-size: 14px;">[தமிழ்] இந்த தொழில்நுட்ப முன்னேற்றம் மருத்துவ துறையில் குறிப்பிடத்தக்க மாற்றங்களை கொண்டு வரும் என எதிர்பார்க்கப்படுகிறது.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+                <span style="font-size: 12px; color: #64748b;">மூலம்: தி பெட்டர் இந்தியா</span>
+                <a href="#" style="color: #6366f1; text-decoration: none; font-size: 14px;">மேலும் படிக்க ↗</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function testTranslation() {
+            const resultsDiv = document.getElementById('translation-results');
+            resultsDiv.innerHTML = '<div class="loading">Testing translation API...</div>';
+            
+            const testTexts = [
+                "Breaking: New AI technology revolutionizes healthcare",
+                "Scientists discover breakthrough in renewable energy",
+                "Local startup creates jobs for 1000 people"
+            ];
+            
+            let results = '<h3>Translation Results:</h3>';
+            
+            for (const text of testTexts) {
+                try {
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|ta`);
+                    const data = await response.json();
+                    
+                    if (data.responseStatus === 200 && data.responseData) {
+                        results += `
+                            <div class="translation-result success">
+                                <strong>Original:</strong> ${text}<br>
+                                <strong>Tamil:</strong> ${data.responseData.translatedText}
+                            </div>
+                        `;
+                    } else {
+                        results += `
+                            <div class="translation-result" style="background: #f8d7da;">
+                                <strong>Failed:</strong> ${text}<br>
+                                <strong>Error:</strong> Translation failed
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    results += `
+                        <div class="translation-result" style="background: #f8d7da;">
+                            <strong>Error:</strong> ${text}<br>
+                            <strong>Details:</strong> ${error.message}
+                        </div>
+                    `;
+                }
+                
+                // Small delay between requests
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            resultsDiv.innerHTML = results;
+        }
+    </script>
+</body>
+</html>
