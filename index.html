@@ -5754,6 +5754,10 @@
       });
     }
 
+    // Make functions globally accessible
+    window.handleReadMore = handleReadMore;
+    window.showTamilModal = showTamilModal;
+
     // Translate text using Google Translate API (free tier)
     async function translateText(text, targetLang) {
       if (targetLang === 'en' || !text) return text;
