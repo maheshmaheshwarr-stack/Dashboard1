@@ -5746,7 +5746,6 @@
           link.textContent = navTexts[text];
         }
       });
-    }
 
       // Update last updated text
       const lastUpdatedLabel = document.querySelector('#last-updated-label');
@@ -5843,6 +5842,58 @@
         tamilContent += '</div>';
       }
 
+      // Build the modal buttons HTML
+      let buttonsHTML = '';
+      
+      if (isAuthentic && language === 'ta') {
+        buttonsHTML += `
+          <button onclick="showTamilSummary('${encodeURIComponent(decodedTitle)}')" style="
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+          " onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
+            📝 தமிழ் சுருக்கம் காட்டு
+          </button>`;
+      }
+      
+      const readButtonText = language === 'ta' ? (isAuthentic ? '📖 தமிழில் முழு செய்தியைப் படிக்க' : '🌐 மூல கட்டுரையைப் பார்க்க (ஆங்கிலத்தில்)') : 'மூல கட்டுரையைப் பார்க்கவும்';
+      
+      buttonsHTML += `
+        <button onclick="window.open('${url}', '_blank', 'noopener,noreferrer')" style="
+          background: #1e40af;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          cursor: pointer;
+          margin-right: 12px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.2s;
+        " onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#1e40af'">
+          ${readButtonText}
+        </button>
+        <button onclick="this.closest('div').parentElement.remove()" style="
+          background: #6b7280;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.2s;
+        " onmouseover="this.style.background='#4b5563'" onmouseout="this.style.background='#6b7280'">
+          மூடு
+        </button>`;
+
       modal.innerHTML = `
         <div style="
           background: white;
@@ -5881,49 +5932,7 @@
           ${tamilContent}
           
           <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 16px;">
-            ${isAuthentic && language === 'ta' ? `
-              <button onclick="showTamilSummary('${encodeURIComponent(decodedTitle)}')" style="
-                background: #059669;
-                color: white;
-                border: none;
-                padding: 12px 24px;
-                border-radius: 8px;
-                cursor: pointer;
-                margin-right: 12px;
-                font-weight: 600;
-                font-size: 0.9rem;
-                transition: all 0.2s;
-              " onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
-                📝 தமிழ் சுருக்கம் காட்டு
-              </button>
-            ` : ''}
-            <button onclick="window.open('${url}', '_blank', 'noopener,noreferrer')" style="
-              background: #1e40af;
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              border-radius: 8px;
-              cursor: pointer;
-              margin-right: 12px;
-              font-weight: 600;
-              font-size: 0.9rem;
-              transition: all 0.2s;
-            " onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#1e40af'">
-              ${language === 'ta' ? (isAuthentic ? '📖 தமிழில் முழு செய்தியைப் படிக்க' : '🌐 மூல கட்டுரையைப் பார்க்க (ஆங்கிலத்தில்)') : 'மூல கட்டுரையைப் பார்க்கவும்'}
-            </button>
-            <button onclick="this.closest('div').parentElement.remove()" style="
-              background: #6b7280;
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              border-radius: 8px;
-              cursor: pointer;
-              font-weight: 600;
-              font-size: 0.9rem;
-              transition: all 0.2s;
-            " onmouseover="this.style.background='#4b5563'" onmouseout="this.style.background='#6b7280'">
-              மூடு
-            </button>
+            ${buttonsHTML}
           </div>
         </div>
       `;
