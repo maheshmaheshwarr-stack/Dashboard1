@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Tamil RSS Feeds</title>
+    <style>
+        body { font-family: system-ui; padding: 20px; background: #f8fafc; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .feed-test { margin: 20px 0; padding: 16px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .success { border-color: #059669; background: #f0fdf4; }
+        .error { border-color: #dc2626; background: #fef2f2; }
+        .warning { border-color: #d97706; background: #fffbeb; }
+        button { background: #1e40af; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin: 4px; }
+        .results { margin-top: 12px; font-size: 0.9rem; }
+        .article { margin: 8px 0; padding: 8px; background: #f8fafc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Tamil RSS Feeds Debug</h1>
+        <p>Testing Tamil RSS feeds to identify loading issues...</p>
+        
+        <button onclick="testAllFeeds()">Test All Tamil Feeds</button>
+        <button onclick="testWorkingFeeds()">Test Known Working Feeds</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const RSS_API_BASE = "https://api.rss2json.com/v1/api.json?rss_url=";
+        
+        const tamilFeeds = {
+            // Current feeds from the main app
+            oneindia: "https://tamil.oneindia.com/rss/feeds/oneindia-tamil-fb.xml",
+            zeenews: "https://zeenews.india.com/tamil/rss.xml",
+            hindustantimes: "https://tamil.hindustantimes.com/rss",
+            news18: "https://tamil.news18.com/rss/news.xml",
+            webdunia: "https://tamil.webdunia.com/rss/news.xml",
+            dinamalar: "https://www.dinamalar.com/rss.xml",
+            vikatan: "https://www.vikatan.com/feed/",
+            thanthi: "https://www.dailythanthi.com/feed/",
+            dinakaran: "https://www.dinakaran.com/feed/",
+            malaimalar: "https://www.maalaimalar.com/feed/",
+            tbi: "https://www.thebetterindia.com/feed/",
+            thehindu: "https://www.thehindu.com/feeder/default.rss"
+        };
+
+        const workingFeeds = {
+            // Known working feeds for comparison
+            bbc: "http://feeds.bbci.co.uk/news/rss.xml",
+            techcrunch: "https://techcrunch.com/feed/",
+            hackernews: "https://hnrss.org/frontpage",
+            // Alternative Tamil feeds
+            tamilOneindia: "https://tamil.oneindia.com/rss/tamil-news-fb.xml",
+            tamilNews18: "https://www.news18.com/rss/tamil.xml"
+        };
+
+        function isTamilContent(text) {
+            if (!text) return false;
+            const tamilRegex = /[\u0B80-\u0BFF]/;
+            return tamilRegex.test(text);
+        }
+
+        async function testFeed(name, url, category = 'tamil') {
+            const resultsDiv = document.getElementById('results');
+            const feedDiv = document.createElement('div');
+            feedDiv.className = 'feed-test';
+            feedDiv.innerHTML = `
+                <h3>Testing: ${name}</h3>
+                <p><strong>URL:</strong> ${url}</p>
+                <div class="results">Testing...</div>
+            `;
+            resultsDiv.appendChild(feedDiv);
+
+            try {
+                const response = await fetch(RSS_API_BASE + encodeURIComponent(url));
+                const data = await response.json();
+                
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    const articles = data.items.slice(0, 3);
+                    let tamilCount = 0;
+                    let articlesList = '';
+                    
+                    articles.forEach((article, index) => {
+                        const hasTamil = isTamilContent(article.title);
+                        if (hasTamil) tamilCount++;
+                        
+                        articlesList += `
+                            <div class="article">
+                                <strong>${index + 1}. ${article.title}</strong><br>
+                                <small>Tamil content: ${hasTamil ? '✅ Yes' : '❌ No'}</small><br>
+                                <small>Published: ${article.pubDate}</small>
+                            </div>
+                        `;
+                    });
+                    
+                    feedDiv.className = 'feed-test success';
+                    feedDiv.querySelector('.results').innerHTML = `
+                        <strong>✅ SUCCESS</strong><br>
+                        Articles found: ${data.items.length}<br>
+                        Tamil content articles: ${tamilCount}/${articles.length}<br>
+                        Feed title: ${data.feed?.title || 'Unknown'}<br>
+                        ${articlesList}
+                    `;
+                } else {
+                    feedDiv.className = 'feed-test error';
+                    feedDiv.querySelector('.results').innerHTML = `
+                        <strong>❌ FAILED</strong><br>
+                        Status: ${data.status}<br>
+                        Message: ${data.message || 'No articles found'}<br>
+                        Items: ${data.items ? data.items.length : 0}
+                    `;
+                }
+            } catch (error) {
+                feedDiv.className = 'feed-test error';
+                feedDiv.querySelector('.results').innerHTML = `
+                    <strong>❌ ERROR</strong><br>
+                    ${error.message}
+                `;
+            }
+        }
+
+        async function testAllFeeds() {
+            document.getElementById('results').innerHTML = '<h2>Testing Tamil Feeds...</h2>';
+            
+            for (const [name, url] of Object.entries(tamilFeeds)) {
+                await testFeed(name, url, 'tamil');
+                await new Promise(resolve => setTimeout(resolve, 500)); // Rate limiting
+            }
+        }
+
+        async function testWorkingFeeds() {
+            document.getElementById('results').innerHTML = '<h2>Testing Known Working Feeds...</h2>';
+            
+            for (const [name, url] of Object.entries(workingFeeds)) {
+                await testFeed(name, url, 'working');
+                await new Promise(resolve => setTimeout(resolve, 500)); // Rate limiting
+            }
+        }
+    </script>
+</body>
+</html>

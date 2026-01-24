@@ -1,6 +1,6 @@
-const CACHE_NAME = 'mahesh-news-v4';
-const STATIC_CACHE = 'static-v4';
-const DYNAMIC_CACHE = 'dynamic-v4';
+const CACHE_NAME = 'mahesh-news-v5';
+const STATIC_CACHE = 'static-v5';
+const DYNAMIC_CACHE = 'dynamic-v5';
 
 // Static resources that rarely change
 const staticAssets = [

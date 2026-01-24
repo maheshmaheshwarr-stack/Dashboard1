@@ -4019,21 +4019,22 @@
         phys: "https://phys.org/rss-feed/"
       },
       ta: {
-        // Tamil News Sources (Authentic Tamil content)
-        oneindia: "https://tamil.oneindia.com/rss/feeds/oneindia-tamil-fb.xml",
-        zeenews: "https://zeenews.india.com/tamil/rss.xml",
-        hindustantimes: "https://tamil.hindustantimes.com/rss",
-        news18: "https://tamil.news18.com/rss/news.xml",
-        webdunia: "https://tamil.webdunia.com/rss/news.xml",
-        // Try alternative Tamil sources
-        dinamalar: "https://www.dinamalar.com/rss.xml",
-        vikatan: "https://www.vikatan.com/feed/",
-        thanthi: "https://www.dailythanthi.com/feed/",
-        dinakaran: "https://www.dinakaran.com/feed/",
-        malaimalar: "https://www.maalaimalar.com/feed/",
-        // Fallback to major Indian sources with Tamil sections
+        // Tamil News Sources (Authentic Tamil content) - Updated with working feeds
+        news18tamil: "https://www.news18.com/rss/tamil.xml",
+        tamiloneindia: "https://tamil.oneindia.com/rss/tamil-news-fb.xml",
+        zeenewstamil: "https://zeenews.india.com/tamil/rss.xml",
+        // Fallback to major Indian sources that work reliably
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
         tbi: "https://www.thebetterindia.com/feed/",
-        thehindu: "https://www.thehindu.com/feeder/default.rss"
+        hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        // Working international sources for comparison
+        bbc: "http://feeds.bbci.co.uk/news/rss.xml",
+        reuters: "https://www.reutersagency.com/feed/",
+        // Tech sources that work well
+        techcrunch: "https://techcrunch.com/feed/",
+        hackernews: "https://hnrss.org/frontpage"
       },
       hi: {
         // Hindi News Sources
@@ -4466,7 +4467,7 @@
       const newsList = document.getElementById("news-list");
       const lastUpdatedEl = document.getElementById("last-updated");
       
-      newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
+      newsList.innerHTML = `<p style="color:#6b7280;font-size:0.8rem;">${translations[currentLanguage].ui.fetchingStories || 'Fetching positive stories from multiple sources…'}</p>`;
 
       try {
         // Build fetch promises using current language feeds
@@ -4487,10 +4488,12 @@
         // Process all feeds
         results.forEach(({ key, data }) => {
           if (!data || data.status !== "ok" || !data.items || !data.items.length) {
+            console.log(`DEBUG: Feed ${key} failed or has no items:`, data?.status, data?.message);
             return;
           }
 
           const sourceName = data.feed?.title || "News Source";
+          console.log(`DEBUG: Processing ${key} with ${data.items.length} items from ${sourceName}`);
           
           data.items.slice(0, 6).forEach(item => {
             const article = {
@@ -4517,8 +4520,13 @@
         });
 
         if (!state.allArticles.length) {
-          newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">No stories found. Please try again later.</p>';
-          if (lastUpdatedEl) lastUpdatedEl.textContent = "No stories available";
+          console.log('DEBUG: No articles found. Current language:', currentLanguage);
+          console.log('DEBUG: Current feeds:', getCurrentFeeds());
+          console.log('DEBUG: Results from feeds:', results.map(r => ({ key: r.key, status: r.data?.status, items: r.data?.items?.length })));
+          
+          const t = translations[currentLanguage].ui;
+          newsList.innerHTML = `<p style="color:#6b7280;font-size:0.8rem;">${t.noStoriesFound || 'No stories found. Please try again later.'}</p>`;
+          if (lastUpdatedEl) lastUpdatedEl.textContent = t.noStoriesAvailable || "No stories available";
           return;
         }
 
@@ -5442,12 +5450,31 @@
           refresh: "புதுப்பிக்க",
           listView: "பட்டியல் காட்சி",
           gridView: "கிரிட் காட்சி",
-          allSources: "அனைத்து மூலங்கள்",
-          allCategories: "அனைத்து வகைகள்",
+          compactView: "சுருக்க காட்சி",
+          allSources: "அனைத்து மூலங்கள் (ஒருங்கிணைந்த)",
+          allCategories: "அனைத்து",
+          sources: "மூலங்கள்",
           lastUpdated: "கடைசியாக புதுப்பிக்கப்பட்டது",
           readingTime: "நிமிடம் படிக்க",
           aiCurated: "AI தேர்வு செய்யப்பட்ட",
-          positiveNews: "நேர்மறை செய்திகள்"
+          positiveNews: "நேர்மறை செய்திகள்",
+          loadingWeather: "வானிலை ஏற்றுகிறது...",
+          supportProject: "இந்த திட்டத்தை ஆதரிக்கவும்",
+          premiumSoon: "பிரீமியம் விரைவில்",
+          readingStats: "உங்கள் வாசிப்பு புள்ளிவிவரங்கள்",
+          aiAgent: "AI முகவர்",
+          todaysMood: "இன்றைய மனநிலை",
+          feedback: "பார்வையாளர் கருத்து",
+          sendFeedback: "கருத்து அனுப்பவும்",
+          showMore: "மேலும் கதைகளைக் காட்டு",
+          installApp: "ஆப்ஸை நிறுவவும்",
+          login: "உள்நுழைய",
+          signUp: "பதிவு செய்யவும்",
+          newsFeed: "செய்தி ஊட்டம்",
+          about: "பற்றி",
+          noStoriesFound: "கதைகள் எதுவும் கிடைக்கவில்லை. பின்னர் முயற்சிக்கவும்.",
+          noStoriesAvailable: "கதைகள் எதுவும் கிடைக்கவில்லை",
+          fetchingStories: "பல மூலங்களிலிருந்து நேர்மறை கதைகளைப் பெறுகிறது..."
         }
       },
       te: {
@@ -5620,9 +5647,9 @@
       // Update refresh button
       const refreshBtn = document.getElementById('refresh-btn');
       if (refreshBtn) {
-        const refreshText = refreshBtn.querySelector('span');
-        if (refreshText) {
-          refreshText.textContent = t.refresh;
+        const refreshSpan = refreshBtn.querySelector('span:last-child');
+        if (refreshSpan) {
+          refreshSpan.textContent = t.refresh;
         }
       }
 
@@ -5637,16 +5664,89 @@
         gridViewBtn.title = t.gridView;
       }
 
-      // Update filter chips
-      const allSourcesChip = document.querySelector('.source-chip[data-source="all"]');
-      if (allSourcesChip) {
-        allSourcesChip.textContent = t.allSources;
+      const compactViewBtn = document.getElementById('compact-view-btn');
+      if (compactViewBtn) {
+        compactViewBtn.title = t.compactView || 'Compact View';
       }
 
+      // Update filter chips text
       const allCategoriesChip = document.querySelector('.filter-chip[data-filter="all"]');
       if (allCategoriesChip) {
-        allCategoriesChip.textContent = t.allCategories;
+        const span = allCategoriesChip.querySelector('span:last-child');
+        if (span) span.textContent = t.allCategories || 'All';
       }
+
+      // Update sources count label
+      const sourcesCountLabel = document.getElementById('sources-count-label');
+      if (sourcesCountLabel) {
+        sourcesCountLabel.textContent = t.allSources || 'All sources (combined)';
+      }
+
+      // Update sources label
+      const sourcesLabel = document.querySelector('.sources-label');
+      if (sourcesLabel) {
+        const span = sourcesLabel.querySelector('span:last-child');
+        if (span) span.textContent = t.sources || 'Sources';
+      }
+
+      // Update last updated text
+      const lastUpdatedEl = document.getElementById('last-updated');
+      if (lastUpdatedEl && lastUpdatedEl.textContent.includes('Fetching')) {
+        lastUpdatedEl.textContent = t.loading || 'Loading...';
+      }
+
+      // Update weather widget
+      const weatherText = document.getElementById('weather-text');
+      if (weatherText && weatherText.textContent.includes('Loading')) {
+        weatherText.textContent = t.loadingWeather || 'Loading weather...';
+      }
+
+      // Update sidebar titles
+      const sidebarTitles = {
+        'Support This Project': t.supportProject || 'Support This Project',
+        'Premium Coming Soon': t.premiumSoon || 'Premium Coming Soon',
+        'Your Reading Stats': t.readingStats || 'Your Reading Stats',
+        'AI Agent': t.aiAgent || 'AI Agent',
+        "Today's Mood": t.todaysMood || "Today's Mood",
+        'Visitor Feedback': t.feedback || 'Visitor Feedback'
+      };
+
+      document.querySelectorAll('.sidebar-card h3').forEach(h3 => {
+        const englishText = h3.textContent.trim();
+        if (sidebarTitles[englishText]) {
+          h3.textContent = sidebarTitles[englishText];
+        }
+      });
+
+      // Update button texts
+      const buttonTexts = {
+        'Send feedback': t.sendFeedback || 'Send feedback',
+        'Show more stories': t.showMore || 'Show more stories',
+        'Install App': t.installApp || 'Install App',
+        'Login': t.login || 'Login',
+        'Sign Up': t.signUp || 'Sign Up'
+      };
+
+      document.querySelectorAll('button').forEach(btn => {
+        const text = btn.textContent.trim();
+        if (buttonTexts[text]) {
+          btn.textContent = buttonTexts[text];
+        }
+      });
+
+      // Update navigation links
+      const navTexts = {
+        'News Feed': t.newsFeed || 'News Feed',
+        'About': t.about || 'About'
+      };
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const text = link.textContent.trim();
+        if (navTexts[text]) {
+          link.textContent = navTexts[text];
+        }
+      });
+    }
 
       // Update last updated text
       const lastUpdatedLabel = document.querySelector('#last-updated-label');
