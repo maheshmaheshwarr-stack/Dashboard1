@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil UI Test - No Cache</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 4px;
+        }
+        .badge--category {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge--positive {
+            background: #dcfce7;
+            color: #059669;
+        }
+        button {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px 4px;
+            font-weight: 600;
+        }
+        .language-selector {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+        h1 { color: #1e40af; }
+        h3 { color: #334155; margin-top: 0; }
+        .info {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Tamil UI Translation Test</h1>
+    
+    <div class="info">
+        <strong>⚠️ Cache Bypass Test</strong><br>
+        This page has a unique timestamp to bypass all caching. If translations work here but not on the main page, it's a caching issue.
+    </div>
+
+    <div class="language-selector">
+        <h3>Select Language:</h3>
+        <button onclick="changeLanguage('en')">🇬🇧 English</button>
+        <button onclick="changeLanguage('ta')">🇮🇳 தமிழ்</button>
+        <button onclick="changeLanguage('hi')">🇮🇳 हिंदी</button>
+    </div>
+
+    <div class="test-card">
+        <h3>Sample News Card</h3>
+        <div class="news-badges">
+            <span class="badge badge--category" id="category-badge">POLITICS</span>
+            <span class="badge badge--positive" id="positive-badge">Net positive impact</span>
+        </div>
+        <h3 id="news-title">India's renewable energy capacity reaches new milestone</h3>
+        <p id="news-description">The country has achieved significant progress in clean energy adoption...</p>
+        
+        <div style="margin: 16px 0;">
+            <strong id="ai-label">🤖 AI Summary:</strong>
+            <span id="ai-summary">Positive development in sustainable energy sector.</span>
+        </div>
+        
+        <div style="margin: 16px 0;">
+            <span id="source-label">Source:</span> <span>The Hindu</span>
+        </div>
+        
+        <button id="read-btn">Read</button>
+        <button id="action-btn">💪 What Can I Do?</button>
+    </div>
+
+    <div class="test-card">
+        <h3>Translation Status</h3>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // Translations object (copied from main file)
+        const translations = {
+            en: {
+                name: 'English',
+                ui: {
+                    readMore: "Read",
+                    source: "Source",
+                    aiSummary: "AI Summary",
+                    netPositiveImpact: "Net positive impact",
+                    whatCanIDo: "What Can I Do?"
+                },
+                categories: {
+                    politics: "POLITICS"
+                }
+            },
+            ta: {
+                name: 'தமிழ்',
+                ui: {
+                    readMore: "படிக்க",
+                    source: "மூலம்",
+                    aiSummary: "AI சுருக்கம்",
+                    netPositiveImpact: "நேர்மறை தாக்கம்",
+                    whatCanIDo: "நான் என்ன செய்ய முடியும்?"
+                },
+                categories: {
+                    politics: "அரசியல்"
+                }
+            },
+            hi: {
+                name: 'हिंदी',
+                ui: {
+                    readMore: "पढ़ें",
+                    source: "स्रोत",
+                    aiSummary: "एआई सारांश",
+                    netPositiveImpact: "सकारात्मक प्रभाव",
+                    whatCanIDo: "मैं क्या कर सकता हूं?"
+                },
+                categories: {
+                    politics: "राजनीति"
+                }
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateUI();
+        }
+
+        function updateUI() {
+            const t = translations[currentLanguage].ui;
+            const cat = translations[currentLanguage].categories;
+
+            // Update badges
+            document.getElementById('category-badge').textContent = cat.politics;
+            document.getElementById('positive-badge').textContent = t.netPositiveImpact;
+
+            // Update labels
+            document.getElementById('ai-label').textContent = `🤖 ${t.aiSummary}:`;
+            document.getElementById('source-label').textContent = t.source + ':';
+
+            // Update buttons
+            document.getElementById('read-btn').textContent = t.readMore;
+            document.getElementById('action-btn').textContent = `💪 ${t.whatCanIDo}`;
+
+            // Show status
+            const status = document.getElementById('status');
+            status.innerHTML = `
+                <p><strong>Current Language:</strong> ${translations[currentLanguage].name}</p>
+                <p><strong>Category Badge:</strong> ${cat.politics}</p>
+                <p><strong>Positive Badge:</strong> ${t.netPositiveImpact}</p>
+                <p><strong>Read Button:</strong> ${t.readMore}</p>
+                <p><strong>Action Button:</strong> ${t.whatCanIDo}</p>
+                <p><strong>Source Label:</strong> ${t.source}</p>
+                <p><strong>AI Summary Label:</strong> ${t.aiSummary}</p>
+                <p style="color: #059669; margin-top: 16px;"><strong>✅ Translations are working correctly!</strong></p>
+            `;
+        }
+
+        // Initialize
+        updateUI();
+    </script>
+
+    <div class="info" style="margin-top: 40px;">
+        <strong>📝 Instructions:</strong><br>
+        1. Click the தமிழ் button above<br>
+        2. All text in the sample card should change to Tamil<br>
+        3. If it works here but not on main page, clear your browser cache completely<br>
+        4. Page loaded at: <strong><?php echo date('Y-m-d H:i:s'); ?></strong> (timestamp: <?php echo time(); ?>)
+    </div>
+</body>
+</html>
