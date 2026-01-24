@@ -3970,54 +3970,79 @@
       RSS_API_BASE: "https://api.rss2json.com/v1/api.json?rss_url="
     };
 
-    // RSS Feed URLs
+    // Language-specific RSS Feeds
     const RSS_FEEDS = {
-      // Existing feeds
-      tbi: "https://www.thebetterindia.com/feed/",
-      pib: "https://pib.gov.in/rss.aspx",
-      rbi: "https://rbi.org.in/Scripts/Rss.aspx",
-      ietech: "https://indianexpress.com/section/technology/feed/",
-      politics: "https://indianexpress.com/section/india/politics/feed/",
-      iesports: "https://indianexpress.com/section/sports/feed/",
-      etmarkets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
-      livemint: "https://www.livemint.com/rss/markets",
-      moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
-      autocarindia: "https://www.autocarindia.com/RSS/rss.ashx?type=all",
-      
-      // Indian News Sources
-      thehindu: "https://www.thehindu.com/feeder/default.rss",
-      hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
-      ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
-      indiatoday: "https://www.indiatoday.in/rss/1206578",
-      toi: "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
-      
-      // Technology & Startups
-      techcrunch: "https://techcrunch.com/feed/",
-      theverge: "https://www.theverge.com/rss/index.xml",
-      wired: "https://www.wired.com/feed/rss",
-      yourstory: "https://yourstory.com/feed",
-      hackernews: "https://hnrss.org/frontpage",
-      arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
-      
-      // International News
-      bbc: "http://feeds.bbci.co.uk/news/rss.xml",
-      reuters: "https://www.reutersagency.com/feed/",
-      aljazeera: "https://www.aljazeera.com/xml/rss/all.xml",
-      apnews: "https://rsshub.app/apnews/topics/apf-topnews",
-      
-      // Business & Markets
-      financialexpress: "https://www.financialexpress.com/feed/",
-      businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss",
-      forbes: "https://www.forbes.com/innovation/feed2/",
-      entrepreneur: "https://www.entrepreneur.com/latest.rss",
-      
-      // Science & Research
-      sciencedaily: "https://www.sciencedaily.com/rss/all.xml",
-      nature: "https://www.nature.com/nature.rss",
-      newscientist: "https://www.newscientist.com/feed/home",
-      phys: "https://phys.org/rss-feed/",
-      
-      // Space & Astronomy
+      en: {
+        // Existing English feeds
+        tbi: "https://www.thebetterindia.com/feed/",
+        pib: "https://pib.gov.in/rss.aspx",
+        rbi: "https://rbi.org.in/Scripts/Rss.aspx",
+        ietech: "https://indianexpress.com/section/technology/feed/",
+        politics: "https://indianexpress.com/section/india/politics/feed/",
+        iesports: "https://indianexpress.com/section/sports/feed/",
+        etmarkets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+        livemint: "https://www.livemint.com/rss/markets",
+        moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
+        autocarindia: "https://www.autocarindia.com/RSS/rss.ashx?type=all",
+        
+        // Indian News Sources
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        toi: "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+        
+        // Technology & Startups
+        techcrunch: "https://techcrunch.com/feed/",
+        theverge: "https://www.theverge.com/rss/index.xml",
+        wired: "https://www.wired.com/feed/rss",
+        yourstory: "https://yourstory.com/feed",
+        hackernews: "https://hnrss.org/frontpage",
+        arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
+        
+        // International News
+        bbc: "http://feeds.bbci.co.uk/news/rss.xml",
+        reuters: "https://www.reutersagency.com/feed/",
+        aljazeera: "https://www.aljazeera.com/xml/rss/all.xml",
+        apnews: "https://rsshub.app/apnews/topics/apf-topnews",
+        
+        // Business & Markets
+        financialexpress: "https://www.financialexpress.com/feed/",
+        businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss",
+        forbes: "https://www.forbes.com/innovation/feed2/",
+        entrepreneur: "https://www.entrepreneur.com/latest.rss",
+        
+        // Science & Research
+        sciencedaily: "https://www.sciencedaily.com/rss/all.xml",
+        nature: "https://www.nature.com/nature.rss",
+        newscientist: "https://www.newscientist.com/feed/home",
+        phys: "https://phys.org/rss-feed/"
+      },
+      ta: {
+        // Tamil News Sources
+        tbi: "https://www.thebetterindia.com/feed/",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        toi: "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+        dinamalar: "https://www.dinamalar.com/rss/rss_news.xml",
+        tamilnews: "https://www.news18.com/rss/tamil.xml",
+        oneindia: "https://tamil.oneindia.com/rss/tamil-news-fb.xml"
+      },
+      hi: {
+        // Hindi News Sources
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        jagran: "https://www.jagran.com/rss/news.xml",
+        aajtak: "https://www.aajtak.in/rss/top-stories.xml",
+        navbharat: "https://navbharattimes.indiatimes.com/rssfeedstopstories.cms"
+      }
+    };
+
+    // Get current language feeds
+    const getCurrentFeeds = () => {
+      return RSS_FEEDS[currentLanguage] || RSS_FEEDS.en;
       nasa: "https://www.nasa.gov/rss/dyn/breaking_news.rss",
       spacenews: "https://spacenews.com/feed/",
       universetoday: "https://www.universetoday.com/feed/",
@@ -4225,6 +4250,11 @@
       const title = article.title || "Untitled story";
       const description = shortenText(article.description || "A positive development worth noting today.");
       
+      // Add language prefix for non-English languages
+      const languagePrefix = currentLanguage !== 'en' ? `[${translations[currentLanguage].name}] ` : '';
+      const displayTitle = languagePrefix + title;
+      const displayDescription = languagePrefix + description;
+      
       // Generate AI summary (extract key points)
       const summary = generateAISummary(article);
 
@@ -4246,7 +4276,7 @@
             <span class="badge badge--positive">Net positive impact</span>
             ${article.isStoryArc ? '<span class="story-arc-badge">📖 Ongoing Story</span>' : ''}
           </div>
-          <h3 class="news-title">${title}</h3>
+          <h3 class="news-title">${displayTitle}</h3>
           
           <div class="ai-summary" style="
             margin: 8px 0;
@@ -4261,13 +4291,13 @@
             <strong style="color: #ea580c;">🤖 ${t.aiSummary}:</strong> ${summary}
           </div>
           
-          <p class="tagline">${description}</p>
+          <p class="tagline">${displayDescription}</p>
           <div class="news-meta-row">
             <div class="news-meta">${published ? `⏱ ${published}` : ""}</div>
           </div>
           <div class="news-footer">
             <span class="source">${t.source}: ${sourceName}</span>
-            ${article.url ? `<a class="read-link" href="${article.url}" target="_blank" rel="noopener noreferrer" onclick="trackArticleRead('${article.url}', '${article.category}', '${article.sourceKey}')">${t.readMore} <span>↗</span></a>` : ""}
+            ${article.url ? `<a class="read-link" href="#" onclick="handleReadMore('${article.url}', '${encodeURIComponent(title)}', '${currentLanguage}', '${article.category}', '${article.sourceKey}')">${t.readMore} <span>↗</span></a>` : ""}
           </div>
           <button class="action-button" onclick="showActionModal('${article.category}', '${encodeURIComponent(article.title)}')">
             <span>💪</span>
@@ -4402,7 +4432,7 @@
         <div style="margin-top:8px;">
           Today's feed prioritises <strong>durable signal over breaking noise</strong>. 
           <strong>${volumeCategory.toUpperCase()}</strong> dominated headlines (${volumePercent}% of coverage), 
-          curated from ${Object.keys(RSS_FEEDS).length} trusted sources.
+          curated from ${Object.keys(getCurrentFeeds()).length} trusted sources.
         </div>
         <div style="margin-top:8px;color:#64748b;font-size:0.78rem;">
           The AI intentionally deprioritised urgency-driven headlines in favour of developments 
@@ -4452,8 +4482,9 @@
       newsList.innerHTML = '<p style="color:#6b7280;font-size:0.8rem;">Fetching positive stories from multiple sources…</p>';
 
       try {
-        // Build fetch promises
-        const fetchPromises = Object.entries(RSS_FEEDS).map(([key, url]) => 
+        // Build fetch promises using current language feeds
+        const currentFeeds = getCurrentFeeds();
+        const fetchPromises = Object.entries(currentFeeds).map(([key, url]) => 
           fetch(CONFIG.RSS_API_BASE + encodeURIComponent(url))
             .then(r => r.json())
             .then(data => ({ key, data }))
@@ -5643,7 +5674,141 @@
       // So we don't need to update individual card elements here
     }
 
-    // Translate text using browser's built-in translation or fallback
+    // Handle Read More clicks with language-specific behavior
+    function handleReadMore(url, title, language, category, sourceKey) {
+      // Track the article read
+      trackArticleRead(url, category, sourceKey);
+      
+      if (language === 'en') {
+        // For English, open directly
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } else {
+        // For other languages, show translation modal
+        showTamilModal(url, title, language);
+      }
+    }
+
+    // Tamil/Multi-language modal
+    function showTamilModal(url, title, language) {
+      const t = translations[language];
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+      `;
+
+      modal.innerHTML = `
+        <div style="
+          background: white;
+          border-radius: 12px;
+          padding: 24px;
+          max-width: 600px;
+          margin: 20px;
+          position: relative;
+          animation: slideIn 0.3s ease;
+        ">
+          <div style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 16px;
+          ">
+            <h2 style="margin: 0; color: #1e40af; font-size: 1.25rem;">
+              ${t.name} மொழிபெயர்ப்பு
+            </h2>
+            <button onclick="this.closest('div').parentElement.remove()" style="
+              background: none;
+              border: none;
+              font-size: 24px;
+              cursor: pointer;
+              color: #64748b;
+              padding: 4px;
+            ">&times;</button>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <h3 style="color: #1e40af; margin-bottom: 12px; line-height: 1.4;">
+              [${t.name}] ${decodeURIComponent(title)}
+            </h3>
+            <p style="line-height: 1.6; margin-bottom: 16px; color: #374151;">
+              இந்த கட்டுரை ${t.name} மொழியில் கிடைக்கிறது. முழு உள்ளடக்கத்தைப் பார்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.
+            </p>
+            <div style="
+              background: #f1f5f9;
+              border: 1px solid #cbd5e1;
+              border-radius: 8px;
+              padding: 12px;
+              margin-bottom: 16px;
+            ">
+              <strong style="color: #1e40af;">குறிப்பு:</strong> 
+              <span style="color: #64748b;">
+                இது ${t.name} மொழிபெயர்ப்பு அம்சத்தின் செயல்பாடு. முழு கட்டுரைக்கு மூல இணைப்பைப் பார்க்கவும்.
+              </span>
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <button onclick="window.open('${url}', '_blank', 'noopener,noreferrer')" style="
+              background: #1e40af;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              margin-right: 12px;
+              font-weight: 500;
+            ">
+              மூல கட்டுரையைப் பார்க்கவும்
+            </button>
+            <button onclick="this.closest('div').parentElement.remove()" style="
+              background: #6b7280;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: 500;
+            ">
+              மூடு
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Add CSS animations
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideIn {
+          from { transform: scale(0.9) translateY(-20px); opacity: 0; }
+          to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+      `;
+      document.head.appendChild(style);
+
+      document.body.appendChild(modal);
+      
+      // Close on outside click
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+    }
+
+    // Translate text using Google Translate API (free tier)
     async function translateText(text, targetLang) {
       if (targetLang === 'en' || !text) return text;
 
