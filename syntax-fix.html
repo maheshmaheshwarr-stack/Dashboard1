@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Fix Test</title>
+</head>
+<body>
+    <h1>Testing Tamil Modal Function</h1>
+    <button onclick="testTamilModal()">Test Tamil Modal</button>
+    
+    <script>
+        // Simplified version of the Tamil modal function to test syntax
+        function showTamilModal(url, title, language) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+
+            const decodedTitle = decodeURIComponent(title);
+            const isAuthentic = true; // Simplified for testing
+            
+            // Build content without nested template literals
+            let content = '<div style="background: white; padding: 20px; border-radius: 12px; max-width: 500px;">';
+            content += '<h3>' + decodedTitle + '</h3>';
+            
+            if (language === 'ta') {
+                if (isAuthentic) {
+                    content += '<div style="background: #dcfce7; padding: 16px; border-radius: 8px;">';
+                    content += '<h4>✅ முழுமையான தமிழ் செய்தி</h4>';
+                    content += '<p>இது தமிழ் மூலங்களில் இருந்து வரும் முழுமையான தமிழ் செய்தி.</p>';
+                    content += '</div>';
+                } else {
+                    content += '<div style="background: #fef3c7; padding: 16px; border-radius: 8px;">';
+                    content += '<h4>📰 மொழிபெயர்க்கப்பட்ட செய்தி</h4>';
+                    content += '<p>இந்த செய்தி ஆங்கில மூலத்திலிருந்து மொழிபெயர்க்கப்பட்டுள்ளது.</p>';
+                    content += '</div>';
+                }
+            }
+            
+            content += '<button onclick="this.closest(\'div\').parentElement.remove()" style="margin-top: 16px; padding: 8px 16px; background: #1e40af; color: white; border: none; border-radius: 6px; cursor: pointer;">மூடு</button>';
+            content += '</div>';
+            
+            modal.innerHTML = content;
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        function testTamilModal() {
+            showTamilModal('https://example.com', 'Test%20Tamil%20News', 'ta');
+        }
+        
+        console.log('Syntax fix test loaded successfully');
+    </script>
+</body>
+</html>
