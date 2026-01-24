@@ -4096,23 +4096,14 @@
       const hasTamilTitle = isTamilContent(article.title);
       const hasTamilDescription = isTamilContent(article.description);
       
-      // If content is already in Tamil, mark it as authentic
+      // Mark if content is authentic Tamil
       if (hasTamilTitle || hasTamilDescription) {
         article.isAuthenticTamil = true;
-        return article;
-      }
-      
-      // For non-Tamil content, add Tamil context
-      article.isAuthenticTamil = false;
-      
-      // Add Tamil source indicator if from Tamil sources
-      const tamilSources = ['oneindia', 'zeenews', 'hindustantimes', 'news18', 'webdunia', 'dinamalar', 'vikatan', 'thanthi', 'dinakaran', 'malaimalar'];
-      if (tamilSources.includes(article.sourceKey)) {
-        article.title = `[தமிழ் மூலம்] ${article.title}`;
       } else {
-        article.title = `[தமிழ்] ${article.title}`;
+        article.isAuthenticTamil = false;
       }
       
+      // Don't modify the title - display content as-is from the feed
       return article;
     }
 
@@ -4238,16 +4229,17 @@
       const title = article.title || "Untitled story";
       const description = shortenText(article.description || "A positive development worth noting today.");
       
-      // Add language prefix for non-English languages
-      const languagePrefix = currentLanguage !== 'en' ? `[${translations[currentLanguage].name}] ` : '';
-      const displayTitle = languagePrefix + title;
-      const displayDescription = languagePrefix + description;
+      // Don't add prefix - display content as-is from the feed
+      const displayTitle = title;
+      const displayDescription = description;
       
       // Generate AI summary (extract key points)
       const summary = generateAISummary(article);
 
       // Get translations
       const t = translations[currentLanguage].ui;
+      const categoryTranslations = translations[currentLanguage].categories || {};
+      const translatedCategory = categoryTranslations[article.category] || article.category.toUpperCase();
 
       // Get image URL
       const imageUrl = article.enclosure?.link || article.thumbnail || article.image || '';
@@ -4260,9 +4252,9 @@
         ${imageHTML}
         <div class="news-card-content">
           <div class="news-badges">
-            <span class="badge badge--category">${article.category.toUpperCase()}</span>
-            <span class="badge badge--positive">Net positive impact</span>
-            ${article.isStoryArc ? '<span class="story-arc-badge">📖 Ongoing Story</span>' : ''}
+            <span class="badge badge--category">${translatedCategory}</span>
+            <span class="badge badge--positive">${t.netPositiveImpact || 'Net positive impact'}</span>
+            ${article.isStoryArc ? `<span class="story-arc-badge">📖 ${t.ongoingStory || 'Ongoing Story'}</span>` : ''}
           </div>
           <h3 class="news-title">${displayTitle}</h3>
           
@@ -4289,7 +4281,7 @@
           </div>
           <button class="action-button" onclick="showActionModal('${article.category}', '${encodeURIComponent(article.title)}')">
             <span>💪</span>
-            <span>What Can I Do?</span>
+            <span>${t.whatCanIDo || 'What Can I Do?'}</span>
           </button>
           <div class="agent-reason">
             <strong>🧠 ${t.whySelected}</strong><br>
@@ -5474,7 +5466,26 @@
           about: "பற்றி",
           noStoriesFound: "கதைகள் எதுவும் கிடைக்கவில்லை. பின்னர் முயற்சிக்கவும்.",
           noStoriesAvailable: "கதைகள் எதுவும் கிடைக்கவில்லை",
-          fetchingStories: "பல மூலங்களிலிருந்து நேர்மறை கதைகளைப் பெறுகிறது..."
+          fetchingStories: "பல மூலங்களிலிருந்து நேர்மறை கதைகளைப் பெறுகிறது...",
+          // News card specific translations
+          netPositiveImpact: "நேர்மறை தாக்கம்",
+          ongoingStory: "தொடர் கதை",
+          whatCanIDo: "நான் என்ன செய்ய முடியும்?"
+        },
+        categories: {
+          all: "அனைத்து",
+          politics: "அரசியல்",
+          markets: "சந்தைகள்",
+          startups: "ஸ்டார்ட்அப்கள்",
+          ai: "செயற்கை நுண்ணறிவு",
+          space: "விண்வெளி",
+          science: "அறிவியல்",
+          health: "சுகாதாரம்",
+          environment: "சுற்றுச்சூழல்",
+          sports: "விளையாட்டு",
+          design: "வடிவமைப்பு",
+          culture: "கலாச்சாரம்",
+          positive: "நேர்மறை செய்திகள்"
         }
       },
       te: {
