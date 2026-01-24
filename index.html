@@ -5474,10 +5474,11 @@
         },
         categories: {
           all: "அனைத்து",
+          current: "நடப்பு விவகாரங்கள்",
           politics: "அரசியல்",
           markets: "சந்தைகள்",
           startups: "ஸ்டார்ட்அப்கள்",
-          ai: "செயற்கை நுண்ணறிவு",
+          ai: "AI & தொழில்நுட்பம்",
           space: "விண்வெளி",
           science: "அறிவியல்",
           health: "சுகாதாரம்",
@@ -5658,9 +5659,9 @@
       // Update refresh button
       const refreshBtn = document.getElementById('refresh-btn');
       if (refreshBtn) {
-        const refreshSpan = refreshBtn.querySelector('span:last-child');
-        if (refreshSpan) {
-          refreshSpan.textContent = t.refresh;
+        const textNode = Array.from(refreshBtn.childNodes).find(node => node.nodeType === 3);
+        if (textNode) {
+          textNode.textContent = t.refresh;
         }
       }
 
@@ -5683,9 +5684,39 @@
       // Update filter chips text
       const allCategoriesChip = document.querySelector('.filter-chip[data-filter="all"]');
       if (allCategoriesChip) {
-        const span = allCategoriesChip.querySelector('span:last-child');
-        if (span) span.textContent = t.allCategories || 'All';
+        const textNode = Array.from(allCategoriesChip.childNodes).find(node => node.nodeType === 3);
+        if (textNode) {
+          textNode.textContent = t.allCategories || 'All';
+        }
       }
+
+      // Update all category filter chips
+      const categoryTranslations = translations[currentLanguage].categories || {};
+      const filterChipMap = {
+        'current': 'current',
+        'ai': 'ai',
+        'startups': 'startups',
+        'markets': 'markets',
+        'science': 'science',
+        'space': 'space',
+        'health': 'health',
+        'environment': 'environment',
+        'politics': 'politics',
+        'sports': 'sports',
+        'culture': 'culture',
+        'design': 'design',
+        'positive': 'positive'
+      };
+
+      Object.entries(filterChipMap).forEach(([dataFilter, categoryKey]) => {
+        const chip = document.querySelector(`.filter-chip[data-filter="${dataFilter}"]`);
+        if (chip && categoryTranslations[categoryKey]) {
+          const textNode = Array.from(chip.childNodes).find(node => node.nodeType === 3);
+          if (textNode) {
+            textNode.textContent = categoryTranslations[categoryKey];
+          }
+        }
+      });
 
       // Update sources count label
       const sourcesCountLabel = document.getElementById('sources-count-label');
