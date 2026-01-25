@@ -2516,6 +2516,9 @@
             <button class="filter-chip" data-filter="markets">
               <span class="dot"></span>Markets
             </button>
+            <button class="filter-chip" data-filter="automobiles">
+              <span class="dot"></span>Automobiles
+            </button>
             <button class="filter-chip" data-filter="science">
               <span class="dot"></span>Science
             </button>
@@ -4124,6 +4127,7 @@
       if (source.match(/smithsonian|conversation|aeon/i)) return "culture";
       if (source.match(/edutopia|chronicle/i)) return "education";
       if (source.match(/goodnews|positive|optimist/i)) return "positive";
+      if (source.match(/autocar|teambhp|team-bhp/i)) return "automobiles";
       
       // Content-based classification
       if (text.match(/cricket|football|t20|ipl|world cup|olympic|tennis|basketball/i)) return "sports";
@@ -5466,6 +5470,7 @@
           markets: "बाजार",
           startups: "स्टार्टअप",
           ai: "AI और तकनीक",
+          automobiles: "ऑटोमोबाइल",
           space: "अंतरिक्ष",
           science: "विज्ञान",
           health: "स्वास्थ्य",
@@ -5537,6 +5542,7 @@
           markets: "சந்தைகள்",
           startups: "ஸ்டார்ட்அப்கள்",
           ai: "AI & தொழில்நுட்பம்",
+          automobiles: "வாகனங்கள்",
           space: "விண்வெளி",
           science: "அறிவியல்",
           health: "சுகாதாரம்",
@@ -5608,6 +5614,7 @@
           markets: "మార్కెట్లు",
           startups: "స్టార్టప్‌లు",
           ai: "AI & టెక్నాలజీ",
+          automobiles: "ఆటోమొబైల్స్",
           space: "అంతరిక్షం",
           science: "విజ్ఞానం",
           health: "ఆరోగ్యం",
@@ -5679,6 +5686,7 @@
           markets: "ಮಾರುಕಟ್ಟೆಗಳು",
           startups: "ಸ್ಟಾರ್ಟಪ್‌ಗಳು",
           ai: "AI ಮತ್ತು ತಂತ್ರಜ್ಞಾನ",
+          automobiles: "ಆಟೋಮೊಬೈಲ್ಸ್",
           space: "ಅಂತರಿಕ್ಷ",
           science: "ವಿಜ್ಞಾನ",
           health: "ಆರೋಗ್ಯ",
@@ -5750,6 +5758,7 @@
           markets: "വിപണികൾ",
           startups: "സ്റ്റാർട്ടപ്പുകൾ",
           ai: "AI & സാങ്കേതികവിദ്യ",
+          automobiles: "ഓട്ടോമൊബൈൽസ്",
           space: "ബഹിരാകാശം",
           science: "ശാസ്ത്രം",
           health: "ആരോഗ്യം",
@@ -5904,6 +5913,7 @@
         'ai': 'ai',
         'startups': 'startups',
         'markets': 'markets',
+        'automobiles': 'automobiles',
         'science': 'science',
         'space': 'space',
         'health': 'health',
