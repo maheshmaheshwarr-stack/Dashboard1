@@ -4603,6 +4603,15 @@
         return `🌍 You're part of an amazing community! ${stats} people have read positive news with us. Together, we're spreading hope and making a difference!`;
       }
 
+      // Positive news / Show me news queries
+      if (q.includes("positive") || q.includes("show me") || q.includes("give me")) {
+        const top = articles.slice(0, 5);
+        if (!top.length) {
+          return "✨ No articles available right now, but check back soon for inspiring stories!";
+        }
+        return `✨ Here are today's most positive stories:\n\n${top.map((a, i) => `${i + 1}. ${a.title}`).join("\n\n")}\n\nClick on any story to read more!`;
+      }
+
       // Inspiring/best story
       if (q.includes("inspiring") || q.includes("best") || q.includes("favorite") || q.includes("top")) {
         const top = articles.slice(0, 3);
