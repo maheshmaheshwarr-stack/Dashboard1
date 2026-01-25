@@ -4674,6 +4674,14 @@
         return `📈 Market highlights:\n\n${markets.map(a => `• ${a.title}`).join("\n\n")}`;
       }
 
+      if (q.includes("automobile") || q.includes("car") || q.includes("vehicle") || q.includes("auto")) {
+        const autos = articles.filter(a => a.category === "automobiles").slice(0, 3);
+        if (!autos.length) {
+          return "🚗 No major automobile stories today, but the road ahead is exciting!";
+        }
+        return `🚗 Latest automobile news:\n\n${autos.map(a => `• ${a.title}`).join("\n\n")}`;
+      }
+
       // Today's news summary
       if (q.includes("today") || q.includes("summary") || q.includes("headlines")) {
         const top = articles.slice(0, 5);
