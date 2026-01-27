@@ -4100,6 +4100,7 @@
       card.dataset.category = article.category;
       card.dataset.source = article.sourceKey;
       card.dataset.articleId = article.url; // For tracking
+      card.dataset.aiScore = article.aiScore || 50; // Store AI positivity score
 
       // Check if article has image
       const hasImage = article.enclosure?.link || article.thumbnail || article.image;
@@ -4237,7 +4238,16 @@
       cards.forEach((card) => {
         const category = card.dataset.category;
         const sourceKey = card.dataset.source;
-        const categoryOK = state.activeCategory === "all" || category === state.activeCategory;
+        const aiScore = parseFloat(card.dataset.aiScore) || 50;
+        
+        // For "positive" filter, show articles with high positivity scores (>60)
+        let categoryOK;
+        if (state.activeCategory === "positive") {
+          categoryOK = aiScore > 60;
+        } else {
+          categoryOK = state.activeCategory === "all" || category === state.activeCategory;
+        }
+        
         const sourceOK = state.activeSource === "all" || sourceKey === state.activeSource;
 
         if (categoryOK && sourceOK && shown < state.visibleCount) {
