@@ -2482,6 +2482,23 @@
           ">
             📱 Install App
           </button>
+
+          <button id="positive-news-btn" onclick="filterPositiveNews()" style="
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 2px solid #22c55e;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+          " title="Show only positive news from all categories">
+            ✨ Show me positive news
+          </button>
         </nav>
 
         <div class="meta">
@@ -4680,6 +4697,34 @@
 
     // ======================
     // EVENT HANDLERS
+    // ======================
+    // POSITIVE NEWS FILTER
+    // ======================
+    function filterPositiveNews() {
+      // Set the active category to "positive"
+      state.activeCategory = "positive";
+      state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
+      
+      // Update filter chips - remove active from all, add to positive
+      const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
+      categoryChips.forEach(chip => {
+        if (chip.getAttribute("data-filter") === "positive") {
+          chip.classList.add("active");
+        } else {
+          chip.classList.remove("active");
+        }
+      });
+      
+      // Update visible cards
+      updateVisibleCards();
+      
+      // Scroll to news section
+      const newsList = document.getElementById("news-list");
+      if (newsList) {
+        newsList.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
     // ======================
     function setupEventListeners() {
       // Category filters
