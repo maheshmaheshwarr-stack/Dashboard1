@@ -3890,7 +3890,7 @@
         arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
         
         // International News
-        bbc: "http://feeds.bbci.co.uk/news/rss.xml",
+        bbc: "https://feeds.bbci.co.uk/news/rss.xml",
         reuters: "https://www.reutersagency.com/feed/",
         aljazeera: "https://www.aljazeera.com/xml/rss/all.xml",
         apnews: "https://rsshub.app/apnews/topics/apf-topnews",
@@ -3919,7 +3919,7 @@
         tbi: "https://www.thebetterindia.com/feed/",
         hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
         // Working international sources for comparison
-        bbc: "http://feeds.bbci.co.uk/news/rss.xml",
+        bbc: "https://feeds.bbci.co.uk/news/rss.xml",
         reuters: "https://www.reutersagency.com/feed/",
         // Tech sources that work well
         techcrunch: "https://techcrunch.com/feed/",
@@ -4244,7 +4244,6 @@
         let categoryOK;
         if (state.activeCategory === "positive") {
           categoryOK = aiScore > 60;
-          console.log(`Checking ${category}: score=${aiScore}, show=${categoryOK}`);
         } else {
           categoryOK = state.activeCategory === "all" || category === state.activeCategory;
         }
@@ -4258,8 +4257,6 @@
           card.classList.add("hidden");
         }
       });
-
-      console.log(`Showing ${shown} cards out of ${cards.length}`);
 
       const loadMoreBtn = document.getElementById("load-more-btn");
       if (loadMoreBtn) {
@@ -4718,9 +4715,6 @@
       state.activeCategory = "positive";
       state.visibleCount = CONFIG.INITIAL_VISIBLE_COUNT;
       
-      console.log("Filtering positive news...");
-      console.log("Total cards:", document.querySelectorAll(".news-card").length);
-      
       // Update filter chips - remove active from all, add to positive
       const categoryChips = document.querySelectorAll(".filter-chip[data-filter]");
       categoryChips.forEach(chip => {
@@ -4730,16 +4724,6 @@
           chip.classList.remove("active");
         }
       });
-      
-      // Debug: log all cards and their scores
-      const cards = document.querySelectorAll(".news-card");
-      let positiveCount = 0;
-      cards.forEach(card => {
-        const score = parseFloat(card.dataset.aiScore) || 50;
-        if (score > 60) positiveCount++;
-        console.log(`Card: ${card.dataset.category}, Score: ${score}`);
-      });
-      console.log(`Found ${positiveCount} positive articles (score > 60)`);
       
       // Update visible cards
       updateVisibleCards();
