@@ -3861,18 +3861,10 @@
     // Language-specific RSS Feeds
     const RSS_FEEDS = {
       en: {
-        // Existing English feeds
-        tbi: "https://www.thebetterindia.com/feed/",
+        // Indian Government & Institutions
         pib: "https://pib.gov.in/rss.aspx",
         rbi: "https://rbi.org.in/Scripts/Rss.aspx",
-        ietech: "https://indianexpress.com/section/technology/feed/",
-        politics: "https://indianexpress.com/section/india/politics/feed/",
-        iesports: "https://indianexpress.com/section/sports/feed/",
-        etmarkets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
-        livemint: "https://www.livemint.com/rss/markets",
-        moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
-        autocarindia: "https://www.autocarindia.com/RSS/rss.ashx?type=all",
-        teambhp: "https://www.team-bhp.com/forum/external.php?type=RSS2",
+        tbi: "https://www.thebetterindia.com/feed/",
         
         // Indian News Sources
         thehindu: "https://www.thehindu.com/feeder/default.rss",
@@ -3880,14 +3872,38 @@
         ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
         indiatoday: "https://www.indiatoday.in/rss/1206578",
         toi: "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+        deccanherald: "https://www.deccanherald.com/rss/",
+        theprint: "https://theprint.in/feed/",
+        scroll: "https://scroll.in/feed",
         
         // Technology & Startups
+        ietech: "https://indianexpress.com/section/technology/feed/",
         techcrunch: "https://techcrunch.com/feed/",
         theverge: "https://www.theverge.com/rss/index.xml",
         wired: "https://www.wired.com/feed/rss",
         yourstory: "https://yourstory.com/feed",
         hackernews: "https://hnrss.org/frontpage",
         arstechnica: "https://feeds.arstechnica.com/arstechnica/index",
+        slashdot: "https://slashdot.org/feed",
+        
+        // Business & Markets
+        etmarkets: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+        livemint: "https://www.livemint.com/rss/markets",
+        moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
+        financialexpress: "https://www.financialexpress.com/feed/",
+        businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss",
+        forbes: "https://www.forbes.com/innovation/feed2/",
+        entrepreneur: "https://www.entrepreneur.com/latest.rss",
+        
+        // Automobiles
+        autocarindia: "https://www.autocarindia.com/RSS/rss.ashx?type=all",
+        teambhp: "https://www.team-bhp.com/forum/external.php?type=RSS2",
+        
+        // Science & Research
+        sciencedaily: "https://www.sciencedaily.com/rss/all.xml",
+        nature: "https://www.nature.com/nature.rss",
+        newscientist: "https://www.newscientist.com/feed/home",
+        phys: "https://phys.org/rss-feed/",
         
         // International News
         bbc: "https://feeds.bbci.co.uk/news/rss.xml",
@@ -3895,35 +3911,33 @@
         aljazeera: "https://www.aljazeera.com/xml/rss/all.xml",
         apnews: "https://rsshub.app/apnews/topics/apf-topnews",
         
-        // Business & Markets
-        financialexpress: "https://www.financialexpress.com/feed/",
-        businessstandard: "https://www.business-standard.com/rss/home_page_top_stories.rss",
-        forbes: "https://www.forbes.com/innovation/feed2/",
-        entrepreneur: "https://www.entrepreneur.com/latest.rss",
-        
-        // Science & Research
-        sciencedaily: "https://www.sciencedaily.com/rss/all.xml",
-        nature: "https://www.nature.com/nature.rss",
-        newscientist: "https://www.newscientist.com/feed/home",
-        phys: "https://phys.org/rss-feed/"
+        // Sports
+        iesports: "https://indianexpress.com/section/sports/feed/",
+        politics: "https://indianexpress.com/section/india/politics/feed/"
       },
       ta: {
-        // Tamil News Sources (Authentic Tamil content) - Updated with working feeds
+        // Tamil News Sources
         news18tamil: "https://www.news18.com/rss/tamil.xml",
         tamiloneindia: "https://tamil.oneindia.com/rss/tamil-news-fb.xml",
         zeenewstamil: "https://zeenews.india.com/tamil/rss.xml",
-        // Fallback to major Indian sources that work reliably
+        
+        // Major Indian sources (English but accessible to Tamil readers)
         thehindu: "https://www.thehindu.com/feeder/default.rss",
         ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
         indiatoday: "https://www.indiatoday.in/rss/1206578",
         tbi: "https://www.thebetterindia.com/feed/",
         hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
-        // Working international sources for comparison
+        deccanherald: "https://www.deccanherald.com/rss/",
+        
+        // Technology
+        techcrunch: "https://techcrunch.com/feed/",
+        hackernews: "https://hnrss.org/frontpage",
+        yourstory: "https://yourstory.com/feed",
+        
+        // International
         bbc: "https://feeds.bbci.co.uk/news/rss.xml",
         reuters: "https://www.reutersagency.com/feed/",
-        // Tech sources that work well
-        techcrunch: "https://techcrunch.com/feed/",
-        hackernews: "https://hnrss.org/frontpage"
+        aljazeera: "https://www.aljazeera.com/xml/rss/all.xml"
       },
       hi: {
         // Hindi News Sources
@@ -3932,7 +3946,70 @@
         thehindu: "https://www.thehindu.com/feeder/default.rss",
         jagran: "https://www.jagran.com/rss/news.xml",
         aajtak: "https://www.aajtak.in/rss/top-stories.xml",
-        navbharat: "https://navbharattimes.indiatimes.com/rssfeedstopstories.cms"
+        navbharat: "https://navbharattimes.indiatimes.com/rssfeedstopstories.cms",
+        hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        tbi: "https://www.thebetterindia.com/feed/",
+        
+        // Technology
+        techcrunch: "https://techcrunch.com/feed/",
+        yourstory: "https://yourstory.com/feed",
+        hackernews: "https://hnrss.org/frontpage",
+        
+        // International
+        bbc: "https://feeds.bbci.co.uk/news/rss.xml",
+        reuters: "https://www.reutersagency.com/feed/"
+      },
+      te: {
+        // Telugu News Sources
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        tbi: "https://www.thebetterindia.com/feed/",
+        hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        
+        // Technology
+        techcrunch: "https://techcrunch.com/feed/",
+        yourstory: "https://yourstory.com/feed",
+        hackernews: "https://hnrss.org/frontpage",
+        
+        // International
+        bbc: "https://feeds.bbci.co.uk/news/rss.xml",
+        reuters: "https://www.reutersagency.com/feed/"
+      },
+      kn: {
+        // Kannada News Sources
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        tbi: "https://www.thebetterindia.com/feed/",
+        hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        deccanherald: "https://www.deccanherald.com/rss/",
+        
+        // Technology
+        techcrunch: "https://techcrunch.com/feed/",
+        yourstory: "https://yourstory.com/feed",
+        hackernews: "https://hnrss.org/frontpage",
+        
+        // International
+        bbc: "https://feeds.bbci.co.uk/news/rss.xml",
+        reuters: "https://www.reutersagency.com/feed/"
+      },
+      ml: {
+        // Malayalam News Sources
+        ndtv: "https://feeds.feedburner.com/ndtvnews-top-stories",
+        indiatoday: "https://www.indiatoday.in/rss/1206578",
+        thehindu: "https://www.thehindu.com/feeder/default.rss",
+        tbi: "https://www.thebetterindia.com/feed/",
+        hindustantimes: "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        
+        // Technology
+        techcrunch: "https://techcrunch.com/feed/",
+        yourstory: "https://yourstory.com/feed",
+        hackernews: "https://hnrss.org/frontpage",
+        
+        // International
+        bbc: "https://feeds.bbci.co.uk/news/rss.xml",
+        reuters: "https://www.reutersagency.com/feed/"
       }
     };
 
