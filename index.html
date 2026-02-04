@@ -3055,6 +3055,17 @@
           </div>
         </section>
 
+        <!-- Trending Topics Section -->
+        <section class="sidebar-card" style="margin-top: 10px;">
+          <h3>🔥 Trending Topics</h3>
+          <p style="font-size:0.78rem;color:#78716c;">Most talked about today</p>
+          <ul class="sidebar-list" id="trending-topics-list" style="margin-top: 8px;">
+            <li style="padding: 4px 0; display: flex; justify-content: space-between; align-items: center;">
+              <span>Loading trends...</span>
+            </li>
+          </ul>
+        </section>
+
         <section class="sidebar-card" style="margin-top: 10px;">
           <h3>Visitor Feedback</h3>
           <p style="font-size:0.78rem;color:#6b7280;">Tell me who you are and how this news feed feels.</p>
@@ -4362,6 +4373,45 @@
       positivityBarFillEl.style.width = `${clamped}%`;
     }
 
+    function updateTrendingTopics(articles) {
+      const trendingList = document.getElementById("trending-topics-list");
+      if (!trendingList || !articles || !articles.length) return;
+
+      // Extract keywords from article titles and descriptions
+      const keywords = {};
+      const stopWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'can', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'what', 'which', 'who', 'when', 'where', 'why', 'how']);
+
+      articles.forEach(article => {
+        const text = ((article.title || '') + ' ' + (article.description || '')).toLowerCase();
+        const words = text.match(/\b[a-z]{4,}\b/g) || [];
+        
+        words.forEach(word => {
+          if (!stopWords.has(word) && word.length > 3) {
+            keywords[word] = (keywords[word] || 0) + 1;
+          }
+        });
+      });
+
+      // Get top 5 trending topics
+      const trending = Object.entries(keywords)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(([word, count]) => ({ word: word.charAt(0).toUpperCase() + word.slice(1), count }));
+
+      // Update UI
+      if (trending.length === 0) {
+        trendingList.innerHTML = '<li style="padding: 4px 0; color: #94a3b8;">No trends yet</li>';
+        return;
+      }
+
+      trendingList.innerHTML = trending.map((trend, index) => `
+        <li style="padding: 6px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-radius: 4px; padding: 6px 8px; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+          <span style="font-weight: 500; color: #0f172a;">${index + 1}. ${trend.word}</span>
+          <span class="pill-mini" style="font-size: 0.65rem;">${trend.count}</span>
+        </li>
+      `).join('');
+    }
+
     function updateAgentNote(articles) {
       const el = document.getElementById("agent-note-text");
       if (!el || !articles || !articles.length) return;
@@ -4536,6 +4586,7 @@
 
         updateAgentNote(state.allArticles);
         updateIgnoredList(state.allArticles);
+        updateTrendingTopics(state.allArticles);
 
         // Load multimedia content
         loadMultimediaContent(state.allArticles);
