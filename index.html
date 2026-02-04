@@ -7614,7 +7614,17 @@
         localStorage.setItem('moodData', JSON.stringify(moodData));
         
         closeMoodTracker();
-        showAffirmation('Great! Enjoy reading positive news. Check back later to see how you feel! 🌟');
+        
+        // Show different messages based on mood selected
+        const moodMessages = {
+          stressed: "I understand you're stressed. Let's find some calming, positive stories to help you relax. 🧘‍♀️",
+          sad: "I'm sorry you're feeling down. Positive news can help lift your spirits. Let's find uplifting stories for you. 💙",
+          neutral: "Great! Let's explore some inspiring stories to brighten your day. ✨",
+          good: "Wonderful! You're in a good mood. Let's find stories that keep that energy going! 🌟",
+          happy: "Amazing! You're feeling happy! Let's celebrate with some feel-good news! 🎉"
+        };
+        
+        showAffirmation(moodMessages[selectedMood] || 'Enjoy reading positive news!');
       } else {
         // After mood
         moodData.after = selectedMood;
